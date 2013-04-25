@@ -23,9 +23,8 @@ urlpatterns = patterns('',
     url(r'', include('django.contrib.staticfiles.urls')),
 
 
+    url(r'^home/',views.BasicPage),
 
-
-    (r'',views.HomePage),
 
 
 )
