@@ -6,6 +6,11 @@ from django.contrib import admin
 
 from darkoob import views 
 
+
+######################
+from dajaxice.core import dajaxice_autodiscover, dajaxice_config
+dajaxice_autodiscover()
+######################
 admin.autodiscover()
 
 urlpatterns = patterns('',

@@ -4,6 +4,9 @@ from django.utils.translation import ugettext as _
 from django.views.decorators.clickjacking import xframe_options_exempt
 
 
+from dajaxice.core import dajaxice_autodiscover, dajaxice_config
+dajaxice_autodiscover()
+
 def HomePage(request):
     return HttpResponse("HELLO DARKOOB! :D")
 
