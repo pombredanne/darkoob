@@ -140,6 +140,8 @@ INSTALLED_APPS = (
     # dajaxice 
     'dajaxice',
     'dajax',
+
+    'darkoob.main',
 )
 
 # A sample logging configuration. The only tangible logging
