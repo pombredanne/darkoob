@@ -23,13 +23,15 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
 
-
-	#static url
+    #static url
     url(r'', include('django.contrib.staticfiles.urls')),
 
 
-    url(r'^home/',views.BasicPage),
+    url(r'^home/', 'darkoob.views.BasicPage'),
+    url(r'^$', 'darkoob.views.index'),
+    url(r'^login/$', 'darkoob.views.login'),
+    url(r'^logout/$', 'darkoob.views.logout'),
 
-
+    url(r'^main/', include('darkoob.main.urls')),
 
 )
