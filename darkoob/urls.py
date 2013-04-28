@@ -27,10 +27,10 @@ urlpatterns = patterns('',
     url(r'', include('django.contrib.staticfiles.urls')),
 
 
-    url(r'^home/', 'darkoob.views.BasicPage'),
-    url(r'^$', 'darkoob.views.index'),
-    url(r'^login/$', 'darkoob.views.login'),
-    url(r'^logout/$', 'darkoob.views.logout'),
+    url(r'^home/', views.BasicPage),
+    url(r'^$', views.index, name='index'),
+    url(r'^login/$', views.login, name='login'),
+    url(r'^logout/$', views.logout, name='logout'),
 
     url(r'^main/', include('darkoob.main.urls')),
 
