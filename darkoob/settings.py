@@ -86,7 +86,11 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+   # 'django.contrib.staticfiles.finders.DefaultStorageFinder',
+
+    # dajaxice static file finder
+    'dajaxice.finders.DajaxiceFinder',
+
 )
 
 # Make this unique, and don't share it with anybody.
@@ -96,7 +100,7 @@ SECRET_KEY = 'vw5*f-$i_f6)t_)v^0cxs4^qq+h1t$l1gbbj)#2-(m@%%&q@x3'
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-#     'django.template.loaders.eggs.Loader',
+    'django.template.loaders.eggs.Loader',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -132,6 +136,10 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
+
+    # dajaxice 
+    'dajaxice',
+    'dajax',
 )
 
 # A sample logging configuration. The only tangible logging

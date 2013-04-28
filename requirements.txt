@@ -1,1 +1,2 @@
+django-dajaxice
 django_dajax
