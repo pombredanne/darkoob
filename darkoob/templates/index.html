@@ -10,9 +10,15 @@
 function my_js_callback(data){
     alert(data.message);
 }
+function callback(data){
+    alert(data.message);
+}
 </script>
 
 </head>
 <body>
-<input type="text" value="" id="result">
 <input type="button" onclick="Dajaxice.darkoob.dajaxice_example(my_js_callback)" value="Get message from server!"></body>
+
+
+<input type="text" id="text"/>
+<input type="button" onclick="Dajaxice.darkoob.args_example(callback, {'text':$('#text').val()})" value="Send!"/>
