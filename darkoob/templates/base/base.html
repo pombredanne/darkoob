@@ -1,12 +1,26 @@
 {% load dajaxice_templatetags %}
+
 <html>
 <head>
 <title> {% block title %}{% endblock %}</title>
 {% load dajaxice_templatetags %}
+
+{% dajaxice_js_import %}
+
+<script type="text/javascript">
+function calculate(){
+    Dajaxice.examples.multiply(Dajax.process,{'a':$('#a').val(),'b':$('#b').val()})
+}
+</script>
+
+
 </head>
 <h1> {% block top %}{% endblock %} </h1>
 
+{% block main %}
 
+
+{% endblock %}
 
 
 <b>{% block footer %}کلیه حقوق این سایت متعلق به استاد حسن نادری می باشد! {% endblock %}</b>

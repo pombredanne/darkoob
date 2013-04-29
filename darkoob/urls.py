@@ -23,7 +23,7 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
 
-    #static url
+    # static url
     url(r'', include('django.contrib.staticfiles.urls')),
 
 
