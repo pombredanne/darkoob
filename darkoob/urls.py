@@ -23,12 +23,17 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
 
-
-	#static url
+    #static url
     url(r'', include('django.contrib.staticfiles.urls')),
 
 
     url(r'^home/',views.BasicPage),
+
     url(dajaxice_config.dajaxice_url, include('dajaxice.urls')),
+    url(r'^$', views.index, name='index'),
+    url(r'^login/$', views.login, name='login'),
+    url(r'^logout/$', views.logout, name='logout'),
+
+    url(r'^main/', include('darkoob.main.urls')),
 
 )
