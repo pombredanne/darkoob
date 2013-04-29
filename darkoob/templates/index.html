@@ -1,15 +1,18 @@
 {% load dajaxice_templatetags %}
 <html><head>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
     {% dajaxice_js_import %}
+
+
 <script>
 
-function calculate(){
-    Dajaxice.darkoob.multiply(Dajax.process,{'a':$('#a').val(),'b':$('#b').val()})
+function my_js_callback(data){
+    alert(data.message);
 }
-
 </script>
-</head>
 
+</head>
+<body>
 <input type="text" value="" id="result">
-<input type="button" onclick="Dajaxice.randomize(Dajax.process)" value="Random!">
+<input type="button" onclick="Dajaxice.darkoob.dajaxice_example(my_js_callback)" value="Get message from server!"></body>
