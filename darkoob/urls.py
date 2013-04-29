@@ -32,6 +32,5 @@ urlpatterns = patterns('',
     url(r'^login/$', views.login, name='login'),
     url(r'^logout/$', views.logout, name='logout'),
 
-    url(r'^main/', include('darkoob.main.urls')),
 
 )
