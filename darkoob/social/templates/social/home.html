@@ -1,0 +1,7 @@
+{% extends "base/base.html" %}
+
+{% block main %}
+  Hello {{ user }}
+  <br />
+  <a href="{% url 'social:logout' %}">Logout</a>
+{% endblock main %}
