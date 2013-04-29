@@ -5,7 +5,7 @@ from django.contrib import admin
 
 
 from darkoob import views 
-
+from darkoob import ajax 
 
 ######################
 from dajaxice.core import dajaxice_autodiscover, dajaxice_config
@@ -23,13 +23,17 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
 
-    # static url
+    # Static url
     url(r'', include('django.contrib.staticfiles.urls')),
 
 
     url(r'^home/',views.BasicPage),
 
+    url(r'^home/',views.BasicPage),
+
+
     url(dajaxice_config.dajaxice_url, include('dajaxice.urls')),
+    
     url(r'^$', views.index, name='index'),
     url(r'^login/$', views.login, name='login'),
     url(r'^logout/$', views.logout, name='logout'),
