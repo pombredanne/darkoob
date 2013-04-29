@@ -4,8 +4,7 @@ from django.utils.translation import ugettext as _
 from django.views.decorators.clickjacking import xframe_options_exempt
 
 
-from dajaxice.core import dajaxice_autodiscover, dajaxice_config
-dajaxice_autodiscover()
+
 
 def index(request):
     return render_to_response('index.html', {})

@@ -27,7 +27,9 @@ urlpatterns = patterns('',
     url(r'', include('django.contrib.staticfiles.urls')),
 
 
-    url(r'^home/', views.BasicPage),
+    url(r'^home/',views.BasicPage),
+
+    url(dajaxice_config.dajaxice_url, include('dajaxice.urls')),
     url(r'^$', views.index, name='index'),
     url(r'^login/$', views.login, name='login'),
     url(r'^logout/$', views.logout, name='logout'),
