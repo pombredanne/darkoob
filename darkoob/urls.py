@@ -29,7 +29,6 @@ urlpatterns = patterns('',
 
 
     url(r'^home/',views.BasicPage),
-
-
+    url(dajaxice_config.dajaxice_url, include('dajaxice.urls')),
 
 )
