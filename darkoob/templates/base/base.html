@@ -1,27 +1,32 @@
+<!DOCTYPE html>
 {% load dajaxice_templatetags %}
-
+{% load bootstrap_toolkit %}
 <html>
 <head>
-<title> {% block title %}{% endblock %}</title>
-{% load dajaxice_templatetags %}
+  <title> {% block title %}{% endblock %}</title>
+  {% load dajaxice_templatetags %}
+  {% dajaxice_js_import %}
 
-{% dajaxice_js_import %}
+  {% bootstrap_stylesheet_tag %}
+  {% bootstrap_stylesheet_tag "responsive" %}
+  {% bootstrap_javascript_tag %}
 
-<script type="text/javascript">
-function calculate(){
-    Dajaxice.examples.multiply(Dajax.process,{'a':$('#a').val(),'b':$('#b').val()})
-}
-</script>
-
-
+  <script type="text/javascript">
+  function calculate(){
+      Dajaxice.examples.multiply(Dajax.process,{'a':$('#a').val(),'b':$('#b').val()})
+  }
+  </script>
 </head>
-<h1> {% block top %}{% endblock %} </h1>
+<body>
 
-{% block main %}
+  <h1> {% block top %}{% endblock %} </h1>
+
+  {% block main %}
 
 
-{% endblock %}
+  {% endblock %}
 
 
-<b>{% block footer %}کلیه حقوق این سایت متعلق به استاد حسن نادری می باشد! {% endblock %}</b>
+  <b>{% block footer %}کلیه حقوق این سایت متعلق به استاد حسن نادری می باشد! {% endblock %}</b>
+</body>
 </html>

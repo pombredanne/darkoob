@@ -19,19 +19,15 @@ urlpatterns = patterns('',
     # url(r'^darkoob/', include('darkoob.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
-    url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
+    # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
 
     # Static url
     url(r'', include('django.contrib.staticfiles.urls')),
 
-
-    url(r'^home/',views.BasicPage),
-
-    url(r'^home/',views.BasicPage),
-
-
+    # For test dajaxice 
+    url(r'^ajaxice',views.BasicPage),
     url(dajaxice_config.dajaxice_url, include('dajaxice.urls')),
     
     url(r'^$', views.index, name='index'),
@@ -39,4 +35,7 @@ urlpatterns = patterns('',
     url(r'^logout/$', views.logout, name='logout'),
 
 
+    url(r'^$', views.index, name='index'),
+
+    url(r'', include('darkoob.social.urls', namespace='social', app_name='socials')),
 )
