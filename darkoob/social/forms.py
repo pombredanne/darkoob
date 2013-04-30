@@ -19,52 +19,60 @@ MONTH_CHOICES = (
 	(12,'12'),
 )
 class RegisterForm(forms.Form):
-	first_name = forms.CharField(label="firstname", 
-		min_length=2, 
-		max_length=30,
-		widget=forms.TextInput(attrs={
-			'label':'First Name',
+	first_name = forms.CharField(
+		label = "firstname", 
+		min_length = 2, 
+		max_length = 30,
+		widget = forms.TextInput(attrs={
+			'placeholder':'First Name',
 		}))
 
-	last_name = forms.CharField(label="lastname",min_length=2,max_length=30,widget=forms.TextInput(attrs={
-		'place':'Last Name',
-		'label':'Last Name',
-		'require':'true',
+	last_name = forms.CharField(
+		label = "lastname",
+		min_length = 2,
+		max_length = 30,
+		widget = forms.TextInput(attrs={
+			'placeholder':'Last Name',			
 		}))
-	email = forms.EmailField(label="email",min_length=5,widget=forms.TextInput(attrs={
-		'place': 'Your email address',
-		'label':'Email', 
-		'require':'true',
-		'id':'email',
-		'validate':'email',	
+	email = forms.EmailField(
+		label = 'email',
+		min_length = 5,
+		widget = forms.TextInput(attrs={
+			'placeholder': 'Your email address',
 		}))
-	pw = forms.CharField(label="Password", min_length=8,max_length=30,widget=forms.PasswordInput(attrs={
-		'place':'Password',
-		'label':'Password',
-		'require':'true',
-		'id':'pass',
+	password = forms.CharField(
+		label = "Password",
+		min_length = 8,
+		max_length = 30,
+		widget = forms.PasswordInput(attrs={
+			'placeholder':'Password',
 		}))
-	pwconfirm = forms.CharField(label="rePassword",min_length=8,max_length=30, widget=forms.PasswordInput(attrs={
-		'place':'Re-type password',
-		'label':'rePassword',
-		'require':'true',
-		'match':'pw',
+	confirm_password = forms.CharField(
+		label = "rePassword",
+		min_length = 8,
+		max_length = 30,
+		widget = forms.PasswordInput(attrs={
+			'placeholder':'Re-type password',
 		}))
-	sex = forms.ChoiceField(choices=SEX_CHOICES)
+
+	sex = forms.ChoiceField(choices=SEX_CHOICES)	
 	
 	month = forms.ChoiceField(choices=MONTH_CHOICES)
-	day=forms.CharField(label="Day",min_length=1,max_length=2,widget=forms.TextInput(attrs={
-		'place':"Day",
-		'require':'true',
-		'label':'Day',
-		'size':'1',
+	
+	day = forms.CharField(
+		label = "Day",
+		min_length = 1,
+		max_length = 2,
+		widget = forms.TextInput(attrs={
+			'placeholder':"Day",
 		}))
 		
-	year=forms.CharField(label="Year",min_length=4,max_length=4,widget=forms.TextInput(attrs={
-		'place':"Year",
-		'require':'true',
-		'label':'Year',
-		'size':'1',
+	year = forms.CharField(
+		label = "Year",
+		min_length = 4,
+		max_length = 4,
+		widget = forms.TextInput(attrs={
+			'placeholder':"Year",
 		}))
 		
 	
@@ -72,20 +80,19 @@ class RegisterForm(forms.Form):
  		day = int(self.cleaned_data['day'])
 		if (day>31 or day<1):
 			raise forms.ValidationError("Invalid date")
-			
-
 		return day
+		
 	def clean_month(self):
 		month= int(self.cleaned_data['month'])
 		if (month >12 or month<1):
 			raise forms.ValidationError("Invalid date")
 		
 		return month
+
 	def clean_year(self):
 		year= int(self.cleaned_data['year'])
 		if (year >2012 or year<1900):
 			raise forms.ValidationError("Invalid date")
-		
 		return year
 		
 
