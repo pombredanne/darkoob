@@ -12,6 +12,8 @@ def index(request):
         return HttpResponseRedirect(reverse('social:home'))
     return render(request, 'index.html', {})
 
+def BasicPage(request):
+	return render(request,'index.html')
 def login(request):
     pass
 

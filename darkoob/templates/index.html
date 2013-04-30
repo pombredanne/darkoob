@@ -1,21 +1,24 @@
-{% extends "base/base.html" %}
-{% load i18n %}
+{% load dajaxice_templatetags %}
+<html><head>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
-"dadfadsfds"
-
-
-
-
-{% block title %}{% blocktrans %}Darkoob{% endblocktrans %}{% endblock %}
-{% block top %}Darkoob home page{% endblock %}
+    {% dajaxice_js_import %}
 
 
-{% block main %}
+<script>
 
-<input type="text" value="5" id="a"> x
-<input type="text" value="6" id="b"> =
-<input type="text" value="" id="result">
-<input type="button" value="Multiply!" onclick="calculate();">
+function my_js_callback(data){
+    alert(data.message);
+}
+function callback(data){
+    alert(data.message);
+}
+</script>
+
+</head>
+<body>
+<input type="button" onclick="Dajaxice.darkoob.dajaxice_example(my_js_callback)" value="Get message from server!"></body>
 
 
-{% endblock %}
+<input type="text" id="text"/>
+<input type="button" onclick="Dajaxice.darkoob.args_example(callback, {'text':$('#text').val()})" value="Send!"/>
