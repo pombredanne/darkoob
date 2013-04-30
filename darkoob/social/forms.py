@@ -20,7 +20,7 @@ MONTH_CHOICES = (
 )
 class RegisterForm(forms.Form):
 	first_name = forms.CharField(
-		label = "firstname", 
+		label = 'firstname', 
 		min_length = 2, 
 		max_length = 30,
 		widget = forms.TextInput(attrs={
@@ -28,7 +28,7 @@ class RegisterForm(forms.Form):
 		}))
 
 	last_name = forms.CharField(
-		label = "lastname",
+		label = 'lastname',
 		min_length = 2,
 		max_length = 30,
 		widget = forms.TextInput(attrs={
@@ -41,14 +41,14 @@ class RegisterForm(forms.Form):
 			'placeholder': 'Your email address',
 		}))
 	password = forms.CharField(
-		label = "Password",
+		label = 'Password',
 		min_length = 8,
 		max_length = 30,
 		widget = forms.PasswordInput(attrs={
 			'placeholder':'Password',
 		}))
 	confirm_password = forms.CharField(
-		label = "rePassword",
+		label = 'rePassword',
 		min_length = 8,
 		max_length = 30,
 		widget = forms.PasswordInput(attrs={
@@ -60,39 +60,39 @@ class RegisterForm(forms.Form):
 	month = forms.ChoiceField(choices=MONTH_CHOICES)
 	
 	day = forms.CharField(
-		label = "Day",
+		label = 'Day',
 		min_length = 1,
 		max_length = 2,
 		widget = forms.TextInput(attrs={
-			'placeholder':"Day",
+			'placeholder':'Day',
 		}))
 		
 	year = forms.CharField(
-		label = "Year",
+		label = 'Year',
 		min_length = 4,
 		max_length = 4,
 		widget = forms.TextInput(attrs={
-			'placeholder':"Year",
+			'placeholder':'Year',
 		}))
 		
 	
 	def clean_day(self):	
  		day = int(self.cleaned_data['day'])
 		if (day>31 or day<1):
-			raise forms.ValidationError("Invalid date")
+			raise forms.ValidationError('Invalid date')
 		return day
 		
 	def clean_month(self):
 		month= int(self.cleaned_data['month'])
 		if (month >12 or month<1):
-			raise forms.ValidationError("Invalid date")
+			raise forms.ValidationError('Invalid date')
 		
 		return month
 
 	def clean_year(self):
 		year= int(self.cleaned_data['year'])
 		if (year >2012 or year<1900):
-			raise forms.ValidationError("Invalid date")
+			raise forms.ValidationError('Invalid date')
 		return year
 		
 
