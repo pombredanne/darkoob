@@ -26,6 +26,12 @@
 
   <h1> {% block top %}{% endblock %} </h1>
 
+  {% if errors %}
+    {% for error in errors %}
+      <div class="alert">{{ error }}</div>
+    {% endfor %}
+  {% endif %}
+
   {% block main %}
 
 

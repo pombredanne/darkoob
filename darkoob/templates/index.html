@@ -1,8 +1,6 @@
+{% extends "base/base.html" %}
 {% load dajaxice_templatetags %}
-<html><head>
-{% dajaxice_js_import %}
-
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+{% load bootstrap_toolkit %}
 
 <script>
 function my_js_callback(data){
@@ -13,12 +11,20 @@ function callback(data){
 }
 </script>
 
-</head>
-<body>
+{% block main %}
   <input type="button" onclick="Dajaxice.darkoob.dajaxice_example(my_js_callback)" value="Get message from server!">
 
   <input type="text" id="text"/>
   <input type="button" onclick="Dajaxice.darkoob.args_example(callback, {'text':$('#text').val()})" value="Send!"/>
-</body>
-</html>
+  <br />
+
+  <form method="post" action="{% url "social:signup" %}">
+    {% csrf_token %}
+    {{ form|as_bootstrap }}
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </form>
+
+{% endblock main %}
 

@@ -3,14 +3,14 @@ from django.shortcuts import render
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 from django.views.decorators.clickjacking import xframe_options_exempt
-
+from django.contrib.auth.forms import UserCreationForm
 
 
 
 def index(request):
     if request.user.is_authenticated():
         return HttpResponseRedirect(reverse('social:home'))
-    return render(request, 'index.html', {})
+    return render(request, 'index.html', {'form': UserCreationForm()})
 
 
 @xframe_options_exempt
