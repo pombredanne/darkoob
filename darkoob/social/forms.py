@@ -70,7 +70,6 @@ class RegisterForm(forms.Form):
 	
 	def clean_day(self):	
  		day = int(self.cleaned_data['day'])
-		print type(day),"itssssssssssssssssss type"
 		if (day>31 or day<1):
 			raise forms.ValidationError("Invalid date")
 			
