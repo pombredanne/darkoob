@@ -21,13 +21,13 @@ def signup(request):
             print 'Valid Email'
 
         if cd['password']==cd['confirm_password']:
-            user=User.objects.create_user(username=cd['email'], password = cd['pw'], email = cd['email'])
+            user = User.objects.create_user(username=cd['email'], password = cd['password'], email = cd['email'])
             user.first_name = cd['first_name']
             user.last_name = cd['last_name']
 	#######TODO: change this part
         #TODO:Change birthday model from Varchar to Data
-        UserProfile.objects.filter(user=user).update(birthday=str(cd['year']) + ' '+ str(cd['month']) + ' ' + str(cd['day']))
-        if cd['sex']=='Female':
+        UserProfile.objects.filter(user = user).update(birthday = str(cd['year']) + ' '+ str(cd['month']) + ' ' + str(cd['day']))
+        if cd['sex']== 'Female':
             UserProfile.objects.filter(user=user).update(sex = 'Female')
         else:
             UserProfile.objects.filter(user=user).update(sex = 'Male')
