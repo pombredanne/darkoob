@@ -8,12 +8,17 @@ from django.contrib.auth.models import User
 from darkoob.social.forms import RegisterForm
 from darkoob.social.models import UserProfile 
 
+from django.core.validators import validate_email
+
+
 def signup(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
             cd = form.cleaned_data      
         email = cd['email'] #TODO: mail should be unique 
+        if validate_email(email):
+            print 'Valid Email'
 
         if cd['password']==cd['confirm_password']:
             user=User.objects.create_user(username=cd['email'], password = cd['pw'], email = cd['email'])
