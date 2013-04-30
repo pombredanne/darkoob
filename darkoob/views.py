@@ -12,17 +12,6 @@ def index(request):
         return HttpResponseRedirect(reverse('social:home'))
     return render(request, 'index.html', {})
 
-def BasicPage(request):
-	return render(request,'index.html')
-def login(request):
-    pass
-
-def logout(request):
-    pass
-
-def signup(request):
-    pass
-
 
 @xframe_options_exempt
 def ok_to_load_in_a_frame(request):

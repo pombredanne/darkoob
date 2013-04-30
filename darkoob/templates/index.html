@@ -1,12 +1,10 @@
 {% load dajaxice_templatetags %}
 <html><head>
+{% dajaxice_js_import %}
+
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
-    {% dajaxice_js_import %}
-
-
 <script>
-
 function my_js_callback(data){
     alert(data.message);
 }
@@ -17,8 +15,10 @@ function callback(data){
 
 </head>
 <body>
-<input type="button" onclick="Dajaxice.darkoob.dajaxice_example(my_js_callback)" value="Get message from server!"></body>
+  <input type="button" onclick="Dajaxice.darkoob.dajaxice_example(my_js_callback)" value="Get message from server!">
 
+  <input type="text" id="text"/>
+  <input type="button" onclick="Dajaxice.darkoob.args_example(callback, {'text':$('#text').val()})" value="Send!"/>
+</body>
+</html>
 
-<input type="text" id="text"/>
-<input type="button" onclick="Dajaxice.darkoob.args_example(callback, {'text':$('#text').val()})" value="Send!"/>
