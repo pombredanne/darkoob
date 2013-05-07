@@ -1,6 +1,7 @@
 from django import forms
 from django.utils.translation import ugettext as _
 from django.core.validators import validate_email
+from passwords.fields import PasswordField
 
 SEX_CHOICES = (
     ('Male', _('Male')),
@@ -109,9 +110,8 @@ class RegisterForm(forms.Form):
 
 	def clean_password(self):
 		password = self.cleaned_data['password']
-		# TODO: Check is the strong password
+		# Check strog password
 		return password
-		
 	def clean_confirm_password(self):
 		confirm_password = self.cleaned_data['confirm_password']
 		if confirm_password != self.cleaned_data['password']:
