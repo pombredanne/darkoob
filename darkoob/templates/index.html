@@ -2,6 +2,8 @@
 {% load dajaxice_templatetags %}
 {% load bootstrap_toolkit %}
 
+
+{% block main %}
 <script>
 function my_js_callback(data){
     alert(data.message);
@@ -9,15 +11,34 @@ function my_js_callback(data){
 function callback(data){
     alert(data.message);
 }
+function calculate(){
+    Dajaxice.darkoob.multiply(Dajax.process)
+}
 </script>
+<input type="text" value="" id="result">
+<input type="button" onclick="Dajaxice.darkoob.randomize(Dajax.process)" value="Random!">
 
-{% block main %}
+
+
+
+</br>
+</br>
+</br>
+</br>
+</hr>
   <input type="button" onclick="Dajaxice.darkoob.dajaxice_example(my_js_callback)" value="Get message from server!">
 
   <input type="text" id="text"/>
   <input type="button" onclick="Dajaxice.darkoob.args_example(callback, {'text':$('#text').val()})" value="Send!"/>
   <br />
 
+
+
+</br>
+</br>
+</br>
+</br>
+</hr>
   <form method="post" action="{% url "social:signup" %}">
     {% csrf_token %}
     {{ form|as_bootstrap }}
