@@ -15,15 +15,13 @@ def signup(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
-            import datetime
+            from datetime import date
             cd = form.cleaned_data      
             email = cd['email'] #TODO: Email should be unique 
             user = User.objects.create_user(username = cd['email'], password = cd['password'], email = cd['email'])
             user.first_name = cd['first_name']
             user.last_name = cd['last_name']
-            #TODO:Change birthday model from Varchar to Data
-            
-            UserProfile.objects.filter(user = user).update(birthday = datetime.date(cd['year'], cd['month'], cd['day']))
+            UserProfile.objects.filter(user = user).update(birthday = date(cd['year'], cd['month'], cd['day']))
             if cd['sex']== 'Female':
                 UserProfile.objects.filter(user=user).update(sex = 'Female')
             else:
