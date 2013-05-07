@@ -8,7 +8,7 @@ SEX_CHOICES = (
 class UserProfile(models.Model):
 	user = models.OneToOneField(User)
 	sex = models.CharField(max_length = 6, choices = SEX_CHOICES)
-	birthday = models.CharField(max_length = 20, null = True, blank = True)
+	birthday = models.DateField(null = True)
 
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
