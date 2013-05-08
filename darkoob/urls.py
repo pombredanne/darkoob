@@ -28,6 +28,6 @@ urlpatterns = patterns('',
 
     # Search 
     # TODO: Move to search application
-    url(r'^user/$',user_search_page),
-    url(r'^users/$',ajax_result_of_user_search),
+    url(r'^user/$', search_user),
+    url(r'^users/$', search_user_result),
 )

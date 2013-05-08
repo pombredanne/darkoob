@@ -1,0 +1,41 @@
+{% load endless %}
+{% load staticfiles %}
+{% if results|length %}
+    <table>   
+       <!-- <tr class='even'>
+                <td colspan="3" class="right">
+                    <strong>Found {{ results|length }} users</strong>
+                </td>
+            </tr>
+        -->
+        {% paginate 3,1 results %}
+        {% for user in results %}
+            <tr class={% cycle 'odd' 'even' %}>
+                <td style="width:80px;">
+                    <img src="{%static "img/an.jpg" %}" alt="Smiley face" style="width:80px;height:80px"  />
+                </td>
+                <td>
+                    {{ user.first_name }} {{ user.last_name }}<br/>
+                    <!-- 
+                    <span class="hint">Gender:{% if user.userprofile.sex %}dd{%else%}ff{%endif%}</span>
+                    <br/>-->
+                </td>
+                <td class="right">
+                    <span class="hint">
+                        Joined {{ user.date_joined|timesince }} ago 
+                        <br/>
+                        <a href="#">Follow</a>
+                    </span>
+                </td>
+            </tr>
+        {% endfor %}
+
+    </table>
+    {% show_more 'Other Results...'%}
+
+{% else %}
+
+    <div class="note">
+        Your search yielded no results:D
+    </div>
+{% endif %}
