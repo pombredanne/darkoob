@@ -157,7 +157,9 @@ INSTALLED_APPS = (
     'dajax',
     'bootstrap_toolkit',
     'darkoob.social',
-    'endless_pagination'
+    'darkoob.search',
+    'endless_pagination',
+
 )
 
 
