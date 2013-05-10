@@ -1,7 +1,6 @@
 from django import forms
 from django.utils.translation import ugettext as _
 from django.core.validators import validate_email
-from passwords.fields import PasswordField
 
 SEX_CHOICES = (
     ('Male', _('Male')),
@@ -21,6 +20,39 @@ MONTH_CHOICES = (
 	(11, '11'),
 	(12, '12'),
 )
+
+class ChangePasswordForm(forms.Form):
+	password = forms.CharField(
+		label = _('Password'),
+		min_length = 3,
+		max_length = 30,
+		widget = forms.PasswordInput(attrs={
+			'placeholder':_('Password'),
+		}))
+
+	new_password = forms.CharField(
+		label = _('New password'),
+		min_length = 6,
+		max_length = 30,
+		widget = forms.PasswordInput(attrs={
+			'placeholder':_('New password'),
+		}))
+
+	confirm_new_password = forms.CharField(
+		label = _('Re-type new password'),
+		min_length = 6,
+		max_length = 30,
+		widget = forms.PasswordInput(attrs={
+			'placeholder':_('Re-type new password'),
+		}))
+
+	def clean_confirm_new_password(self):
+		confirm_new_password = self.cleaned_data['confirm_new_password']
+		if confirm_new_password != self.cleaned_data['new_password']:
+			raise forms.ValidationError(_('New password and Re-type does not match'))
+		return confirm_new_password
+
+
 class RegisterForm(forms.Form):
 	first_name = forms.CharField(
 		label = _('First Name'), 

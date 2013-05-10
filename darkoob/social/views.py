@@ -3,12 +3,11 @@ from django.shortcuts import render, render_to_response
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 from django.contrib.auth.decorators import login_required
+
+from darkoob.social.forms import RegisterForm, ChangePasswordForm
+
 from django.contrib.auth.models import User
-
-from darkoob.social.forms import RegisterForm
 from darkoob.social.models import UserProfile 
-
-from django.core.validators import validate_email
 
 
 def signup(request):
@@ -35,6 +34,26 @@ def signup(request):
         )
     return render_to_response('signup.html', {'form':form})
 
+
+@login_required
+def change_password(request):
+    if request.method == 'POST':
+        form = ChangePasswordForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            if request.user.check_password(cd['password']):
+                user = User.objects.get(username = request.user.username)
+                user.set_password(cd['new_password'])
+                user.save()
+                return HttpResponse('Succsessfull! Password has been changed')
+                #TODO: Send Email to user
+            else: 
+                pass 
+                #TODO: Raise Error('Your Password is not correct')
+
+    else:
+        form = ChangePasswordForm()
+    return render_to_response('change_password.html', {'user': request.user, 'form': form})
 @login_required
 def home(request):
 	return render(request, 'social/home.html', {})
