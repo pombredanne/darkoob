@@ -1,0 +1,37 @@
+{% extends 'search_base.html' %}
+{% load staticfiles %}
+
+{% block extra_js %}
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#searchSubmit').click(function() {
+            q = $('#q').val();
+            $('#results').html('&nbsp;').load('/users/?q=' + q);
+        });
+    });
+    $(document).ajaxStart(function() {
+        $('#spinner').slideDown('normal');//show();
+    }).ajaxStop(function() {
+        $('#spinner').slideUp('normal');//.hide();
+    });
+</script>
+{% endblock %}
+
+{% block main %}
+<div>
+    <div style="text-align:center">
+        <strong>Looking For Members</strong>
+    </div>
+    <hr/>
+    
+    <input id="q" type="text" placeholder="Searching for..."/>
+    <input id="searchSubmit" type="submit" value="Search" />
+    
+    <br/>
+    <span class="hint">Type person name,family or username to search for users</span>
+    <div class="margin">
+        <span id="spinner"><img src="{% static "img/spinner.gif" %}"/></span>
+        <div id="results"> </div>
+    </div>
+</div>
+{% endblock %}

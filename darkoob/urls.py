@@ -5,7 +5,6 @@ from dajaxice.core import dajaxice_autodiscover, dajaxice_config
 from darkoob import views 
 from darkoob import ajax 
 
-from search.views import *
 
 dajaxice_autodiscover()
 admin.autodiscover()
@@ -28,6 +27,5 @@ urlpatterns = patterns('',
 
     # Search 
     # TODO: Move to search application
-    url(r'^user/$', search_user),
-    url(r'^users/$', search_user_result),
+    url(r'', include('darkoob.search.urls', namespace='search')),
 )
