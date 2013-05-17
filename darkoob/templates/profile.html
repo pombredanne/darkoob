@@ -1,13 +1,73 @@
 {% extends "base/base.html" %}
+{% load staticfiles %}
+
+  {% block css %}
+	<style type="text/css">
+		#sex_field{
+			Display:none;
+		}
+		.ico-edit{width:22px; height:22px;cursor: pointer;}
+
+	</style>
+
+  {% endblock %}
+
+  {% block js %}
+	<script type="text/javascript">
+		function jedit(editbox, hidebox, showbox){
+			$(editbox).click(function() {
+				$(hidebox).slideUp('normal');
+				$(showbox).slideDown('normal');
+			});
+		}
+		$(function() {
+			jedit('#edit_sex','#sex_box','#sex_field');
+		});
+	</script>
+
+
+
+	<script>
+function my_callback(data){
+	alert(data.message)
+	// $.sticky(data.message);
+	// if (data.message=="True"){
+	// $.sticky('Trueeeeeeeeeeeeeeeee');
+		// $('#AboutForm').slideUp('normal');
+		// $('#AboutBox').slideDown('normal');
+	// document.getElementById("AboutBox").innerHTML=data.about;	
+	// }else{
+		// $.sticky('Excuseme! a problem occered! please try again later');
+	// }
+}
+</script>
+  {% endblock %}
+
+
+
 
   {% block main %}
 
 <h3>{{ user.get_full_name}} Profile</h3> 
 <hr />
 <br />
-	{{ user.userprofile.sex }}
+
+
+	<div id="sex_box">
+		{{ user.userprofile.sex }} <a id="edit_sex"  alt="Edit"><img alt="Edit" src="{%static "img/Edit.ico" %}" class="ico-edit"/></a>
+	</div>
+
+	<div id='sex_field'>
+		{{ form.sex }} <input type="button" value="change" onmousedown="Dajaxice.darkoob.social.sex(my_callback,{'day':$('#day').val()})">
+	</div>
+	
 	<br />
-	{{ user.userprofile.birthday}}
+	<br />
+
+	{{ user.userprofile.birthday}} <a id="edit_birthday"> Edit </a>
+	<br />
+	{{ form.day}}	{{ form.year }}	{{ form.month}}<input type="button" value="change">
+
 	<br />
 
 <h4> Contact Information </h4>

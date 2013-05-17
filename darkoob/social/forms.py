@@ -21,6 +21,28 @@ MONTH_CHOICES = (
 	(12, '12'),
 )
 
+class EditProfileForm(forms.Form):
+	month = forms.ChoiceField(choices = MONTH_CHOICES)
+	
+	day = forms.CharField(
+		label = _('Day'),
+		min_length = 1,
+		max_length = 2,
+		widget = forms.TextInput(attrs={
+			'placeholder':_('Day'),
+			'id': 'day',
+		}))
+		
+	year = forms.CharField(
+		label = _('Year'),
+		min_length = 4,
+		max_length = 4,
+		widget = forms.TextInput(attrs={
+			'placeholder':_('Year'),
+		}))
+
+	sex = forms.ChoiceField(choices = SEX_CHOICES)	
+
 class ChangePasswordForm(forms.Form):
 	password = forms.CharField(
 		label = _('Password'),

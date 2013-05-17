@@ -18,3 +18,4 @@ def randomize(request):
     dajax = Dajax()
     dajax.assign('#result', 'value', random.randint(1, 10))
     return dajax.json()
+

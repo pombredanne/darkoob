@@ -4,17 +4,16 @@ from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 from django.contrib.auth.decorators import login_required
 
-from darkoob.social.forms import RegisterForm, ChangePasswordForm
+from darkoob.social.forms import RegisterForm, ChangePasswordForm, EditProfileForm
 
 from django.contrib.auth.models import User
 from darkoob.social.models import UserProfile 
 
 @login_required
 def profile(request):
+    form = EditProfileForm(request.POST)
 
-    # print request.user.userprofile.Education.all()
-    # print dir(request.user.userprofile)
-    return render_to_response('profile.html',{'user': request.user})
+    return render_to_response('profile.html',{'user': request.user, 'form': form})
 
 def signup(request):
     if request.method == 'POST':
