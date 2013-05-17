@@ -48,7 +48,7 @@ def change_password(request):
                 return HttpResponse('Succsessfull! Password has been changed')
                 #TODO: Send Email to user
             else: 
-                pass 
+                pass
                 #TODO: Raise Error('Your Password is not correct')
 
     else:

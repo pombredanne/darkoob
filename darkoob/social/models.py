@@ -5,12 +5,46 @@ SEX_CHOICES = (
         ('Male', 'Male'),
     	('Female', 'Female'),
     )
+
+class Country(models.Model):
+	name = models.CharField(max_length = 50)
+
+	def __unicode__(self):
+		return self.name 
+
+class City(models.Model):
+	name = models.CharField(max_length = 50)
+	country = models.OneToOneField(Country)
+	
+	def __unicode__(self):
+		return self.name 
+
 class UserProfile(models.Model):
 	user = models.OneToOneField(User)
 	sex = models.CharField(max_length = 6, choices = SEX_CHOICES)
 	birthday = models.DateField(null = True)
+	mobile = models.CharField(max_length = 20)
+	website = models.URLField()
+	city = models.OneToOneField(City, null = True, blank = True)
+
+	# NOTE: userprof_obj.education_set.all() return all education set of a person 
+
 	def __unicode__(self):
 		return self.user.get_full_name()
+
+class School(models.Model):
+	name = models.CharField(max_length = 50)
+	
+	def __unicode__(self):
+		return self.name 
+
+class Education(models.Model):
+	user_profile = models.ForeignKey(UserProfile, related_name='Education')
+	school = models.OneToOneField(School)
+
+	def __unicode__(self):
+		return self.school
+
 
 def create_user_profile(sender, instance, created, **kwargs):
     if created:

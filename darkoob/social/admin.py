@@ -1,10 +1,30 @@
 from django.contrib import admin
-from models import UserProfile
+from models import UserProfile, Education, School, City, Country
 
 class UserProfileAdmin(admin.ModelAdmin):
-	list_display = ('user', 'sex')
-	search_fields = ('user',)
-	list_display = ('user', 'sex', 'birthday')
+	search_fields = ('user', 'city', 'mobile')
+	list_display = ('user', 'sex', 'birthday', 'city')
 
-	
-admin.site.register(UserProfile,UserProfileAdmin)
+class EducationAdmin(admin.ModelAdmin):
+	list_display = ('user_profile', 'school')
+	search_fields = ('school',)
+
+class SchoolAdmin(admin.ModelAdmin):
+	list_display = ('name',)
+	search_fields = ('name',)
+
+class CityAdmin(admin.ModelAdmin):
+	list_display = ('name','country')
+	search_fields = ('name','country')
+
+class CountryAdmin(admin.ModelAdmin):
+	list_display = ('name',)
+	search_fields = ('name',)
+
+
+admin.site.register(UserProfile, UserProfileAdmin)
+admin.site.register(Education, EducationAdmin)
+admin.site.register(School, SchoolAdmin)
+admin.site.register(City, CityAdmin)
+admin.site.register(Country, CountryAdmin)
+
