@@ -1,0 +1,36 @@
+{% extends "base/base.html" %}
+
+  {% block main %}
+
+<h3>{{ user.get_full_name}} Profile</h3> 
+<hr />
+<br />
+	{{ user.userprofile.sex }}
+	<br />
+	{{ user.userprofile.birthday}}
+	<br />
+
+<h4> Contact Information </h4>
+	{{ user.userprofile.mobile }}
+	<br />
+	<a href='{{ user.userprofile.website }}'>{{ user.userprofile.website }}</a>
+
+<h4> Educations </h4>
+	{% for education in user.userprofile.education_set.all %}
+		{{ education.school.name }}
+		</br>
+	{%endfor%}
+<h4> Location </h4>
+	{{ user.userprofile.city }}, {{ user.userprofile.city.country }}
+
+<h4> Followed </h4>
+
+
+<h4> Follower </h4>
+
+  {% endblock %}
+
+
+
+
+

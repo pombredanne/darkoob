@@ -39,11 +39,11 @@ class School(models.Model):
 		return self.name 
 
 class Education(models.Model):
-	user_profile = models.ForeignKey(UserProfile, related_name='Education')
+	user_profile = models.ForeignKey(UserProfile, related_name = 'education_set')
 	school = models.OneToOneField(School)
 
 	def __unicode__(self):
-		return self.school
+		return unicode(self.school)
 
 
 def create_user_profile(sender, instance, created, **kwargs):

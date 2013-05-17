@@ -9,6 +9,12 @@ from darkoob.social.forms import RegisterForm, ChangePasswordForm
 from django.contrib.auth.models import User
 from darkoob.social.models import UserProfile 
 
+@login_required
+def profile(request):
+
+    # print request.user.userprofile.Education.all()
+    # print dir(request.user.userprofile)
+    return render_to_response('profile.html',{'user': request.user})
 
 def signup(request):
     if request.method == 'POST':
