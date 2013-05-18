@@ -23,21 +23,21 @@ Preliminary Tables
 	2.city_id -> city_name, country_id, country_name 
 	3.country_id -> country_name 
 	4.school_id -> school_name
+	# TODO: type FDs 
 
 
 ### Table2
 
 
-
-              -----------------------------------                -------------------------------
-              |        |         |              |                |          |                  |
-              |        V         V              V                |          V                  V
-----------------------------------------------------------------------------------------------------------
-|user_name|post_id|post_title|post_text|post_submitted_time|comment_id|comment_text|submited_comment_time|
-----------------------------------------------------------------------------------------------------------
-     |        |                                                  ^            ^                ^
-     |        |                                                  |            |                |
-     -------------------------------------------------------------------------------------------
+     ----------------------------------------------------------------------------------------------------------------------------
+     |                    |        |         |              |               |            |              |                       |
+     V                    |        V         V              V               V            V              V                       V
+-----------------------------------------------------------------------------------------------------------------------------------------------
+|post_author_user_name|post_id|post_title|post_text|post_submitted_time|comment_id|comment_text|submited_comment_time|comment_author_user_name|
+-----------------------------------------------------------------------------------------------------------------------------------------------
+                                                                             |            ^                ^                     ^
+                                                                             |            |                |                     |
+                                                                             -----------------------------------------------------
 
 
 ### Table3
@@ -160,43 +160,55 @@ This table is BCNF
 
 This table is BCNF 
 
-Normalization of Table2(in daghone:D)
+Normalization of Table2
 -----------------------
 
-    --------------------------------------------------
-    |         |         |              |             |
-    |         V         V              V             V
------------------------------------------------------------
-|post_id|post_title|post_text|post_submited_time|user_name|
------------------------------------------------------------
-   
-
-    ------------------------------------------------
-    |            |                 |               |           
-    |            V                 V               V           
----------------------------------------------------------
-|comment_id|comment_text|comment_submited_time|user_name|
----------------------------------------------------------
-
-   -----------
-   |         |
-   |         V
---------------------
-|post_id|comment_id|
---------------------
+	(post_id) is a candidate key, there are no exesits any partial dependency, so this table in second normal form ,but this isn't a 3NF(a transitive dep exsist):
 
 
-	(user_name, post_id) is a candidate key, for convert this table to second normal form we should remove all partial dependancy.
 
-     ------------------------------------------------------------
-     |        |        |         |              |               |
-     V        |        V         V              V               V
-----------------------------------------------------------------------------------------------------------
-|user_name|post_id|post_title|post_text|post_submitted_time|comment_id|comment_text|submited_comment_time|
-----------------------------------------------------------------------------------------------------------
-     ^                                                           |            ^                ^
-     |                                                           |            |                |
-     -------------------------------------------------------------------------------------------
+### Table2.1
+ 
+------------------------------------------------------------------------
+|comment_id|comment_text|submited_comment_time|comment_author_user_name|
+------------------------------------------------------------------------
+       |            ^                ^                     ^
+       |            |                |                     |
+       -----------------------------------------------------
+This table is BCNF 
+
+### Table2.2
+     ------------------------------------------------------------------------
+     |                    |        |         |              |               |        
+     V                    |        V         V              V               V       
+-----------------------------------------------------------------------------------
+|post_author_user_name|post_id|post_title|post_text|post_submitted_time|comment_id|
+-----------------------------------------------------------------------------------
+
+
+table 2.1 and table 2.2 are 3NF
+
+
+	there is a MVD in post_id and comment_id (becuase a post can have been many comments)
+	
+	#### Table2.2.1
+	   -----------
+	   |         |
+	   |         V
+	--------------------
+	|post_id|comment_id|
+	--------------------
+	This table is BCNF 
+
+	#### Table2.2.2
+	     --------------------------------------------------------
+	     |                    |        |         |              |                    
+	     V                    |        V         V              V                      
+	------------------------------------------------------------------------
+	|post_author_user_name|post_id|post_title|post_text|post_submitted_time|
+	------------------------------------------------------------------------
+	This table is BCNF 		                                                     
+	
                           
 Normalization of Table3
 -----------------------
@@ -224,7 +236,7 @@ Normalization of Table3
 	-------------------------------------------------------
 	|book_id|book_title|publisher_id|language_id|book_rate|
 	-------------------------------------------------------
-
+	This table is BCNF 
 
 	#### Table3.1.2
 	     --------
@@ -233,6 +245,7 @@ Normalization of Table3
 	-------------------
 	|book_id|author_id|
 	-------------------
+	This table is BCNF 
 
 	#### Table3.1.3
 	     --------
@@ -241,6 +254,7 @@ Normalization of Table3
 	-----------------------
 	|book_id|translator_id|
 	-----------------------
+	This table is BCNF 
 
 	#### Table3.1.4
 	     --------
@@ -249,6 +263,7 @@ Normalization of Table3
 	----------------
 	|book_id|tag_id|
 	----------------
+	This table is BCNF 
 
 
 
@@ -262,6 +277,8 @@ Normalization of Table3
       |            |    
       -------------- 
 
+This table is BCNF 
+
 ### Table3.3
 
 ---------------------------
@@ -270,6 +287,9 @@ Normalization of Table3
       |            ^              
       |            |    
       --------------
+
+
+This table is BCNF 
 
 ### Table3.4 
 
@@ -280,6 +300,8 @@ Normalization of Table3
      |         |            |
      ------------------------
 
+This table is BCNF 
+
 ### Table3.5
 
 -------------------------------
@@ -288,6 +310,7 @@ Normalization of Table3
       |              ^              
       |              |    
       ---------------- 
+This table is BCNF 
 
 ### Table3.6
 
@@ -297,6 +320,8 @@ Normalization of Table3
    |       ^              
    |       |    
    --------- 
+
+This table is BCNF 
 
 Normalization of Table4
 -----------------------
@@ -313,6 +338,7 @@ Normalization of Table4
 |book_id|review_id|
 -------------------
 
+This table is BCNF 
 
 ### Table4.2
 
@@ -322,6 +348,8 @@ Normalization of Table4
      ^         ^          ^                   ^             |
      |         |          |                   |             |
      --------------------------------------------------------
+
+This table is BCNF 
 
 Normalizattion of Table5
 ------------------------
@@ -337,6 +365,8 @@ Normalizattion of Table5
 |user_name|followship_id|
 -------------------------
 
+This table is BCNF 
+
 
 ### Table5.2
 ------------------------------------------------
@@ -346,4 +376,4 @@ Normalizattion of Table5
          |               |            |
          ------------------------------
 
-
+This table is BCNF 
