@@ -14,22 +14,24 @@
 
   {% block js %}
 	<script type="text/javascript">
-		function jedit(editbox, hidebox, showbox){
+		function edit_animation(editbox, hidebox, showbox){
 			$(editbox).click(function() {
 				$(hidebox).slideUp('normal');
 				$(showbox).slideDown('normal');
 			});
 		}
 		$(function() {
-			jedit('#edit_sex','#sex_box','#sex_field');
+			edit_animation('#edit_sex','#sex_box','#sex_field');
 		});
 	</script>
 
 
 
 	<script>
-function my_callback(data){
-	alert(data.message)
+function edit_sex_callback(data){
+	if (data.done){
+			alert(data.done)
+	}
 	// $.sticky(data.message);
 	// if (data.message=="True"){
 	// $.sticky('Trueeeeeeeeeeeeeeeee');
@@ -58,7 +60,7 @@ function my_callback(data){
 	</div>
 
 	<div id='sex_field'>
-		{{ form.sex }} <input type="button" value="change" onmousedown="Dajaxice.darkoob.social.sex(my_callback,{'day':$('#day').val()})">
+		{{ form.sex }} <input type="button" value="change" onmousedown="Dajaxice.darkoob.social.edit_sex(edit_sex_callback,{'sex':$('#sex').val()})">
 	</div>
 	
 	<br />

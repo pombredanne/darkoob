@@ -41,7 +41,9 @@ class EditProfileForm(forms.Form):
 			'placeholder':_('Year'),
 		}))
 
-	sex = forms.ChoiceField(choices = SEX_CHOICES)	
+	sex = forms.ChoiceField(
+		choices = SEX_CHOICES,
+		)
 
 class ChangePasswordForm(forms.Form):
 	password = forms.CharField(
