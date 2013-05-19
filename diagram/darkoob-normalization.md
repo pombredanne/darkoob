@@ -41,8 +41,11 @@ Preliminary Tables
 		                                                                         |            ^                ^                     ^
 		                                                                         |            |                |                     |
 		                                                                         -----------------------------------------------------
-
 	``
+
+1.	post_id -> Table2
+2.	comment_id -> comment_text, submited_comment_time, comment_author_user_name
+
 ### Table3
 
 	``
@@ -58,6 +61,14 @@ Preliminary Tables
 		                      --------------              -------------           ------------------------            ----------------                     --------
 
 	``
+
+1.	publisher_id -> publisher_name 
+2. 	language_id -> language_name
+3.	author_id -> author_name, author_rate
+4.	translator_id -> translator_name
+5.	tag_id -> tag_name
+6.	book_id -> Table3
+
 ### Table4
 
 	``
@@ -71,6 +82,10 @@ Preliminary Tables
 		 ----------------------------------------------------------------
 
 	``
+
+1.	book_id -> review_id
+2.	review_id -> Table4
+
 ### Table5
 
 	``
@@ -84,6 +99,9 @@ Preliminary Tables
 		                |               |            |
 		                ------------------------------
 	``
+
+1. user_name -> Table5
+2. followship -> followed_date, followed_user_name
 
 All field's are atomic and in one normal form.
 
@@ -409,3 +427,16 @@ This table is BCNF
 	``
 
 This table is BCNF 
+
+
+
+
+
+
+
+
+Final Table's After Normalization
+---------------------------------
+
+
+
