@@ -196,6 +196,7 @@ Normalization of Table2
 
 
 *	### Table2.1
+	
 	`` 
 	------------------------------------------------------------------------
 	|comment_id|comment_text|submited_comment_time|comment_author_user_name|
@@ -204,9 +205,12 @@ Normalization of Table2
 		   |            |                |                     |
 		   -----------------------------------------------------
 	``
-This table is BCNF 
+	
+	This table is BCNF 
 
 *	### Table2.2
+
+
 	``
 		 ------------------------------------------------------------------------
 		 |                    |        |         |              |               | 
@@ -216,12 +220,15 @@ This table is BCNF
 	-----------------------------------------------------------------------------------
 
 	``
-table 2.1 and table 2.2 are 3NF
 
 
-there is a MVD in post_id and comment_id (becuase a post can have been many comments)
+	table 2.1 and table 2.2 are 3NF
+
+
+	there is a MVD in post_id and comment_id (becuase a post can have been many comments)
 	
 *	#### Table2.2.1
+
 	``
 	   -----------
 	   |         |
@@ -230,10 +237,13 @@ there is a MVD in post_id and comment_id (becuase a post can have been many comm
 	|post_id|comment_id|
 	--------------------
 	``
-This table is BCNF 
+
+	This table is BCNF 
 
 	
 *	#### Table2.2.2
+
+
 	``
 	     --------------------------------------------------------
 	     |                    |        |         |              |
@@ -242,7 +252,9 @@ This table is BCNF
 	|post_author_user_name|post_id|post_title|post_text|post_submitted_time|
 	------------------------------------------------------------------------
 	``	
-This table is BCNF
+
+
+	This table is BCNF
 	
                           
 Normalization of Table3
@@ -252,6 +264,7 @@ In third normal forms we should remove all transitive dependance.
 
 
 *	### Table3.1
+
 	``
 		------------------------------------------------------------------------------
 		|       |            |            |          |          |            |       |
