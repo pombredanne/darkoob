@@ -111,7 +111,7 @@ user_name is a condidate key, In second normal form we should remove all partial
 In third normal forms we should remove all transitive dependance.
 	 
 	
-*	### Table1.1
+### Table1.1
 	``
 		---------------------------------------------------------------------
 		|         |           |       |      |       |      |      |        | 
@@ -125,7 +125,7 @@ In third normal forms we should remove all transitive dependance.
 This table is BC normal form(BCNF).
 This table has multi-value dependency in mobile and school_id, so we should correction our table's:
 
-*	#### Table1.1.1
+#### Table1.1.1
 	``
 	    -----------
 	    |         |
@@ -135,7 +135,7 @@ This table has multi-value dependency in mobile and school_id, so we should corr
 	------------------
 	``
 
-*	#### Table1.1.2
+#### Table1.1.2
 	``
 	     -----------
 	     |         |
@@ -145,7 +145,7 @@ This table has multi-value dependency in mobile and school_id, so we should corr
 	---------------------
 	``
 
-*	#### Table1.1.3
+#### Table1.1.3
 	``
 	    ------------------------------------------------------
 	    |         |           |       |      |       |       |
@@ -155,7 +155,7 @@ This table has multi-value dependency in mobile and school_id, so we should corr
 	--------------------------------------------------------------
 	``
 
-*	### Table1.2
+### Table1.2
 	``
 	-----------------------
 	|school_id|school_name|
@@ -166,7 +166,7 @@ This table has multi-value dependency in mobile and school_id, so we should corr
 	``
 This table is BCNF 
 
-*	### Table1.3
+### Table1.3
 	``
 	------------------------------
 	|city_id|city_name|country_id|
@@ -177,7 +177,7 @@ This table is BCNF
 	``
 This table is BCNF 
 
-*	### Table1.4
+### Table1.4
 	``
 		  ------------
 		  |          |
@@ -195,8 +195,7 @@ Normalization of Table2
 
 
 
-*	### Table2.1
-	
+### Table2.1
 	`` 
 	------------------------------------------------------------------------
 	|comment_id|comment_text|submited_comment_time|comment_author_user_name|
@@ -205,12 +204,9 @@ Normalization of Table2
 		   |            |                |                     |
 		   -----------------------------------------------------
 	``
-	
-	This table is BCNF 
+This table is BCNF 
 
-*	### Table2.2
-
-
+### Table2.2
 	``
 		 ------------------------------------------------------------------------
 		 |                    |        |         |              |               | 
@@ -220,15 +216,12 @@ Normalization of Table2
 	-----------------------------------------------------------------------------------
 
 	``
+table 2.1 and table 2.2 are 3NF
 
 
-	table 2.1 and table 2.2 are 3NF
-
-
-	there is a MVD in post_id and comment_id (becuase a post can have been many comments)
+there is a MVD in post_id and comment_id (becuase a post can have been many comments)
 	
-*	#### Table2.2.1
-
+#### Table2.2.1
 	``
 	   -----------
 	   |         |
@@ -237,13 +230,10 @@ Normalization of Table2
 	|post_id|comment_id|
 	--------------------
 	``
-
-	This table is BCNF 
+This table is BCNF 
 
 	
-*	#### Table2.2.2
-
-
+#### Table2.2.2
 	``
 	     --------------------------------------------------------
 	     |                    |        |         |              |
@@ -252,9 +242,7 @@ Normalization of Table2
 	|post_author_user_name|post_id|post_title|post_text|post_submitted_time|
 	------------------------------------------------------------------------
 	``	
-
-
-	This table is BCNF
+This table is BCNF
 	
                           
 Normalization of Table3
@@ -263,8 +251,7 @@ book_id is condidate key of this table, In second normal form we should remove a
 In third normal forms we should remove all transitive dependance.
 
 
-*	### Table3.1
-
+### Table3.1
 	``
 		------------------------------------------------------------------------------
 		|       |            |            |          |          |            |       |
@@ -276,7 +263,7 @@ In third normal forms we should remove all transitive dependance.
 We see Multi value dependency(MVD) in tag_id and author_id and translator_id, so we have modified:
 
 
-*	#### Table3.1.1
+#### Table3.1.1
 	``
 	    ----------------------------------------------
 	    |       |            |            |          |         
@@ -287,7 +274,7 @@ We see Multi value dependency(MVD) in tag_id and author_id and translator_id, so
 	``	
 This table is BCNF 
 
-*	#### Table3.1.2
+#### Table3.1.2
 	``
 	     --------
 	     |      |
@@ -298,7 +285,7 @@ This table is BCNF
 	``	
 This table is BCNF 
 
-*	#### Table3.1.3
+#### Table3.1.3
 	``
 	     --------
 	     |      |
@@ -309,7 +296,7 @@ This table is BCNF
 	``	
 This table is BCNF 
 
-*	#### Table3.1.4
+#### Table3.1.4
 
 	``
 	     --------
@@ -324,7 +311,7 @@ This table is BCNF
 
 
 
-*	### Table3.2
+### Table3.2
 	``
 	-----------------------------
 	|publisher_id|publisher_name|
@@ -335,7 +322,7 @@ This table is BCNF
 	``
 This table is BCNF 
 
-*	### Table3.3
+### Table3.3
 	``
 	---------------------------
 	|language_id|language_name|
@@ -347,7 +334,7 @@ This table is BCNF
 
 This table is BCNF 
 
-*	### Table3.4 
+### Table3.4 
 	``
 	-----------------------------------
 	|author_id|author_name|author_rate|
@@ -358,7 +345,7 @@ This table is BCNF
 	``
 This table is BCNF 
 
-*	### Table3.5
+### Table3.5
 	``
 	-------------------------------
 	|translator_id|translator_name|
@@ -369,7 +356,7 @@ This table is BCNF
 	``
 This table is BCNF 
 
-*	### Table3.6
+### Table3.6
 	``
 	-----------------
 	|tag_id|tag_name|
@@ -385,7 +372,7 @@ Normalization of Table4
 
 there is not exeist any partial dependency and transitive dependency, but this table isn't BCNF
 
-*	### Table4.1 
+### Table4.1 
 
 	``
 		---------
@@ -398,7 +385,7 @@ there is not exeist any partial dependency and transitive dependency, but this t
 	``
 This table is BCNF 
 
-*	### Table4.2
+### Table4.2
 	``
 	------------------------------------------------------------------
 	|user_name|review_text|review_rate|review_submited_time|review_id|
@@ -415,7 +402,7 @@ Normalizattion of Table5
 user_name is a condidate key for this table, and there are no exsist any partial depandency.
 for convert this table to third normal form we should remove all transitive dependancy.
 
-*	### Table5.1
+### Table5.1
 	``
 		 --------------
 		 |            |   
@@ -428,7 +415,7 @@ for convert this table to third normal form we should remove all transitive depe
 This table is BCNF 
 
 
-*	### Table5.2
+### Table5.2
 	``
 	------------------------------------------------
 	|followed_user_name|followed_date|followship_id|
