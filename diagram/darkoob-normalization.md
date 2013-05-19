@@ -1,6 +1,6 @@
-Darkoob DataBase Normalization Diagram
-======================================
-At first step we should specific all data and first's plan of tables and all functional dependence.
+Darkoob's DataBase Normalization Diagram
+========================================
+At first step we should specific all data and first's plan of tables and specific all functional dependencies.
 
 Preliminary Tables
 ------------------
@@ -22,6 +22,7 @@ Preliminary Tables
 
 	``
 
+##### Functional Dependencies
 1.	user_name -> Table1
 2.	city_id -> city_name, country_id, country_name 
 3.	country_id -> country_name 
