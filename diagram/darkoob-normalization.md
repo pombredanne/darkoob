@@ -126,7 +126,6 @@ This table is BC normal form(BCNF).
 This table has multi-value dependency in mobile and school_id, so we should correction our table's:
 
 *	#### Table1.1.1
-
 	``
 	    -----------
 	    |         |
@@ -137,7 +136,6 @@ This table has multi-value dependency in mobile and school_id, so we should corr
 	``
 
 *	#### Table1.1.2
-
 	``
 	     -----------
 	     |         |
