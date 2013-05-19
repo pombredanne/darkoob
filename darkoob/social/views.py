@@ -61,5 +61,5 @@ def change_password(request):
     return render_to_response('change_password.html', {'user': request.user, 'form': form})
 @login_required
 def home(request):
-	return render(request, 'social/home.html', {})
+    return render(request, 'social/home.html', {})
 
