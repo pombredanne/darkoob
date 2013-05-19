@@ -151,15 +151,14 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
-
     'dajaxice',
     'dajax',
     'bootstrap_toolkit',
+    'endless_pagination',
+)   'darkoob.book',
     'darkoob.social',
     'darkoob.search',
-    'endless_pagination',
-
-)
+ 
 
 
 
