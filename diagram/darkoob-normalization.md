@@ -28,7 +28,6 @@ Preliminary Tables
 4.	school_id -> school_name
 
 
-
 ### Table2
 
 	``
