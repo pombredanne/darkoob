@@ -9,14 +9,14 @@ class Group(models.Model):
     members = models.ManyToManyField(User, related_name='group_set')
 
     def __unicode__(self):
-        return self.name
+        return unicode(self.name)
 
 class Schedule(models.Model):
     group = models.ForeignKey(Group)
     book = models.ForeignKey(Book)
 
     def __unicode__(self):
-        return "%s - %s" % (self.group.name, self.book.title)
+        return unicode("%s - %s" % (self.group.name, self.book.title))
 
 class Deadline(models.Model):
     schedule = models.ForeignKey(Schedule)
@@ -25,10 +25,10 @@ class Deadline(models.Model):
     end_time = models.DateField()
 
     def __unicode__(self):
-        return "%s, %s from page %g to %g" % (
+        return unicode("%s, %s from page %g to %g" % (
             self.schedule.group.name,
             self.schedule.book.title,
             self.from_page,
             self.to_page,
-        )
+        ))
 
