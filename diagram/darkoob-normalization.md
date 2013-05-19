@@ -458,6 +458,10 @@ Final Table's After Normalization
 *	user_followship(user_name, followship_id)
 *	followship(followed_user_name, followed_date, followship_id)
 
+
+Functional Dependence:
+
+
 	``
 	    -----------
 	    |         |
@@ -466,6 +470,7 @@ Final Table's After Normalization
 	|user_name|mobile|
 	------------------
 	``
+
 	``
 	     -----------
 	     |         |
@@ -492,6 +497,7 @@ Final Table's After Normalization
 		 |         |
 		 -----------
 	``
+
 	``
 	------------------------------
 	|city_id|city_name|country_id|
@@ -500,6 +506,7 @@ Final Table's After Normalization
 	   |         |         | 
 	   --------------------- 
 	``
+
 	``
 		  ------------
 		  |          |
@@ -509,15 +516,18 @@ Final Table's After Normalization
 	-------------------------
 	``
 
-
+	``
 	   -----------
 	   |         |
 	   |         V
 	--------------------
 	|post_id|comment_id|
 	--------------------
+	
 	``
+
 	``
+
 	     --------------------------------------------------------
 	     |                    |        |         |              |
 	     V                    |        V         V              V 
@@ -525,6 +535,7 @@ Final Table's After Normalization
 	|post_author_user_name|post_id|post_title|post_text|post_submitted_time|
 	------------------------------------------------------------------------
 	``	
+
 	``
 	    ----------------------------------------------
 	    |       |            |            |          |         
@@ -533,6 +544,7 @@ Final Table's After Normalization
 	|book_id|book_title|publisher_id|language_id|book_rate|
 	-------------------------------------------------------
 	``	
+
 	``
 	     --------
 	     |      |
@@ -541,6 +553,7 @@ Final Table's After Normalization
 	|book_id|author_id|
 	-------------------
 	``	
+
 	``
 	     --------
 	     |      |
@@ -549,6 +562,7 @@ Final Table's After Normalization
 	|book_id|translator_id|
 	-----------------------
 	``	
+
 	``
 	     --------
 	     |      |
@@ -556,7 +570,8 @@ Final Table's After Normalization
 	----------------
 	|book_id|tag_id|
 	----------------
-	``	
+	``
+	
 	``
 	-----------------------------
 	|publisher_id|publisher_name|
@@ -565,6 +580,7 @@ Final Table's After Normalization
 		  |            |    
 		  -------------- 
 	``
+
 	``
 	---------------------------
 	|language_id|language_name|
@@ -573,6 +589,7 @@ Final Table's After Normalization
 		  |            |    
 		  --------------
 	`` 
+
 	``
 	-----------------------------------
 	|author_id|author_name|author_rate|
@@ -581,6 +598,7 @@ Final Table's After Normalization
 		 |         |            |
 		 ------------------------
 	``
+
 	``
 	-------------------------------
 	|translator_id|translator_name|
@@ -589,6 +607,7 @@ Final Table's After Normalization
 		  |              |    
 		  ---------------- 
 	``
+
 	``
 	-----------------
 	|tag_id|tag_name|
@@ -597,6 +616,7 @@ Final Table's After Normalization
 	   |       |    
 	   --------- 
 	``
+
 	``
 		---------
 		|       |
@@ -606,6 +626,7 @@ Final Table's After Normalization
 	-------------------
 
 	``
+
 	``
 	------------------------------------------------------------------
 	|user_name|review_text|review_rate|review_submited_time|review_id|
@@ -614,6 +635,7 @@ Final Table's After Normalization
 		 |         |          |                   |             |
 		 --------------------------------------------------------
 	``
+
 	``
 		 --------------
 		 |            |   
@@ -623,6 +645,7 @@ Final Table's After Normalization
 	-------------------------
 
 	``
+
 	``
 	------------------------------------------------
 	|followed_user_name|followed_date|followship_id|
