@@ -43,6 +43,8 @@ Preliminary Tables
 		                                                                         -----------------------------------------------------
 	``
 
+##### Functional Dependencies
+
 1.	post_id -> Table2
 2.	comment_id -> comment_text, submited_comment_time, comment_author_user_name
 
@@ -61,6 +63,8 @@ Preliminary Tables
 		                      --------------              -------------           ------------------------            ----------------                     --------
 
 	``
+
+##### Functional Dependencies
 
 1.	publisher_id -> publisher_name 
 2. 	language_id -> language_name
@@ -83,6 +87,8 @@ Preliminary Tables
 
 	``
 
+##### Functional Dependencies
+
 1.	book_id -> review_id
 2.	review_id -> Table4
 
@@ -99,6 +105,8 @@ Preliminary Tables
 		                |               |            |
 		                ------------------------------
 	``
+
+##### Functional Dependencies
 
 1. user_name -> Table5
 2. followship -> followed_date, followed_user_name
