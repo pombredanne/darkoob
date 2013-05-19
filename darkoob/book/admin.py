@@ -3,7 +3,7 @@ from models import Book, Publisher, Language, Author, Translator, Translation, R
 
 class BookAdmin(admin.ModelAdmin):
     search_fields = ('title', 'publisher', 'language', 'authors')
-    list_display = ('title', 'publisher', 'authors')
+    list_display = ('title', 'publisher', 'admin_names')
 
 class PublisherAdmin(admin.ModelAdmin):
     search_fields = ('name',)
@@ -18,12 +18,12 @@ class AuthorAdmin(admin.ModelAdmin):
     list_display = ('name',)
 
 class TranslatorAdmin(admin.ModelAdmin):
-    search_fields = ('name',)
-    list_display = ('name',)
+    search_fields = ('author',)
+    list_display = ('author',)
 
 class TranslationAdmin(admin.ModelAdmin):
-    search_fields = ('book', 'traslator', 'language')
-    list_display = ('book', 'traslator', 'language')
+    search_fields = ('book', 'translator', 'language')
+    list_display = ('book', 'translator', 'language')
 
 class ReviewAdmin(admin.ModelAdmin):
     search_fields = ('book', 'user', 'text', 'submitted_time')

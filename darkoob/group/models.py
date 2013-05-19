@@ -5,7 +5,7 @@ from darkoob.social.models import User
 class Group(models.Model):
     name = models.CharField(max_length=255)
     admin = models.ForeignKey(User)
-    members = models.ManyToManyField(User)
+    members = models.ManyToManyField(User, related_name='group_member')
 
     def __unicode__(self):
         return self.name

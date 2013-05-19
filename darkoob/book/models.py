@@ -10,6 +10,10 @@ class Book(models.Model):
     def __unicode__(self):
         return unicode(self.title)
 
+    def admin_names(self):
+        return ', '.join([a.admin_name for a in self.admins.all()])
+    admin_names.short_description = "Admin Names"
+
 class Publisher(models.Model):
     name = models.CharField(max_length=255)
 
