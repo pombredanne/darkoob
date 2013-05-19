@@ -436,6 +436,27 @@ This table is BCNF
 
 Final Table's After Normalization
 ---------------------------------
+*	user_mobile(user_name, mobile)
+*	user_school(user_name, school_id)
+*	user_profile(user_name, first_name, last_name, email, password, gender, city_id)
+*	schools(school_id, school_name)
+*	cites(city_id, city_name, country_id)
+*	countries(country_id, country_name)
+*	post_comment(post_id, comment_id)
+*	posts(post_author_user_name, post_id, post_title, post_text, post_submitted_time)
+*	books(book_id, book_title, publisher_id, language_id, book_rate)
+*	book_author(book_id, book_author)
+*	book_translator(book_id, translator_id)
+*	book_tag(book_id, tag_id)
+*	publishers(publisher_id, publisher_name)
+*	languages(language_id, language_name)
+*	authors(author_id, author_name, author_rate)
+*	translators(translator_id, translator_name)
+*	tags(tag_id, tag_name)
+*	book_review(book_id, review_id)
+*	reviews(review_id, user_name, review_text, review_rate, review_submited_time)
+*	user_followship(user_name, followship_id)
+*	followship(followed_user_name, followed_date, followship_id)
 
 	``
 	    -----------
