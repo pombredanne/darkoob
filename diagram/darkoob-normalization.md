@@ -14,19 +14,19 @@ Preliminary Tables
 	-----------------------------------------------------------------------------------------------------------------------------
 	|user_name|first_name|last_name|email|password|gender|mobile|city_id|city_name|country_id|country_name|school_id|school_name|
 	-----------------------------------------------------------------------------------------------------------------------------
-			                                                   |         ^         ^  |        ^  ^         |         ^
-									   |         |         |  |        |  |         |         |
-									   ---------------------------------  |         -----------
-			                                                                          |           |
-			                                                                          -------------
+			                                                         |         ^         ^ |         ^  ^         |         ^
+									                                 |         |         | |         |  |         |         |
+									                                 ---------------------------------  |         -----------
+			                                                                               |            |
+			                                                                               --------------
 
 	``
 
-1.user_name -> Table1
-2.city_id -> city_name, country_id, country_name 
-3.country_id -> country_name 
-4.school_id -> school_name
-# TODO: type FDs 
+1.	user_name -> Table1
+2.	city_id -> city_name, country_id, country_name 
+3.	country_id -> country_name 
+4.	school_id -> school_name
+
 
 
 ### Table2
