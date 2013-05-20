@@ -8,6 +8,6 @@ urlpatterns = patterns('',
     url(r'^signup/$', social_views.signup, name='signup'),
     url(r'^login/$', auth_views.login, {'template_name': 'social/login.html'}, name='login'),
     url(r'^logout/$', auth_views.logout_then_login, name='logout'),
-    url(r'^change_password/$', social_views.change_password, name = 'change_password'),
-    url(r'^profile/$', social_views.profile, name = 'profile'),
+    url(r'^change_password/$', social_views.change_password, name='change_password'),
+    url(r'^profile/$', social_views.profile, name='profile'),
 )
