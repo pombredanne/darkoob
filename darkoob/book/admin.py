@@ -3,7 +3,7 @@ from models import Book, Publisher, Language, Author, Translator, Translation, R
 
 class BookAdmin(admin.ModelAdmin):
     search_fields = ('title', 'publisher', 'language', 'authors')
-    list_display = ('title', 'publisher', 'admin_names')
+    list_display = ('title', 'publisher', 'author_names')
 
 class PublisherAdmin(admin.ModelAdmin):
     search_fields = ('name',)
