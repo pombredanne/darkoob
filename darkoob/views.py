@@ -4,13 +4,16 @@ from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 from django.views.decorators.clickjacking import xframe_options_exempt
 from django.contrib.auth.forms import UserCreationForm
-
+from darkoob.social.forms import AuthenticationFormPlaceholder
 
 
 def index(request):
     if request.user.is_authenticated():
         return HttpResponseRedirect(reverse('social:home'))
-    return render(request, 'index.html', {'form': UserCreationForm()})
+    return render(request, 'index.html', {
+        'signup_form': UserCreationForm(),
+        'login_form': AuthenticationFormPlaceholder(),
+    })
 
 
 @xframe_options_exempt

@@ -1,6 +1,7 @@
 from django import forms
 from django.utils.translation import ugettext as _
 from django.core.validators import validate_email
+from django.contrib.auth.forms import AuthenticationForm
 
 SEX_CHOICES = (
     ('Male', _('Male')),
@@ -20,6 +21,21 @@ MONTH_CHOICES = (
     (11, '11'),
     (12, '12'),
 )
+
+class AuthenticationFormPlaceholder(AuthenticationForm):
+    username = forms.CharField(
+        max_length=30,
+        widget=forms.TextInput(attrs={
+            'placeholder': _('Username'),
+            'class': 'input-medium',
+        })
+    )
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={
+            'placeholder': _('Password'),
+            'class': 'input-medium'
+        })
+    )
 
 class EditProfileForm(forms.Form):
     month = forms.ChoiceField(choices = MONTH_CHOICES)
@@ -169,9 +185,9 @@ class RegisterForm(forms.Form):
             user = User.objects.get(email=email) 
         except User.DoesNotExist:
             return email
-            else:
-                # E-mail is a uniqe field 
-                raise forms.ValidationError(_('You are member! Did you forget your password?'))
+        else:
+            # E-mail is a uniqe field 
+            raise forms.ValidationError(_('You are member! Did you forget your password?'))
 
     def clean_password(self):
         password = self.cleaned_data['password']
