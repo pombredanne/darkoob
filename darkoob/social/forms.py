@@ -46,7 +46,6 @@ class EditProfileForm(forms.Form):
         max_length = 2,
         widget = forms.TextInput(attrs={
             'placeholder':_('Day'),
-            'id': 'day',
         })
     )
 
@@ -61,6 +60,24 @@ class EditProfileForm(forms.Form):
 
     sex = forms.ChoiceField(
         choices = SEX_CHOICES,
+    )
+
+    mobile = forms.CharField(
+        label = _('Mobile'),
+        min_length = 7,
+        max_length = 20,
+        widget = forms.TextInput(attrs={
+            'placeholder':_('Mobile'),
+        })
+    )
+
+    website = forms.CharField(
+        label = _('Website'),
+        min_length = 4,
+        max_length = 100,
+        widget = forms.TextInput(attrs={
+            'placeholder':_('Website'),
+        })
     )
 
 class ChangePasswordForm(forms.Form):

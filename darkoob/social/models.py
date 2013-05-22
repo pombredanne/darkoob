@@ -23,8 +23,8 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User)
     sex = models.CharField(max_length=6, choices=SEX_CHOICES)
     birthday = models.DateField(null=True)
-    mobile = models.CharField(max_length=20)
-    website = models.URLField()
+    mobile = models.CharField(max_length=20, null=True, blank=True)
+    website = models.URLField(null=True, blank=True)
     city = models.OneToOneField(City, null=True, blank=True)
 
     # NOTE: userprof_obj.education_set.all() return all education set of a person 

@@ -6,7 +6,7 @@ class GroupAdmin(admin.ModelAdmin):
     list_display = ('name', 'admin')
 
 class ScheduleAdmin(admin.ModelAdmin):
-    search_fields = ('group', 'book')
+    search_fields = ('group', 'book', 'members')
     list_display = ('group', 'book')
 
 class DeadlineAdmin(admin.ModelAdmin):

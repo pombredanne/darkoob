@@ -2,7 +2,6 @@ from django.db import models
 from darkoob.social.models import User
 from darkoob.book.models import Book
 
-# Create your models here.
 class Group(models.Model):
     name = models.CharField(max_length=255)
     admin = models.ForeignKey(User, related_name='admin_set')

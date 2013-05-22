@@ -14,8 +14,6 @@ class Book(models.Model):
     def __unicode__(self):
         return unicode(self.title)
 
-
-
 class Publisher(models.Model):
     name = models.CharField(max_length=255)
 
