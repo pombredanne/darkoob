@@ -14,4 +14,14 @@ urlpatterns = patterns('',
     url(r'^logout/$', auth_views.logout_then_login, name='logout'),
     url(r'^change_password/$', social_views.change_password, name='change_password'),
     url(r'^profile/$', social_views.profile, name='profile'),
+
+
+    url(r'^accounts/password/reset/$', 'django.contrib.auth.views.password_reset', 
+        {'post_reset_redirect' : '/accounts/password/reset/done/'}, name='reset_pass'),
+    url(r'^accounts/password/reset/done/$', 'django.contrib.auth.views.password_reset_done'),
+    url(r'^accounts/password/reset/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)/$', 'django.contrib.auth.views.password_reset_confirm', 
+        {'post_reset_redirect' : '/accounts/password/done/'}),
+    url(r'^accounts/password/done/$', 'django.contrib.auth.views.password_reset_complete'),
+
+
 )
