@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block body %}
+<h1> {% block top %}{% endblock %} </h1>
+
+{% if errors %}
+  {% for error in errors %}
+    <div class="alert">{{ error }}</div>
+  {% endfor %}
+{% endif %}
+</br>
+</br>
+</br>
+</br>
+</hr>
+{% block main %}
+
+
+{% endblock %}
+
+</br></br>
+</br>
+</br>
+</br>
+</hr>
+{% endblock body %}
