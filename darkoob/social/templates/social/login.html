@@ -1,18 +1,42 @@
 {% extends "base/base.html" %}
 {% load bootstrap_toolkit %}
-{% block main %}
-  {% if form.errors %}
-    <div class="alert">
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-      Username or password are incorrect.
+{% load staticfiles %}
+{% block css %}
+<link rel="stylesheet" type="text/less" href="{% static "/static/css/index_style.less" %}">
+{% endblock css %}
+{% block title %}
+Login
+{% endblock title %}
+
+{% block body %}
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="span4 offset4 middle">
+        <div class="row-fluid">
+          <div class="span9 offset1 signup">
+            <legend>Login</legend>
+
+            {% if form.errors %}
+              <div class="alert alert-error">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                Username or password are incorrect.
+              </div>
+            {% endif %}
+
+            <form method="post" class="form-vertical" action="{% url "social:login" %}">
+              {% csrf_token %}
+              {% for field in form %}
+                {{ field }}
+              {% endfor %}
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Login</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
-  {% endif %}
-  <form method="post" action="{% url 'social:login' %}">
-    {% csrf_token %}
-    {{ form|as_bootstrap }}
-    <div class="form-actions">
-      <button type="submit" class="btn btn-primary">Submit</button>
-    </div>
-  </form>
-      
-{% endblock main %}
+  </div> <!-- Container -->
+
+
+{% endblock body %}

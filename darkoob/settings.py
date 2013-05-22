@@ -93,7 +93,7 @@ STATICFILES_FINDERS = (
 
     # dajaxice static file finder
     'dajaxice.finders.DajaxiceFinder',
-
+    'compressor.finders.CompressorFinder',
 )
 
 # Make this unique, and don't share it with anybody.
@@ -109,7 +109,7 @@ TEMPLATE_LOADERS = (
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    # 'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware', #clickjacking protection:
@@ -155,6 +155,7 @@ INSTALLED_APPS = (
     'dajax',
     'bootstrap_toolkit',
     'endless_pagination',
+    'compressor',
     'darkoob.book',
     'darkoob.social',
     'darkoob.search',
@@ -191,3 +192,12 @@ LOGGING = {
         },
     }
 }
+
+
+COMPRESS_ENABLED = True
+COMPRESS_PARSER = 'compressor.parser.HtmlParser'
+COMPRESS_CSS_FILTERS = ['compressor.filters.css_default.CssAbsoluteFilter', 'compressor.filters.cssmin.CSSMinFilter']
+COMPRESS_PRECOMPILERS = (
+    ('text/coffeescript', 'coffee --compile --stdio'),
+    ('text/less', 'lessc {infile} {outfile}'),
+)
