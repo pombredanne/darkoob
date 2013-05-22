@@ -15,12 +15,12 @@ urlpatterns = patterns('',
     url(r'^change_password/$', social_views.change_password, name='change_password'),
     url(r'^profile/$', social_views.profile, name='profile'),
 
-    url(r'^accounts/password/reset/$', auth_views.password_reset, 
-        {'post_reset_redirect' : '/accounts/password/reset/done/'}, name='reset_pass'),
-    url(r'^accounts/password/reset/done/$', auth_views.password_reset_done),
-    url(r'^accounts/password/reset/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)/$', auth_views.password_reset_confirm, 
-        {'post_reset_redirect' : '/accounts/password/done/'}),
-    url(r'^accounts/password/done/$', auth_views.password_reset_complete),
+    url(r'^password/reset/$', auth_views.password_reset, 
+        {'post_reset_redirect': 'password/reset/done/'}, name='reset_pass'),
+    url(r'^password/reset/done/$', auth_views.password_reset_done),
+    url(r'^password/reset/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)/$',  
+        {'post_reset_redirect': 'password/done/'}),
+    url(r'^password/done/$', auth_views.password_reset_complete),
 
 
 )
