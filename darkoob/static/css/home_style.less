@@ -1,0 +1,26 @@
+@import "common_style.less";
+
+.simple_box {
+  background-color: white;
+  border: 1px solid @border;
+  text-align: left;
+
+  p {
+    margin-left: .5em;
+    margin-top: .5em;
+  }
+}
+
+.quote {
+  height: auto;
+}
+
+.suggestion {
+  .simple_box;
+}
+
+.sidebox {
+  .simple_box;
+  .box-shadow(@light_grey);
+  margin-bottom: .5em;
+}

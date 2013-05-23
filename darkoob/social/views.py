@@ -39,7 +39,6 @@ def signup(request):
         )
     return render_to_response('signup.html', {'form':form})
 
-
 @login_required
 def change_password(request):
     if request.method == 'POST':
@@ -59,6 +58,7 @@ def change_password(request):
     else:
         form = ChangePasswordForm()
     return render_to_response('change_password.html', {'user': request.user, 'form': form})
+
 @login_required
 def home(request):
     return render(request, 'social/home.html', {})

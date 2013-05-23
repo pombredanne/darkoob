@@ -1,8 +1,12 @@
-{% extends "base.html" %}
-{% block body %}
+{% extends "base/base.html" %}
+{% load staticfiles %}
+{% block css %}
+<link rel="stylesheet" type="text/less" href="{% static "/static/css/profile_base_style.less" %}">
+{% endblock css %}
+{% block title %}Homepage{% endblock title %}
 <h1> {% block top %}{% endblock %} </h1>
 
-{% if errors %}
+<!-- {% if errors %}
   {% for error in errors %}
     <div class="alert">{{ error }}</div>
   {% endfor %}
@@ -12,14 +16,50 @@
 </br>
 </br>
 </hr>
-{% block main %}
+-->
+{% block body %}
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span12">
+      <div class="navbar navbar-fixed-top navbar-inverse">
+        <div class="navbar-inner">
+          <div class="container">
+            <a class="brand pull-left logo" href="{% url "social:home" %}">Darkoob</a>
+            <form class="nav-search search_form pull-left">
+              <input type="text" class="search-query input-xxlarge" placeholder="Search">
+            </form>
+            <ul class="nav pull-right">
+              <li id="fat-menu" class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">
+                  User
+                  <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                  <li><a href="#">Profile</a></li>
+                  <li><a href="#">Settings</a></li>
+                  <li><a href="{% url "social:logout" %}">Logout</a></li>
+                </ul>
+              </li> <!-- dropdown -->
+            </ul> <!-- nav -->
+          </div> <!-- container -->
+        </div> <!-- navbar-inner -->
+      </div> <!-- navbar -->
+    </div> <!-- span -->
+  </div> <!-- row -->
+  <div class="row-fluid" id="structure">
+    <div class="span12">
+      <div class="row-fluid">
+        <div class="span4 offset1">
+          {% block sidebar %}
+          {% endblock sidebar %}
+        </div> <!-- span4 -->
+        <div class="span6">
+          {% block main %}
+          {%endblock main %}
+        </div> <!-- span6 -->
+      </div> <!-- row1 -->
+    </div> <!-- span12 -->
+  </div> <!-- row0 -->
 
-
-{% endblock %}
-
-</br></br>
-</br>
-</br>
-</br>
-</hr>
+</div> <!-- container -->
 {% endblock body %}

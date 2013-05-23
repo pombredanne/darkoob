@@ -1,7 +1,55 @@
-{% extends "base/base.html" %}
-
+{% extends "base/profile_base.html" %}
+{% load staticfiles %}
+{% block css %}
+{{ block.super }}
+<link rel="stylesheet" type="text/less" href="{% static "/static/css/home_style.less" %}">
+{% endblock css %}
+{% block sidebar %}
+<div class="row-fluid">
+  <div class="span12">
+    <div class="row-fluid">
+      <div class="span10 sidebox">
+        <legend>Groups</legend>
+        list<br />
+        of<br />
+        groups
+      </div> <!-- span10 -->
+    </div> <!-- row -->
+    <div class="row-fluid">
+      <div class="span10 sidebox">
+        <legend>Books</legend>
+        some<br />
+        books
+      </div> <!-- span10 -->
+    </div> <!-- row -->
+  </div> <!-- span12 -->
+</div> <!-- row -->
+{% endblock sidebar %}
 {% block main %}
-  Hello {{ user }}
-  <br />
-  <a href="{% url 'social:logout' %}">Logout</a>
+<div class="row-fluid">
+  <div class="span12">
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="quote">
+          <blockquote>
+            <p>Those who mind don't matter, and those who matter don't mind.</p>
+            <small>Bernard M. Baruch</small>
+          </blockquote>
+        </div>
+      </div>
+    </div> <!-- row -->
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="suggestion">
+          <p>
+          I suggest you to read something.
+            <span>
+              <button class="close pull-right">&times;</button>
+            </span>
+          </p>
+        </div>
+      </div>
+    </div> <!-- row -->
+  </div> <!-- span8 -->
+</div> <!-- row -->
 {% endblock main %}
