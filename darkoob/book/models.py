@@ -54,3 +54,11 @@ class Review(models.Model):
 
     def __unicode__(self):
         return unicode(self.book) + unicode(self.user)
+
+class Quote(models.Model):
+    person = models.CharField(max_length=255)
+    text = models.TextField()
+
+    def __unicode__(self):
+        return unicode(self.person)
+

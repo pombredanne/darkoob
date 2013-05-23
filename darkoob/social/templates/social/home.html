@@ -10,16 +10,20 @@
     <div class="row-fluid">
       <div class="span10 sidebox">
         <legend>Groups</legend>
-        list<br />
-        of<br />
-        groups
+        <p>
+          list<br />
+          of<br />
+          groups
+        </p>
       </div> <!-- span10 -->
     </div> <!-- row -->
     <div class="row-fluid">
       <div class="span10 sidebox">
         <legend>Books</legend>
-        some<br />
-        books
+        <p>
+          some<br />
+          books
+        </p>
       </div> <!-- span10 -->
     </div> <!-- row -->
   </div> <!-- span12 -->
@@ -38,18 +42,31 @@
         </div>
       </div>
     </div> <!-- row -->
+    <div class="row-fluid suggestion">
+      <div class="span12">
+        <p>
+          I suggest you to read something.
+          <span>
+            <button class="close pull-right" onClick="remove_suggestion()">&times;</button>
+          </span>
+        </p>
+      </div>
+    </div> <!-- row -->
     <div class="row-fluid">
       <div class="span12">
-        <div class="suggestion">
+        <div class="sidebox post">
           <p>
-          I suggest you to read something.
-            <span>
-              <button class="close pull-right">&times;</button>
-            </span>
+            This is my first post, yeaaah. Long live darkoob!!
+            Viva La Vida!
           </p>
         </div>
-      </div>
+      </div> <!-- span12 -->
     </div> <!-- row -->
   </div> <!-- span8 -->
 </div> <!-- row -->
+<script>
+  function remove_suggestion() {
+    $('.suggestion').remove();
+  }
+</script>
 {% endblock main %}
