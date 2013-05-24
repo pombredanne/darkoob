@@ -13,7 +13,7 @@ from darkoob.social.models import UserProfile
 def profile(request):
     form = EditProfileForm(request.POST)
 
-    return render_to_response('profile.html',{'user': request.user, 'form': form})
+    return render_to_response('social/profile.html',{'user': request.user, 'form': form})
 
 def signup(request):
     if request.method == 'POST':
