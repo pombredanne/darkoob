@@ -28,12 +28,14 @@ class AuthenticationFormPlaceholder(AuthenticationForm):
         widget=forms.TextInput(attrs={
             'placeholder': _('Username'),
             'class': 'input-medium',
+            'required': '',
         })
     )
     password = forms.CharField(
         widget=forms.PasswordInput(attrs={
             'placeholder': _('Password'),
-            'class': 'input-medium'
+            'class': 'input-medium',
+            'required': '',
         })
     )
 
@@ -115,12 +117,31 @@ class ChangePasswordForm(forms.Form):
         return confirm_new_password
 
 class RegisterForm(forms.Form):
+    error_messages = {
+        'duplicate_username': _("A user with that username already exists."),
+        'password_mismatch': _("The two password fields didn't match."),
+    }
+    username = forms.RegexField(label=_("Username"), max_length=30,
+        regex=r'^[\w.@+-]+$',
+        help_text=_("Required. 30 characters or fewer. Letters, digits and "
+                      "@/./+/-/_ only."),
+        error_messages={
+            'invalid': _("This value may contain only letters, numbers and "
+                         "@/./+/-/_ characters.")},
+        widget=forms.TextInput(attrs={
+            'placeholder': _('Username'),
+            'required': '',
+            'class': 'span12',
+        }))
+
     first_name = forms.CharField(
         label = _('First Name'), 
         min_length = 2, 
         max_length = 30,
         widget = forms.TextInput(attrs={
             'placeholder':_('First Name'),
+            'required': '',
+            'class': 'span6',
         })
     )
 
@@ -129,7 +150,9 @@ class RegisterForm(forms.Form):
         min_length = 2,
         max_length = 30,
         widget = forms.TextInput(attrs={
-            'placeholder':_('Last Name'),			
+            'placeholder':_('Last Name'),
+            'required': '',
+            'class': 'span6',
         })
     )
     email = forms.EmailField(
@@ -137,6 +160,9 @@ class RegisterForm(forms.Form):
         min_length = 5,
         widget = forms.TextInput(attrs={
             'placeholder': _('Your email address'),
+            'type': 'email',
+            'required': '',
+            'class': 'span12',
         })
     )
     password = forms.CharField(
@@ -145,6 +171,8 @@ class RegisterForm(forms.Form):
         max_length = 30,
         widget = forms.PasswordInput(attrs={
             'placeholder':_('Password'),
+            'required': '',
+            'class': 'span6',
         })
     )
     confirm_password = forms.CharField(
@@ -153,11 +181,17 @@ class RegisterForm(forms.Form):
         max_length = 30,
         widget = forms.PasswordInput(attrs={
             'placeholder':_('Re-type password'),
+            'required': '',
+            'class': 'span6',
         })
     )
 
     sex = forms.ChoiceField(choices=SEX_CHOICES)
-    month = forms.ChoiceField(choices=MONTH_CHOICES)
+    month = forms.ChoiceField(choices=MONTH_CHOICES,
+        widget=forms.Select(attrs={
+            'class': 'span4',
+        })
+    )
 
     day = forms.CharField(
         label = _('Day'),
@@ -165,6 +199,7 @@ class RegisterForm(forms.Form):
         max_length = 2,
         widget = forms.TextInput(attrs={
             'placeholder':_('Day'),
+            'class': 'span4',
         })
     )
 
@@ -174,6 +209,7 @@ class RegisterForm(forms.Form):
         max_length = 4,
         widget = forms.TextInput(attrs={
             'placeholder':_('Year'),
+            'class': 'span4',
         })
     )
 

@@ -5,6 +5,9 @@
 {% block css %}
 <link rel="stylesheet" type="text/less" href="{% static "/static/css/index_style.less" %}">
 {% endblock css %}
+{% block js %}
+<script type="text/javascript" src="{% static "/static/js/index.js" %}"></script>
+{% endblock js %}
 {% block title %}
 Darkoob
 {% endblock title %}
@@ -67,7 +70,7 @@ function calculate(){
             <form class="form-inline login" method="post" action="{% url "social:login" %}">
               {% csrf_token %}
               {% for field in login_form %}
-                {{ field }}
+                  {{ field }}
               {% endfor %}
               <input type="submit" value="Submit" class="btn btn-primary">
             </form>
@@ -79,13 +82,33 @@ function calculate(){
     <div class="row-fluid">
       <div class="span6 offset3 middle">
         <div class="row-fluid">
-          <div class="span6 offset1 signup">
+          <div class="span9 offset1 signup">
             <legend>Sign up</legend>
-            <form method="post" action="{% url "social:login" %}">
+          </div>
+          <div class="span6 offset1 signup">
+            <form id="id_signup_form" method="post" action="{% url "social:login" %}">
               {% csrf_token %}
-              {{ signup_form|as_bootstrap }}
+              <div class="controls">
+                {{ signup_form.username }}
+              </div>
+              <div class="controls controls-row">
+                {{ signup_form.first_name }}
+                {{ signup_form.last_name }}
+              </div>
+              <div class="controls controls-row">
+                {{ signup_form.password }}
+                {{ signup_form.confirm_password }}
+              </div>
+              <div class="controls">
+                {{ signup_form.email }}
+              </div>
+              <div class="controls controls-row">
+                {{ signup_form.year }}
+                {{ signup_form.month }}
+                {{ signup_form.day }}
+              </div>
               <div class="form-actions">
-                <button type="submit" class="btn btn-primary">Login</button>
+                <button type="submit" class="btn btn-primary" onClick="validate_signup();">Login</button>
               </div>
             </form>
           </div>
