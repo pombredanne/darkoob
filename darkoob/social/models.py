@@ -48,5 +48,8 @@ class Education(models.Model):
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         UserProfile.objects.create(user=instance)
-
+        from py2neo import neo4j
+        db = neo4j.GraphDatabaseService("http://localhost:7474/db/data/")
+        db.create({'user_id': instance.id})
+        
 post_save.connect(create_user_profile, sender=User)
