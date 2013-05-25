@@ -2,7 +2,6 @@
 {% load staticfiles %}
 {% load dajaxice_templatetags %}
 {% load bootstrap_toolkit %}
-{% load compress %}
 <html>
 <head>
   <title>{% block title %}{% endblock %}</title>
@@ -10,7 +9,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="content-type" content="text/html" charset=UTF-8">
 
-  {% compress js %}
   <script type="text/javascript" src="{% static "/static/js/jquery-1.9.1.min.js" %}"></script>
   <script type="text/javascript" src="{% static "/static/js/jquery.validate.min.js" %}"></script>
   <script type="text/javascript" src="{% static "/static/bootstrap/js/bootstrap.min.js" %}"></script>
@@ -24,14 +22,11 @@
 
   {% block js %}
   {% endblock %}
-  {% endcompress %}
 
-  {% compress css %}
   <link rel="stylesheet" type="text/css" media="screen" href="{% static "/static/bootstrap/css/bootstrap.min.css" %}">
   <link rel="stylesheet" type="text/css" media="screen" href="{% static "/static/bootstrap/css/bootstrap-responsive.min.css" %}">
   {% block css %}
   {% endblock %}
-  {% endcompress %}
 </head>
 <body>
   {% block body %}
