@@ -22,5 +22,6 @@ urlpatterns = patterns('',
         {'post_reset_redirect': 'password/done/'}),
     url(r'^password/done/$', auth_views.password_reset_complete),
 
+    url(r'^post/new/$', social_views.new_post, name='new_post'),
 
 )

@@ -253,3 +253,12 @@ class RegisterForm(forms.Form):
             raise forms.ValidationError(_('Password and Re-type does not match'))
         return confirm_password
 
+class NewPostForm(forms.Form):
+    text = forms.CharField(
+        label=_('Text'),
+        widget=forms.Textarea(attrs={
+            'placeholder': _('Say it!'),
+            'class': 'span6',
+        })
+    )
+

@@ -54,6 +54,17 @@
     </div> <!-- row -->
     <div class="row-fluid">
       <div class="span12">
+        <div class="sidebox new_post">
+          <legend>Post something new</legend>
+          <form method="post" class="form-vertical" action="{% url "social:new_post" %}">
+            {% csrf_token %}
+            {{ new_post_form.text }}
+          </form>
+        </div>
+      </div> <!-- span12 -->
+    </div> <!-- row -->
+    <div class="row-fluid">
+      <div class="span12">
         <div class="sidebox post">
           <p>
             This is my first post, yeaaah. Long live darkoob!!
