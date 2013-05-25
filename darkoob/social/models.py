@@ -1,10 +1,17 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
+from neomodel import StructuredNode, IntegerProperty, RelationshipTo
+
 SEX_CHOICES = (
         ('Male', 'Male'),
         ('Female', 'Female'),
 )
+
+
+class UserNode(StructuredNode):
+    user_id = IntegerProperty(required=True)
+    follow = RelationshipTo('UserNode', 'FOLLOW')
 
 class Country(models.Model):
     name = models.CharField(max_length=50)
@@ -48,8 +55,7 @@ class Education(models.Model):
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         UserProfile.objects.create(user=instance)
-        from py2neo import neo4j
-        db = neo4j.GraphDatabaseService("http://localhost:7474/db/data/")
-        db.create({'user_id': instance.id})
-        
+        UserNode(user_id=instance.id).save()
+
+
 post_save.connect(create_user_profile, sender=User)
