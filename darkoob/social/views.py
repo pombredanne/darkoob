@@ -104,7 +104,7 @@ def home(request):
 def new_post(request):
     pass
 
-def entry_index(request,template="social/entry_index.html",page_template="social/entry_index_page.html"):
+def entry_index(request,template="social/entry_post_index.html",page_template="social/entry_post_index_page.html"):
     posts = Post.objects.order_by("-submitted_time")
     count = range(1,len(posts)+1)
     # print count
