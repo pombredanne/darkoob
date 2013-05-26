@@ -14,7 +14,6 @@
 .post-header{
     background-color:#FFF;
     width:90%;
-    
     margin-left:20px;
     margin-right:20px;
     height:100px;
@@ -65,22 +64,7 @@
     height:100px;
 
 }
-.tags{
-    margin-top:0px;
-    width:90%;
-    background-color:#CCCF00;
-    margin-left:20px;
-    margin-right:20px;
 
-
-}
-.comment{
-    margin-top:0px;
-    width:90%;
-    background-color:#CCfF00;
-    margin-left:20px;
-    margin-right:20px;
-}
 
 </style>
 <script>
@@ -90,49 +74,41 @@
 
 {% load endless %}
 {% paginate 3,1 posts %}
-{% for post in posts %}
-<div class="">
-    <div class="post-header">
-        <div style="float:left;">
-            <div class="author">
-                <div class="author-img">
-                 
-                    Profile Image
-        
+    {% for post in posts %}
+        <div class="">
+            <div class="post-header">
+                <div style="float:left;">
+                    <div class="author">
+                        <div class="author-img">
+                         
+                            Profile Image
+                
+                    
+
+                        </div>
+                        <div class="author-name">
+                            {{post.user.first_name}}
+                        </div>
+                    </div>
+                </div>
+                <div style="float:right;">
+
+                    <div class="post-detail">
+                        Published on {{post.submitted_time}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="content">
+
+                {{post.text}}
+
+                <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+
+            </div>
+        </div>
+
             
-
-                </div>
-                <div class="author-name">
-                    {{post.user.first_name}}
-                </div>
-            </div>
-        </div>
-        <div style="float:right;">
-
-            <div class="title">
-         
-    
-            </div> 
-            <div class="title-des">
-            </div>
-
-            <div class="post-detail">
-                Published on {{post.submitted_time}}
-            </div>
-        </div>
-    </div>
-
-
-    <div class="content">
-
-        {{post.text}}
-
-        <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-
-    </div>
-</div>
-
-    
-<br />
+        <br />
     {% endfor %}
 {% show_more %}
