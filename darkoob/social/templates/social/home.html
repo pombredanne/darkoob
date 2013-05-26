@@ -54,13 +54,19 @@
     </div> <!-- row -->
     <div class="row-fluid">
       <div class="span12">
-        <div class="sidebox new_post">
-          <legend>Post something new</legend>
-          <form method="post" class="form-vertical" action="{% url "social:new_post" %}">
-            {% csrf_token %}
-            {{ new_post_form.text }}
-          </form>
-        </div>
+        <div class="sidebox">
+          <div class="row-fluid">
+            <div class="span7 new_post_container">
+              <form method="post" action="{% url "social:new_post" %}">
+                {% csrf_token %}
+                {{ new_post_form.text }}
+              </form>
+            </div>
+            <div class="span1 new_post_button">
+              <button class="btn btn-inverse">Post</button>
+            </div>
+          </div> <!-- row -->
+        </div> <!-- sidebox -->
       </div> <!-- span12 -->
     </div> <!-- row -->
     <div class="row-fluid">

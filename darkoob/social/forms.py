@@ -258,7 +258,9 @@ class NewPostForm(forms.Form):
         label=_('Text'),
         widget=forms.Textarea(attrs={
             'placeholder': _('Say it!'),
-            'class': 'span6',
+            'rows': 3,
+            'class': 'span12',
+            'style': 'resize: none;',
         })
     )
 
