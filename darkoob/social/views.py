@@ -4,9 +4,13 @@ from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+<<<<<<< HEAD
+from darkoob.social.models import UserProfile, UserNode 
+=======
 
 from darkoob.social.forms import RegisterForm, ChangePasswordForm, EditProfileForm, NewPostForm
 from darkoob.social.models import UserProfile 
+>>>>>>> bbdb4ad219001e222fe576f032b0d6392f5bf0e7
 
 @login_required
 def profile(request):
@@ -40,6 +44,42 @@ def signup(request):
 
 @login_required
 def change_password(request):
+    ##
+    ## Please Dont remove:D
+    ##
+    # # print ',,,,,,,,,,,', UserNode.index.search(user_id=27)[0]
+    # a = UserNode.index.search(user_id=27)[0]
+    # # print '------------', a
+    # # e = UserNode(user_id=114)
+    # b = UserNode.index.get(user_id=31)
+    # c = UserNode.index.search(user_id=42)
+    # d = UserNode.index.search(user_id=53)
+    # # e = UserNode(user_id=114)
+    # # e = UserNode.index.get(user_id=114)
+    # # print "eeeeeeeeee",e
+    # # e.save()
+    # e = UserNode.index.get(user_id=114)
+
+
+    # # a.follow_person(114)
+    # # print b, c , d
+    # # a.follow_person(114)
+    # print "-----------------------------------"
+    # # print b , c , d , e
+    # # print 
+    for i in  a.get_followed():
+    #     print i.user_id
+
+    # # a.follow.connect(b)
+    # # a.follow.connect(c)
+    # # a.follow.connect(d)
+    # # a[0].save()
+    # print "-----------------------------------"
+    # # print UserNode.index.search(user_id=26)[0].get_follows()
+
+
+
+
     if request.method == 'POST':
         form = ChangePasswordForm(request.POST)
         if form.is_valid():
