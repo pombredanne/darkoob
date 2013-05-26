@@ -1,11 +1,15 @@
 from django.db import models
 from darkoob.social.models import User
+from taggit.managers import TaggableManager
+
 
 class Book(models.Model):
     title = models.CharField(max_length=255)
     publisher = models.ForeignKey('Publisher')
     language = models.ForeignKey('Language')
     authors = models.ManyToManyField('Author')
+    tags = TaggableManager()
+
     
     def author_names(self):
         return ', '.join([a.name for a in self.authors.all()])
