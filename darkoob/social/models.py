@@ -8,10 +8,29 @@ SEX_CHOICES = (
         ('Female', 'Female'),
 )
 
-
 class UserNode(StructuredNode):
-    user_id = IntegerProperty(required=True)
+    user_id = IntegerProperty(required=True, index=True)
     follow = RelationshipTo('UserNode', 'FOLLOW')
+
+    def get_follows(self):
+        results, metadata = self.cypher("START a=node({self}) MATCH a-[:FOLLOW]->(b) RETURN b");
+        return [self.__class__.inflate(row[0]) for row in results]
+
+
+    def get_followed(self):
+        results, metadata = self.cypher("START a=node({self}) MATCH b-[:FOLLOW]->(a) RETURN b");
+        return [self.__class__.inflate(row[0]) for row in results]
+
+    def follow_person(self, user_id):
+        import datetime
+        from django.utils.timezone import utc
+
+        followed_user = self.index.get(user_id=user_id)
+        self.follow.connect(followed_user, {'time': str(datetime.datetime.utcnow().replace(tzinfo=utc))})
+        self.save()
+
+    
+
 
 class Country(models.Model):
     name = models.CharField(max_length=50)
@@ -56,6 +75,7 @@ def create_user_profile(sender, instance, created, **kwargs):
     if created:
         UserProfile.objects.create(user=instance)
         UserNode(user_id=instance.id).save()
+        print "a node with user_id %d created!" % instance.id
 
 
 post_save.connect(create_user_profile, sender=User)
