@@ -1,41 +1,37 @@
 <!DOCTYPE html>
 {% load staticfiles %}
 {% load dajaxice_templatetags %}
-{% load bootstrap_toolkit %}
-{% load compress %}
 <html>
 <head>
-  <title>{% block title %}{% endblock %}</title>
+  <title>{% block title %}Darkoob{% endblock %}</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="content-type" content="text/html" charset=UTF-8">
 
-  {% compress js %}
-  <script type="text/javascript" src="{% static "/static/js/jquery-1.9.1.min.js" %}"></script>
-  <script type="text/javascript" src="{% static "/static/js/jquery.validate.min.js" %}"></script>
-  <script type="text/javascript" src="{% static "/static/bootstrap/js/bootstrap.min.js" %}"></script>
-  <script type="text/javascript" src="{% static "/static/dajax/jquery.dajax.core.js" %}"></script>
-  {% dajaxice_js_import %}
-  <script type="text/javascript">
-  function calculate(){
-      Dajaxice.examples.multiply(Dajax.process,{'a':$('#a').val(),'b':$('#b').val()})
-  }
-  </script>
-
-  {% block js %}
-  {% endblock %}
-  {% endcompress %}
-
-  {% compress css %}
+  <link rel="stylesheet" type="text/less" href="{% static "/static/css/common_style.less" %}">
   <link rel="stylesheet" type="text/css" media="screen" href="{% static "/static/bootstrap/css/bootstrap.min.css" %}">
   <link rel="stylesheet" type="text/css" media="screen" href="{% static "/static/bootstrap/css/bootstrap-responsive.min.css" %}">
   {% block css %}
   {% endblock %}
-  {% endcompress %}
+
+  <script type="text/javascript" src="{% static "/static/js/jquery-1.9.1.min.js" %}"></script>
+  <script type="text/javascript" src="{% static "/static/js/jquery.validate.min.js" %}"></script>
+  <script type="text/javascript" src="{% static "/static/bootstrap/js/bootstrap.min.js" %}"></script>
+  <script type="text/javascript" src="{% static "/static/dajax/jquery.dajax.core.js" %}"></script>
+  <script type="text/javascript" src="{% static "/static/js/less-1.3.3.min.js" %}"></script>
+  {% dajaxice_js_import %}
+
+  {% block js %}
+  {% endblock %}
+
+
 </head>
 <body>
   {% block body %}
   {% endblock body %}
   <!--  <em>{% block footer %}کلیه حقوق این سایت متعلق به استاد حسن نادری می باشد! {% endblock %}</em> -->
+
+{% block bottom_js %}
+{% endblock bottom_js %}
 </body>
 </html>

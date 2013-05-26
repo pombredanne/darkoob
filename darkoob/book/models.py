@@ -56,9 +56,10 @@ class Review(models.Model):
         return unicode(self.book) + unicode(self.user)
 
 class Quote(models.Model):
-    person = models.CharField(max_length=255)
+    author = models.ForeignKey(Author)
     text = models.TextField()
+    shared_by = models.ForeignKey(User)
 
     def __unicode__(self):
-        return unicode(self.person)
+        return unicode(self.text)
 
