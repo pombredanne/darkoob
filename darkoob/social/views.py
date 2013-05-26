@@ -4,13 +4,9 @@ from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-<<<<<<< HEAD
-from darkoob.social.models import UserProfile, UserNode 
-=======
 
+from darkoob.social.models import UserProfile, UserNode 
 from darkoob.social.forms import RegisterForm, ChangePasswordForm, EditProfileForm, NewPostForm
-from darkoob.social.models import UserProfile 
->>>>>>> bbdb4ad219001e222fe576f032b0d6392f5bf0e7
 
 @login_required
 def profile(request):
@@ -67,7 +63,7 @@ def change_password(request):
     # print "-----------------------------------"
     # # print b , c , d , e
     # # print 
-    for i in  a.get_followed():
+    #for i in  a.get_followed():
     #     print i.user_id
 
     # # a.follow.connect(b)
