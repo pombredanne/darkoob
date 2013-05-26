@@ -86,7 +86,7 @@ function calculate(){
             <legend>Sign up</legend>
           </div>
           <div class="span6 offset1 signup">
-            <form id="id_signup_form" method="post" action="{% url "social:login" %}">
+            <form id="id_signup_form" method="post" action="{% url "social:signup" %}">
               {% csrf_token %}
               <div class="controls">
                 {{ signup_form.username }}

@@ -3,11 +3,14 @@ from django.shortcuts import render, render_to_response
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 from django.contrib.auth.decorators import login_required
-
-from darkoob.social.forms import RegisterForm, ChangePasswordForm, EditProfileForm
-
 from django.contrib.auth.models import User
+<<<<<<< HEAD
 from darkoob.social.models import UserProfile, UserNode 
+=======
+
+from darkoob.social.forms import RegisterForm, ChangePasswordForm, EditProfileForm, NewPostForm
+from darkoob.social.models import UserProfile 
+>>>>>>> bbdb4ad219001e222fe576f032b0d6392f5bf0e7
 
 @login_required
 def profile(request):
@@ -97,5 +100,8 @@ def change_password(request):
 
 @login_required
 def home(request):
-    return render(request, 'social/home.html', {})
+    return render(request, 'social/home.html', {'new_post_form': NewPostForm()})
 
+@login_required
+def new_post(request):
+    pass
