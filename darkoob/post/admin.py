@@ -2,8 +2,8 @@ from django.contrib import admin
 from models import Post, GroupPostStream, CommentStream, ProfilePostStream
 
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('user', 'submitted_time')
-    search_fields = ('user', 'submitted_time', 'text')
+    list_display = ('user_id', 'submitted_time')
+    search_fields = ('user_id', 'submitted_time', 'text')
 
 class GroupPostStreamAdmin(admin.ModelAdmin):
     list_display = ('group_id', 'post_id')
@@ -20,5 +20,5 @@ class ProfilePostStreamAdmin(admin.ModelAdmin):
 
 admin.site.register(Post, PostAdmin)
 admin.site.register(GroupPostStream, GroupPostStreamAdmin)
-admin.site.register(CommentStream, CommentStreamStream)
+admin.site.register(CommentStream, CommentStreamAdmin)
 admin.site.register(ProfilePostStream, ProfilePostStreamAdmin)
