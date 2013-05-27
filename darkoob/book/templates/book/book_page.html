@@ -42,6 +42,15 @@
           <p>
           TIMELINE
           </p>
+          <div id="star"></div>
+          <script type="text/javascript" src="{% static "/static/js/jquery.min.js" %}"></script>
+          <script type="text/javascript" src="{% static "/static/js/jquery.raty.min.js" %}"></script>
+          <script type="text/javascript">
+          $(function(){
+          $.fn.raty.defaults.path='/static/img';
+          $('#star').raty();
+          });
+          </script>
         </div>
       </div> <!-- span12 -->
     </div> <!-- row -->
