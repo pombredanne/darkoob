@@ -29,8 +29,10 @@ class UserNode(StructuredNode):
         self.follow.connect(followed_user, {'time': str(datetime.datetime.utcnow().replace(tzinfo=utc))})
         self.save()
 
-    
-
+class Post(models.Model):
+    user = models.ForeignKey(User)
+    text = models.TextField()
+    submitted_time = models.DateTimeField() # TODO: Set defualt now()
 
 class Country(models.Model):
     name = models.CharField(max_length=50)

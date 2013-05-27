@@ -24,4 +24,7 @@ urlpatterns = patterns('',
 
     url(r'^post/new/$', social_views.new_post, name='new_post'),
 
+
+    url(r'^posts/$', social_views.entry_index)
+
 )

@@ -5,8 +5,11 @@ from django.utils.translation import ugettext as _
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
-from darkoob.social.models import UserProfile, UserNode 
+from darkoob.social.models import UserProfile, UserNode, Post
 from darkoob.social.forms import RegisterForm, ChangePasswordForm, EditProfileForm, NewPostForm
+
+from django.template import RequestContext
+
 
 @login_required
 def profile(request):
@@ -63,7 +66,11 @@ def change_password(request):
     # print "-----------------------------------"
     # # print b , c , d , e
     # # print 
+<<<<<<< HEAD
     #for i in  a.get_followed():
+=======
+    # for i in  a.get_followed():
+>>>>>>> ec6fbe766b5ec8a1f026acf548eba98a64345f44
     #     print i.user_id
 
     # # a.follow.connect(b)
@@ -101,3 +108,20 @@ def home(request):
 @login_required
 def new_post(request):
     pass
+
+def entry_index(request,template="social/entry_index.html",page_template="social/entry_index_page.html"):
+    posts = Post.objects.order_by("-submitted_time")
+    count = range(1,len(posts)+1)
+    # print count
+    # print count[::-1]
+    context = {
+        'posts': posts,
+        'page_template': page_template,
+        'count':count[::-1],
+    }
+    if request.is_ajax():
+        template = page_template
+        # print "Ajax"
+    return render_to_response(template, context,context_instance=RequestContext(request))
+
+
