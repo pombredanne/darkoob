@@ -9,4 +9,5 @@ from django.template import RequestContext
 from darkoob.book.models import Book
 
 def page(request, book_id, book_title):
+    book = Book.objects.filter(id__equal = book_id)
     return render(request, "book/book_page.html")
