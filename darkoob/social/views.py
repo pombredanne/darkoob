@@ -4,11 +4,12 @@ from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-
-from darkoob.social.models import UserProfile, UserNode, Post
-from darkoob.social.forms import RegisterForm, ChangePasswordForm, EditProfileForm, NewPostForm
-
 from django.template import RequestContext
+
+from darkoob.social.models import UserProfile, UserNode
+from darkoob.social.forms import RegisterForm, ChangePasswordForm, EditProfileForm, NewPostForm
+from darkoob.post.models import Post
+
 
 
 @login_required
