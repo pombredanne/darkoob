@@ -48,7 +48,11 @@
           <script type="text/javascript">
           $(function(){
           $.fn.raty.defaults.path='/static/img';
-          $('#star').raty();
+          $('#star').raty({
+		  click: function(score, evt) {
+		    alert('ID: ' + $(this).attr('id') + "\nscore: " + score + "\nevent: " + evt);
+		  }
+		});
           });
           </script>
         </div>
