@@ -160,6 +160,7 @@ INSTALLED_APPS = (
     'darkoob.social',
     'darkoob.search',
     'darkoob.group',
+    'darkoob.post',
     
 )
 
