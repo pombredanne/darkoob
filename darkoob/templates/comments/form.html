@@ -1,4 +1,4 @@
-{% load comments i18n %}
+<!-- {% load comments i18n %}
 <form action="{% comment_form_target %}" method="post">{% csrf_token %}
     {{ form.object_pk }}
     {{ form.content_type }}
@@ -9,4 +9,8 @@
     {% endif %}
     {{ form.comment }}
     <input type="submit">
-</form>
+</form> -->
+
+
+<div class="comment-form" id="comment-form-{{ node.id }}" {% if node.id %}style="display:none;"{% endif %}>
+<form action="{% comment_form_target %}" method="post" id="comment-form-{{ node.id }}f">

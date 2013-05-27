@@ -5,6 +5,10 @@
 
 {% if comments %}
 {% recursetree comments %}
+
+<div {% if request.REQUEST.c|add:"0" == node.id %}id="newly_posted_comment"{% endif %}>
+...comment content...
+</div>
             <a name="c{{ node.id }}"></a>
             {{ node.comment }}
             {{ node.user }}
