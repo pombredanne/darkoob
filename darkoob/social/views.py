@@ -5,8 +5,11 @@ from django.utils.translation import ugettext as _
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
+from darkoob.social.models import UserProfile, UserNode, Post
 from darkoob.social.forms import RegisterForm, ChangePasswordForm, EditProfileForm, NewPostForm
-from darkoob.social.models import UserProfile 
+
+from django.template import RequestContext
+
 
 @login_required
 def profile(request):
@@ -40,6 +43,42 @@ def signup(request):
 
 @login_required
 def change_password(request):
+    ##
+    ## Please Dont remove:D
+    ##
+    # # print ',,,,,,,,,,,', UserNode.index.search(user_id=27)[0]
+    # a = UserNode.index.search(user_id=27)[0]
+    # # print '------------', a
+    # # e = UserNode(user_id=114)
+    # b = UserNode.index.get(user_id=31)
+    # c = UserNode.index.search(user_id=42)
+    # d = UserNode.index.search(user_id=53)
+    # # e = UserNode(user_id=114)
+    # # e = UserNode.index.get(user_id=114)
+    # # print "eeeeeeeeee",e
+    # # e.save()
+    # e = UserNode.index.get(user_id=114)
+
+
+    # # a.follow_person(114)
+    # # print b, c , d
+    # # a.follow_person(114)
+    # print "-----------------------------------"
+    # # print b , c , d , e
+    # # print 
+    # for i in  a.get_followed():
+    #     print i.user_id
+
+    # # a.follow.connect(b)
+    # # a.follow.connect(c)
+    # # a.follow.connect(d)
+    # # a[0].save()
+    # print "-----------------------------------"
+    # # print UserNode.index.search(user_id=26)[0].get_follows()
+
+
+
+
     if request.method == 'POST':
         form = ChangePasswordForm(request.POST)
         if form.is_valid():
@@ -69,3 +108,19 @@ def new_post(request):
 @login_required
 def user_profile(request, username):
     return render(request, 'social/user_profile.html', {'username': username})
+
+def entry_index(request,template="social/entry_post_index.html",page_template="social/entry_post_index_page.html"):
+    posts = Post.objects.order_by("-submitted_time")
+    count = range(1,len(posts)+1)
+    # print count
+    # print count[::-1]
+    context = {
+        'posts': posts,
+        'page_template': page_template,
+        'count':count[::-1],
+    }
+    if request.is_ajax():
+        template = page_template
+        # print "Ajax"
+    return render_to_response(template, context,context_instance=RequestContext(request))
+
