@@ -174,6 +174,9 @@ INSTALLED_APPS = (
     'darkoob.post',
     'darkoob.comments',
 
+    'avatar',
+
+
 
 
     
