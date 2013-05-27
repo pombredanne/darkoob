@@ -1,7 +1,7 @@
 from django.db import models
 from darkoob.social.models import User
 from taggit.managers import TaggableManager
-
+from djangoratings.fields import RatingField
 
 class Book(models.Model):
     title = models.CharField(max_length=255)
@@ -9,7 +9,7 @@ class Book(models.Model):
     language = models.ForeignKey('Language')
     authors = models.ManyToManyField('Author')
     tags = TaggableManager()
-
+    rating = RatingField(range = 5, can_change_vote = True, allow_delete = False, allow_anonymous = False )
     
     def author_names(self):
         return ', '.join([a.name for a in self.authors.all()])
