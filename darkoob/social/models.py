@@ -13,9 +13,8 @@ class UserNode(StructuredNode):
     follow = RelationshipTo('UserNode', 'FOLLOW')
 
     def get_followers(self):
-        # results, metadata = self.cypher("START a=node({self}) MATCH a-[:FOLLOW]->(b) RETURN b");
-        # return [self.__class__.inflate(row[0]) for row in results]
-        pass
+        results, metadata = self.cypher("START a=node({self}) MATCH a<-[:FOLLOW]-(b) RETURN b");
+        return [self.__class__.inflate(row[0]) for row in results]
 
     def get_following(self):
         results, metadata = self.cypher("START a=node({self}) MATCH b-[:FOLLOW]->(a) RETURN b");
@@ -28,11 +27,6 @@ class UserNode(StructuredNode):
         followed_user = self.index.get(user_id=user_id)
         self.follow.connect(followed_user, {'time': str(datetime.datetime.utcnow().replace(tzinfo=utc))})
         self.save()
-
-class Post(models.Model):
-    user = models.ForeignKey(User)
-    text = models.TextField()
-    submitted_time = models.DateTimeField() # TODO: Set defualt now()
 
 class Country(models.Model):
     name = models.CharField(max_length=50)
