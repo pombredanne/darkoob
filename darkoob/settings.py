@@ -147,12 +147,12 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'dajaxice',
     'dajax',
+    'taggit',
     'bootstrap_toolkit',
     'endless_pagination',
     'compressor',
@@ -160,6 +160,7 @@ INSTALLED_APPS = (
     'darkoob.social',
     'darkoob.search',
     'darkoob.group',
+    
 )
 
 
