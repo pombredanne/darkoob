@@ -12,12 +12,12 @@ class UserNode(StructuredNode):
     user_id = IntegerProperty(required=True, index=True)
     follow = RelationshipTo('UserNode', 'FOLLOW')
 
-    def get_follows(self):
-        results, metadata = self.cypher("START a=node({self}) MATCH a-[:FOLLOW]->(b) RETURN b");
-        return [self.__class__.inflate(row[0]) for row in results]
+    def get_followers(self):
+        # results, metadata = self.cypher("START a=node({self}) MATCH a-[:FOLLOW]->(b) RETURN b");
+        # return [self.__class__.inflate(row[0]) for row in results]
+        pass
 
-
-    def get_followed(self):
+    def get_following(self):
         results, metadata = self.cypher("START a=node({self}) MATCH b-[:FOLLOW]->(a) RETURN b");
         return [self.__class__.inflate(row[0]) for row in results]
 
