@@ -2,10 +2,13 @@ from django.db import models
 from darkoob.social.models import User
 from darkoob.group.models import Group
 
+from datetime import datetime    
+
+
 class Post(models.Model):
 	user_id = models.ForeignKey(User, related_name='post_user_id_set')
 	text = models.TextField()
-	submitted_time = models.DateTimeField()
+	submitted_time = models.DateTimeField(default=datetime.now())
 
 	def __unicode__(self):
 		return unicode(self.text)

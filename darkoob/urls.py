@@ -10,6 +10,8 @@ dajaxice_autodiscover()
 admin.autodiscover()
 
 urlpatterns = patterns('',
+    # search url
+    url(r'^search/', include('haystack.urls')),
     # Django Admin
     url(r'^admin/', include(admin.site.urls)),
 
