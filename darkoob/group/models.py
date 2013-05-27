@@ -2,6 +2,8 @@ from django.db import models
 from darkoob.social.models import User
 from darkoob.book.models import Book
 
+from datetime import datetime    
+
 class Group(models.Model):
     name = models.CharField(max_length=255)
     admin = models.ForeignKey(User, related_name='admin_set')
@@ -13,6 +15,7 @@ class Group(models.Model):
 class Schedule(models.Model):
     group = models.ForeignKey(Group)
     book = models.ForeignKey(Book)
+    started_time = models.DateTimeField(default=datetime.now())
 
     def __unicode__(self):
         return unicode("%s - %s" % (self.group.name, self.book.title))
