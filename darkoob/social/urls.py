@@ -24,4 +24,5 @@ urlpatterns = patterns('',
 
     url(r'^post/new/$', social_views.new_post, name='new_post'),
 
+    url(r'^user/(?P<username>\w+)/$', social_views.user_profile, name='user_profile'),
 )

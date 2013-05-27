@@ -65,3 +65,7 @@ def home(request):
 @login_required
 def new_post(request):
     pass
+
+@login_required
+def user_profile(request, username):
+    return render(request, 'social/user_profile.html', {'username': username})
