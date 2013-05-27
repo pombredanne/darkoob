@@ -23,8 +23,6 @@ urlpatterns = patterns('',
     url(r'^password/done/$', auth_views.password_reset_complete),
 
     url(r'^post/new/$', social_views.new_post, name='new_post'),
-
-
     url(r'^posts/$', social_views.entry_index)
-
+    url(r'^user/(?P<username>\w+)/$', social_views.user_profile, name='user_profile'),
 )

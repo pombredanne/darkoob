@@ -34,8 +34,7 @@ class AuthenticationFormPlaceholder(AuthenticationForm):
     password = forms.CharField(
         widget=forms.PasswordInput(attrs={
             'placeholder': _('Password'),
-            'class': 'input-medium',
-            'required': '',
+            'class': 'input-medium required',
         })
     )
 
@@ -130,8 +129,7 @@ class RegisterForm(forms.Form):
                          "@/./+/-/_ characters.")},
         widget=forms.TextInput(attrs={
             'placeholder': _('Username'),
-            'required': '',
-            'class': 'span12',
+            'class': 'span12 required',
         }))
 
     first_name = forms.CharField(
@@ -140,8 +138,8 @@ class RegisterForm(forms.Form):
         max_length = 30,
         widget = forms.TextInput(attrs={
             'placeholder':_('First Name'),
+            'class': 'span6 required',
             'required': '',
-            'class': 'span6',
         })
     )
 
@@ -151,8 +149,7 @@ class RegisterForm(forms.Form):
         max_length = 30,
         widget = forms.TextInput(attrs={
             'placeholder':_('Last Name'),
-            'required': '',
-            'class': 'span6',
+            'class': 'span6 required',
         })
     )
     email = forms.EmailField(
@@ -161,8 +158,7 @@ class RegisterForm(forms.Form):
         widget = forms.TextInput(attrs={
             'placeholder': _('Your email address'),
             'type': 'email',
-            'required': '',
-            'class': 'span12',
+            'class': 'span12 required',
         })
     )
     password = forms.CharField(
@@ -171,8 +167,7 @@ class RegisterForm(forms.Form):
         max_length = 30,
         widget = forms.PasswordInput(attrs={
             'placeholder':_('Password'),
-            'required': '',
-            'class': 'span6',
+            'class': 'span6 required',
         })
     )
     confirm_password = forms.CharField(
@@ -181,8 +176,7 @@ class RegisterForm(forms.Form):
         max_length = 30,
         widget = forms.PasswordInput(attrs={
             'placeholder':_('Re-type password'),
-            'required': '',
-            'class': 'span6',
+            'class': 'span6 required',
         })
     )
 

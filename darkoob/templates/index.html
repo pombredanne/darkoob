@@ -119,4 +119,8 @@ function calculate(){
   </div>
 
 {% endblock body %}
-
+<script>
+  $('form').bind('invalid', function(event) {
+    event.preventDefault();
+  });
+</script>

@@ -66,8 +66,8 @@ def change_password(request):
     # print "-----------------------------------"
     # # print b , c , d , e
     # # print 
-    #for i in  a.get_followed():
 
+    # for i in  a.get_followed():
     #     print i.user_id
 
     # # a.follow.connect(b)
@@ -106,6 +106,10 @@ def home(request):
 def new_post(request):
     pass
 
+@login_required
+def user_profile(request, username):
+    return render(request, 'social/user_profile.html', {'username': username})
+
 def entry_index(request,template="social/entry_post_index.html",page_template="social/entry_post_index_page.html"):
     posts = Post.objects.order_by("-submitted_time")
     count = range(1,len(posts)+1)
@@ -120,5 +124,4 @@ def entry_index(request,template="social/entry_post_index.html",page_template="s
         template = page_template
         # print "Ajax"
     return render_to_response(template, context,context_instance=RequestContext(request))
-
 
