@@ -66,11 +66,8 @@ def change_password(request):
     # print "-----------------------------------"
     # # print b , c , d , e
     # # print 
-<<<<<<< HEAD
     #for i in  a.get_followed():
-=======
-    # for i in  a.get_followed():
->>>>>>> ec6fbe766b5ec8a1f026acf548eba98a64345f44
+
     #     print i.user_id
 
     # # a.follow.connect(b)

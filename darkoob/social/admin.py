@@ -1,5 +1,5 @@
 from django.contrib import admin
-from models import UserProfile, Education, School, City, Country, Post
+from models import UserProfile, Education, School, City, Country
 
 class UserProfileAdmin(admin.ModelAdmin):
     search_fields = ('user', 'city', 'mobile')
@@ -21,13 +21,9 @@ class CountryAdmin(admin.ModelAdmin):
     list_display = ('name',)
     search_fields = ('name',)
 
-class PostAdmin(admin.ModelAdmin):
-    list_display = ('user', 'submitted_time')
-    search_fields = ('user', 'submitted_time', 'text')
 
 admin.site.register(UserProfile, UserProfileAdmin)
 admin.site.register(Education, EducationAdmin)
 admin.site.register(School, SchoolAdmin)
 admin.site.register(City, CityAdmin)
 admin.site.register(Country, CountryAdmin)
-admin.site.register(Post, PostAdmin)

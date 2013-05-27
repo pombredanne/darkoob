@@ -1,6 +1,6 @@
 (function($) {
     $(document).ready(function(){
-        $("a.endless_more").live("click", function() {
+        $(document).on("click","a.endless_more", function() {
             var container = $(this).closest(".endless_container");
             var loading = container.find(".endless_loading");
             $(this).hide();
@@ -12,7 +12,7 @@
             });
             return false;
         });
-        $("a.endless_page_link").live("click", function() {
+        $(document).on("click","a.endless_page_link", function() {
             var page_template = $(this).closest(".endless_page_template");
             if (!page_template.hasClass("endless_page_skip")) {
                 var data = "querystring_key=" + $(this).attr("rel").split(" ")[0];
