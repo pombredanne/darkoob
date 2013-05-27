@@ -18,4 +18,4 @@ py2neo==1.4.6
 neomodel
 pytz
 django-taggit==0.10a1
-
+django-comments-xtd
