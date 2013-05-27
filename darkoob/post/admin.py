@@ -1,5 +1,5 @@
 from django.contrib import admin
-from models import Post, GroupPostStream, CommentStream, ProfilePostStream
+from darkoob.post.models import Post, GroupPostStream, CommentStream, ProfilePostStream
 
 class PostAdmin(admin.ModelAdmin):
     list_display = ('user_id', 'submitted_time')
