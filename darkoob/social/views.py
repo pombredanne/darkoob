@@ -7,8 +7,9 @@ from django.contrib.auth.models import User
 from django.template import RequestContext
 
 from darkoob.social.models import UserProfile, UserNode
-from darkoob.social.forms import RegisterForm, ChangePasswordForm, EditProfileForm, NewPostForm
-from darkoob.post.models import Post
+from darkoob.social.forms import RegisterForm, ChangePasswordForm, EditProfileForm, NewPostForm, CommentForm
+from darkoob.post.models import Post, Comment
+
 
 
 
@@ -77,26 +78,41 @@ def change_password(request):
     # # a[0].save()
     # print "-----------------------------------"
     # # print UserNode.index.search(user_id=26)[0].get_follows()
-
-
-
-
     if request.method == 'POST':
-        form = ChangePasswordForm(request.POST)
+        form = CommentForm(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
-            if request.user.check_password(cd['password']):
-                user = User.objects.get(username = request.user.username)
-                user.set_password(cd['new_password'])
-                user.save()
-                return HttpResponse('Succsessfull! Password has been changed')
-                #TODO: Send Email to user
-            else: 
-                pass
-                #TODO: Raise Error('Your Password is not correct')
-
+            
+            comment = Comment(
+                author=request.POST['author'],
+                comment=request.POST['comment'],
+            )
+            if form.cleaned_data['parent_id'] != '':
+                comment.parent = Comment.objects.get(id=request.POST['parent_id'])
+            comment.save()
     else:
-        form = ChangePasswordForm()
+        form = CommentForm()
+    # if this is a reply to a comment, not to a post
+    # if form.cleaned_data['parent_id'] != '':
+    #     comment.parent = Comment.objects.get(id=request.POST['parent_id'])
+    # comment.save()
+
+    # if request.method == 'POST':
+    #     form = ChangePasswordForm(request.POST)
+    #     if form.is_valid():
+    #         cd = form.cleaned_data
+    #         if request.user.check_password(cd['password']):
+    #             user = User.objects.get(username = request.user.username)
+    #             user.set_password(cd['new_password'])
+    #             user.save()
+    #             return HttpResponse('Succsessfull! Password has been changed')
+    #             #TODO: Send Email to user
+    #         else: 
+    #             pass
+    #             #TODO: Raise Error('Your Password is not correct')
+
+    # else:
+    #     form = ChangePasswordForm()
     return render_to_response('change_password.html', {'user': request.user, 'form': form})
 
 @login_required

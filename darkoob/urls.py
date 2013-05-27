@@ -30,4 +30,7 @@ urlpatterns = patterns('',
     # Search 
     # TODO: Move to search application
     url(r'', include('darkoob.search.urls', namespace='search')),
+
+    # url(r'^comments/', include('django.contrib.comments.urls')),
+
 )
