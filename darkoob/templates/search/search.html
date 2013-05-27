@@ -1,0 +1,32 @@
+{% block content %}
+    <h2>Search</h2>
+    <form method="get">
+    <table>
+      {{ form.as_table }}
+      <tr>
+        <td>&nbsp;</td>
+        <td>
+          <input type="submit" value="Search">
+        </td>
+      </tr>
+    </table>
+
+    {% if query %}
+      <h3>Results</h3>
+      {% for result in page.object_list %}
+      <p>
+      Title:{{ result.object.title }}<br/>
+      Authors:<br/>
+      {% for author in result.object.authors.all %}
+      {{ author }}<br/>
+      {% endfor %}
+      Language:{{ result.object.language }}<br/>
+      Publisher:{{ result.object.publisher }}<br/>
+      </p>
+      {% empty %}
+      <p>No results found.</p>
+      {% endfor %}
+      {% endif %}
+
+    </form>
+    {% endblock %}
