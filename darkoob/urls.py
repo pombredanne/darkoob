@@ -25,7 +25,7 @@ urlpatterns = patterns('',
     # Project-specific URLs
     url(r'^$', views.index, name='index'),
     url(r'', include('darkoob.social.urls', namespace='social', app_name='socials')),
-
+    url(r'^book/', include('darkoob.book.urls', namespace='book')),
 
     # Search 
     # TODO: Move to search application
