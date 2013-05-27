@@ -101,7 +101,18 @@ def change_password(request):
 
 @login_required
 def home(request):
-    return render(request, 'social/home.html', {'new_post_form': NewPostForm()})
+    template = 'social/home.html'
+    posts = Post.objects.order_by("-submitted_time")
+    count = range(1, len(posts) + 1)
+
+    if request.is_ajax():
+        template = 'post/posts.html'
+
+    return render(request, template, {
+        'new_post_form': NewPostForm(),
+        'posts': posts,
+        'count': count[::-1],
+    })
 
 @login_required
 def new_post(request):
@@ -110,19 +121,4 @@ def new_post(request):
 @login_required
 def user_profile(request, username):
     return render(request, 'social/user_profile.html', {'username': username})
-
-def entry_index(request,template="social/entry_post_index.html",page_template="social/entry_post_index_page.html"):
-    posts = Post.objects.order_by("-submitted_time")
-    count = range(1,len(posts)+1)
-    # print count
-    # print count[::-1]
-    context = {
-        'posts': posts,
-        'page_template': page_template,
-        'count':count[::-1],
-    }
-    if request.is_ajax():
-        template = page_template
-        # print "Ajax"
-    return render_to_response(template, context,context_instance=RequestContext(request))
 
