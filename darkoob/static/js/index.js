@@ -1,4 +1,8 @@
-function validate_signup() {
+$(document).ready(function() {
+  $("#id_username").focus();
+})
+
+$("#id_signup_form").bind('submit', function() {
 /*
   var validator = $("#id_signup_form").validate({
     rules: {
@@ -9,9 +13,16 @@ function validate_signup() {
     },
   });
 */
+  return false;
 
   if ($("#id_password").val() == $("#id_confirm_password")) {
-    return;
+    return true;
   } else {
-    highlight
+    return false;
+    $("#id_form_error").css("display", "block");
+  }
+})
+
+function reset_form() {
+  $("#id_signup_form")[0].reset();
 }
