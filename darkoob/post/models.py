@@ -4,6 +4,7 @@ from darkoob.group.models import Group
 
 from datetime import datetime    
 
+from mptt.models import MPTTModel, TreeForeignKey
 
 class Post(models.Model):
 	user_id = models.ForeignKey(User, related_name='post_user_id_set')
@@ -12,6 +13,21 @@ class Post(models.Model):
 
 	def __unicode__(self):
 		return unicode(self.text)
+
+
+class Comment(MPTTModel):
+    """ Threaded comments for blog posts """
+    post = models.ForeignKey(Post)
+    author = models.CharField(max_length=60)
+    comment = models.TextField()
+    added  = models.DateTimeField(default=datetime.now)
+    # a link to comment that is being replied, if one exists
+    parent = TreeForeignKey('self', null=True, blank=True, related_name='children')
+
+    class MPTTMeta:
+        # comments on one level will be ordered by date of creation
+        order_insertion_by=['added']
+
 
 class GroupPostStream(models.Model):
 	group_id = models.ForeignKey(Group)

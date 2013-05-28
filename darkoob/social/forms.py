@@ -21,6 +21,11 @@ MONTH_CHOICES = (
     (11, '11'),
     (12, '12'),
 )
+class CommentForm(forms.Form):
+    author = forms.CharField()
+    comment = forms.CharField()
+    parent_id = forms.CharField(widget=forms.HiddenInput())
+
 
 class AuthenticationFormPlaceholder(AuthenticationForm):
     username = forms.CharField(
