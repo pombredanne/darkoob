@@ -92,7 +92,12 @@ function calculate(){
             <form id="id_signup_form" method="post" action="{% url "social:signup" %}">
               {% csrf_token %}
               <div class="controls">
-                {{ signup_form.username }}
+                {# {{ signup_form.username }} #}
+                {% if form.errors %}
+                  <p style="color: red;">
+                    Please correct the error{{ form.errors }} below.
+                  </p>
+                {% endif %}
               </div>
               <div class="controls controls-row">
                 {{ signup_form.first_name }}
@@ -104,6 +109,9 @@ function calculate(){
               </div>
               <div class="controls">
                 {{ signup_form.email }}
+              </div>
+              <div class="controls">
+                {{ signup_form.sex }}
               </div>
               <div class="controls controls-row">
                 {{ signup_form.year }}

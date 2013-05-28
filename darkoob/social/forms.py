@@ -4,8 +4,8 @@ from django.core.validators import validate_email
 from django.contrib.auth.forms import AuthenticationForm
 
 SEX_CHOICES = (
-    ('Male', _('Male')),
-    ('Female', _('Female')),
+    ('Male', 'Male'),
+    ('Female', 'Female'),
 )
 MONTH_CHOICES = (
     (1, '1'),
@@ -67,10 +67,11 @@ class EditProfileForm(forms.Form):
         })
     )
 
-    sex = forms.ChoiceField(
-        choices = SEX_CHOICES,
-    )
-
+    # sex = forms.ChoiceField(
+    #     choices = SEX_CHOICES,
+    # )
+    
+    sex = forms.CharField(label=_('Sex'))
     mobile = forms.CharField(
         label = _('Mobile'),
         min_length = 7,
@@ -128,18 +129,18 @@ class RegisterForm(forms.Form):
         'duplicate_username': _("A user with that username already exists."),
         'password_mismatch': _("The two password fields didn't match."),
     }
-    username = forms.RegexField(label=_("Username"), max_length=30,
-        regex=r'^[\w.@+-]+$',
-        help_text=_("Required. 30 characters or fewer. Letters, digits and "
-                      "@/./+/-/_ only."),
-        error_messages={
-            'invalid': _("This value may contain only letters, numbers and "
-                         "@/./+/-/_ characters.")},
-        widget=forms.TextInput(attrs={
-            'placeholder': _('Username'),
-            'class': 'span12 required',
-            'required': '',
-        }))
+    # username = forms.RegexField(label=_("Username"), max_length=30,
+    #     regex=r'^[\w.@+-]+$',
+    #     help_text=_("Required. 30 characters or fewer. Letters, digits and "
+    #                   "@/./+/-/_ only."),
+    #     error_messages={
+    #         'invalid': _("This value may contain only letters, numbers and "
+    #                      "@/./+/-/_ characters.")},
+    #     widget=forms.TextInput(attrs={
+    #         'placeholder': _('Username'),
+    #         'class': 'span12 required',
+    #         'required': '',
+    #     }))
 
     first_name = forms.CharField(
         label = _('First Name'), 
@@ -194,6 +195,7 @@ class RegisterForm(forms.Form):
     )
 
     sex = forms.ChoiceField(choices=SEX_CHOICES)
+
     month = forms.ChoiceField(choices=MONTH_CHOICES,
         widget=forms.Select(attrs={
             'class': 'span4',
