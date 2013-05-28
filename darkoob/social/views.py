@@ -5,10 +5,12 @@ from django.utils.translation import ugettext as _
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.template import RequestContext
+from django.contrib.auth import authenticate
 
 from darkoob.social.models import UserProfile, UserNode
-from darkoob.social.forms import RegisterForm, ChangePasswordForm, EditProfileForm, NewPostForm
-from darkoob.post.models import Post
+from darkoob.social.forms import RegisterForm, ChangePasswordForm, EditProfileForm, NewPostForm, CommentForm
+from darkoob.post.models import Post, Comment
+
 
 
 
@@ -24,8 +26,9 @@ def signup(request):
         if form.is_valid():
             from datetime import date
             cd = form.cleaned_data      
+            username = cd['username']
             email = cd['email'] #TODO: Email should be unique 
-            user = User.objects.create_user(username = cd['email'], password = cd['password'], email = cd['email'])
+            user = User.objects.create_user(username = cd['username'], password = cd['password'], email = cd['email'])
             user.first_name = cd['first_name']
             user.last_name = cd['last_name']
             UserProfile.objects.filter(user = user).update(birthday = date(cd['year'], cd['month'], cd['day']))
@@ -34,13 +37,20 @@ def signup(request):
             else:
                 UserProfile.objects.filter(user=user).update(sex = 'Male')
             user.save()
-            return render_to_response('registered.html',{'firstname':cd['first_name']})
-    else:
+            u = authenticate(cd['username'], cd['password'])
+            return HttpResponseRedirect(reverse('social:home'))
+            #return render_to_response('registered.html',{'firstname':cd['first_name']})
+        else:
+            return HttpResponseRedirect(reverse('index'))
+
+    elif request.method == 'GET':
         #TODO: Initial return page's fields 
         form = RegisterForm( 
             # initial = {'username': 'initial'}
         )
-    return render_to_response('signup.html', {'form':form})
+        return render_to_response('signup.html', {'form':form})
+    else:
+        return HttpResponseRedirect(reverse('index'))
 
 @login_required
 def change_password(request):
@@ -77,31 +87,57 @@ def change_password(request):
     # # a[0].save()
     # print "-----------------------------------"
     # # print UserNode.index.search(user_id=26)[0].get_follows()
-
-
-
-
     if request.method == 'POST':
-        form = ChangePasswordForm(request.POST)
+        form = CommentForm(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
-            if request.user.check_password(cd['password']):
-                user = User.objects.get(username = request.user.username)
-                user.set_password(cd['new_password'])
-                user.save()
-                return HttpResponse('Succsessfull! Password has been changed')
-                #TODO: Send Email to user
-            else: 
-                pass
-                #TODO: Raise Error('Your Password is not correct')
-
+            
+            comment = Comment(
+                author=request.POST['author'],
+                comment=request.POST['comment'],
+            )
+            if form.cleaned_data['parent_id'] != '':
+                comment.parent = Comment.objects.get(id=request.POST['parent_id'])
+            comment.save()
     else:
-        form = ChangePasswordForm()
+        form = CommentForm()
+    # if this is a reply to a comment, not to a post
+    # if form.cleaned_data['parent_id'] != '':
+    #     comment.parent = Comment.objects.get(id=request.POST['parent_id'])
+    # comment.save()
+
+    # if request.method == 'POST':
+    #     form = ChangePasswordForm(request.POST)
+    #     if form.is_valid():
+    #         cd = form.cleaned_data
+    #         if request.user.check_password(cd['password']):
+    #             user = User.objects.get(username = request.user.username)
+    #             user.set_password(cd['new_password'])
+    #             user.save()
+    #             return HttpResponse('Succsessfull! Password has been changed')
+    #             #TODO: Send Email to user
+    #         else: 
+    #             pass
+    #             #TODO: Raise Error('Your Password is not correct')
+
+    # else:
+    #     form = ChangePasswordForm()
     return render_to_response('change_password.html', {'user': request.user, 'form': form})
 
 @login_required
 def home(request):
-    return render(request, 'social/home.html', {'new_post_form': NewPostForm()})
+    template = 'social/home.html'
+    posts = Post.objects.order_by("-submitted_time")
+    count = range(1, len(posts) + 1)
+
+    if request.is_ajax():
+        template = 'post/posts.html'
+
+    return render(request, template, {
+        'new_post_form': NewPostForm(),
+        'posts': posts,
+        'count': count[::-1],
+    })
 
 @login_required
 def new_post(request):
@@ -110,19 +146,4 @@ def new_post(request):
 @login_required
 def user_profile(request, username):
     return render(request, 'social/user_profile.html', {'username': username})
-
-def entry_index(request,template="social/entry_post_index.html",page_template="social/entry_post_index_page.html"):
-    posts = Post.objects.order_by("-submitted_time")
-    count = range(1,len(posts)+1)
-    # print count
-    # print count[::-1]
-    context = {
-        'posts': posts,
-        'page_template': page_template,
-        'count':count[::-1],
-    }
-    if request.is_ajax():
-        template = page_template
-        # print "Ajax"
-    return render_to_response(template, context,context_instance=RequestContext(request))
 

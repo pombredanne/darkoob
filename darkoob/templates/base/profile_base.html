@@ -4,6 +4,13 @@
 {% block css %}
 <link rel="stylesheet" type="text/less" href="{% static "/static/css/profile_base_style.less" %}">
 {% endblock css %}
+{% block js %}
+<script src="{% static "js/endless.js" %}" type="text/javascript" charset="utf-8" ></script>
+<script src="{% static "js/endless_on_scroll.js" %}" type="text/javascript" charset="utf-8" ></script>
+<script type="text/javascript" charset="utf-8">
+    var endless_on_scroll_margin = 1;
+</script>
+{% endblock js %}
 {% block title %}Homepage{% endblock title %}
 <h1> {% block top %}{% endblock %} </h1>
 
