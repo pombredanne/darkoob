@@ -23,13 +23,9 @@ def profile(request):
 def signup(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
-        print " valid"
-        print form
         if form.is_valid():
-            print "form is not valid"
             from datetime import date
             cd = form.cleaned_data      
-            # username = cd['username']
             email = cd['email'] #TODO: Email should be unique 
             user = User.objects.create_user(username = email, password = cd['password'], email = cd['email'])
             user.first_name = cd['first_name']
@@ -40,9 +36,9 @@ def signup(request):
             else:
                 UserProfile.objects.filter(user=user).update(sex = 'Male')
             user.save()
-            u = authenticate(email, cd['password'])
-            return HttpResponseRedirect(reverse('social:home'))
-            #return render_to_response('registered.html',{'firstname':cd['first_name']})
+            # u = authenticate(email, cd['password'])
+            # return HttpResponseRedirect(reverse('social:home'))
+            return render_to_response('registered.html',{'firstname':cd['first_name']})
         else:
             return HttpResponseRedirect(reverse('index'))
 
