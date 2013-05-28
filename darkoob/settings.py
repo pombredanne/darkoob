@@ -165,15 +165,16 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.comments',
-    'mptt',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'djangoratings',
     'dajaxice',
     'dajax',
+    'avatar',
     'taggit',
     'bootstrap_toolkit',
     'endless_pagination',
+    'mptt',
     # Search apps
     'haystack',
     'queued_search',
@@ -185,13 +186,7 @@ INSTALLED_APPS = (
     'darkoob.group',
     'darkoob.post',
     'darkoob.comments',
-
-    'avatar',
-
-
-
-
-    
+    'darkoob.migration',    
 )
 
 

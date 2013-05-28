@@ -87,6 +87,7 @@ def change_password(request):
     # # a[0].save()
     # print "-----------------------------------"
     # # print UserNode.index.search(user_id=26)[0].get_follows()
+    print Migration.objects.all()
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
