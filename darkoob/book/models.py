@@ -70,7 +70,7 @@ class Quote(models.Model):
 
 class Migration(models.Model):
     book = models.ForeignKey(Book)
-    starter = models.ForeigntKey(User)
+    starter = models.ForeignKey(User)
     start_time = models.DateTimeField(default=datetime.now)
 
     def __unicode__(self):
