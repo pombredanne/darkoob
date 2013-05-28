@@ -7,9 +7,25 @@
 {% endblock css %}
 {% block title %}User{% endblock title %}
 
+{% load avatar_tags %}
+
 {% block sidebar %}
 <div class="row-fluid">
   <div class="span12">
+    <div class="row-fluid">
+      <div class="span10 sidebox">
+        <legend>Profile Information</legend>
+          <p>
+            <a href='{% url "avatar_change" %}'>Change your avatar</a>
+
+            {% avatar user %}
+
+            list<br />
+            of<br />
+            groups
+          </p>
+      </div> <!-- span10 -->
+    </div> <!-- row -->
     <div class="row-fluid">
       <div class="span10 sidebox">
         <legend>Groups</legend>
