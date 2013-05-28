@@ -5,6 +5,7 @@ from django.utils.translation import ugettext as _
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.template import RequestContext
+from django.contrib.auth import authenticate
 
 from darkoob.social.models import UserProfile, UserNode
 from darkoob.social.forms import RegisterForm, ChangePasswordForm, EditProfileForm, NewPostForm, CommentForm
@@ -25,8 +26,9 @@ def signup(request):
         if form.is_valid():
             from datetime import date
             cd = form.cleaned_data      
+            username = cd['username']
             email = cd['email'] #TODO: Email should be unique 
-            user = User.objects.create_user(username = cd['email'], password = cd['password'], email = cd['email'])
+            user = User.objects.create_user(username = cd['username'], password = cd['password'], email = cd['email'])
             user.first_name = cd['first_name']
             user.last_name = cd['last_name']
             UserProfile.objects.filter(user = user).update(birthday = date(cd['year'], cd['month'], cd['day']))
@@ -35,13 +37,20 @@ def signup(request):
             else:
                 UserProfile.objects.filter(user=user).update(sex = 'Male')
             user.save()
-            return render_to_response('registered.html',{'firstname':cd['first_name']})
-    else:
+            u = authenticate(cd['username'], cd['password'])
+            return HttpResponseRedirect(reverse('social:home'))
+            #return render_to_response('registered.html',{'firstname':cd['first_name']})
+        else:
+            return HttpResponseRedirect(reverse('index'))
+
+    elif request.method == 'GET':
         #TODO: Initial return page's fields 
         form = RegisterForm( 
             # initial = {'username': 'initial'}
         )
-    return render_to_response('signup.html', {'form':form})
+        return render_to_response('signup.html', {'form':form})
+    else:
+        return HttpResponseRedirect(reverse('index'))
 
 @login_required
 def change_password(request):

@@ -33,4 +33,7 @@ urlpatterns = patterns('',
 
     # url(r'^comments/', include('django.contrib.comments.urls')),
 
+    url(r'^avatar/', include('avatar.urls')),
+
+
 )

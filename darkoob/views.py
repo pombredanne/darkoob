@@ -6,12 +6,16 @@ from django.views.decorators.clickjacking import xframe_options_exempt
 from darkoob.social.forms import AuthenticationFormPlaceholder, RegisterForm
 
 
-def index(request):
+def index(request, **kwargs):
+    error = ''
+    if kwargs['errno']:
+        error = "An error has occured"
     if request.user.is_authenticated():
         return HttpResponseRedirect(reverse('social:home'))
     return render(request, 'index.html', {
         'signup_form': RegisterForm(),
         'login_form': AuthenticationFormPlaceholder(),
+        'error': error,
     })
 
 
