@@ -61,8 +61,9 @@
       <div class="span12">
         <div class="quote">
           <blockquote>
-            <p>Those who mind don't matter, and those who matter don't mind.</p>
-            <small>Bernard M. Baruch</small>
+            <p>{{ quote.text }}</p><!-- Those who mind don't matter, and those who matter don't mind. -->
+            {% if quote.author %}<small>{{ quote.author }}</small>{% endif %}<!-- Bernard M. Baruch -->
+            {% if quote.book %}<small>{{ quote.book }}</small>{% endif %}
           </blockquote>
         </div>
       </div>

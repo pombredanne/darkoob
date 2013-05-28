@@ -10,6 +10,7 @@ from django.contrib.auth import authenticate
 from darkoob.social.models import UserProfile, UserNode
 from darkoob.social.forms import RegisterForm, ChangePasswordForm, EditProfileForm, NewPostForm, CommentForm
 from darkoob.post.models import Post, Comment
+from darkoob.book.models import Quote
 
 
 
@@ -132,10 +133,13 @@ def home(request):
     if request.is_ajax():
         template = 'post/posts.html'
 
+    
+
     return render(request, template, {
         'new_post_form': NewPostForm(),
         'posts': posts,
         'count': count[::-1],
+        'quote': Quote.objects.order_by('?')[0],
     })
 
 @login_required

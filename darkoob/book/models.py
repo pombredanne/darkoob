@@ -62,7 +62,7 @@ class Review(models.Model):
 
 class Quote(models.Model):
     author = models.ForeignKey(Author)
-    book = models.ForeignKey(Book, null=True)
+    book = models.ForeignKey(Book, null=True, blank=True)
     text = models.TextField()
 
     def __unicode__(self):
