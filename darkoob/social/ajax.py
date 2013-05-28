@@ -3,10 +3,11 @@ from dajaxice.decorators import dajaxice_register
 from django.utils.translation import ugettext as _
 
 from models import UserProfile
+from darkoob.book.models import Quote
 
 @dajaxice_register(method='POST')
 def edit_sex(request,sex):
-    errors = []
+    errors = ['error1', 'error2', 'error3']
     try:
         UserProfile.objects.filter(user=request.user).update(sex=sex)
     except:
@@ -16,6 +17,23 @@ def edit_sex(request,sex):
 
 
     return simplejson.dumps({'done':done, 'sex':sex , 'errors':errors })
+
+@dajaxice_register(method='POST')
+def set_my_quote(request, quote_id):
+    errors = []
+    done = False
+
+    try:
+        quote = Quote.objects.get(id=quote_id)
+        UserProfile.objects.filter(user=request.user).update(quote=quote)
+    except:
+        print "khkhakh"
+        errors.append('dsfds')
+    else:
+        done = True
+
+
+    return simplejson.dumps({'done':done, 'errors':errors })
 
 
 # @dajaxice_register(method='POST')
