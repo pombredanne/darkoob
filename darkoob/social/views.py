@@ -14,7 +14,6 @@ from darkoob.book.models import Quote
 
 
 
-
 @login_required
 def profile(request):
     form = EditProfileForm(request.POST)
@@ -87,7 +86,12 @@ def change_password(request):
     # # a[0].save()
     # print "-----------------------------------"
     # # print UserNode.index.search(user_id=26)[0].get_follows()
-    print Migration.objects.all()
+    from darkoob.migration.models import Migration, Hop
+
+    # print Migration.objects.all()[0].hop_set.filter()
+    # print "khkh", UserProfile.objects.get(user=request.user).get_related_migrations()
+    m = Migration() 
+    print m.get_user_related_migrations(request.user)
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
