@@ -68,3 +68,18 @@ class Quote(models.Model):
     def __unicode__(self):
         return unicode(self.text)
 
+class Migration(models.Model):
+    book = models.ForeignKey(Book)
+    starter = models.ForeigntKey(User)
+    start_time = models.DateTimeField(default=datetime.now)
+
+    def __unicode__(self):
+        return unicode("%s - %s" % (self.book.title, self.starter.username))
+
+class Hop(models.Model):
+    migration = models.ForeignKey(Migration)
+    host = models.ForeignKey(User)
+    received_time = models.DateTimeField(default=datetime.now)
+
+    def __unicode__(self):
+        return unicode("%s - %s" % (self.migration, self.host.username))
