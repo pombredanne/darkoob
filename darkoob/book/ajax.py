@@ -7,12 +7,20 @@ from darkoob.book.models import Book
 def rate(request, rate, book_id):
     done = False
     errors = []
+    book = ''
     try:
-        Book.objects.get(id = book_id).rating.add(score=rate, user=request.user, ip_address=request.META['REMOTE_ADDR'])
+        book = Book.objects.get(id = book_id) 
+        book.rating.add(score=rate, user=request.user, ip_address=request.META['REMOTE_ADDR'])
     except:
         errors.append('An error occoured in record in database')
     else:
+        try: 
+            rate = book.rating.get_rating()
+        except:
+            errors.append('An error occoured in reading rate')
+            rate = 0
         done = True
 
-    return simplejson.dumps({'done':done , 'errors': errors })
+
+    return simplejson.dumps({'done':done , 'rate':rate, 'errors': errors })
 

@@ -65,9 +65,10 @@
           $(function(){
           	$.fn.raty.defaults.path='/static/img';
           	$('#star').raty({
+              score: {{ rate }},
 	          	click: function(score, evt) {
-		          Dajaxice.darkoob.book.rate(callback,{'rate':score , 'book_id':{{book_id }} });
-		  }
+		            Dajaxice.darkoob.book.rate(callback,{'rate':score , 'book_id':{{book_id }} });
+		          }
 		});
           });
           </script>
