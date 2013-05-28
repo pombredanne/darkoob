@@ -5,6 +5,9 @@
 <link rel="stylesheet" type="text/less" href="{% static "/static/css/profile_base_style.less" %}">
 <link rel="stylesheet" type="text/less" href="{% static "/static/css/home_style.less" %}">
 {% endblock css %}
+
+
+
 {% block title %}Book{% endblock title %}
 
 {% block sidebar %}
@@ -46,15 +49,24 @@
           <script type="text/javascript" src="{% static "/static/js/jquery.min.js" %}"></script>
           <script type="text/javascript" src="{% static "/static/js/jquery.raty.min.js" %}"></script>
           <script type="text/javascript">
+          function callback(data){
+            if (data.done){
+            //   $.sticky('<B> your gender changed</b>');
+            //   $('#sex_field').slideUp('normal');
+            //   $('#sex_box').slideDown('normal');
+            //   document.getElementById("sex_text").innerHTML = data.sex; 
+            //   }else{
+            //   $.sticky(data.errors);
+                        alert(data.done);
+
+            }
+          }
+
           $(function(){
           	$.fn.raty.defaults.path='/static/img';
           	$('#star').raty({
 	          	click: function(score, evt) {
-		          $.ajax({
-			       type: "POST",
-			       url: "http://127.0.0.1:8000/book/rate/",
-			       data: "rate=score",	      
-			     });
+		          Dajaxice.darkoob.book.rate(callback,{'rate':score , 'book_id':{{book_id }} });
 		  }
 		});
           });
