@@ -31,6 +31,7 @@ class AuthenticationFormPlaceholder(AuthenticationForm):
     username = forms.CharField(
         max_length=30,
         widget=forms.TextInput(attrs={
+            'id': 'id_username_auth',
             'placeholder': _('Username'),
             'class': 'input-medium',
             'required': '',
@@ -38,8 +39,10 @@ class AuthenticationFormPlaceholder(AuthenticationForm):
     )
     password = forms.CharField(
         widget=forms.PasswordInput(attrs={
+            'id': 'id_password_auth',
             'placeholder': _('Password'),
             'class': 'input-medium required',
+            'required': '',
         })
     )
 
@@ -135,6 +138,7 @@ class RegisterForm(forms.Form):
         widget=forms.TextInput(attrs={
             'placeholder': _('Username'),
             'class': 'span12 required',
+            'required': '',
         }))
 
     first_name = forms.CharField(
@@ -155,6 +159,7 @@ class RegisterForm(forms.Form):
         widget = forms.TextInput(attrs={
             'placeholder':_('Last Name'),
             'class': 'span6 required',
+            'required': '',
         })
     )
     email = forms.EmailField(
@@ -164,6 +169,7 @@ class RegisterForm(forms.Form):
             'placeholder': _('Your email address'),
             'type': 'email',
             'class': 'span12 required',
+            'required': '',
         })
     )
     password = forms.CharField(
@@ -173,6 +179,7 @@ class RegisterForm(forms.Form):
         widget = forms.PasswordInput(attrs={
             'placeholder':_('Password'),
             'class': 'span6 required',
+            'required': '',
         })
     )
     confirm_password = forms.CharField(
@@ -181,7 +188,8 @@ class RegisterForm(forms.Form):
         max_length = 30,
         widget = forms.PasswordInput(attrs={
             'placeholder':_('Re-type password'),
-            'class': 'span6 required',
+            'class': 'span6',
+            'required': '',
         })
     )
 
@@ -199,6 +207,7 @@ class RegisterForm(forms.Form):
         widget = forms.TextInput(attrs={
             'placeholder':_('Day'),
             'class': 'span4',
+            'required': '',
         })
     )
 
@@ -209,6 +218,7 @@ class RegisterForm(forms.Form):
         widget = forms.TextInput(attrs={
             'placeholder':_('Year'),
             'class': 'span4',
+            'required': '',
         })
     )
 

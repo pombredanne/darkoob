@@ -67,7 +67,7 @@ function calculate(){
             Darkoob
           </div>
           <div class="span8 offset2">
-            <form class="form-inline login" method="post" action="{% url "social:login" %}">
+            <form id="id_login_form" class="form-inline login" method="post" action="{% url "social:login" %}">
               {% csrf_token %}
               {% for field in login_form %}
                   {{ field }}
@@ -86,6 +86,9 @@ function calculate(){
             <legend>Sign up</legend>
           </div>
           <div class="span6 offset1 signup">
+            <div id="id_form_error" class="alert alert-error" style="display: {% if error %}block{% else %}none{% endif %};">
+              {{ error }}
+            </div>
             <form id="id_signup_form" method="post" action="{% url "social:signup" %}">
               {% csrf_token %}
               <div class="controls">
@@ -108,7 +111,8 @@ function calculate(){
                 {{ signup_form.day }}
               </div>
               <div class="form-actions">
-                <button type="submit" class="btn btn-primary" onClick="validate_signup();">Login</button>
+                <button type="submit" class="btn btn-primary">Login</button>
+                <button class="btn" onClick="reset_form();">Reset</button>
               </div>
             </form>
           </div>
@@ -117,6 +121,20 @@ function calculate(){
     </div>
 
   </div>
+  <script>
+$("#id_signup_form").submit(function() {
+  pass = $("#id_password");
+  confirm_pass = $("#id_confirm_password");
+  if (pass.val() == confirm_pass.val()) {
+    return true;
+  } else {
+    console.log(pass.val() + " == " + confirm_pass.val());
+    $("#id_form_error").css("display", "block").text("Your passwords don't match.");
+    return false;
+  }
+})
+</script>
+
 
 {% endblock body %}
 <script>
