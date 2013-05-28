@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from neomodel import StructuredNode, IntegerProperty, RelationshipTo
+from darkoob.book.models import Quote
 
 SEX_CHOICES = (
         ('Male', 'Male'),
@@ -48,6 +49,7 @@ class UserProfile(models.Model):
     mobile = models.CharField(max_length=20, null=True, blank=True)
     website = models.URLField(null=True, blank=True)
     city = models.OneToOneField(City, null=True, blank=True)
+    quote = models.ForeignKey(Quote, null=True, blank=True)
 
     # NOTE: userprof_obj.education_set.all() return all education set of a person 
 

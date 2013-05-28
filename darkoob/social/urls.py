@@ -5,7 +5,7 @@ from darkoob.social import views as social_views
 from darkoob.social.forms import AuthenticationFormPlaceholder
 
 urlpatterns = patterns('',
-    url(r'^home/', social_views.home, name='home'),
+    url(r'^home/$', social_views.home, name='home'),
     url(r'^signup/$', social_views.signup, name='signup'),
     url(r'^login/$', auth_views.login,
         {'template_name': 'social/login.html',

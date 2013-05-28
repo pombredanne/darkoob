@@ -62,8 +62,8 @@ class Review(models.Model):
 
 class Quote(models.Model):
     author = models.ForeignKey(Author)
+    book = models.ForeignKey(Book, null=True)
     text = models.TextField()
-    shared_by = models.ForeignKey(User)
 
     def __unicode__(self):
         return unicode(self.text)

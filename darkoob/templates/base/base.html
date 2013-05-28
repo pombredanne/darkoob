@@ -11,6 +11,8 @@
   <link rel="stylesheet" type="text/less" href="{% static "/static/css/common_style.less" %}">
   <link rel="stylesheet" type="text/css" media="screen" href="{% static "/static/bootstrap/css/bootstrap.min.css" %}">
   <link rel="stylesheet" type="text/css" media="screen" href="{% static "/static/bootstrap/css/bootstrap-responsive.min.css" %}">
+  <link rel="stylesheet" type="text/css" href="{% static "/static/css/jquery.pnotify.default.css" %}">
+  <link rel="stylesheet" type="text/css" href="{% static "/static/css/jquery.pnotify.default.icons.css" %}">
   {% block css %}
   {% endblock %}
 
@@ -19,6 +21,9 @@
   <script type="text/javascript" src="{% static "/static/bootstrap/js/bootstrap.min.js" %}"></script>
   <script type="text/javascript" src="{% static "/static/dajax/jquery.dajax.core.js" %}"></script>
   <script type="text/javascript" src="{% static "/static/js/less-1.3.3.min.js" %}"></script>
+  <script type="text/javascript" src="{% static "/static/js/jquery.pnotify.min.js" %}"></script>
+  <script type="text/javascript" src="{% static "/static/js/base.js" %}"></script>
+
   {% dajaxice_js_import %}
 
   {% block js %}
