@@ -22,17 +22,15 @@ def edit_sex(request,sex):
 def set_my_quote(request, quote_id):
     errors = []
     done = False
-
     try:
         quote = Quote.objects.get(id=quote_id)
-        UserProfile.objects.filter(user=request.user).update(quote=quote)
+        request.user.userprofile.quote = quote
+        request.user.userprofile.save()
     except:
         print "khkhakh"
         errors.append('dsfds')
     else:
         done = True
-
-
     return simplejson.dumps({'done':done, 'errors':errors })
 
 

@@ -11,6 +11,8 @@ from darkoob.social.models import UserProfile, UserNode
 from darkoob.social.forms import RegisterForm, ChangePasswordForm, EditProfileForm, NewPostForm, CommentForm
 from darkoob.post.models import Post, Comment
 from darkoob.book.models import Quote
+from darkoob.migration.models import Migration
+
 
 
 
@@ -86,12 +88,12 @@ def change_password(request):
     # # a[0].save()
     # print "-----------------------------------"
     # # print UserNode.index.search(user_id=26)[0].get_follows()
-    from darkoob.migration.models import Migration, Hop
+    # from darkoob.migration.models import Migration, Hop
 
-    # print Migration.objects.all()[0].hop_set.filter()
-    # print "khkh", UserProfile.objects.get(user=request.user).get_related_migrations()
-    m = Migration() 
-    print m.get_user_related_migrations(request.user)
+    # # print Migration.objects.all()[0].hop_set.filter()
+    # # print "khkh", UserProfile.objects.get(user=request.user).get_related_migrations()
+    # m = Migration() 
+    # print m.get_user_related_migrations(request.user)
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
@@ -138,13 +140,15 @@ def home(request):
     if request.is_ajax():
         template = 'post/posts.html'
 
-    
+    m = Migration() 
+    print m.get_user_related_migrations(request.user)
 
     return render(request, template, {
         'new_post_form': NewPostForm(),
         'posts': posts,
         'count': count[::-1],
         'quote': Quote.objects.order_by('?')[0],
+        'migrations': m.get_user_related_migrations(request.user),
     })
 
 @login_required
