@@ -1,7 +1,7 @@
 {% block content %}
     <h2>Search</h2>
     <form method="get">
-    <table>
+      <table>
       {{ form.as_table }}
       <tr>
         <td>&nbsp;</td>
@@ -14,15 +14,25 @@
     {% if query %}
       <h3>Results</h3>
       {% for result in page.object_list %}
-      <p>
-      Title:{{ result.object.title }}<br/>
-      Authors:<br/>
-      {% for author in result.object.authors.all %}
-      {{ author }}<br/>
-      {% endfor %}
-      Language:{{ result.object.language }}<br/>
-      Publisher:{{ result.object.publisher }}<br/>
-      </p>
+      {% if result.content_type == 'book.book' %}
+      <div class=book_result">
+        title:<b>{{ result.object.title }}</b><br/>
+        authors:<br/>
+        <li>
+        {% for author in result.object.authors.all %}
+        <lo>{{ author }}</lo>
+        {% endfor %}
+        </li>
+        language:{{ result.object.language }}<br/>
+        publisher:{{ result.object.publisher }}<br/>
+      </div>
+      {% endif %}
+      {% if result.content_type == 'book.author' %}
+      <div class="Author_result">
+        Author:<b>{{ result.object.name }}</b><br/>
+      </div>
+      {% endif %}
+
       {% empty %}
       <p>No results found.</p>
       {% endfor %}

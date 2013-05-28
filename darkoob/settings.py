@@ -33,6 +33,14 @@ HAYSTACK_CONNECTIONS = {
    },
 }
 
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+#HAYSTACK_SIGNAL_PROCESSOR = 'queued_search.signals.QueuedSignalProcessor'
+#QUEUE_BACKEND = 'redis'
+
+#import logging
+#SEARCH_QUEUE_LOG_LEVEL = logging.DEBUG
+
+
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = []
@@ -166,7 +174,11 @@ INSTALLED_APPS = (
     'taggit',
     'bootstrap_toolkit',
     'endless_pagination',
+    # Search apps
     'haystack',
+    'queued_search',
+    'saved_searches',
+    # site apps
     'darkoob.book',
     'darkoob.social',
     'darkoob.search',

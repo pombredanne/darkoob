@@ -14,6 +14,16 @@ Run curl -X GET http://localhost:9200/
 
 WIKI
 ----
-SEARCH ENGINE
---------------
+
+--------------------------
+SEARCH ENGINE INSTALLATION
+--------------------------
+
+INSTALLING MEMCACHED
+---------------------
+DOWNLOAD: http://memcached.googlecode.com/files/memcached-1.4.15.tar.gz
+RUN:
+  *./configure
+  *sudo make
+  *sudo make install
 Run: python manage.py rebuild_index
