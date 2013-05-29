@@ -9,7 +9,7 @@ from django.template import RequestContext
 from darkoob.book.models import Book
 
 def page(request, book_id, book_title):
-    book = Book.objects.get(id = book_id)
+    book = Book.objects.get(id = book_id, title = book_title)
 
     if book:
         return render(request, "book/book_page.html" ,{'book_id': book_id, 'rate': book.rating.get_rating()})
