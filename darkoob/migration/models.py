@@ -17,6 +17,7 @@ class Migration(models.Model):
     book = models.ForeignKey(Book, related_name='book_set')
     starter = models.ForeignKey(User, related_name='starter_set')
     start_time = models.DateTimeField(auto_now_add=True)
+    private_key = models.CharField(max_length=10)
  
     def get_user_hoped_migrations(self, user):
         '''return all migration's objects that hoped in user'''

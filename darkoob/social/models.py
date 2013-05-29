@@ -53,9 +53,9 @@ class UserProfile(models.Model):
 
     # NOTE: userprof_obj.education_set.all() return all education set of a person 
 
-    def get_related_migrations(self):
-        from darkoob.migration.models import Migration, Hop
-        print Hop.objects.filter(host=user)
+    # def get_related_migrations(self):
+    #     from darkoob.migration.models import Migration, Hop
+    #     print Hop.objects.filter(host=user)
 
 
     def __unicode__(self):

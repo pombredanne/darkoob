@@ -141,7 +141,7 @@ def home(request):
         template = 'post/posts.html'
 
     m = Migration() 
-    print m.get_user_related_migrations(request.user)
+    # print m.get_user_related_migrations(request.user)
 
     return render(request, template, {
         'new_post_form': NewPostForm(),
