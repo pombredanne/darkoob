@@ -20,9 +20,11 @@
       <div class="span10 sidebox">
         <legend>Groups</legend>
         <p>
-          list<br />
-          of<br />
-          groups
+          <ul>
+            {% for group in groups %}
+              <li><a href={% url 'group:group' group_id=group.id group_name=group.name %}>{{ group.name }}</a></li>
+            {% endfor %}
+          </ul>
         </p>
       </div> <!-- span10 -->
     </div> <!-- row -->

@@ -132,7 +132,7 @@ def home(request):
     template = 'social/home.html'
     posts = Post.objects.order_by("-submitted_time")
     count = range(1, len(posts) + 1)
-
+    groups = request.user.group_set.all()
     if request.is_ajax():
         template = 'post/posts.html'
 
@@ -140,6 +140,7 @@ def home(request):
         'new_post_form': NewPostForm(),
         'posts': posts,
         'count': count[::-1],
+        'groups': groups,
     })
 
 @login_required
@@ -149,4 +150,5 @@ def new_post(request):
 @login_required
 def user_profile(request, username):
     return render(request, 'social/user_profile.html', {'username': username})
+
 
