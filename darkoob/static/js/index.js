@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  $("#id_username").focus();
+  $("#id_username_auth").focus();
 })
 
 $("#id_signup_form").bind('submit', function() {

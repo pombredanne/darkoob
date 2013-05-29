@@ -1,5 +1,5 @@
 from django.contrib import admin
-from models import Book, Publisher, Language, Author, Translator, Translation, Review
+from models import Book, Publisher, Language, Author, Translator, Translation, Review, Quote
 
 class BookAdmin(admin.ModelAdmin):
     search_fields = ('title', 'publisher', 'language', 'authors')
@@ -29,6 +29,9 @@ class ReviewAdmin(admin.ModelAdmin):
     search_fields = ('book', 'user', 'text', 'submitted_time')
     list_display = ('book', 'user', 'submitted_time')
 
+class QuoteAdmin(admin.ModelAdmin):
+    search_fields = ('author', 'text', 'book') 
+    list_display = ('author', 'text', 'book')
 
 admin.site.register(Book, BookAdmin)
 admin.site.register(Publisher, PublisherAdmin)
@@ -37,3 +40,4 @@ admin.site.register(Author, AuthorAdmin)
 admin.site.register(Translator, TranslatorAdmin)
 admin.site.register(Translation, TranslationAdmin)
 admin.site.register(Review, ReviewAdmin)
+admin.site.register(Quote, QuoteAdmin)

@@ -10,6 +10,35 @@
 {% endblock css %}
 
 {% block js %}
+<script>
+function set_my_quote_callback(data){
+  if (data.done){
+    $.pnotify({
+      title: 'Profile Updated',
+      text: 'You change your favaorite quote',
+      opacity: .8
+    })
+    // document.write(data.errors + "<br>"); 
+
+// for (var i=0;i<data.errors.length;i++)
+// { 
+//   aler
+//   alert(data.errors[i]);
+// // document.write(cars[i] + "<br>");
+// }
+// }    // $.pnotify({
+    // title: 'See Through Error',
+    // text: 'There\'s an error, but no one cares.',
+    // type: 'error',
+    // opacity: .8
+    // });
+  }else{
+
+  }
+}
+</script>
+
+
 {{ block.super }}
 {% endblock js %}
 
@@ -63,9 +92,11 @@
       <div class="span12">
         <div class="quote">
           <blockquote>
-            <p>Those who mind don't matter, and those who matter don't mind.</p>
-            <small>Bernard M. Baruch</small>
+            <p>{{ quote.text }}</p><!-- Those who mind don't matter, and those who matter don't mind. -->
+            {% if quote.author %}<small>{{ quote.author }}</small>{% endif %}<!-- Bernard M. Baruch -->
+            {% if quote.book %}<small>{{ quote.book }}</small>{% endif %}
           </blockquote>
+          <button id="set_quote" class="btn btn-inverse" onmousedown="Dajaxice.darkoob.social.set_my_quote(set_my_quote_callback,{'quote_id': {{ quote.id }} })">MyQuote</button>
         </div>
       </div>
     </div> <!-- row -->

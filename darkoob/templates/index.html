@@ -1,61 +1,22 @@
 {% extends "base/base.html" %}
+
 {% load staticfiles %}
 {% load dajaxice_templatetags %}
 {% load bootstrap_toolkit %}
+
 {% block css %}
 <link rel="stylesheet" type="text/less" href="{% static "/static/css/index_style.less" %}">
 {% endblock css %}
+
 {% block js %}
 <script type="text/javascript" src="{% static "/static/js/index.js" %}"></script>
 {% endblock js %}
+
 {% block title %}
 Darkoob
 {% endblock title %}
 
 {% block body %}
-<!--<script>
-function my_js_callback(data){
-    alert(data.message);
-}
-function callback(data){
-    alert(data.message);
-}
-function calculate(){
-    Dajaxice.darkoob.multiply(Dajax.process)
-}
-</script>
-<input type="text" value="" id="result">
-<input type="button" onclick="Dajaxice.darkoob.randomize(Dajax.process)" value="Random!">
-
-
-
-
-</br>
-</br>
-</br>
-</br>
-</hr>
-  <input type="button" onclick="Dajaxice.darkoob.dajaxice_example(my_js_callback)" value="Get message from server!">
-
-  <input type="text" id="text"/>
-  <input type="button" onclick="Dajaxice.darkoob.args_example(callback, {'text':$('#text').val()})" value="Send!"/>
-  <br />
-
-
-
-</br>
-</br>
-</br>
-</br>
-</hr>
-  <form method="post" actin="{% url "social:signup" %}">
-    {% csrf_token %}
-    {{ form|as_bootstrap }}
-    <div class="form-actions">
-      <button type="submit" class="btn btn-primary">Submit</button>
-    </div>
-  </form>-->
-
   <div class="container-fluid">
     <div class="row-fluid">
       <div class="span6 offset3 top">
@@ -94,9 +55,9 @@ function calculate(){
               <div class="controls">
                 {# {{ signup_form.username }} #}
                 {% if form.errors %}
-                           <p style="color: red;">
-                               Please correct the error{{ form.errors }} below.
-                               </p>
+                  <p style="color: red;">
+                    Please correct the error{{ form.errors }} below.
+                  </p>
                 {% endif %}
               </div>
               <div class="controls controls-row">
@@ -119,7 +80,7 @@ function calculate(){
                 {{ signup_form.day }}
               </div>
               <div class="form-actions">
-                <button type="submit" class="btn btn-primary">Login</button>
+                <button type="submit" class="btn btn-primary">Sign Up!</button>
                 <button class="btn" onClick="reset_form();">Reset</button>
               </div>
             </form>

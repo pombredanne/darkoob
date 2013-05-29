@@ -54,6 +54,13 @@
   <div class="span12">
     <div class="row-fluid">
       <div class="span12">
+        <div class="quote">
+          <blockquote>
+            <p>{{ user.userprofile.quote.text }}</p>
+            {% if user.userprofile.quote.author %}<small>{{ user.userprofile.quote.author }}</small>{% endif %}
+            {% if user.userprofile.quote.book %}<small>{{ user.userprofile.quote.book }}</small>{% endif %}
+          </blockquote>
+        </div>
         <div class="sidebox post">
           <p>
             This is user's first post.

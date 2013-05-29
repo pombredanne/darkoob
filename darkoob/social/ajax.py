@@ -3,48 +3,35 @@ from dajaxice.decorators import dajaxice_register
 from django.utils.translation import ugettext as _
 
 from models import UserProfile
+from darkoob.book.models import Quote
 
 @dajaxice_register(method='POST')
 def edit_sex(request,sex):
-    errors = []
+    #TODO: In I18N should save only Male an Female in database 
+    errors = ['error1', 'error2', 'error3']
     try:
         UserProfile.objects.filter(user=request.user).update(sex=sex)
     except:
-        errors.append('dsfds')
+        errors.append(_('an error occoured in saving to database'))
     else:
         done = True
 
-
     return simplejson.dumps({'done':done, 'sex':sex , 'errors':errors })
 
+@dajaxice_register(method='POST')
+def set_my_quote(request, quote_id):
+    errors = []
+    done = False
+    try:
+        quote = Quote.objects.get(id=quote_id)
+        request.user.userprofile.quote = quote
+        request.user.userprofile.save()
+    except:
+        errors.append(_('an error occoured in saving to database'))
+    else:
+        done = True
 
-# @dajaxice_register(method='POST')
-# def edit_sex(request,sex):
-#     errors = []
-#     done = False
-#     # print 'day:', sex
-
-
-#     # try:
-#     #     # TODO: In I18N should save only Male an Female in database 
-#     #     print UserProfile.objects.filter(user=request.user).update(sex=sex)
-#     # except: 
-#     #     errors.append(_('an error eccoured'))
-#     # else: 
-#     #     done = True
-
-
-#     return simplejson.dumps({'done':True, 'sex': sex, 'errors': errors})
-
-
-#     # try:
-#     #     UserProfile.objects.filter(user=request.user).update(sex=SEX_CHOICES[sex])
-#     # except:
-#     #     print "ERROR"
-#     #     errors.append(_('An error eccoured!'))
-#     # else:
-#     #     done = True
-
+    return simplejson.dumps({'done':done, 'errors':errors })
 
 def date_validators(date):
     # TODO: need to validator for date 
@@ -67,7 +54,6 @@ def edit_birthday(request, day, year, month):
     else: 
         done = True
 
-
     return simplejson.dumps({'done': done, 'birthday': birthday.strftime('%m/%d/%Y') , 'errors': errors})
 
 @dajaxice_register(method='POST')
@@ -81,7 +67,6 @@ def edit_mobile(request, mobile):
         #TODO: a phone number validator
     else: 
         done = True
-
 
     return simplejson.dumps({'done': done, 'mobile': mobile , 'errors': errors})
 

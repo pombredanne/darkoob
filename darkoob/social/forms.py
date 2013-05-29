@@ -32,7 +32,7 @@ class AuthenticationFormPlaceholder(AuthenticationForm):
         max_length=30,
         widget=forms.TextInput(attrs={
             'id': 'id_username_auth',
-            'placeholder': _('Username'),
+            'placeholder': _('Username or Email'),
             'class': 'input-medium',
             'required': '',
         })

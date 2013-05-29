@@ -10,6 +10,8 @@ from django.contrib.auth import authenticate
 from darkoob.social.models import UserProfile, UserNode
 from darkoob.social.forms import RegisterForm, ChangePasswordForm, EditProfileForm, NewPostForm, CommentForm
 from darkoob.post.models import Post, Comment
+from darkoob.book.models import Quote
+from darkoob.migration.models import Migration
 
 
 
@@ -23,13 +25,9 @@ def profile(request):
 def signup(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
-        print " valid"
-        print form
         if form.is_valid():
-            print "form is not valid"
             from datetime import date
             cd = form.cleaned_data      
-            # username = cd['username']
             email = cd['email'] #TODO: Email should be unique 
             user = User.objects.create_user(username = email, password = cd['password'], email = cd['email'])
             user.first_name = cd['first_name']
@@ -40,9 +38,9 @@ def signup(request):
             else:
                 UserProfile.objects.filter(user=user).update(sex = 'Male')
             user.save()
-            u = authenticate(email, cd['password'])
-            return HttpResponseRedirect(reverse('social:home'))
-            #return render_to_response('registered.html',{'firstname':cd['first_name']})
+            # u = authenticate(email, cd['password'])
+            # return HttpResponseRedirect(reverse('social:home'))
+            return render_to_response('registered.html',{'firstname':cd['first_name']})
         else:
             return HttpResponseRedirect(reverse('index'))
 
@@ -90,6 +88,12 @@ def change_password(request):
     # # a[0].save()
     # print "-----------------------------------"
     # # print UserNode.index.search(user_id=26)[0].get_follows()
+    # from darkoob.migration.models import Migration, Hop
+
+    # # print Migration.objects.all()[0].hop_set.filter()
+    # # print "khkh", UserProfile.objects.get(user=request.user).get_related_migrations()
+    # m = Migration() 
+    # print m.get_user_related_migrations(request.user)
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
@@ -136,11 +140,16 @@ def home(request):
     if request.is_ajax():
         template = 'post/posts.html'
 
+    m = Migration() 
+    print m.get_user_related_migrations(request.user)
+
     return render(request, template, {
         'new_post_form': NewPostForm(),
         'posts': posts,
         'count': count[::-1],
         'groups': groups,
+        'quote': Quote.objects.order_by('?')[0],
+        'migrations': m.get_user_related_migrations(request.user),
     })
 
 @login_required
