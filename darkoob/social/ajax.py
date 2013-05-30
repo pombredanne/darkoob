@@ -8,7 +8,7 @@ from darkoob.book.models import Quote
 @dajaxice_register(method='POST')
 def edit_sex(request,sex):
     #TODO: In I18N should save only Male an Female in database 
-    errors = ['error1', 'error2', 'error3']
+    errors = []
     try:
         UserProfile.objects.filter(user=request.user).update(sex=sex)
     except:
@@ -20,7 +20,7 @@ def edit_sex(request,sex):
 
 @dajaxice_register(method='POST')
 def set_my_quote(request, quote_id):
-    errors = []
+    errors = ['e2','e4']
     done = False
     try:
         quote = Quote.objects.get(id=quote_id)

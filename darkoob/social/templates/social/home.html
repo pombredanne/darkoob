@@ -18,22 +18,34 @@ function set_my_quote_callback(data){
       text: 'You change your favaorite quote',
       opacity: .8
     })
-    // document.write(data.errors + "<br>"); 
-
-// for (var i=0;i<data.errors.length;i++)
-// { 
-//   aler
-//   alert(data.errors[i]);
-// // document.write(cars[i] + "<br>");
-// }
-// }    // $.pnotify({
-    // title: 'See Through Error',
-    // text: 'There\'s an error, but no one cares.',
-    // type: 'error',
-    // opacity: .8
-    // });
   }else{
-
+    for (i in data.errors){
+      $.pnotify({
+        title: 'Error',
+        type:'error',
+        text: data.errors[i],
+        opacity: .8
+      })
+    }
+  }
+}
+function submit_private_key_callback(data){
+  if (data.done){
+    $.pnotify({
+      type: 'success',
+      title: 'correct info',
+      text: data.message,
+      opacity: .8
+    })
+  }else{
+    for (i in data.errors){
+      $.pnotify({
+        title: 'Error',
+        type:'error',
+        text: data.errors[i],
+        opacity: .8
+      })
+    }
   }
 }
 </script>
@@ -45,6 +57,17 @@ function set_my_quote_callback(data){
 {% block sidebar %}
 <div class="row-fluid">
   <div class="span12">
+    <div class="row-fluid">
+      <div class="span10 sidebox">
+        <legend>Hoping</legend>
+        <p>
+          I Get a book( TODO: tooltip(private key is 10 digit key that writen in your book) )
+          </br>
+          <input type="text" placeholder="Private Key" id='private_key'> 
+          <button id='' class="btn btn-inverse" onmousedown="Dajaxice.darkoob.migration.submit_key(submit_private_key_callback,{'private_key': $('#private_key').val() })">Check</button>
+        </p>
+      </div> <!-- span10 -->
+    </div> <!-- row -->
     <div class="row-fluid">
       <div class="span10 sidebox">
         <legend>Groups</legend>
