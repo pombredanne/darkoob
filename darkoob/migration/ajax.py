@@ -1,4 +1,4 @@
-from django.utils import simplejson
+from django.utisls import simplejson
 from dajaxice.decorators import dajaxice_register
 from django.utils.translation import ugettext as _
 
