@@ -74,7 +74,7 @@ function submit_private_key_callback(data){
         <p>
           <ul>
             {% for group in groups %}
-              <li><a href={% url 'group:group' group_id=group.id group_name=group.name %}>{{ group.name }}</a></li>
+              <li><a href="{% url 'group:group_page' group_id=group.id group_name=group.name %}">{{ group.name }}</a></li>
             {% endfor %}
           </ul>
         </p>
