@@ -152,6 +152,34 @@ def home(request):
         'migrations': m.get_user_related_migrations(request.user),
     })
 
+
+
+def entry_followers(request,template="social/followers.html",page_template="social/followers_page.html"):
+    posts= Post.objects.order_by("-publish_date")
+    count=[1,2]
+    context = {
+            'posts': posts,
+            'page_template': page_template,
+            'count':count[::-1],
+    }
+    if request.is_ajax():
+        template = page_template
+
+    return render_to_response(template, context,context_instance=RequestContext(request))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @login_required
 def new_post(request):
     pass

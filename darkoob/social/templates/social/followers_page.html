@@ -1,0 +1,145 @@
+<style>
+
+.main-post{
+  width:95%;
+  
+  margin-left:4px;
+  margin-right:4px;
+  height:100px;
+  background-color:#FF00;
+
+
+
+}
+.post-header{
+  background-color:#FFF;
+  width:90%;
+  
+  margin-left:20px;
+  margin-right:20px;
+  height:100px;
+
+
+}
+.author{
+  width:120px;
+  height:100px;
+  background-color:#342;
+
+}
+.author-img{
+  width:80px;
+  height:80px;
+  background-color:#FFF;
+}
+.author-name{
+  color:#CCCC00;
+
+}
+.title{
+  float:right;
+  font-size:40px;
+  margin-right:20px;
+  width:350px;
+  background-color:#999;
+}
+.title-des{
+  font-size:20px;
+
+
+}
+
+.post-detail{
+  
+
+
+}
+
+
+.content{
+  margin-top:5px;
+  width:90%;
+  background-color:#FFF;
+  margin-left:20px;
+  margin-right:20px;
+  height:100px;
+
+}
+.tags{
+  margin-top:0px;
+  width:90%;
+  background-color:#CCCF00;
+  margin-left:20px;
+  margin-right:20px;
+
+
+}
+.comment{
+  margin-top:0px;
+  width:90%;
+  background-color:#CCfF00;
+  margin-left:20px;
+  margin-right:20px;
+}
+
+</style>
+<script>
+
+</script>
+
+
+{% load endless %}
+{% paginate 3,10 posts %}
+<div class="">
+  <div class="post-header">
+    <div style="float:left;">
+      <div class="author">
+        <div class="author-img">
+         
+          Profile Image
+    
+      
+
+        </div>
+        <div class="author-name">
+        </div>
+      </div>
+    </div>
+    <div style="float:right;">
+
+      <div class="title">
+  
+      </div> 
+      <div class="title-des">
+      </div>
+
+      <div class="post-detail">
+      </div>
+    </div>
+  </div>
+
+
+  <div class="content">
+    {{ post.text }}
+
+    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+
+  </div>
+  <div class="tags">
+
+
+
+    <div style="float:right"><a id='c-{{post.id}}'>Comments</a></div>
+  <div class="comment" >
+
+
+  </div>
+    
+  </div>
+
+
+</div>
+
+  
+<br />
+{% show_more %}
