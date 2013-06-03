@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.template import RequestContext
 from django.contrib.auth import authenticate
+from django.utils import timezone
 
 from darkoob.social.models import UserProfile, UserNode
 from darkoob.social.forms import RegisterForm, ChangePasswordForm, EditProfileForm, NewPostForm, CommentForm
@@ -13,7 +14,7 @@ from darkoob.post.models import Post, Comment
 from darkoob.book.models import Quote
 from darkoob.migration.models import Migration
 from darkoob.group.models import Schedule
-from django.utils import timezone
+
 
 
 
@@ -140,7 +141,14 @@ def home(request):
     posts = Post.objects.order_by("-submitted_time")
     count = range(1, len(posts) + 1)
     groups = request.user.group_set.all()
+    admin_groups = request.user.admin_set.all()
     book_deadlines = []
+    # for group in admin_groups:
+    #     for schedule in group.schedule_set.all():
+    #         deadline_set = schedule.deadline_set.all()
+    #         for i in range(len(deadline_set)):
+    #             deadline_set[i].time_percentage = (timezone.now() - deadline_set[i].start_time).total_seconds()  / (deadline_set[i].end_time - deadline_set[i].start_time).total_seconds() * 100
+    #         book_deadlines.append([ schedule.book , deadline_set])
     for group in groups:
         for schedule in group.schedule_set.all():
             deadline_set = schedule.deadline_set.all()
@@ -159,6 +167,7 @@ def home(request):
         'posts': posts,
         'count': count[::-1],
         'groups': groups,
+        'admin_groups': admin_groups,
         'book_deadlines': book_deadlines,
         'quote': Quote.objects.order_by('?')[0],
         'migrations': m.get_user_related_migrations(request.user),

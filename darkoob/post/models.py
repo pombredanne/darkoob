@@ -1,15 +1,14 @@
 from django.db import models
 from darkoob.social.models import User
 from darkoob.group.models import Group
-
-from datetime import datetime    
+from django.utils import timezone  
 
 from mptt.models import MPTTModel, TreeForeignKey
 
 class Post(models.Model):
 	user_id = models.ForeignKey(User, related_name='post_user_id_set')
 	text = models.TextField()
-	submitted_time = models.DateTimeField(default=datetime.now())
+	submitted_time = models.DateTimeField(default=timezone.now())
 
 	def __unicode__(self):
 		return unicode(self.text)
@@ -20,7 +19,7 @@ class Comment(MPTTModel):
     post = models.ForeignKey(Post)
     author = models.CharField(max_length=60)
     comment = models.TextField()
-    added  = models.DateTimeField(default=datetime.now)
+    added  = models.DateTimeField(default=timezone.now())
     # a link to comment that is being replied, if one exists
     parent = TreeForeignKey('self', null=True, blank=True, related_name='children')
 

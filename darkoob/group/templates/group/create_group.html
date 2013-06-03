@@ -1,0 +1,58 @@
+{% extends "base/profile_base.html" %}
+{% load staticfiles %}
+{% block css %}
+{{ block.super }}
+<link rel="stylesheet" type="text/less" href="{% static "/static/css/profile_base_style.less" %}">
+<link rel="stylesheet" type="text/less" href="{% static "/static/css/home_style.less" %}">
+{% endblock css %}
+
+
+
+{% block title %}Group{% endblock title %}
+
+{% block sidebar %}
+<div class="row-fluid">
+  <div class="span12">
+    <div class="row-fluid">
+      <div class="span10 sidebox">
+        <legend>Groups</legend>
+        <p>
+          list<br />
+          of<br />
+          groups
+        </p>
+      </div> <!-- span10 -->
+    </div> <!-- row -->
+    <div class="row-fluid">
+      <div class="span10 sidebox">
+        <legend>Books</legend>
+        <p>
+          some<br />
+          books
+        </p>
+      </div> <!-- span10 -->
+    </div> <!-- row -->
+  </div> <!-- span12 -->
+</div> <!-- row -->
+{% endblock sidebar %}
+
+{% block main %}
+<div class="row-fluid">
+  <div class="span12">
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="simple-box">
+          <p>
+          TIMELINE
+          </p>
+          <form action='{% url "group:create_group" %}' method='post'>
+           {% csrf_token %}
+           {{ form.name }}
+           <input type="submit" value="Submit">
+          </form>
+        </div>
+      </div> <!-- span12 -->
+    </div> <!-- row -->
+  </div> <!-- span -->
+</div> <!-- row -->
+{% endblock main %}
