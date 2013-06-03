@@ -15,7 +15,7 @@ class Group(models.Model):
 class Schedule(models.Model):
     group = models.ForeignKey(Group)
     book = models.ForeignKey(Book)
-    started_time = models.DateTimeField(default=datetime.now())
+    submitted_time = models.DateTimeField(default=datetime.now())
 
     def __unicode__(self):
         return unicode("%s - %s" % (self.group.name, self.book.title))
@@ -24,7 +24,8 @@ class Deadline(models.Model):
     schedule = models.ForeignKey(Schedule)
     from_page = models.PositiveIntegerField()
     to_page = models.PositiveIntegerField()
-    end_time = models.DateField()
+    start_time = models.DateTimeField()
+    end_time = models.DateTimeField()
 
     def __unicode__(self):
         return unicode("%s, %s from page %g to %g" % (
