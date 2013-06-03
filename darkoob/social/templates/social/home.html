@@ -88,8 +88,13 @@ function submit_private_key_callback(data){
             <li class="deadline"><a href="#">{{ book.0 }}</a>
               <span style="display: none;">
                 {% for deadline in book.1 %}
-                  <div class="progress" style="width: 50%;">
-                    <div class="bar bar-danger" style="width: {{ deadline.time_percentage }}%;"></div>
+                  <div class="progress 
+                    {% if deadline.time_percentage > 90 %} progress-danger
+                    {% else %}{% if deadline.time_percentage > 60 %} progress-warning 
+                    {% else %} progress-success
+                    {% endif %} {% endif %}"
+                  style="width: 88%;">
+                    <div class="bar" style="width: {{ deadline.time_percentage }}%;"></div>
                   </div>
                 {% endfor %}
               </span>
