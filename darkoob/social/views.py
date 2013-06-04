@@ -156,9 +156,20 @@ def home(request):
         'quote': Quote.objects.order_by('?')[0],
         'migrations': m.get_user_related_migrations(request.user),
     })
+@login_required
+def following(request):
+    template = 'social/following.html'
+    if request.is_ajax():
+        template = 'social/user_bar.html'
+    return render(request, template, {
+
+    })
 
 @login_required
 def followers(request):
+    # start cleanup code 
+
+    # 
     template = 'social/followers.html'
     posts = Post.objects.order_by("-submitted_time")
     count = range(1, len(posts) + 1)
@@ -176,8 +187,8 @@ def followers(request):
     # u1 = UserNode.index.get(user_id=2)
 
     # u1 = UserNode(user_id=1).save()
-    # u2 = UserNode(user_id=2).save()
-    # u3 = UserNode(user_id=3).save()
+    # u2 = UserNode(user_id=5).save()
+    # u3 = UserNode(user_id=6).save()
 
 
     # u1.follow_person(2)
@@ -189,9 +200,10 @@ def followers(request):
 
     
     # u1.follow_person(2)
-    # u1.follow_person(3)
-    # u1.follow_person(4)
-    print type(u1.followers.all()[0])
+    # u1.follow_person(5)
+    # u1.follow_person(6)
+    print [User.objects.get(id=node.user_id) for node in u1.following.all()]
+    # print type(u1.followers.all())
     print "User 1 follows {}".format(u1.following.all())
     print "User 1's followers {}".format(u1.followers.all())
     # print "User 1 follows {}".format(u1.get_following())
