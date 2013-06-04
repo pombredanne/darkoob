@@ -25,6 +25,8 @@ DATABASES = {
     }
 }
 
+AUTHENTICATION_BACKENDS = ('darkoob.backend.EmailOrUsernameModelBackend',)
+
 HAYSTACK_CONNECTIONS = {
     'default': {
         'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
