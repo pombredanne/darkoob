@@ -20,8 +20,9 @@ def edit_sex(request,sex):
 
 @dajaxice_register(method='POST')
 def set_my_quote(request, quote_id):
-    errors = ['e2','e4']
+    errors = []
     done = False
+    message = ''
     try:
         quote = Quote.objects.get(id=quote_id)
         request.user.userprofile.quote = quote
@@ -30,8 +31,9 @@ def set_my_quote(request, quote_id):
         errors.append(_('an error occoured in saving to database'))
     else:
         done = True
+        message = 'You change your favaorite quote'
 
-    return simplejson.dumps({'done':done, 'errors':errors })
+    return simplejson.dumps({'done': done, 'errors': errors, 'message': message})
 
 def date_validators(date):
     # TODO: need to validator for date 

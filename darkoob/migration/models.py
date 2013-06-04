@@ -16,6 +16,7 @@ class Hop(models.Model):
 class Migration(models.Model):
     book = models.ForeignKey(Book, related_name='book_set')
     starter = models.ForeignKey(User, related_name='starter_set')
+    starter_message = models.TextField()
     start_time = models.DateTimeField(auto_now_add=True)
     private_key = models.CharField(max_length=10)
  

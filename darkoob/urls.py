@@ -25,6 +25,8 @@ urlpatterns = patterns('',
     # Project-specific URLs
     url(r'^$', views.index, name='index'),
     url(r'', include('darkoob.social.urls', namespace='social', app_name='socials')),
+    url(r'', include('darkoob.migration.urls', namespace='migration')),
+
     url(r'^book/', include('darkoob.book.urls', namespace='book')),
     url(r'^group/', include('darkoob.group.urls', namespace='group')),
     # Search 
@@ -34,6 +36,7 @@ urlpatterns = patterns('',
     # url(r'^comments/', include('django.contrib.comments.urls')),
 
     url(r'^avatar/', include('avatar.urls')),
+
 
 
 )

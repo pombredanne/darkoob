@@ -8,10 +8,6 @@
 <script type="text/javascript" src="{% static "js/sticky.js" %}"></script>
 <link rel="stylesheet" href="{% static "css/sticky.css" %}" type="text/css" />
 
-
-  <script src="{% static "js/jquery.min.js" %}" type="text/javascript" charset="utf-8" ></script>
-  <script src="{% static "js/endless.js" %}" type="text/javascript" charset="utf-8" ></script>
-  <script src="{% static "js/endless_on_scroll.js" %}" type="text/javascript" charset="utf-8" ></script>
 {% endblock js %}
 
 {% block main %}
@@ -20,8 +16,14 @@
     <div class="row-fluid">
       <div class="span12">
         <div class="sidebox post">
-          <h4> Follower </h4>
-          {% include 'social/followers_page.html' %}
+          <h4>Starting a book migration</h4>
+            you will start a new book migration for {{ book.title }} book.<br />
+            please write key in your book and give book to another person.<br />
+            will be used from this key to validate a person ...<br />
+            <b> KEY: {{ private_key }} </b>
+            <br />
+              BACK TO HOME 
+            <br />
         </div> <!-- post -->
       </div> <!-- span12 -->
     </div> <!-- row -->

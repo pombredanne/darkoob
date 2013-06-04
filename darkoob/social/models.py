@@ -1,9 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
-from neomodel import StructuredNode, IntegerProperty, RelationshipTo
+from neomodel import StructuredNode, IntegerProperty, RelationshipTo, RelationshipFrom
 from darkoob.book.models import Quote
 
+import datetime
+from django.utils.timezone import utc
 SEX_CHOICES = (
         ('Male', 'Male'),
         ('Female', 'Female'),
@@ -11,7 +13,9 @@ SEX_CHOICES = (
 
 class UserNode(StructuredNode):
     user_id = IntegerProperty(required=True, index=True)
-    follow = RelationshipTo('UserNode', 'FOLLOW')
+    # follow = RelationshipTo('UserNode', 'FOLLOW')
+    following = RelationshipTo('UserNode', 'FOLLOW')
+    followers = RelationshipFrom('UserNode', 'FOLLOW')
 
     def get_followers(self):
         results, metadata = self.cypher("START a=node({self}) MATCH a<-[:FOLLOW]-(b) RETURN b");
@@ -20,14 +24,14 @@ class UserNode(StructuredNode):
     def get_following(self):
         results, metadata = self.cypher("START a=node({self}) MATCH b-[:FOLLOW]->(a) RETURN b");
         return [self.__class__.inflate(row[0]) for row in results]
-
+    
     def follow_person(self, user_id):
-        import datetime
-        from django.utils.timezone import utc
-
         followed_user = self.index.get(user_id=user_id)
-        self.follow.connect(followed_user, {'time': str(datetime.datetime.utcnow().replace(tzinfo=utc))})
-        self.save()
+        self.following.connect(followed_user, {'time': str(datetime.datetime.utcnow())})
+
+    def __unicode__(self):
+        return unicode(user_id)
+
 
 class Country(models.Model):
     name = models.CharField(max_length=50)

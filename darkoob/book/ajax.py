@@ -24,3 +24,7 @@ def rate(request, rate, book_id):
 
     return simplejson.dumps({'done':done , 'rate':rate, 'errors': errors })
 
+@dajaxice_register(method='POST')
+def ha(request, book_name):
+    print "book_name", book_name
+    return simplejson.dumps({'done': True})

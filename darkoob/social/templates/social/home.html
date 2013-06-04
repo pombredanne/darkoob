@@ -15,7 +15,7 @@ function set_my_quote_callback(data){
   if (data.done){
     $.pnotify({
       title: 'Profile Updated',
-      text: 'You change your favaorite quote',
+      text: data.message,
       opacity: .8
     })
   }else{
@@ -123,7 +123,7 @@ function submit_private_key_callback(data){
             {% if quote.book %}<small>{{ quote.book }}</small>{% endif %}
 
             <a href="#"
-              onclick="javascript:Dajaxice.darkoob.social.set_my_quote(\
+              onclick="javascript:Dajaxice.darkoob.social.set_my_quote(
               set_my_quote_callback, {'quote_id': {{ quote.id }} })">
               <i data-toggle="tooltip"id="set_quote" class="icon-ok pull-right">
               </i>

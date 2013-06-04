@@ -1,10 +1,11 @@
-from django.utisls import simplejson
+from django.utils import simplejson
 from dajaxice.decorators import dajaxice_register
 from django.utils.translation import ugettext as _
 
 from darkoob.migration.models import Migration, Hop
+from darkoob.book.models import Book
 @dajaxice_register(method='POST')
-def submit_key(request,private_key):
+def submit_key(request, private_key):
     errors = []
     done = True
     message = ''
@@ -28,4 +29,32 @@ def submit_key(request,private_key):
                 errors.append(_('You have already submitted this book'))
                 done = False
 
-    return simplejson.dumps({'done':done,'errors':errors,'message': message})
+    return simplejson.dumps({'done': done, 'errors': errors, 'message': message})
+
+
+
+
+# @dajaxice_register(method='POST')
+# def submit_start_new_migration(request, book_name):
+#     errors = []
+#     done = True
+#     print "salam"
+#     # try:
+#     #     Book.objects.get(title=book_name)
+#     # except:
+#     #     print "salam"
+#     # else:
+#     #     pass
+
+
+#     return simplejson.dumps({'done': done, 'errors': errors})
+@dajaxice_register(method='POST')
+def is_book(request, book_title):
+    try:
+        Book.objects.get(title=book_title)
+    except:
+        result = False
+    else:
+        result = True
+    print 'ajax result', result
+    return simplejson.dumps({'done': True, 'result': result })

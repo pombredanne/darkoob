@@ -58,36 +58,41 @@ def change_password(request):
     ##
     ## Please Dont remove:D
     ##
-    # # print ',,,,,,,,,,,', UserNode.index.search(user_id=27)[0]
-    # a = UserNode.index.search(user_id=27)[0]
-    # # print '------------', a
-    # # e = UserNode(user_id=114)
-    # b = UserNode.index.get(user_id=31)
-    # c = UserNode.index.search(user_id=42)
+    # print ',,,,,,,,,,,', UserNode.index.search(user_id=27)[0]
+    a = UserNode.index.get(user_id=200)
+    # print '------------', a
+    b = UserNode.index.get(user_id=201)
+    c = UserNode.index.get(user_id=202)
+    print a, b , c
+    # a.save()
+    # b.save()
+
     # d = UserNode.index.search(user_id=53)
-    # # e = UserNode(user_id=114)
-    # # e = UserNode.index.get(user_id=114)
-    # # print "eeeeeeeeee",e
-    # # e.save()
+    # e = UserNode(user_id=114)
+    # e = UserNode.index.get(user_id=114)
+    # print "eeeeeeeeee",e
+    # e.save()
     # e = UserNode.index.get(user_id=114)
 
 
-    # # a.follow_person(114)
-    # # print b, c , d
-    # # a.follow_person(114)
-    # print "-----------------------------------"
-    # # print b , c , d , e
-    # # print 
+    a.follow_person(201)
+    # b.follow_person
+    print a.get_followers(), a.get_following()
+    # print b, c , d
+    # a.follow_person(114)
+    print "-----------------------------------"
+    # print b , c , d , e
+    # print 
 
     # for i in  a.get_followed():
-    #     print i.user_id
+        # print i.user_id
 
-    # # a.follow.connect(b)
-    # # a.follow.connect(c)
-    # # a.follow.connect(d)
-    # # a[0].save()
-    # print "-----------------------------------"
-    # # print UserNode.index.search(user_id=26)[0].get_follows()
+    # a.follow.connect(b)
+    # a.follow.connect(c)
+    # a.follow.connect(d)
+    # a[0].save()
+    print "-----------------------------------"
+    # print UserNode.index.search(user_id=26)[0].get_follows()
     # from darkoob.migration.models import Migration, Hop
 
     # # print Migration.objects.all()[0].hop_set.filter()
@@ -152,33 +157,71 @@ def home(request):
         'migrations': m.get_user_related_migrations(request.user),
     })
 
+@login_required
+def followers(request):
+    template = 'social/followers.html'
+    posts = Post.objects.order_by("-submitted_time")
+    count = range(1, len(posts) + 1)
+    # a = UserNode.index.get(user_id=request.user.id)
+    # b = UserNode.index.get(user_id=2)
+    # c = UserNode.index.get(user_id=3)
+
+    # print a,b,c
+    # a.follow.connect(c)
+
+    # a.save()
+    # print 'find', UserNode.index.search(user_id=request.user.id)[0].get_following()
+    # print 'saladsm',UserNode.index.get(user_id=request.user.id).get_followers()
+    u1 = UserNode.index.get(user_id=1)
+    # u1 = UserNode.index.get(user_id=2)
+
+    # u1 = UserNode(user_id=1).save()
+    # u2 = UserNode(user_id=2).save()
+    # u3 = UserNode(user_id=3).save()
 
 
-def entry_followers(request,template="social/followers.html",page_template="social/followers_page.html"):
-    posts= Post.objects.order_by("-publish_date")
-    count=[1,2]
-    context = {
-            'posts': posts,
-            'page_template': page_template,
-            'count':count[::-1],
-    }
+    # u1.follow_person(2)
+    # u2.follow_person(1)
+    # u1.follow_person(3)
+    # u3.follow_person(1)
+    # UserNode(user_id=3).save()
+    # UserNode(user_id=4).save()
+
+    
+    # u1.follow_person(2)
+    # u1.follow_person(3)
+    # u1.follow_person(4)
+    print type(u1.followers.all()[0])
+    print "User 1 follows {}".format(u1.following.all())
+    print "User 1's followers {}".format(u1.followers.all())
+    # print "User 1 follows {}".format(u1.get_following())
+    # print "User 1's followers {}".format(u1.get_followers())
+    # u1 = UserNode(user_id=2).save()
+    # u2 = UserNode(user_id=3).save()
+    # u3 = UserNode(user_id=4).save()
+    # u4 = UserNode(user_id=5).save()
+
+    # u.follow_person(2)
+    # u.follow_person(3)
+    # u.follow_person(4)
+    # u.follow_person(5)
+    # print ")))))))((((((())))(((("
+    # print u.followers
+    # print u.following
+    # for i in u.get_following():
+        # print "i", dir(i)
+
+    # print "User 1 follows {}".format(u.get_following())
+    # print "User 1's followers {}".format(u.get_followers())
+
     if request.is_ajax():
-        template = page_template
-
-    return render_to_response(template, context,context_instance=RequestContext(request))
+        template = 'post/posts.html'
 
 
-
-
-
-
-
-
-
-
-
-
-
+    return render(request, template, {
+        'posts': posts,
+        'count': count[::-1],
+    })
 
 @login_required
 def new_post(request):
