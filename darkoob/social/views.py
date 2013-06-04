@@ -156,23 +156,50 @@ def home(request):
         'quote': Quote.objects.order_by('?')[0],
         'migrations': m.get_user_related_migrations(request.user),
     })
+
 @login_required
 def following(request):
-    template = 'social/following.html'
-    if request.is_ajax():
-        template = 'social/user_bar.html'
-    return render(request, template, {
+    '''A view for showing all following users of logged in user'''
 
+    template = 'social/following.html'
+    user_node = UserNode.index.get(user_id=request.user.id)
+    following = [User.objects.get(id=node.user_id) for node in user_node.following.all()]
+    count = range(1, len(following) + 1)
+    print following
+
+    if request.is_ajax():
+        template = 'social/following_page.html'
+
+    return render(request, template, {
+        'following': following,
+        'count': count[::-1],
     })
 
 @login_required
 def followers(request):
+    '''A view for showing all followers users of logged in user'''
+    
     # start cleanup code 
-
-    # 
     template = 'social/followers.html'
-    posts = Post.objects.order_by("-submitted_time")
-    count = range(1, len(posts) + 1)
+    user_node = UserNode.index.get(user_id=request.user.id)
+    followers = [User.objects.get(id=node.user_id) for node in user_node.followers.all()]
+    count = range(1, len(followers) + 1)
+    print followers
+
+    if request.is_ajax():
+        template = 'social/followers_page.html'
+
+    return render(request, template, {
+        'followers': followers,
+        'count': count[::-1],
+    })
+    # end cleanup code 
+
+    # Dont remove plese. I know it's very dirty:D 
+
+    # template = 'social/followers.html'
+    # posts = Post.objects.order_by("-submitted_time")
+    # count = range(1, len(posts) + 1)
     # a = UserNode.index.get(user_id=request.user.id)
     # b = UserNode.index.get(user_id=2)
     # c = UserNode.index.get(user_id=3)
@@ -183,7 +210,7 @@ def followers(request):
     # a.save()
     # print 'find', UserNode.index.search(user_id=request.user.id)[0].get_following()
     # print 'saladsm',UserNode.index.get(user_id=request.user.id).get_followers()
-    u1 = UserNode.index.get(user_id=1)
+    # u1 = UserNode.index.get(user_id=1)
     # u1 = UserNode.index.get(user_id=2)
 
     # u1 = UserNode(user_id=1).save()
@@ -202,10 +229,10 @@ def followers(request):
     # u1.follow_person(2)
     # u1.follow_person(5)
     # u1.follow_person(6)
-    print [User.objects.get(id=node.user_id) for node in u1.following.all()]
-    # print type(u1.followers.all())
-    print "User 1 follows {}".format(u1.following.all())
-    print "User 1's followers {}".format(u1.followers.all())
+    # print [User.objects.get(id=node.user_id) for node in u1.following.all()]
+    # # print type(u1.followers.all())
+    # print "User 1 follows {}".format(u1.following.all())
+    # print "User 1's followers {}".format(u1.followers.all())
     # print "User 1 follows {}".format(u1.get_following())
     # print "User 1's followers {}".format(u1.get_followers())
     # u1 = UserNode(user_id=2).save()
@@ -226,14 +253,14 @@ def followers(request):
     # print "User 1 follows {}".format(u.get_following())
     # print "User 1's followers {}".format(u.get_followers())
 
-    if request.is_ajax():
-        template = 'post/posts.html'
+    # if request.is_ajax():
+    #     template = 'post/posts.html'
 
 
-    return render(request, template, {
-        'posts': posts,
-        'count': count[::-1],
-    })
+    # return render(request, template, {
+    #     'posts': posts,
+    #     'count': count[::-1],
+    # })
 
 @login_required
 def new_post(request):
@@ -244,3 +271,4 @@ def user_profile(request, username):
     return render(request, 'social/user_profile.html', {'username': username})
 
 
+# 
