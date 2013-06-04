@@ -2,7 +2,7 @@ from django.db import models
 from darkoob.social.models import User
 from taggit.managers import TaggableManager
 from djangoratings.fields import RatingField
-from datetime import datetime    
+from django.utils import timezone  
 
 class Book(models.Model):
     title = models.CharField(max_length=255)
@@ -55,7 +55,7 @@ class Review(models.Model):
     book = models.ForeignKey(Book)
     user = models.ForeignKey(User)
     text = models.TextField()
-    submitted_time = models.DateTimeField(default=datetime.now())
+    submitted_time = models.DateTimeField(default=timezone.now())
 
     def __unicode__(self):
         return unicode(self.book) + unicode(self.user)
