@@ -1,4 +1,4 @@
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render, render_to_response
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
@@ -177,6 +177,51 @@ def home(request):
         'quote': Quote.objects.order_by('?')[0],
         'migrations': m.get_user_related_migrations(request.user),
     })
+
+@login_required
+def user_following(request, username):
+    try:
+        user = User.objects.get(username=username)
+    except:
+        raise Http404
+    else:
+        template = 'social/user_following.html'
+        user_node = UserNode.index.get(user_id=user.id)
+        following = [User.objects.get(id=node.user_id) for node in user_node.following.all()]
+        count = range(1, len(following) + 1)
+
+        if request.is_ajax():
+            template = 'social/user_following_page.html'
+
+        return render(request, template, {
+            'following': following,
+            'count': count[::-1],
+        })
+
+        return render(request, 'social/user_profile.html', {'username': username})
+
+
+@login_required
+def user_followers(request, username):
+    try:
+        user = User.objects.get(username=username)
+    except:
+        raise Http404
+    else:
+        template = 'social/user_followers.html'
+        user_node = UserNode.index.get(user_id=user.id)
+        followers = [User.objects.get(id=node.user_id) for node in user_node.followers.all()]
+        count = range(1, len(followers) + 1)
+
+        if request.is_ajax():
+            template = 'social/user_following_page.html'
+
+        return render(request, template, {
+            'followers': followers,
+            'count': count[::-1],
+        })
+
+        return render(request, 'social/user_profile.html', {'username': username})
 
 @login_required
 def following(request):

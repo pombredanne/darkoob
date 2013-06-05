@@ -23,6 +23,10 @@
             list<br />
             of<br />
             groups
+            <b> TODO </b>
+            <br />
+            followers link<br />
+            following link<br />
           </p>
       </div> <!-- span10 -->
     </div> <!-- row -->
@@ -61,11 +65,15 @@
             {% if user.userprofile.quote.book %}<small>{{ user.userprofile.quote.book }}</small>{% endif %}
           </blockquote>
         </div>
-        <div class="sidebox post">
-          <p>
-            This is user's first post.
-          </p>
-        </div>
+        {% block right_sidebox %}
+          <div class="sidebox post">
+            <p>
+              This is user's first post.
+            </p>
+          </div>
+        {% endblock right_sidebox %}
+
+
       </div> <!-- span12 -->
     </div> <!-- row -->
   </div> <!-- span12 -->

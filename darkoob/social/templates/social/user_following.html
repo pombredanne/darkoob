@@ -1,0 +1,11 @@
+{% extends "social/user_profile.html" %}
+{% load staticfiles %}
+
+{% block right_sidebox %}
+  <div class="sidebox post">
+    <p>
+      Following
+      {% include 'social/user_following_page.html' %}
+    </p>
+  </div>
+{% endblock right_sidebox %}
