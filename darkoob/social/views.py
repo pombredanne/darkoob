@@ -329,12 +329,46 @@ def followers(request):
     # })
 
 @login_required
+def favorite_books(request):
+    template = 'social/favorite_books.html'
+    favorite_books = User.objects.get(username=request.user).userprofile.favorite_books.all()
+    count = range(1, len(favorite_books) + 1)
+
+    if request.is_ajax():
+        template = 'social/favorite_books_page.html'
+
+    return render(request, template, {
+        'favorite_books': favorite_books,
+        'count': count[::-1],
+    })
+
+
+@login_required
+def user_favorite_books(request, username):
+    template = 'social/user_favorite_books.html'
+    favorite_books = User.objects.get(username=username).userprofile.favorite_books.all()
+    count = range(1, len(favorite_books) + 1)
+
+    if request.is_ajax():
+        template = 'social/user_favorite_books_page.html'
+
+    return render(request, template, {
+        'favorite_books': favorite_books,
+        'count': count[::-1],
+    })
+
+
+@login_required
 def new_post(request):
     pass
 
 @login_required
 def user_profile(request, username):
-    return render(request, 'social/user_profile.html', {'username': username})
-
-
-# 
+    favorite_books = User.objects.get(username=username).userprofile.favorite_books.all()
+    return render(request, 'social/user_profile.html', 
+        {
+            'username': username,
+            'favorite_books': favorite_books,
+        }
+    )
+ 

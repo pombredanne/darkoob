@@ -27,7 +27,9 @@ urlpatterns = patterns('',
 
     url(r'^user/(?P<username>\w+)/following$', social_views.user_following, name='user_following'),
     url(r'^user/(?P<username>\w+)/followers$', social_views.user_followers, name='user_followers'),
+    url(r'^user/(?P<username>\w+)/favorite_books$', social_views.user_favorite_books, name='user_favorite_books'),
 
     url(r'^profile/followers/$', social_views.followers, name='followers'),
-    url(r'^profile/following/$', social_views.following, name='following')
+    url(r'^profile/following/$', social_views.following, name='following'),
+    url(r'^profile/favorite_books$', social_views.favorite_books, name='favorite_books'),
 )
