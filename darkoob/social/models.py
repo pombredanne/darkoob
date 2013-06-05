@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from neomodel import StructuredNode, IntegerProperty, RelationshipTo, RelationshipFrom
-from darkoob.book.models import Quote
+from darkoob.book.models import Quote, Book
 
 import datetime
 from django.utils.timezone import utc
@@ -54,6 +54,12 @@ class UserProfile(models.Model):
     website = models.URLField(null=True, blank=True)
     city = models.OneToOneField(City, null=True, blank=True)
     quote = models.ForeignKey(Quote, null=True, blank=True)
+    favorite_book = models.ManyToManyField(Book, null=True, blank=True)
+
+
+    def favorite_books(self):
+        return ', '.join([a.title for a in self.favorite_books.all()])
+    favorite_book.short_description = "Favorite Book"
 
     # NOTE: userprof_obj.education_set.all() return all education set of a person 
 
