@@ -56,10 +56,10 @@ class UserProfile(models.Model):
     quote = models.ForeignKey(Quote, null=True, blank=True)
     favorite_books = models.ManyToManyField(Book, null=True, blank=True)
 
-
-    def favorite_books(self):
-        return ', '.join([a.title for a in self.favorite_books.all()])
-    favorite_books.short_description = "Favorite Book"
+    # for django model
+    # def favorite_books(self):
+    #     return ', '.join([a.title for a in self.favorite_books.all()])
+    # favorite_books.short_description = "Favorite Book"
 
     # NOTE: userprof_obj.education_set.all() return all education set of a person 
 
