@@ -16,10 +16,6 @@ from darkoob.migration.models import Migration
 from darkoob.group.models import Schedule
 
 
-
-
-
-
 @login_required
 def profile(request):
     form = EditProfileForm(request.POST)
@@ -200,7 +196,6 @@ def user_following(request, username):
 
         return render(request, 'social/user_profile.html', {'username': username})
 
-
 @login_required
 def user_followers(request, username):
     try:
@@ -342,7 +337,6 @@ def favorite_books(request):
         'count': count[::-1],
     })
 
-
 @login_required
 def user_favorite_books(request, username):
     template = 'social/user_favorite_books.html'
@@ -356,7 +350,6 @@ def user_favorite_books(request, username):
         'favorite_books': favorite_books,
         'count': count[::-1],
     })
-
 
 @login_required
 def new_post(request):
