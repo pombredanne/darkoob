@@ -25,6 +25,9 @@ def start_new_migration(request):
                 Migration.objects.create(book=book, starter=request.user,
                     starter_message=cd['starter_message'], private_key=private_key
                 )
+
+
+                # TODO:Redirect to this page 
                 return render(request, 'migration/started.html', 
                     {'private_key': private_key, 'book': book}
                 )
