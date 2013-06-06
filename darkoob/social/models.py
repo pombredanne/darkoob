@@ -29,8 +29,7 @@ class UserNode(StructuredNode):
         followed_user = self.index.get(user_id=user_id)
         self.following.connect(followed_user, {'time': str(datetime.datetime.utcnow())})
 
-    def __unicode__(self):
-        return unicode(user_id)
+
 
 
 class Country(models.Model):

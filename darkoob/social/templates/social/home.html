@@ -10,7 +10,10 @@
 {% endblock css %}
 
 {% block js %}
+
 <script>
+
+
 function set_my_quote_callback(data){
   if (data.done){
     $.pnotify({
@@ -61,6 +64,25 @@ function submit_private_key_callback(data){
       <div class="span10 sidebox">
         <legend>Hoping</legend>
         <p>
+
+          <script type="text/javascript">
+            $(document).ready(function() {
+                $("#vahid").typeahead({
+                    remote: function(query, process) {
+                        $.get('/book/look', { query: query}, function(data) {
+                            process(JSON.parse(data));
+                        });
+                    }
+//                     updater: function (item) {
+//             document.location = "/book/look/?q=" + encodeURIComponent(item);
+//             return item;
+//         },
+                });
+            });
+          </script>
+
+          <input type="text" id="vahid" data-provide='typeahead'>
+
           I Get a book( TODO: tooltip(private key is 10 digit key that writen in your book) )
           </br>
           <input type="text" placeholder="Private Key" id='private_key'> 
