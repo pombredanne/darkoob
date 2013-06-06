@@ -64,25 +64,20 @@ function submit_private_key_callback(data){
       <div class="span10 sidebox">
         <legend>Hoping</legend>
         <p>
-
+          <br />
           <script type="text/javascript">
             $(document).ready(function() {
-                $("#vahid").typeahead({
-                    remote: function(query, process) {
-                        $.get('/book/look', { query: query}, function(data) {
-                            process(JSON.parse(data));
-                        });
-                    }
-//                     updater: function (item) {
-//             document.location = "/book/look/?q=" + encodeURIComponent(item);
-//             return item;
-//         },
-                });
+              $("#vahid").typeahead({
+                source: function (query, process) {
+                  return $.get('/book/look', {  query: query }, function (data) {
+                    return process(data.options);
+                  });
+                }   
+              });
             });
           </script>
-
           <input type="text" id="vahid" data-provide='typeahead'>
-
+          <br />
           I Get a book( TODO: tooltip(private key is 10 digit key that writen in your book) )
           </br>
           <input type="text" placeholder="Private Key" id='private_key'> 

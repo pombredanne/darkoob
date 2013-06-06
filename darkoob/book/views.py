@@ -25,7 +25,7 @@ def book_lookup(request):
             #if len(val) > 2:
             model_results = Book.objects.filter(title__icontains=value)
             results = [ x.title  for x in model_results]
-    to_json = results
+    to_json = {'options':results}
     jt=simplejson.dumps(to_json)
     return HttpResponse(jt, mimetype='application/json')
 
