@@ -163,6 +163,10 @@ def home(request):
     m = Migration() 
     # print m.get_user_related_migrations(request.user)
 
+    # Todo: Change this part
+    suggestion_list = User.objects.order_by('?')[0:3]    # TODO : ISSUE #54
+    #
+
     return render(request, template, {
         'new_post_form': NewPostForm(),
         'posts': posts,
@@ -172,6 +176,7 @@ def home(request):
         'book_deadlines': book_deadlines,
         'quote': Quote.objects.order_by('?')[0],
         'migrations': m.get_user_related_migrations(request.user),
+        'suggestion_list': suggestion_list,
     })
 
 @login_required

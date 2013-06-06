@@ -2,9 +2,22 @@ from django.utils import simplejson
 from dajaxice.decorators import dajaxice_register
 from django.utils.translation import ugettext as _
 
-from models import UserProfile
+from darkoob.social.models import UserProfile, UserNode
 from darkoob.book.models import Quote
 from darkoob.post.models import Post
+
+@dajaxice_register(method='POST')
+def follow_request(request, following_id):
+    # TODO : ISSUE #54
+    try:
+        user = UserNode.index.get(user_id=request.user.id)
+        user.follow_person(following_id)
+        done = True 
+    except:
+        print "nashhod"
+        done = False
+    return simplejson.dumps({'done':done})
+
 
 
 @dajaxice_register(method='POST')

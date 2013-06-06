@@ -57,9 +57,58 @@ function submit_private_key_callback(data){
 {{ block.super }}
 {% endblock js %}
 
+
 {% block sidebar %}
 <div class="row-fluid">
   <div class="span12">
+    <script type="text/javascript">
+      //TODO: It's very dirty code
+      function close_1(){
+        $('#follow_suggestion_1').remove();
+      }
+      function close_2(){
+        $('#follow_suggestion_2').remove();
+      }
+      function close_3(){
+        $('#follow_suggestion_3').remove();
+      }
+      function follow_request_callback_1(data){
+        alert(data.done);
+        close_1();
+      }
+      function follow_request_callback_2(data){
+        alert(data.done);
+        close_2();
+      }
+      function follow_request_callback_3(data){
+        alert(data.done);
+        close_3();
+      }
+    </script>
+
+    <div class="row-fluid">
+      <div class="span10 sidebox">
+        <legend>Suggest To Follow</legend>  
+        # TODO : ISSUE #54
+        <p id='person_box'>
+          <div id='follow_suggestion_1'>
+            <button class="close" id="close_button_1" onmousedown="close_1()">&times;</button>
+            {{ suggestion_list.0 }} <a onmousedown="Dajaxice.darkoob.social.follow_request(follow_request_callback_1,{'following_id': {{suggestion_list.0.id }}})">Follow</a>
+          </div>
+          <div id='follow_suggestion_2' id="close_button_2" onmousedown="close_2()">
+            <button class="close">&times;</button>
+            {{ suggestion_list.1 }} <a onmousedown="Dajaxice.darkoob.social.follow_request(follow_request_callback_2,{'following_id': {{suggestion_list.1.id }}})">Follow</a>
+          </div>
+          <div id='follow_suggestion_3' id="close_button_3" onmousedown="close_3()">
+            <button class="close">&times;</button>
+            {{ suggestion_list.2 }} <a onmousedown="Dajaxice.darkoob.social.follow_request(follow_request_callback_3,{'following_id': {{suggestion_list.2.id }}})">Follow</a>
+          </div>
+        </p>
+      </div> <!-- span10 -->
+    </div> <!-- row -->
+
+
+
     <div class="row-fluid">
       <div class="span10 sidebox">
         <legend>Hoping</legend>
@@ -83,6 +132,7 @@ function submit_private_key_callback(data){
           <input type="text" placeholder="Private Key" id='private_key'> 
           <button id='' class="btn btn-inverse" onmousedown="Dajaxice.darkoob.migration.submit_key(submit_private_key_callback,{'private_key': $('#private_key').val() })">Check</button>
         </p>
+        Find f
       </div> <!-- span10 -->
     </div> <!-- row -->
     <div class="row-fluid">

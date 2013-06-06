@@ -38,10 +38,24 @@ function book_status_callback(data){
             <h5> What's Book migration?</h5>
 
             <h5> Migration lisence</h5>
+
+            <script type="text/javascript">
+              $(document).ready(function() {
+                $("#id_book_title").typeahead({
+                  source: function (query, process) {
+                    return $.get('/book/look', {  query: query }, function (data) {
+                      return process(data.options);
+                    });
+                  }   
+                });
+              });
+            </script>
             <form id="new_migration_form" action="{% url 'migration:new_migration' %}" method='post'>
               {% csrf_token %}
               {{ form.book_title }}<br />
               {{ form.starter_message }}<br />
+
+
               Todo: Accept migration lisence<br />
               TODO: Redirect to started page(see Views.py)<br/>
             <a onmousedown="Dajaxice.darkoob.migration.book_status(book_status_callback,{'book_title':$('#id_book_title').val()}) ">Start New Migration</a>
