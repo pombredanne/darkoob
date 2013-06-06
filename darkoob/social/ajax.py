@@ -4,8 +4,20 @@ from django.utils.translation import ugettext as _
 
 from models import UserProfile
 from darkoob.book.models import Quote
+from darkoob.post.models import Post
 
 
+@dajaxice_register(method='POST')
+def submit_post(request, text):
+    try:
+        Post.objects.create(user_id=request.user, text=text)
+    except:
+        print "nashod"
+        done = 'Fase'
+    else:
+        done = True
+    print "text is", text
+    return simplejson.dumps({'done':done})
 
 @dajaxice_register(method='POST')
 def edit_sex(request,sex):

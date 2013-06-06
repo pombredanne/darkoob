@@ -154,13 +154,26 @@ function submit_private_key_callback(data){
                 {{ new_post_form.text }}
               </form>
             </div>
+            <script type="text/javascript">
+              function submit_post_callback(data){
+                var str = $('#id_text').val()
+                $("#new_post_position").append("<div>"+ str +"</div>")
+                $('#id_text').val('')
+
+              }
+            </script>
             <div class="span1 new_post_button">
+              <a onmousedown="Dajaxice.darkoob.social.submit_post(submit_post_callback,{'text': $('#id_text').val()})"> Post </a>
               <button class="btn btn-inverse">Post</button>
             </div>
           </div> <!-- row -->
         </div> <!-- sidebox -->
       </div> <!-- span12 -->
     </div> <!-- row -->
+
+    <div id="new_post_position">
+      salam
+    </div>
     {% include 'post/posts.html' %}
   </div> <!-- span8 -->
 </div> <!-- row -->
