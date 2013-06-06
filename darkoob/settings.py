@@ -188,7 +188,8 @@ INSTALLED_APPS = (
     'darkoob.group',
     'darkoob.post',
     'darkoob.comments',
-    'darkoob.migration',    
+    'darkoob.migration', 
+    'postman',
 )
 
 
