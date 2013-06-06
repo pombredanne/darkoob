@@ -14,9 +14,10 @@ class StartNewMigrationForm(forms.Form):
     #     })
     # )
     starter_message = forms.CharField(
-        label = _('Your Message'),
-        widget = forms.TextInput(attrs={
+        label=_('Your Message '),
+        widget=forms.Textarea(attrs={
             'placeholder': _('Your Message'),
+            'rows': 7,
+            'class': 'span8',
         })
     )
-

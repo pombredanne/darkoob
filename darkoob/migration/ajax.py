@@ -58,3 +58,14 @@ def is_book(request, book_title):
         result = True
     print 'ajax result', result
     return simplejson.dumps({'done': True, 'result': result })
+
+
+@dajaxice_register(method='POST')
+def book_status(request, book_title):
+    try:
+        Book.objects.get(title=book_title)
+    except:
+        status = False
+    else:
+        status = True
+    return simplejson.dumps({'status': status})

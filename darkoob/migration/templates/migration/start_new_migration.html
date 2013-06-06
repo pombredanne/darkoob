@@ -9,31 +9,18 @@
 <link rel="stylesheet" href="{% static "css/sticky.css" %}" type="text/css" />
 
 <script type="text/javascript">
-var is_recorded_book; 
-
-function callback(data){
-  if (data.done){
-    is_recorded_book = data.result
-    alert('done shod')
-  }else{
-    alert('please reload page');
+function book_status_callback(data){
+  if (data.status){
+    document.getElementById("new_migration_form").submit();
   }
-}
-
-function check_book(){
-    
-  // alert ("check book"+is_recorded_book);
-  // if (is_recorded_book){
-  //   return true;
-  // }else{
-  //   $.pnotify({
-  //     title: 'Error',
-  //     text: 'This book not found in darkoob!',
-  //     type: 'error',
-  //     opacity: .8
-  //   })
-  //   return false;
-  // }
+  else{
+    $.pnotify({
+      title: 'Error',
+      text: 'This book no exsist',
+      type: 'error',
+      opacity: .8
+    })
+  }
 }
 </script>
 
@@ -46,12 +33,18 @@ function check_book(){
       <div class="span12">
         <div class="sidebox post">
           <h4>I Want to start a new migrtion</h4>
-            <form id="myform" action="{% url 'migration:new_migration' %}" method='post'>
+
+
+            <h5> What's Book migration?</h5>
+
+            <h5> Migration lisence</h5>
+            <form id="new_migration_form" action="{% url 'migration:new_migration' %}" method='post'>
               {% csrf_token %}
               {{ form.book_title }}<br />
               {{ form.starter_message }}<br />
               Todo: Accept migration lisence<br />
-              <button onclick="Dajaxice.darkoob.migration.is_book(callback, {'book_title': $('#id_book_title').val() });">click</button>
+              TODO: Redirect to started page(see Views.py)<br/>
+            <a onmousedown="Dajaxice.darkoob.migration.book_status(book_status_callback,{'book_title':$('#id_book_title').val()}) ">Start</a>
             </form>      
         </div> <!-- post -->
       </div> <!-- span12 -->
