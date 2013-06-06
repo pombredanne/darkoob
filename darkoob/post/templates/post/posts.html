@@ -30,15 +30,12 @@
                     <br />
                     <br />
                     <script type="text/javascript">
-                      function callback(data){
+                      function callback_{{post.id}}(data){
                         alert(data.s)
                         $('#n{{post.id}}').text('Kon')
                       }
-                      function send_nok(){
-                        Dajaxice.darkoob.post.nok(callback,{'post_id':{{post.id}}})
-                      }
                     </script>
-                    <button onmousedown="send_nok()"><t id='n{{post.id}}'> Nok</t> </button>
+                    <button onmousedown="Dajaxice.darkoob.post.nok(callback_{{post.id}},{'post_id':{{post.id}}})"><t id='n{{post.id}}'> Nok</t> </button>
                   </div> <!-- content -->
                 </div> <!-- span12 -->
             </div> <!-- sidebox post -->
