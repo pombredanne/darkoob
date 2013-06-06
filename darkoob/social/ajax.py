@@ -5,6 +5,8 @@ from django.utils.translation import ugettext as _
 from models import UserProfile
 from darkoob.book.models import Quote
 
+
+
 @dajaxice_register(method='POST')
 def edit_sex(request,sex):
     #TODO: In I18N should save only Male an Female in database 

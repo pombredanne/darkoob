@@ -10,7 +10,8 @@ class Book(models.Model):
     language = models.ForeignKey('Language')
     authors = models.ManyToManyField('Author')
     tags = TaggableManager()
-    rating = RatingField(range=5, can_change_vote=True, allow_delete=False, allow_anonymous=False)
+    # rating = RatingField(range=5, can_change_vote=True, allow_delete=False, allow_anonymous=False)
+    rating = RatingField(range=5) # 5 possible rating values, 1-5
     
     def author_names(self):
         return ', '.join([a.name for a in self.authors.all()])

@@ -17,7 +17,7 @@
                   </div> <!-- span9 -->
                   <div class="span1 pull-right">
                     <div class="submitted_time">
-                      {{ post.submitted_time.hour }} <!-- TODO: Since now time -->
+                      {{ post.submitted_time|timesince }}
                     </div>
                   </div> <!-- span1 -->
                 </div> <!-- post_head -->
@@ -25,7 +25,20 @@
               <div class="row-fluid">
                 <div class="span12">
                   <div class="post_content">
-                    {{ post.text }}
+                    {{ post.text }} {{ post.id}}
+                    <br />
+                    <br />
+                    <br />
+                    <script type="text/javascript">
+                      function callback(data){
+                        alert(data.s)
+                        $('#n{{post.id}}').text('Kon')
+                      }
+                      function send_nok(){
+                        Dajaxice.darkoob.post.nok(callback,{'post_id':{{post.id}}})
+                      }
+                    </script>
+                    <button onmousedown="send_nok()"><t id='n{{post.id}}'> Nok</t> </button>
                   </div> <!-- content -->
                 </div> <!-- span12 -->
             </div> <!-- sidebox post -->
