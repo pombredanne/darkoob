@@ -50,6 +50,44 @@
            {{ form.name }}
            <input type="submit" value="Submit">
           </form>
+          <script type="text/javascript">
+            $(document).ready(function() {
+              $("#user-look").typeahead({
+                source: function (query, process) {
+                  return $.get('/group/look/', {  query: query }, function (data) {
+                    return process(data.options);
+                  });
+                }   
+              });
+            });
+          </script>
+          <div id="added-users"></div>
+          <input type="text" id="user-look" data-provide='typeahead' />
+          <script type="text/javascript">
+            function close()
+            {
+              alert("salam");
+              
+            }
+            function is_user_callback(data)
+            {
+              if (data.is_exist) {
+                $('#added-users').append('<div><p> '+$('#user-look').val()+'</p><button class="close" id="close_button" onmousedown="close()">&times;</button></div>');
+              } else {
+                $.pnotify({
+                  title: 'Not Exist',
+                  text: 'Wrong username , be sure what you looking for!',
+                  type: 'error',
+                  opacity: .8
+                });
+              }
+            }
+            $('#user-look').keypress(function(e) {
+              if(e.which == 13) {
+                Dajaxice.darkoob.social.is_user(is_user_callback, {'username': $('#user-look').val()});
+              }
+            });
+          </script>
         </div>
       </div> <!-- span12 -->
     </div> <!-- row -->
