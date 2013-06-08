@@ -36,8 +36,13 @@ urlpatterns = patterns('',
     # url(r'^comments/', include('django.contrib.comments.urls')),
 
     url(r'^avatar/', include('avatar.urls')),
-
-
-
-
 )
+
+from django.conf import settings
+media_root = getattr(settings, 'MEDIA_ROOT', '/media')    
+
+urlpatterns += patterns('', 
+url(r'^media/(?P<path>.*)$','django.views.static.serve',
+    {'document_root': media_root})
+)
+
