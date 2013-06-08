@@ -70,6 +70,7 @@
         <legend>Migrations</legend>
           <p>
             {% for migration in migrations %}
+              <b>{{ migration.book.title }} <--> </b> 
               {% if migration.starter == request.user %}
                 Man
               {% else %}

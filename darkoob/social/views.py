@@ -368,7 +368,6 @@ def user_profile(request, username):
             'request': request,
             'username': username,
             'favorite_books': favorite_books,
-            'm': m.get_user_related_migrations(User.objects.get(username=username))[0].hop_set,
             'migrations': m.get_user_related_migrations(User.objects.get(username=username)),
         }
     )
