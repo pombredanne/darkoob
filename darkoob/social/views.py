@@ -168,6 +168,7 @@ def home(request):
     suggestion_list = User.objects.order_by('?')[0:3]    # TODO : ISSUE #54
     #
 
+    print "--------------------", posts[0].noks._get_votes()
     return render(request, template, {
         'new_post_form': NewPostForm(),
         'posts': posts,
