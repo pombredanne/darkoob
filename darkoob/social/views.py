@@ -175,7 +175,7 @@ def home(request):
         'admin_groups': admin_groups,
         'book_deadlines': book_deadlines,
         'quote': Quote.objects.order_by('?')[0],
-        'migrations': m.get_user_related_migrations(request.user),
+        # 'migrations': m.get_user_related_migrations(request.user),
         'suggestion_list': suggestion_list,
     })
 
@@ -231,7 +231,6 @@ def following(request):
     user_node = UserNode.index.get(user_id=request.user.id)
     following = [User.objects.get(id=node.user_id) for node in user_node.following.all()]
     count = range(1, len(following) + 1)
-    print following
 
     if request.is_ajax():
         template = 'social/following_page.html'
@@ -250,7 +249,6 @@ def followers(request):
     user_node = UserNode.index.get(user_id=request.user.id)
     followers = [User.objects.get(id=node.user_id) for node in user_node.followers.all()]
     count = range(1, len(followers) + 1)
-    print followers
 
     if request.is_ajax():
         template = 'social/followers_page.html'
@@ -363,10 +361,15 @@ def new_post(request):
 @login_required
 def user_profile(request, username):
     favorite_books = User.objects.get(username=username).userprofile.favorite_books.all()
+    m = Migration() 
+    print "salma", m.get_user_related_migrations(User.objects.get(username=username))[0].hop_set.all()[0]
     return render(request, 'social/user_profile.html', 
         {
+            'request': request,
             'username': username,
             'favorite_books': favorite_books,
+            'm': m.get_user_related_migrations(User.objects.get(username=username))[0].hop_set,
+            'migrations': m.get_user_related_migrations(User.objects.get(username=username)),
         }
     )
  

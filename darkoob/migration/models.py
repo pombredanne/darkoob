@@ -30,7 +30,7 @@ class Migration(models.Model):
 
     def get_user_related_migrations(self, user):
         '''return get_user_host_migrations() +  get_user_hoped_migrations()'''
-        print self.get_user_hoped_migrations(user) + self.get_user_host_migrations(user)
+        return self.get_user_hoped_migrations(user) + self.get_user_host_migrations(user)
 
     def __unicode__(self):
         return unicode("%s - %s" % (self.book.title, self.starter.username))
