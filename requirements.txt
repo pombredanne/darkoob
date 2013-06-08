@@ -1,5 +1,7 @@
 Django==1.5.1
 PIL==1.1.7
+argparse==1.2.1
+boto==2.0
 distribute==0.6.34
 django-appconf==0.6
 django-avatar==1.0.5
@@ -18,6 +20,7 @@ django-redis==3.2
 django-taggit==0.10a1
 lucene-querybuilder==0.1.6
 neomodel==0.2.8
+postman==0.6.0
 psycopg2==2.5
 py2neo==1.4.6
 pyelasticsearch==0.5

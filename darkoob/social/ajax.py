@@ -1,6 +1,8 @@
 from django.utils import simplejson
-from dajaxice.decorators import dajaxice_register
 from django.utils.translation import ugettext as _
+from django.template.loader import render_to_string
+from dajaxice.decorators import dajaxice_register
+from dajax.core import Dajax
 
 from darkoob.social.models import UserProfile, UserNode
 from django.contrib.auth.models import User
@@ -23,15 +25,22 @@ def follow_request(request, following_id):
 
 @dajaxice_register(method='POST')
 def submit_post(request, text):
+    post = None
+    dajax = Dajax()
     try:
-        Post.objects.create(user_id=request.user, text=text)
+        post = Post.objects.create(user_id=request.user, text=text)
     except:
         print "nashod"
         done = 'Fase'
     else:
         done = True
     print "text is", text
-    return simplejson.dumps({'done':done})
+    t_rendered = render_to_string('post/post.html', {'post': post})
+    dajax.append('#id_new_post_position', 'innerHTML', t_rendered)
+    dajax.clear('#id_text', 'value')
+
+    return dajax.json()
+    #return simplejson.dumps({'done': done, 'post': post})
 
 @dajaxice_register(method='POST')
 def edit_sex(request,sex):
