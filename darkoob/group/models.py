@@ -2,8 +2,7 @@ from django.db import models
 from darkoob.social.models import User
 from darkoob.book.models import Book
 from django.utils import timezone
-
-from datetime import datetime    
+   
 
 class Group(models.Model):
     name = models.CharField(max_length=255)

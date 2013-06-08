@@ -14,6 +14,7 @@ from darkoob.post.models import Post, Comment
 from darkoob.book.models import Quote
 from darkoob.migration.models import Migration
 from darkoob.group.models import Schedule
+from django.utils import simplejson
 
 
 @login_required
@@ -374,3 +375,14 @@ def user_profile(request, username):
         }
     )
  
+def user_lookup(request):
+    results = []
+    if request.method == "GET":
+        if request.GET.has_key(u'query'):
+            value = request.GET[u'query']
+            #if len(val) > 2:
+            model_results = User.objects.filter(username__icontains=value)
+            results = [ x.username  for x in model_results]
+    to_json = {'options':results}
+    jt=simplejson.dumps(to_json)
+    return HttpResponse(jt, mimetype='application/json')

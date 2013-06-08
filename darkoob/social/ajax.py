@@ -5,6 +5,7 @@ from dajaxice.decorators import dajaxice_register
 from dajax.core import Dajax
 
 from darkoob.social.models import UserProfile, UserNode
+from django.contrib.auth.models import User
 from darkoob.book.models import Quote
 from darkoob.post.models import Post
 
@@ -108,6 +109,14 @@ def edit_mobile(request, mobile):
 
     return simplejson.dumps({'done': done, 'mobile': mobile , 'errors': errors})
 
+@dajaxice_register(method='POST')
+def is_user(request, username):
+    try:
+        user = User.objects.get(username=username)
+        if user:
+            return simplejson.dumps({'is_exist': True})
+    except:
+        return simplejson.dumps({'is_exist': False})
 @dajaxice_register(method='POST')
 def edit_website(request, website):
     errors = []
