@@ -15,21 +15,24 @@
   <div class="span12">
     <div class="row-fluid">
       <div class="span10 sidebox">
-        <legend>Groups</legend>
-        <p>
-          list<br />
-          of<br />
-          groups
-        </p>
+        <legend>Books</legend>
       </div> <!-- span10 -->
     </div> <!-- row -->
     <div class="row-fluid">
       <div class="span10 sidebox">
-        <legend>Books</legend>
-        <p>
-          some<br />
-          books
-        </p>
+        <legend>Schedules</legend>
+        
+      </div> <!-- span10 -->
+    </div> <!-- row -->
+     <div class="row-fluid">
+      <div class="span10 sidebox">
+        <legend>Members</legend>
+          <ul>
+            <li><a href="#">{{ group.admin }}</a></li>
+          
+              <li><a href="#">{{ group.members }}</a></li>
+            
+          </ul>
       </div> <!-- span10 -->
     </div> <!-- row -->
   </div> <!-- span12 -->
@@ -42,10 +45,7 @@
     <div class="row-fluid">
       <div class="span12">
         <div class="simple-box">
-          <p>
-          TIMELINE
-          </p>
-         
+          <p>{{ group.name }}</p>
         </div>
       </div> <!-- span12 -->
     </div> <!-- row -->
