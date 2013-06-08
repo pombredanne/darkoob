@@ -23,6 +23,14 @@
             list<br />
             of<br />
             groups
+            <h3>
+            {{ user}}
+          </h3>
+            <b> TODO </b>
+            <br />
+            followers link<br />
+            following link<br />
+            favorite book link<br />
           </p>
       </div> <!-- span10 -->
     </div> <!-- row -->
@@ -40,8 +48,12 @@
       <div class="span10 sidebox">
         <legend>Books</legend>
         <p>
-          some<br />
-          books
+          TODO: links
+          {% for book in favorite_book %}
+          {#{% url 'book:book_page' book_id=book.id book_name=book.title %}#}
+            <li><a href="TODO">{{ book.title }}</a></li>
+          {% endfor %}
+          salam
         </p>
       </div> <!-- span10 -->
     </div> <!-- row -->
@@ -61,11 +73,15 @@
             {% if user.userprofile.quote.book %}<small>{{ user.userprofile.quote.book }}</small>{% endif %}
           </blockquote>
         </div>
-        <div class="sidebox post">
-          <p>
-            This is user's first post.
-          </p>
-        </div>
+        {% block right_sidebox %}
+          <div class="sidebox post">
+            <p>
+              This is user's first post.
+            </p>
+          </div>
+        {% endblock right_sidebox %}
+
+
       </div> <!-- span12 -->
     </div> <!-- row -->
   </div> <!-- span12 -->

@@ -1,0 +1,73 @@
+{% extends "base/profile_base.html" %}
+{% load staticfiles %}
+{% block css %}
+{{ block.super }}
+<link rel="stylesheet" type="text/less" href="{% static "/static/css/home_style.less" %}">
+{% endblock css %}
+{% block js %}
+<script type="text/javascript" src="{% static "js/sticky.js" %}"></script>
+<link rel="stylesheet" href="{% static "css/sticky.css" %}" type="text/css" />
+
+<script type="text/javascript">
+function book_status_callback(data){
+  if (data.status){
+    document.getElementById("new_migration_form").submit();
+  }
+  else{
+    $.pnotify({
+      title: 'Error',
+      text: 'This book no exsist',
+      type: 'error',
+      opacity: .8
+    })
+  }
+}
+</script>
+
+{% endblock js %}
+
+{% block main %}
+<div class="row-fluid">
+  <div class="span12">
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="sidebox post">
+          <h4>I Want to start a new migrtion</h4>
+
+
+            <h5> What's Book migration?</h5>
+
+            <h5> Migration lisence</h5>
+
+            <script type="text/javascript">
+              $(document).ready(function() {
+                $("#id_book_title").typeahead({
+                  source: function (query, process) {
+                    return $.get('/book/look', {  query: query }, function (data) {
+                      return process(data.options);
+                    });
+                  }   
+                });
+              });
+            </script>
+            <form id="new_migration_form" action="{% url 'migration:new_migration' %}" method='post'>
+              {% csrf_token %}
+              {{ form.book_title }}<br />
+              {{ form.starter_message }}<br />
+
+
+              Todo: Accept migration lisence<br />
+              TODO: Redirect to started page(see Views.py)<br/>
+            <a onmousedown="Dajaxice.darkoob.migration.book_status(book_status_callback,{'book_title':$('#id_book_title').val()}) ">Start New Migration</a>
+            </form>      
+        </div> <!-- post -->
+      </div> <!-- span12 -->
+    </div> <!-- row -->
+  </div> <!-- span12 -->
+</div> <!-- row -->
+{% endblock %}
+
+
+
+
+

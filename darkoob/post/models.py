@@ -2,18 +2,17 @@ from django.db import models
 from darkoob.social.models import User
 from darkoob.group.models import Group
 from django.utils import timezone  
+from djangoratings.fields import RatingField
 
 from mptt.models import MPTTModel, TreeForeignKey
-
 class Post(models.Model):
-	user_id = models.ForeignKey(User, related_name='post_user_id_set')
-	text = models.TextField()
-	submitted_time = models.DateTimeField(default=timezone.now())
+    user_id = models.ForeignKey(User, related_name='post_user_id_set')
+    text = models.TextField()
+    submitted_time = models.DateTimeField(default=timezone.now())
+    noks = RatingField(range=1, can_change_vote=True, allow_delete=True, allow_anonymous=False)
 
-	def __unicode__(self):
-		return unicode(self.text)
-
-
+    def __unicode__(self):
+        return unicode("user %s"% self.user_id)
 class Comment(MPTTModel):
     """ Threaded comments for blog posts """
     post = models.ForeignKey(Post)

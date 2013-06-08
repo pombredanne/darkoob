@@ -1,6 +1,6 @@
 {% load endless %}
-{% paginate 3,1 posts %}
-    {% for post in posts %}
+{% paginate 1,1 following %}
+    {% for user in following %}
         <div class="row-fluid">
           <div class="span12">
             <div class="sidebox post">
@@ -12,12 +12,12 @@
                   </div> <!-- span2 -->
                   <div class="span9">
                     <div class="username">
-                        {{ post.user.first_name }}
+                      {{ user }}
                     </div>
                   </div> <!-- span9 -->
                   <div class="span1 pull-right">
                     <div class="submitted_time">
-                      {{ post.submitted_time|timesince }}
+                      
                     </div>
                   </div> <!-- span1 -->
                 </div> <!-- post_head -->
@@ -25,16 +25,7 @@
               <div class="row-fluid">
                 <div class="span12">
                   <div class="post_content">
-                    {{ post.text }} {{ post.id}}
-                    <br />
-                    <br />
-                    <br />
-                    <script type="text/javascript">
-                      function callback_{{post.id}}(data){
-                        $('#n{{post.id}}').text('Kon')
-                      }
-                    </script>
-                    <button onmousedown="Dajaxice.darkoob.post.nok(callback_{{post.id}},{'post_id':{{post.id}}})"><t id='n{{post.id}}'> Nok</t> </button>
+
                   </div> <!-- content -->
                 </div> <!-- span12 -->
             </div> <!-- sidebox post -->

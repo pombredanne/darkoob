@@ -10,7 +10,7 @@ class Book(models.Model):
     language = models.ForeignKey('Language')
     authors = models.ManyToManyField('Author')
     tags = TaggableManager()
-    rating = RatingField(range = 5, can_change_vote = True, allow_delete = False, allow_anonymous = False )
+    rating = RatingField(range=5, can_change_vote=True, allow_delete=False, allow_anonymous=False)
     
     def author_names(self):
         return ', '.join([a.name for a in self.authors.all()])
@@ -54,6 +54,7 @@ class Translation(models.Model):
 class Review(models.Model):
     book = models.ForeignKey(Book)
     user = models.ForeignKey(User)
+    title = models.TextField()
     text = models.TextField()
     submitted_time = models.DateTimeField(default=timezone.now())
 

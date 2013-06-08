@@ -24,4 +24,12 @@ urlpatterns = patterns('',
 
     url(r'^post/new/$', social_views.new_post, name='new_post'),
     url(r'^user/(?P<username>\w+)/$', social_views.user_profile, name='user_profile'),
+
+    url(r'^user/(?P<username>\w+)/following$', social_views.user_following, name='user_following'),
+    url(r'^user/(?P<username>\w+)/followers$', social_views.user_followers, name='user_followers'),
+    url(r'^user/(?P<username>\w+)/favorite_books$', social_views.user_favorite_books, name='user_favorite_books'),
+
+    url(r'^profile/followers/$', social_views.followers, name='followers'),
+    url(r'^profile/following/$', social_views.following, name='following'),
+    url(r'^profile/favorite_books$', social_views.favorite_books, name='favorite_books'),
 )

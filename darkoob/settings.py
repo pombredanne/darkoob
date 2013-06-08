@@ -25,6 +25,8 @@ DATABASES = {
     }
 }
 
+AUTHENTICATION_BACKENDS = ('darkoob.backend.EmailOrUsernameModelBackend',)
+
 HAYSTACK_CONNECTIONS = {
     'default': {
         'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
@@ -186,7 +188,8 @@ INSTALLED_APPS = (
     'darkoob.group',
     'darkoob.post',
     'darkoob.comments',
-    'darkoob.migration',    
+    'darkoob.migration', 
+    'postman',
 )
 
 
