@@ -1,5 +1,6 @@
 from django.contrib import admin
 from models import Book, Publisher, Language, Author, Translator, Translation, Review, Quote
+from sorl.thumbnail.admin import AdminImageMixin
 
 class BookAdmin(admin.ModelAdmin):
     search_fields = ('title', 'publisher', 'language', 'authors')

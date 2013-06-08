@@ -2,6 +2,7 @@
 
 {% load staticfiles %}
 {% load endless %}
+{% load thumbnail %}
 
 {% block css %}
 {{ block.super }}
@@ -88,7 +89,14 @@ function submit_private_key_callback(data){
 
     <div class="row-fluid">
       <div class="span10 sidebox">
-        <legend>Suggest To Follow</legend>  
+        <legend>Suggest To Follow</legend> 
+
+
+        {% thumbnail book.thumb "100x100" crop="center" as im %}
+          <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+        {% endthumbnail %}
+
+
         # TODO : ISSUE #54
         <p id='person_box'>
           <div id='follow_suggestion_1'>

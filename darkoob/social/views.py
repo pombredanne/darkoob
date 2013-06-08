@@ -169,7 +169,9 @@ def home(request):
     suggestion_list = User.objects.order_by('?')[0:3]    # TODO : ISSUE #54
     #
 
-    print "--------------------", posts[0].noks._get_votes()
+    # print "--------------------", posts[0].noks._get_votes()
+    from darkoob.book.models import Book
+
     return render(request, template, {
         'new_post_form': NewPostForm(),
         'posts': posts,
@@ -178,6 +180,7 @@ def home(request):
         'admin_groups': admin_groups,
         'book_deadlines': book_deadlines,
         'quote': Quote.objects.order_by('?')[0],
+        'book': Book.objects.all()[0],
         # 'migrations': m.get_user_related_migrations(request.user),
         'suggestion_list': suggestion_list,
     })
@@ -365,7 +368,7 @@ def new_post(request):
 def user_profile(request, username):
     favorite_books = User.objects.get(username=username).userprofile.favorite_books.all()
     m = Migration() 
-    print "salma", m.get_user_related_migrations(User.objects.get(username=username))[0].hop_set.all()[0]
+    # print "salma", m.get_user_related_migrations(User.objects.get(username=username))[0].hop_set.all()[0]
     return render(request, 'social/user_profile.html', 
         {
             'request': request,

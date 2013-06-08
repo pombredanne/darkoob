@@ -11,9 +11,9 @@ from django.utils import simplejson
 
 def page(request, book_id, book_title):
     book = Book.objects.get(id = book_id, title = book_title)
-
     if book:
-        return render(request, "book/book_page.html" ,{'book_id': book_id, 'rate': book.rating.get_rating()})
+        # Why send book id?
+        return render(request, "book/book_page.html" ,{'book': book, 'book_id': book_id, 'rate': book.rating.get_rating()})
     else:
         return HttpResponse("Book Is not exist!")
 

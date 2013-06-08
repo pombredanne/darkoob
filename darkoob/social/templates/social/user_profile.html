@@ -1,5 +1,6 @@
 {% extends "base/profile_base.html" %}
 {% load staticfiles %}
+{% load thumbnail %}
 {% block css %}
 {{ block.super }}
 <link rel="stylesheet" type="text/less" href="{% static "/static/css/profile_base_style.less" %}">
@@ -69,8 +70,13 @@
     <div class="row-fluid">
       <div class="span12 sidebox">
         <legend>Migrations</legend>
+
+
           <p>
             {% for migration in migrations %}
+                {% thumbnail migration.book.thumb "50x50" crop="center" as im %}
+                  <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+                {% endthumbnail %}
               <b>{{ migration.book.title }} <--> </b> 
               {% if migration.starter == request.user %}
                 {{ migration.starter }}
