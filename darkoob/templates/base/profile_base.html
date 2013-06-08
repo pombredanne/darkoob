@@ -1,30 +1,22 @@
 {% extends "base/base.html" %}
 {% load staticfiles %}
 {% load dajaxice_templatetags %}
+
 {% block css %}
 <link rel="stylesheet" type="text/less" href="{% static "/static/css/profile_base_style.less" %}">
 {% endblock css %}
+
 {% block js %}
 <script src="{% static "js/endless.js" %}" type="text/javascript" charset="utf-8" ></script>
 <script src="{% static "js/endless_on_scroll.js" %}" type="text/javascript" charset="utf-8" ></script>
 <script type="text/javascript" charset="utf-8">
     var endless_on_scroll_margin = 1;
 </script>
+<script type="text/javascript" src="{% static '/static/js/post.js' %}"></script>
 {% endblock js %}
-{% block title %}Homepage{% endblock title %}
-<h1> {% block top %}{% endblock %} </h1>
 
-<!-- {% if errors %}
-  {% for error in errors %}
-    <div class="alert">{{ error }}</div>
-  {% endfor %}
-{% endif %}
-</br>
-</br>
-</br>
-</br>
-</hr>
--->
+{% block title %}Homepage{% endblock title %}
+
 {% block body %}
 <script>
   function show_search_res(data) {

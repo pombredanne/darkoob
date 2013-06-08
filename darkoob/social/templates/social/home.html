@@ -188,9 +188,9 @@ function submit_private_key_callback(data){
 
           <blockquote>
             <p>{{ quote.text }}</p><!-- Those who mind don't matter, and those who matter don't mind. -->
-            {% if quote.author %}<small>{{ quote.author }}</small>{% endif %}<!-- Bernard M. Baruch -->
-            {% if quote.book %}<small>{{ quote.book }}</small>{% endif %}
-
+            {% if quote.author %}<small>{{ quote.author }}{% if quote.book %} ({{ quote.book }}){% endif %}
+</small>{% endif %}<!-- Bernard M. Baruch -->
+            
             <a href="#"
               onclick="javascript:Dajaxice.darkoob.social.set_my_quote(
               set_my_quote_callback, {'quote_id': {{ quote.id }} })">
@@ -239,19 +239,13 @@ function submit_private_key_callback(data){
 {% block bottom_js %}
 {{ block.super }}
 <script>
-  $(document).ready(function() {
-    $('.nok_post').mouseover(function() {
-      $noks = $(this).next().html()
-      $(this).tooltip({
-        title: $noks + ' noks',
-        placement: 'right',
-      });
-    })
-  });
-
   $("#set_quote").tooltip({
     title: "Set as favorite",
     placement: "right",
+  });
+  $('.nok_btn').tooltip({
+    title: 'Nok',
+    placement: 'right',
   });
 </script>
 <script type="text/javascript" src="{% static "/static/js/home.js" %}"></script>
