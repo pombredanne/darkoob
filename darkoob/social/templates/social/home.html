@@ -194,7 +194,7 @@ function submit_private_key_callback(data){
             <a href="#"
               onclick="javascript:Dajaxice.darkoob.social.set_my_quote(
               set_my_quote_callback, {'quote_id': {{ quote.id }} })">
-              <i data-toggle="tooltip"id="set_quote" class="icon-ok pull-right">
+              <i data-toggle="tooltip" id="set_quote" class="icon-ok pull-right">
               </i>
             </a>
           </blockquote>
@@ -239,6 +239,16 @@ function submit_private_key_callback(data){
 {% block bottom_js %}
 {{ block.super }}
 <script>
+  $(document).ready(function() {
+    $('.nok_post').mouseover(function() {
+      $noks = $(this).next().html()
+      $(this).tooltip({
+        title: $noks + ' noks',
+        placement: 'right',
+      });
+    })
+  });
+
   $("#set_quote").tooltip({
     title: "Set as favorite",
     placement: "right",
