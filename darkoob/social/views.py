@@ -143,6 +143,7 @@ def home(request):
     groups = request.user.group_set.all()
     admin_groups = request.user.admin_set.all()
     book_deadlines = []
+    #TODO
     # for group in admin_groups:
     #     for schedule in group.schedule_set.all():
     #         deadline_set = schedule.deadline_set.all()
