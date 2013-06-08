@@ -7,7 +7,7 @@ $(document).ready(function() {
 
 function callback_nok_post(data){
   if (data.ok) {
-    $('#id_post_id_' + data.pid + ' div.noks').html(data.noks);
+    $('#id_post_id_' + data.pid + ' div.noks.span').html(data.noks);
   } else {
     $.pnotify({
       title: 'Noking failed!',
