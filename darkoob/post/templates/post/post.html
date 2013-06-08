@@ -1,5 +1,4 @@
 {% load avatar_tags %}
-
 <div class="row-fluid">
   <div class="span12">
     <div class="sidebox post">
@@ -13,7 +12,7 @@
           <div class="span9">
 
             <div class="username">
-                {{ post.user.first_name }}
+              {{ post.user.first_name }} {{post.user.last_name }}
             </div>
           </div> <!-- span9 -->
           <div class="span1 pull-right">
@@ -29,14 +28,15 @@
             {{ post.text }} {{ post.id }}
             <br />
             <br />
-            {{ post.noks.votes }} person nok's this post
-            <br />
             <script type="text/javascript">
               function callback_{{post.id}}(data){
                 $('#n{{post.id}}').text('Kon')
               }
             </script>
-            <button onmousedown="Dajaxice.darkoob.post.nok(callback_{{post.id}},{'post_id':{{post.id}}})"><t id='n{{post.id}}'> Nok</t> </button>
+            <button class="btn nok_post" data-toggle="tooltip" onmousedown="Dajaxice.darkoob.post.nok(callback_{{post.id}},{'post_id':{{post.id}}})"><t id='n{{post.id}}'> Nok</t> </button>
+            <div style="display: none;">
+              {{ post.noks.votes }}
+            </div>
           </div> <!-- content -->
         </div> <!-- span12 -->
     </div> <!-- sidebox post -->

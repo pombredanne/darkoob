@@ -6,16 +6,17 @@ from djangoratings.fields import RatingField
 
 from mptt.models import MPTTModel, TreeForeignKey
 class Post(models.Model):
-    user_id = models.ForeignKey(User, related_name='post_user_id_set')
+    user = models.ForeignKey(User, related_name='post_set')
     text = models.TextField()
     submitted_time = models.DateTimeField(default=timezone.now())
     noks = RatingField(range=1, can_change_vote=True, allow_delete=True, allow_anonymous=False)
 
     def __unicode__(self):
         return unicode("user %s"% self.user_id)
+
 class Comment(MPTTModel):
     """ Threaded comments for blog posts """
-    post = models.ForeignKey(Post)
+    post = models.ForeignKey(Post, related_name='comment_set')
     author = models.CharField(max_length=60)
     comment = models.TextField()
     added  = models.DateTimeField(default=timezone.now())
@@ -26,24 +27,23 @@ class Comment(MPTTModel):
         # comments on one level will be ordered by date of creation
         order_insertion_by=['added']
 
-
 class GroupPostStream(models.Model):
-	group_id = models.ForeignKey(Group)
-	post_id = models.ForeignKey(Post)
+    group = models.ForeignKey(Group)
+    post = models.ForeignKey(Post)
 
-	def __unicode__(self):
-		return unicode("group_id: %d    post_id: %d"%(self.group_id, self.post_id))
+    def __unicode__(self):
+        return unicode("group: %d    post: %d"%(self.group, self.post))
 
 class CommentStream(models.Model):
-	post_id = models.ForeignKey(Post)
-	parent_id = models.ForeignKey(Post, related_name='comment_stream_parent_id_set')
+    post = models.ForeignKey(Post)
+    parent = models.ForeignKey(Post, related_name='comment_stream_set')
 
-	def __unicode__(self):
-		return unicode("Comment with post_id: %d comes for Post with id: %s"%(self.post_id, parent_id))
+    def __unicode__(self):
+        return unicode("Comment with post: %d comes for Post with id: %s"%(self.post, parent))
 
 class ProfilePostStream(models.Model):
-	user_id = models.ForeignKey(User, related_name='profile_post_stream_user_id_set')
-	post_id = models.ForeignKey(Post)
+    user = models.ForeignKey(User, related_name='profile_post_set')
+    post = models.ForeignKey(Post)
 
-	def __unicode__(self):
-		return unicode("Post with id: %d belong to user with id: %d"%(self.post_id, self.user_id))
+    def __unicode__(self):
+        return unicode("Post with id: %d belong to user with id: %d"%(self.post, self.user))
