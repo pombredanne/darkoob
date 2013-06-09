@@ -71,13 +71,12 @@
       <div class="span12 sidebox">
         <legend>Migrations</legend>
 
-
           <p>
             {% for migration in migrations %}
                 {% thumbnail migration.book.thumb "50x50" crop="center" as im %}
                   <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
                 {% endthumbnail %}
-              <b>{{ migration.book.title }} <--> </b> 
+              <b>{{ migration.book.title }}</b><i class="icon-road"></i> 
               {% if migration.starter == request.user %}
                 {{ migration.starter }}
                 {% avatar migration.starter 30%}
@@ -87,13 +86,15 @@
               {% endif %}
               {# slice can be change with "1:3"#}
               {% for hop in migration.hop_set.all|slice:":"|dictsort:"received_time" %}
-                >>>
+                <i class="icon-chevron-right"></i>
+
                 {% if hop == request.user %}
                   {% avatar request.user 30%}
                   MAN
                 {% else %}
                   <a href="{% url 'social:user_profile' username=hop.host.username %}">{{ hop.host }}</a>
                   {% avatar hop.host 30 %}
+        
 
                 {% endif %}
               {% endfor %}
