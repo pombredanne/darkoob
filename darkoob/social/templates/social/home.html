@@ -2,7 +2,6 @@
 
 {% load staticfiles %}
 {% load endless %}
-
 {% block css %}
 {{ block.super }}
 <link rel="stylesheet" type="text/less" href="{% static "/static/css/home_style.less" %}">
@@ -88,7 +87,9 @@ function submit_private_key_callback(data){
 
     <div class="row-fluid">
       <div class="span10 sidebox">
-        <legend>Suggest To Follow</legend>  
+        <legend>Suggest To Follow</legend> 
+
+
         # TODO : ISSUE #54
         <p id='person_box'>
           <div id='follow_suggestion_1'>
@@ -188,13 +189,13 @@ function submit_private_key_callback(data){
 
           <blockquote>
             <p>{{ quote.text }}</p><!-- Those who mind don't matter, and those who matter don't mind. -->
-            {% if quote.author %}<small>{{ quote.author }}</small>{% endif %}<!-- Bernard M. Baruch -->
-            {% if quote.book %}<small>{{ quote.book }}</small>{% endif %}
-
+            {% if quote.author %}<small>{{ quote.author }}{% if quote.book %} ({{ quote.book }}){% endif %}
+</small>{% endif %}<!-- Bernard M. Baruch -->
+            
             <a href="#"
               onclick="javascript:Dajaxice.darkoob.social.set_my_quote(
               set_my_quote_callback, {'quote_id': {{ quote.id }} })">
-              <i data-toggle="tooltip"id="set_quote" class="icon-ok pull-right">
+              <i data-toggle="tooltip" id="set_quote" class="icon-ok pull-right">
               </i>
             </a>
           </blockquote>
@@ -242,6 +243,10 @@ function submit_private_key_callback(data){
   $("#set_quote").tooltip({
     title: "Set as favorite",
     placement: "right",
+  });
+  $('.nok_btn').tooltip({
+    title: 'Nok',
+    placement: 'right',
   });
 </script>
 <script type="text/javascript" src="{% static "/static/js/home.js" %}"></script>

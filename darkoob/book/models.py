@@ -3,6 +3,7 @@ from darkoob.social.models import User
 from taggit.managers import TaggableManager
 from djangoratings.fields import RatingField
 from django.utils import timezone  
+from sorl.thumbnail import ImageField
 
 class Book(models.Model):
     title = models.CharField(max_length=255)
@@ -10,6 +11,8 @@ class Book(models.Model):
     language = models.ForeignKey('Language')
     authors = models.ManyToManyField('Author')
     tags = TaggableManager()
+    
+    thumb =  models.ImageField(upload_to='books/')
     rating = RatingField(range=5, can_change_vote=True, allow_delete=False, allow_anonymous=False)
     
     def author_names(self):

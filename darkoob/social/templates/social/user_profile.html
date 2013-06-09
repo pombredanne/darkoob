@@ -1,5 +1,6 @@
 {% extends "base/profile_base.html" %}
 {% load staticfiles %}
+{% load thumbnail %}
 {% block css %}
 {{ block.super }}
 <link rel="stylesheet" type="text/less" href="{% static "/static/css/profile_base_style.less" %}">
@@ -25,12 +26,13 @@
             groups
             <h3>
             {{ user}}
-          </h3>
+            </h3>
             <b> TODO </b>
             <br />
-            followers link<br />
-            following link<br />
-            favorite book link<br />
+            Followers Link
+            Followers Link<br />
+            Following Link<br />
+            Favorite Book Link<br />
           </p>
       </div> <!-- span10 -->
     </div> <!-- row -->
@@ -68,21 +70,31 @@
     <div class="row-fluid">
       <div class="span12 sidebox">
         <legend>Migrations</legend>
+
+
           <p>
             {% for migration in migrations %}
+                {% thumbnail migration.book.thumb "50x50" crop="center" as im %}
+                  <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+                {% endthumbnail %}
               <b>{{ migration.book.title }} <--> </b> 
               {% if migration.starter == request.user %}
-                Man
+                {{ migration.starter }}
+                {% avatar migration.starter 30%}
               {% else %}
                 <a href="{% url 'social:user_profile' username=migration.starter.username %}">{{ migration.starter }}</a>
+                {% avatar migration.starter 30%}
               {% endif %}
               {# slice can be change with "1:3"#}
               {% for hop in migration.hop_set.all|slice:":"|dictsort:"received_time" %}
                 >>>
                 {% if hop == request.user %}
+                  {% avatar request.user 30%}
                   MAN
                 {% else %}
                   <a href="{% url 'social:user_profile' username=hop.host.username %}">{{ hop.host }}</a>
+                  {% avatar hop.host 30 %}
+
                 {% endif %}
               {% endfor %}
               <br />
