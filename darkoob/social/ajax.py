@@ -8,6 +8,7 @@ from darkoob.social.models import UserProfile, UserNode
 from django.contrib.auth.models import User
 from darkoob.book.models import Quote
 from darkoob.post.models import Post
+from avatar.templatetags import avatar_tags
 
 @dajaxice_register(method='POST')
 def follow_request(request, following_id):
@@ -114,7 +115,7 @@ def is_user(request, username):
     try:
         user = User.objects.get(username=username)
         if user:
-            return simplejson.dumps({'is_exist': True})
+            return simplejson.dumps({'is_exist': True, 'url': avatar_tags.avatar_url(user,40)})
     except:
         return simplejson.dumps({'is_exist': False})
 @dajaxice_register(method='POST')
