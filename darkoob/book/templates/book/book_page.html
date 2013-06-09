@@ -9,6 +9,7 @@
 
 {% block title %}Darkoob - {{ book.title }}{% endblock title %}
 
+
 {% block sidebar %}
 <div class="row-fluid">
   <div class="span12">
@@ -44,9 +45,7 @@
             {% endthumbnail %}          
           </a>
           <div class="media-body">
-          </div>
           <h4 class="media-heading">{{ book.title|capfirst }}</h4>
-
 
           <dl>
             <dt>Authors</dt>
@@ -72,12 +71,13 @@
 
             <br/>
 
-            <div id="star"></div>       
+            <div id="star"></div>  
+            <!-- javascript code for raty -->     
             <script type="text/javascript" src="{% static "/static/js/jquery.raty.min.js" %}"></script>
+
             <script type="text/javascript">
             function callback(data){
               if (data.done){
-                $.sticky('<B> your gender changed</b>');
                 alert(data.done);
               }
             }
@@ -92,12 +92,9 @@
               });
             });
             </script>              
-          </div>
-        </div>
-
-        <div class="row-fluid">
-
-        </div>
+            <!-- javascript code for raty -->
+          </div> <!-- media-body -->
+        </div><!-- media -->
       </div> <!-- span10 -->
     </div> <!-- row -->
 
