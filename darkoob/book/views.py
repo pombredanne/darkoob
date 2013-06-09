@@ -32,22 +32,19 @@ def page(request, book_id, book_title):
     else:
         raise Http404
 
+
+from avatar.templatetags import avatar_tags
+
+
 def book_lookup(request):
     results = []
     if request.method == "GET":
         if request.GET.has_key(u'query'):
             value = request.GET[u'query']
-            #if len(val) > 2:
             model_results = Book.objects.filter(title__icontains=value)
-            results = [ x.title  for x in model_results]
-    to_json = {'options':results}
-    jt=simplejson.dumps(to_json)
-    return HttpResponse(jt, mimetype='application/json')
+            results = [ {'book_title': x.title , 'photo': x.thumb.url , 'author_name': x.author_names() }  for x in model_results]
 
-# @login_required
-# def rate(request, rate):
-#     if request.method == 'POST':
-#         return HttpResponse("sabt shod")
-#     else:
-#         return HttpResponse("error")
-        
+    to_json = []
+
+    jt=simplejson.dumps(results)
+    return HttpResponse(jt, mimetype='application/json')
