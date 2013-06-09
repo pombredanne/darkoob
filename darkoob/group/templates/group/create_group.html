@@ -43,55 +43,130 @@
       <div class="span12">
         <div class="simple-box">
           <p>
-          TIMELINE
+            TIMELINE
           </p>
           <form action='{% url "group:create_group" %}' method='post'>
            {% csrf_token %}
            {{ form.name }}
            <input type="submit" value="Submit">
-          </form>
-          <script type="text/javascript">
-            $(document).ready(function() {
-              $("#user-look").typeahead({
-                source: function (query, process) {
-                  return $.get('/group/look/', {  query: query }, function (data) {
-                    return process(data.options);
-                  });
-                }   
-              });
+         </form>
+         <script src="{% static "/static/js/underscore.min.js" %}"></script>
+         <script type="text/javascript">
+         $(document).ready(function() {
+
+          $(function(){
+
+            var bondObjs = {};
+            var bondNames = [];
+
+      //get the data to populate the typeahead (plus an id value)
+      var throttledRequest = _.debounce(function(query, process){
+        //get the data to populate the typeahead (plus an id value)
+        $.ajax({
+          url: '/group/look'
+          ,type: "GET"
+          ,data: { query: $('#user-look').val()}
+          ,cache: false
+          ,success: function(data){
+            //reset these containers every time the user searches
+            //because we're potentially getting entirely different results from the api
+            bondObjs = {};
+            bondNames = [];
+
+            //Using underscore.js for a functional approach at looping over the returned data.
+            _.each( data, function(item, ix, list){
+
+              //for each iteration of this loop the "item" argument contains
+              //1 bond object from the array in our json, such as:
+              // { "id":7, "name":"Pierce Brosnan" }
+
+              //add the label to the display array
+              bondNames.push( item.username );
+
+              //also store a hashmap so that when bootstrap gives us the selected
+              //name we can map that back to an id value
+              bondObjs[ item.username ] = item;
             });
 
-            function close_added_user(added_user)
-            {
-              $(added_user).remove();
-              
-            }
-          </script>
-          <div id="added-users"></div>
-          <input type="text" id="user-look" data-provide='typeahead' />
-          <script type="text/javascript">
-            function is_user_callback(data)
-            {
-              if (data.is_exist) {
-                $('#added-users').append('<div id='+$('#user-look').val()+'><p> '+$('#user-look').val()+'</p><button class="close" id="close_button" onmousedown="close_added_user(\'#'+$('#user-look').val()+'\')">&times;</button><a onmousedown="close_added_user(\'#'+$('#user-look').val()+'\')"></a></div>');
-              } else {
-                $.pnotify({
-                  title: 'Not Exist',
-                  text: 'Wrong username , be sure what you looking for!',
-                  type: 'error',
-                  opacity: .8
-                });
-              }
-            }
-            $('#user-look').keypress(function(e) {
-              if(e.which == 13) {
-                Dajaxice.darkoob.social.is_user(is_user_callback, {'username': $('#user-look').val()});
-              }
-            });
-          </script>
-        </div>
-      </div> <!-- span12 -->
-    </div> <!-- row -->
-  </div> <!-- span -->
+            //send the array of results to bootstrap for display
+            process( bondNames );
+          }
+        });
+});
+
+
+$(".typeahead").typeahead({
+  source: function ( query, process ) {
+
+          //here we pass the query (search) and process callback arguments to the throttled function
+          throttledRequest( query, process );
+
+        }
+        ,highlighter: function( item ){
+          var bond = bondObjs[ item ];
+          
+          return '<div class="bond">'
+          +'<img src="' + bond.photo + '" />'
+          +'<br/><strong>' + bond.username + '</strong>'
+          +'</div>';
+        }
+        , updater: function ( selectedName ) {
+
+          //note that the "selectedName" has nothing to do with the markup provided
+          //by the highlighter function. It corresponds to the array of names
+          //that we sent from the source function.
+
+          //save the id value into the hidden field
+          $( "#user-look" ).val( bondObjs[ selectedName ].id );
+
+          //return the string you want to go into the textbox (the name)
+          return selectedName;
+        }
+      });
+});
+
+
+});
+
+function close_added_user(added_user)
+{
+  $(added_user).remove();
+
+}
+</script>
+<div id="added-users"></div>
+          <input
+            type="text"
+            id="user-look"
+            class="span6 typeahead"
+            placeholder="Username"
+            autocomplete="off"
+            data-provide="typeahead"
+          />
+          <br/>
+<script type="text/javascript">
+function is_user_callback(data)
+{
+  if (data.is_exist) {
+    $('#added-users').append('<div id='+$('#user-look').val()+'><p> '+$('#user-look').val()+'</p><button class="close" id="close_button" onmousedown="close_added_user(\'#'+$('#user-look').val()+'\')">&times;</button><a onmousedown="close_added_user(\'#'+$('#user-look').val()+'\')"></a></div>');
+  } else {
+    $.pnotify({
+      title: 'Not Exist',
+      text: 'Wrong username , be sure what you looking for!',
+      type: 'error',
+      opacity: .8
+    });
+  }
+}
+$('#user-look').keypress(function(e) {
+  if(e.which == 13) {
+    Dajaxice.darkoob.social.is_user(is_user_callback, {'username': $('#user-look').val()});
+  }
+});
+</script>
+</div>
+</div> <!-- span12 -->
+</div> <!-- row -->
+</div> <!-- span -->
 </div> <!-- row -->
 {% endblock main %}
