@@ -45,67 +45,77 @@
             {% endthumbnail %}          
           </a>
           <div class="media-body">
-          <h4 class="media-heading">{{ book.title|capfirst }}</h4>
+            <h4 class="media-heading">{{ book.title|capfirst }}</h4>
 
-          <dl>
-            <dt>Authors</dt>
-            {% for author in book.authors.all %}
-            <dd>{{ author.name }}</dd>
-            {% endfor %}
+            <dl>
+              <dt>Authors</dt>
+              {% for author in book.authors.all %}
+              <dd>{{ author.name }}</dd>
+              {% endfor %}
 
-            <dt>Publisher</dt>
-            <dd>{{ book.publisher.name}}</dd>
+              <dt>Publisher</dt>
+              <dd>{{ book.publisher.name}}</dd>
 
-            <dt>Language</dt>
-            <dd>{{ book.language.name }}
+              <dt>Language</dt>
+              <dd>{{ book.language.name }}
 
-              <dt>Tags</dt>
+                <dt>Tags</dt>
 
-              <ul class="inline">
-                {% for tag in book.tags.all %}
-                <li>{{tag}}</li>
-                {%endfor %}
-              </ul>
+                <ul class="inline">
+                  {% for tag in book.tags.all %}
+                  <li>{{tag}}</li>
+                  {%endfor %}
+                </ul>
 
-            </dl>
+              </dl>
 
-            <br/>
+              <br/>
 
-            <div id="star"></div>  
-            <!-- javascript code for raty -->     
-            <script type="text/javascript" src="{% static "/static/js/jquery.raty.min.js" %}"></script>
-
-            <script type="text/javascript">
-            function callback(data){
-              if (data.done){
-                alert(data.done);
-              }
-            }
-
-            $(function(){
-              $.fn.raty.defaults.path='/static/img';
-              $('#star').raty({
-                score: {{ rate }},
-                click: function(score, evt) {
-                  Dajaxice.darkoob.book.rate(callback,{'rate':score , 'book_id':{{book_id }} });
+              <div id="star"></div>  
+              <!-- javascript code for raty -->     
+              <script type="text/javascript" src="{% static "/static/js/jquery.raty.min.js" %}"></script>
+              <script type="text/javascript">
+              function callback(data){
+                if (data.done){
+                  alert(data.done);
                 }
+              }
+              $(function(){
+                $.fn.raty.defaults.path='/static/img';
+                $('#star').raty({
+                  score: {{ rate }},
+                  click: function(score, evt) {
+                    Dajaxice.darkoob.book.rate(callback,{'rate':score , 'book_id':{{book_id }} });
+                  }
+                });
               });
-            });
-            </script>              
-            <!-- javascript code for raty -->
-          </div> <!-- media-body -->
-        </div><!-- media -->
-      </div> <!-- span10 -->
-    </div> <!-- row -->
-
-    <div class="row-fluid">
-      <div class="span12">
-        <div class="simple-box">
-        </div> <!-- span12 -->
+              </script>              
+              <!-- javascript code for raty -->
+            </div> <!-- media-body -->
+          </div><!-- media -->
+        </div> <!-- span10 -->
       </div> <!-- row -->
-    </div> <!-- span -->
-  </div> <!-- row -->
-  {% endblock main %}
+
+      <div class="row-fluid">
+        <div class="span12">
+          <div class="simple-box">
+          </div> <!-- span12 -->
+        </div> <!-- row -->
+
+    
+
+
+        <div class="row-fluid">
+          <div class="span12 sidebox">
+            sdfdsf
+          </div> <!-- span12 -->
+        </div> <!-- row -->
+
+        {% include 'book/reviews.html' %}
+
+      </div> <!-- span -->
+    </div> <!-- row -->
+    {% endblock main %}
 
 
 
