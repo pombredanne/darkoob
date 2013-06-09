@@ -1,6 +1,5 @@
 {% load avatar_tags %}
 {% load staticfiles %}
-
 <div class="row-fluid" id="id_post_id_{{ post.id }}">
   <div class="span12">
     <div class="sidebox post">
@@ -18,7 +17,7 @@
             </div>
           </div> <!-- span9 -->
           <div class="span1 pull-right">
-            <div class="submitted_time" style="left-right: -3em;">
+            <div class="submitted_time" style="margin-right: 3em;">
               <small>{{ post.submitted_time|timesince }}</small>
             </div>
           </div> <!-- span1 -->
@@ -38,6 +37,7 @@
             </div>
           </div> <!-- content -->
         </div> <!-- span12 -->
+      </div> <!-- row -->
     </div> <!-- sidebox post -->
   </div> <!-- span12 -->
 </div> <!-- row -->
