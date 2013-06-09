@@ -5,11 +5,12 @@ from darkoob.post.models import Post
 
 @dajaxice_register(method='POST')
 def nok(request, post_id):
+    ok = True
     try:
         post = Post.objects.get(id=post_id)
         post.noks.add(score=1, user=request.user, ip_address=request.META['REMOTE_ADDR'])
     except:
-        print "nashoda"
+        ok = False
 
-    print "dsf",post.noks.score
-    return simplejson.dumps({'s': post.noks.votes})
+
+    return simplejson.dumps({'pid': post_id, 'ok': ok, 'noks': str(post.noks.votes)})
