@@ -16,14 +16,17 @@
     <div class="row-fluid">
       <div class="span12">
         <div class="sidebox post">
-          <h4>Starting a book migration</h4>
-            you will start a new book migration for {{ book.title }} book.<br />
+          <legend>You start a new migration</legend>
+          <p class="text-success">
+            you will start a new book migration for<b> {{ book.title|capfirst }}</b> book.<br />
             please write key in your book and give book to another person.<br />
-            will be used from this key to validate a person ...<br />
-            <h4> KEY</h4><b> {{ private_key }} </b>
-            <br />
-              BACK TO HOME 
-            <br />
+            will be used from this key to validate a person...
+          </p>
+          key is:
+          <div class="well">
+            <h2> {{ private_key }}</h2>
+          </div>
+
         </div> <!-- post -->
       </div> <!-- span12 -->
     </div> <!-- row -->
