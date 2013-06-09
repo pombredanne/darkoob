@@ -28,10 +28,10 @@
       <div class="span10 sidebox">
         <legend>Members</legend>
           <ul>
-            <li><a href="#">{{ group.admin }}</a></li>
-          
-              <li><a href="#">{{ group.members }}</a></li>
-            
+            <li><a>{{ group.admin }}</a></li>
+            {% for member in group.members.all %}
+              <li><a>{{ member }}</a></li>
+            {% endfor %}
           </ul>
       </div> <!-- span10 -->
     </div> <!-- row -->
