@@ -148,6 +148,7 @@ function submit_private_key_callback(data){
             {% for group in groups %}
               <li><a href="{% url 'group:group_page' group_id=group.id group_name=group.name %}">{{ group.name }}</a></li>
             {% endfor %}
+            <li style="display:block"><a href="{% url 'group:create_group' %}"><button type="button" class="btn btn-primary">Add Group</button></a></li>
           </ul>
         </p>
       </div> <!-- span10 -->
@@ -156,8 +157,11 @@ function submit_private_key_callback(data){
       <div class="span10 sidebox">
         <legend>Deadlines</legend>
         <ul>
+          {% if not book_deadline %}
+            <li>There is no deadline!</li>
+          {% endif %}
           {% for book in book_deadlines %}
-            <li class="deadline"><a href="#">{{ book.0 }}</a>
+            <li class="deadline"><a >{{ book.0 }}</a>
               <span style="display: none;">
                 {% for deadline in book.1 %}
                   <div class="progress 

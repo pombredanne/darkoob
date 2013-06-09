@@ -8,12 +8,9 @@ from darkoob.group.models import Group
 
 def group(request, group_id, group_name):
     group = Group.objects.get(id=group_id, name=group_name)
-
     if group:
         group.admins = group.admin.admin_set.all()
-        group.members = group.members.all()
-        for i in group.members:
-            print i
+        #group.members = group.members.all()
         return render(request, "group/group_page.html" ,{'group': group})
     else:
         return HttpResponse("Group Is not exist!")

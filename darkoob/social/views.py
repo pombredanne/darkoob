@@ -149,13 +149,12 @@ def home(request):
     groups = request.user.group_set.all()
     admin_groups = request.user.admin_set.all()
     book_deadlines = []
-    #TODO
-    # for group in admin_groups:
-    #     for schedule in group.schedule_set.all():
-    #         deadline_set = schedule.deadline_set.all()
-    #         for i in range(len(deadline_set)):
-    #             deadline_set[i].time_percentage = (timezone.now() - deadline_set[i].start_time).total_seconds()  / (deadline_set[i].end_time - deadline_set[i].start_time).total_seconds() * 100
-    #         book_deadlines.append([ schedule.book , deadline_set])
+    for group in admin_groups:
+        for schedule in group.schedule_set.all():
+            deadline_set = schedule.deadline_set.all()
+            for i in range(len(deadline_set)):
+                deadline_set[i].time_percentage = (timezone.now() - deadline_set[i].start_time).total_seconds()  / (deadline_set[i].end_time - deadline_set[i].start_time).total_seconds() * 100
+            book_deadlines.append([ schedule.book , deadline_set])
     for group in groups:
         for schedule in group.schedule_set.all():
             deadline_set = schedule.deadline_set.all()
