@@ -28,3 +28,5 @@ def create_group(request):
     else:
         form = GroupForm()
     return render(request, 'group/create_group.html', {'form': form })
+
+

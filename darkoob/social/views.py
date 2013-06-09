@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from django.template import RequestContext
 from django.contrib.auth import authenticate
 from django.utils import timezone
+from django.db.models import Q
 
 from darkoob.social.models import UserProfile, UserNode
 from darkoob.social.forms import RegisterForm, ChangePasswordForm, EditProfileForm, NewPostForm, CommentForm
@@ -17,7 +18,7 @@ from darkoob.group.models import Schedule
 from django.utils import simplejson
 
 from avatar.forms import PrimaryAvatarForm, DeleteAvatarForm
-from avatar.models import Avatar
+# from avatar.models import Avatar
 from avatar.templatetags import avatar_tags
 
 
@@ -386,12 +387,12 @@ def user_lookup(request):
     if request.method == "GET":
         if request.GET.has_key(u'query'):
             value = request.GET[u'query']
-            #if len(val) > 2:
-            model_results = User.objects.filter(username__icontains=value)
+            model_results = User.objects.filter(
+                Q(first_name__icontains=value) |
+                Q(last_name__icontains=value) |
+                Q(username__icontains=value)
+            )
             results = [ {'username': x.username , 'photo': avatar_tags.avatar_url(x,30), 'full_name': x.get_full_name()}  for x in model_results]
-
     to_json = []
-    #for i in results:
-     #   to_json.append({'username':i,'photo':"URL"})
-    jt=simplejson.dumps(results)#to_json)
+    jt=simplejson.dumps(results)
     return HttpResponse(jt, mimetype='application/json')
