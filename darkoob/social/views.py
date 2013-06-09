@@ -353,7 +353,7 @@ def user_favorite_books(request, username):
     count = range(1, len(favorite_books) + 1)
 
     if request.is_ajax():
-        template = 'social/user_favorite_books_page.html'
+        template = 'social/favorite_books_page.html'
 
     return render(request, template, {
         'favorite_books': favorite_books,
@@ -368,7 +368,6 @@ def new_post(request):
 def user_profile(request, username):
     favorite_books = User.objects.get(username=username).userprofile.favorite_books.all()
     m = Migration() 
-    # print "salma", m.get_user_related_migrations(User.objects.get(username=username))[0].hop_set.all()[0]
     return render(request, 'social/user_profile.html', 
         {
             'request': request,
