@@ -16,6 +16,10 @@ from darkoob.migration.models import Migration
 from darkoob.group.models import Schedule
 from django.utils import simplejson
 
+from avatar.forms import PrimaryAvatarForm, DeleteAvatarForm
+from avatar.models import Avatar
+from avatar.templatetags import avatar_tags
+
 
 @login_required
 def profile(request):
@@ -384,9 +388,10 @@ def user_lookup(request):
             value = request.GET[u'query']
             #if len(val) > 2:
             model_results = User.objects.filter(username__icontains=value)
-            results = [ x.username  for x in model_results]
+            results = [ {'username': x.username , 'photo': avatar_tags.avatar_url(x,30), 'full_name': x.get_full_name()}  for x in model_results]
+
     to_json = []
-    for i in results:
-        to_json.append({'username':i,'photo':"URL"})
-    jt=simplejson.dumps(to_json)
+    #for i in results:
+     #   to_json.append({'username':i,'photo':"URL"})
+    jt=simplejson.dumps(results)#to_json)
     return HttpResponse(jt, mimetype='application/json')
