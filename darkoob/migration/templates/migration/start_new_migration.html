@@ -68,11 +68,11 @@ function book_status_callback(data){
               // { "id":7, "name":"Pierce Brosnan" }
 
               //add the label to the display array
-              bondNames.push( item.username );
+              bondNames.push( item.book_title );
 
               //also store a hashmap so that when bootstrap gives us the selected
               //name we can map that back to an id value
-              bondObjs[ item.username ] = item;
+              bondObjs[ item.book_title ] = item;
             });
 
             //send the array of results to bootstrap for display
@@ -96,8 +96,8 @@ $(".typeahead").typeahead({
           + "<div class='typeahead_wrapper'>"
           +'<img class=\'typeahead_photo\' src="' + bond.photo + '" />'
           + "<div class='typeahead_labels'>"
-          +'<div class=\'typeahead_primary\'>' + bond.username + '</div>'
-          + "<div class='typeahead_secondary'>" + bond.full_name + "</div>"
+          +'<div class=\'typeahead_primary\'>' + bond.book_title + '</div>'
+          + "<div class='typeahead_secondary'>" + bond.author_name + "</div>"
           +'</div>'
           +'</div>';
         }
@@ -161,7 +161,7 @@ $(".typeahead").typeahead({
             TODO: Redirect to started page(see Views.py)<br/>
             <input type="checkbox" id="accept">I Accept Todo: Accept migration lisence</input>
 
-            <button class="btn btn-large btn-block btn-primary" type="button" onclick="">Start New Migration</button>
+            <button class="btn btn-large btn-block btn-primary" type="button" onclick="Dajaxice.darkoob.migration.book_status(book_status_callback,{'book_title':$('#id_book_title').val()})">Start New Migration</button>
           </form>      
         </div> <!-- post -->
       </div> <!-- span12 -->

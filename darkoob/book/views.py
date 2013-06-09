@@ -41,8 +41,8 @@ def book_lookup(request):
     if request.method == "GET":
         if request.GET.has_key(u'query'):
             value = request.GET[u'query']
-            model_results = User.objects.filter(username__icontains=value)
-            results = [ {'username': x.username , 'photo': avatar_tags.avatar_url(x,30), 'full_name': x.get_full_name()}  for x in model_results]
+            model_results = Book.objects.filter(title__icontains=value)
+            results = [ {'book_title': x.title , 'photo': x.thumb.url , 'author_name': x.author_names() }  for x in model_results]
 
     to_json = []
 
