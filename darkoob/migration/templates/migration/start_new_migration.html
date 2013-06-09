@@ -47,28 +47,28 @@ function book_status_callback(data){
               <a href="http://en.wikipedia.org/wiki/License">read more</a>
             </dd>
           </dl>
-            <script type="text/javascript">
-              $(document).ready(function() {
-                $("#id_book_title").typeahead({
-                  source: function (query, process) {
-                    return $.get('/book/look', {  query: query }, function (data) {
-                      return process(data.options);
-                    });
-                  }   
+          <script type="text/javascript">
+          $(document).ready(function() {
+            $("#id_book_title").typeahead({
+              source: function (query, process) {
+                return $.get('/book/look', {  query: query }, function (data) {
+                  return process(data.options);
                 });
-              });
-            </script>
-            <form id="new_migration_form" action="{% url 'migration:new_migration' %}" method='post'>
-              {% csrf_token %}
-              {{ form.book_title }}<br />
-              {{ form.starter_message }}<br />
+              }   
+            });
+          });
+          </script>
+          <form id="new_migration_form" action="{% url 'migration:new_migration' %}" method='post'>
+            {% csrf_token %}
+            {{ form.book_title }}<br />
+            {{ form.starter_message }}<br />
 
 
-              TODO: Redirect to started page(see Views.py)<br/>
-              <input type="checkbox" id="accept">I Accept Todo: Accept migration lisence</input>
+            TODO: Redirect to started page(see Views.py)<br/>
+            <input type="checkbox" id="accept">I Accept Todo: Accept migration lisence</input>
 
             <button class="btn btn-large btn-block btn-primary" type="button" onclick="Dajaxice.darkoob.migration.book_status(book_status_callback,{'book_title':$('#id_book_title').val()}) ">Start New Migration</button>
-            </form>      
+          </form>      
         </div> <!-- post -->
       </div> <!-- span12 -->
     </div> <!-- row -->

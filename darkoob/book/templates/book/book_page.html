@@ -11,25 +11,7 @@
 
 
 {% block sidebar %}
-<div class="row-fluid">
-  <div class="span12">
-    <div class="row-fluid">
-      <div class="span10 sidebox">
-        <legend>Book</legend>
 
-      </div> <!-- span10 -->
-    </div> <!-- row -->
-    <div class="row-fluid">
-      <div class="span10 sidebox">
-        <legend>Books</legend>
-        <p>
-          some<br />
-          books
-        </p>
-      </div> <!-- span10 -->
-    </div> <!-- row -->
-  </div> <!-- span12 -->
-</div> <!-- row -->
 {% endblock sidebar %}
 
 {% block main %}
@@ -85,7 +67,7 @@
                 $('#star').raty({
                   score: {{ rate }},
                   click: function(score, evt) {
-                    Dajaxice.darkoob.book.rate(callback,{'rate':score , 'book_id':{{book_id }} });
+                    Dajaxice.darkoob.book.rate(callback,{'rate':score , 'book_id':{{ book.id }} });
                   }
                 });
               });
@@ -105,11 +87,6 @@
     
 
 
-        <div class="row-fluid">
-          <div class="span12 sidebox">
-            sdfdsf
-          </div> <!-- span12 -->
-        </div> <!-- row -->
 
         {% include 'book/reviews.html' %}
 

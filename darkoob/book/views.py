@@ -1,6 +1,7 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, render_to_response
 from django.core.urlresolvers import reverse
+from django.http import Http404
 from django.utils.translation import ugettext as _
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -10,30 +11,26 @@ from darkoob.book.models import Book
 from django.utils import simplejson
 
 
-from darkoob.post.models import Post
+from darkoob.book.models import Review
 
 def page(request, book_id, book_title):
+    book = Book.objects.get(id = book_id, title = book_title)
     template = 'book/book_page.html'
-    reviews = Post.objects.order_by("-submitted_time")
-    print reviews
+    reviews = Review.objects.filter(book=book).order_by("-submitted_time")
     count = range(1, len(reviews) + 1)
 
     if request.is_ajax():
         template = 'book/reviews.html'
 
-    book = Book.objects.get(id = book_id, title = book_title)
     if book:
-        # Why send book id
         return render(request, template ,{
             'book': book,
-            'book_id': book_id,
             'rate': book.rating.get_rating(),
             'reviews': reviews,
             'count': count[::-1],
         })
     else:
-        #TODO: raise 404 error
-        return HttpResponse("Book Is not exist!")
+        raise Http404
 
 def book_lookup(request):
     results = []

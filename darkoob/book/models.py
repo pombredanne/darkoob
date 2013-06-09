@@ -60,6 +60,8 @@ class Review(models.Model):
     title = models.TextField()
     text = models.TextField()
     submitted_time = models.DateTimeField(default=timezone.now())
+    rating = RatingField(range=5, can_change_vote=True, allow_delete=False, allow_anonymous=False)
+
 
     def __unicode__(self):
         return unicode(self.book) + unicode(self.user)
