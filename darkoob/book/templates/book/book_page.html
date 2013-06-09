@@ -7,9 +7,8 @@
 <link rel="stylesheet" type="text/less" href="{% static "/static/css/home_style.less" %}">
 {% endblock css %}
 
+{% block title %}Darkoob - {{ book.title }}{% endblock title %}
 
-
-{% block title %}Book{% endblock title %}
 
 {% block sidebar %}
 <div class="row-fluid">
@@ -17,14 +16,7 @@
     <div class="row-fluid">
       <div class="span10 sidebox">
         <legend>Book</legend>
-          {% thumbnail book.thumb "150x200" crop="center" as im %}
-            <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
-          {% endthumbnail %}
-          <br />
-          {{ book.title }}<br />
-          {% for author in book.authors.all %}
-            {{ author.name }} <br />
-          {% endfor %}
+
       </div> <!-- span10 -->
     </div> <!-- row -->
     <div class="row-fluid">
@@ -43,42 +35,88 @@
 {% block main %}
 <div class="row-fluid">
   <div class="span12">
+
     <div class="row-fluid">
-      <div class="span12">
-        <div class="simple-box">
-          <p>
-          TIMELINE
-          </p>
-          <div id="star"></div>
-          <script type="text/javascript" src="{% static "/static/js/jquery.min.js" %}"></script>
-          <script type="text/javascript" src="{% static "/static/js/jquery.raty.min.js" %}"></script>
-          <script type="text/javascript">
-          function callback(data){
-            if (data.done){
-              $.sticky('<B> your gender changed</b>');
-            //   $('#sex_field').slideUp('normal');
-            //   $('#sex_box').slideDown('normal');
-            //   document.getElementById("sex_text").innerHTML = data.sex; 
-            //   }else{
-            //   $.sticky(data.errors);
-                        alert(data.done);
+      <div class="span12 sidebox">
+        <div class="media">
+          <a class="pull-left" href="#">
+            {% thumbnail book.thumb "150x200" crop="center" as im %}
+            <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+            {% endthumbnail %}          
+          </a>
+          <div class="media-body">
+            <h4 class="media-heading">{{ book.title|capfirst }}</h4>
 
-            }
-          }
+            <dl>
+              <dt>Authors</dt>
+              {% for author in book.authors.all %}
+              <dd>{{ author.name }}</dd>
+              {% endfor %}
 
-          $(function(){
-          	$.fn.raty.defaults.path='/static/img';
-          	$('#star').raty({
-              score: {{ rate }},
-	          	click: function(score, evt) {
-		            Dajaxice.darkoob.book.rate(callback,{'rate':score , 'book_id':{{book_id }} });
-		          }
-		});
-          });
-          </script>
-        </div>
-      </div> <!-- span12 -->
+              <dt>Publisher</dt>
+              <dd>{{ book.publisher.name}}</dd>
+
+              <dt>Language</dt>
+              <dd>{{ book.language.name }}
+
+                <dt>Tags</dt>
+
+                <ul class="inline">
+                  {% for tag in book.tags.all %}
+                  <li>{{tag}}</li>
+                  {%endfor %}
+                </ul>
+
+              </dl>
+
+              <br/>
+
+              <div id="star"></div>  
+              <!-- javascript code for raty -->     
+              <script type="text/javascript" src="{% static "/static/js/jquery.raty.min.js" %}"></script>
+              <script type="text/javascript">
+              function callback(data){
+                if (data.done){
+                  alert(data.done);
+                }
+              }
+              $(function(){
+                $.fn.raty.defaults.path='/static/img';
+                $('#star').raty({
+                  score: {{ rate }},
+                  click: function(score, evt) {
+                    Dajaxice.darkoob.book.rate(callback,{'rate':score , 'book_id':{{book_id }} });
+                  }
+                });
+              });
+              </script>              
+              <!-- javascript code for raty -->
+            </div> <!-- media-body -->
+          </div><!-- media -->
+        </div> <!-- span10 -->
+      </div> <!-- row -->
+
+      <div class="row-fluid">
+        <div class="span12">
+          <div class="simple-box">
+          </div> <!-- span12 -->
+        </div> <!-- row -->
+
+    
+
+
+        <div class="row-fluid">
+          <div class="span12 sidebox">
+            sdfdsf
+          </div> <!-- span12 -->
+        </div> <!-- row -->
+
+        {% include 'book/reviews.html' %}
+
+      </div> <!-- span -->
     </div> <!-- row -->
-  </div> <!-- span -->
-</div> <!-- row -->
-{% endblock main %}
+    {% endblock main %}
+
+
+
+

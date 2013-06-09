@@ -1,0 +1,6 @@
+{% load endless %}
+{% paginate 3,1 reviews %}
+    {% for review in reviews %}
+      {% include 'book/review.html' with review=review only %}
+    {% endfor %}
+{% show_more %}
