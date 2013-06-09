@@ -6,6 +6,8 @@ ROOT = os.path.dirname(os.path.realpath(__file__))
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
+THUMBNAIL_DEBUG = True
+
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
@@ -79,7 +81,6 @@ LOGIN_URL = 'social:login'
 # MEDIA_ROOT = os.path.abspath(os.path.dirname(__file__)) + '/media/'
 
 SITE_ROOT = os.path.dirname(__file__)
-THUMBNAIL_DEBUG = True
 MEDIA_ROOT = os.path.join(SITE_ROOT, 'media')
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a

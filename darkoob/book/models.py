@@ -13,7 +13,6 @@ class Book(models.Model):
     tags = TaggableManager()
     
     thumb =  models.ImageField(upload_to='books/')
-
     rating = RatingField(range=5, can_change_vote=True, allow_delete=False, allow_anonymous=False)
     
     def author_names(self):
