@@ -385,6 +385,8 @@ def user_lookup(request):
             #if len(val) > 2:
             model_results = User.objects.filter(username__icontains=value)
             results = [ x.username  for x in model_results]
-    to_json = {'options':results}
+    to_json = []
+    for i in results:
+        to_json.append({'username':i,'photo':"URL"})
     jt=simplejson.dumps(to_json)
     return HttpResponse(jt, mimetype='application/json')
