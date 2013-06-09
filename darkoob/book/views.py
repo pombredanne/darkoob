@@ -19,12 +19,12 @@ def page(request, book_id, book_title):
     count = range(1, len(reviews) + 1)
 
     if request.is_ajax():
-        template = 'book/review.html'
+        template = 'book/reviews.html'
 
     book = Book.objects.get(id = book_id, title = book_title)
     if book:
         # Why send book id
-        return render(request, "book/book_page.html" ,{
+        return render(request, template ,{
             'book': book,
             'book_id': book_id,
             'rate': book.rating.get_rating(),
