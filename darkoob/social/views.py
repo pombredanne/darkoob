@@ -161,6 +161,7 @@ def home(request):
             deadline_set = schedule.deadline_set.all()
             for i in range(len(deadline_set)):
                 deadline_set[i].time_percentage = (timezone.now() - deadline_set[i].start_time).total_seconds()  / (deadline_set[i].end_time - deadline_set[i].start_time).total_seconds() * 100
+
             book_deadlines.append([ schedule.book , deadline_set])
         
     if request.is_ajax():
@@ -175,7 +176,6 @@ def home(request):
 
     # print "--------------------", posts[0].noks._get_votes()
     from darkoob.book.models import Book
-
     return render(request, template, {
         'new_post_form': NewPostForm(),
         'posts': posts,

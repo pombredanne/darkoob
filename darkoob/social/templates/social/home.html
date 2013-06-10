@@ -161,9 +161,7 @@ function submit_private_key_callback(data){
       <div class="span10 sidebox">
         <legend>Deadlines</legend>
         <ul>
-          {% if not book_deadline %}
-            <li>There is no deadline!</li>
-          {% endif %}
+
           {% for book in book_deadlines %}
             <li class="deadline"><a >{{ book.0 }}</a>
               <span style="display: none;">
@@ -174,12 +172,14 @@ function submit_private_key_callback(data){
                     {% else %} progress-success
                     {% endif %} {% endif %}"
                   style="width: 88%;">
-                    <div class="bar" style="width: {{ deadline.time_percentage }}%;"></div>
+
+                    <div class="bar" style="width: {% if deadline.time_percentage < 3 %} 3{% else %}{{ deadline.time_percentage }}{%endif%}%"></div>
                   </div>
                 {% endfor %}
               </span>
+            </li>
           {% endfor %}
-          </li>
+      
         </ul>
       </div> <!-- span10 -->
     </div> <!-- row -->
