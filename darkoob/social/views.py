@@ -352,7 +352,7 @@ def favorite_books(request):
 
 @login_required
 def user_favorite_books(request, username):
-    template = 'social/user_favorite_books.html'
+    template = 'social/favorite_books.html'
     favorite_books = User.objects.get(username=username).userprofile.favorite_books.all()
     count = range(1, len(favorite_books) + 1)
 
@@ -370,12 +370,18 @@ def new_post(request):
 
 @login_required
 def user_profile(request, username):
-    favorite_books = User.objects.get(username=username).userprofile.favorite_books.all()
+    try:
+        user = User.objects.get(username=username)
+    except:
+        pass
+        #raise 404
+    favorite_books = user.userprofile.favorite_books.all()
     m = Migration() 
+    
     return render(request, 'social/user_profile.html', 
         {
             'request': request,
-            'username': username,
+            'user': user,
             'favorite_books': favorite_books,
             'migrations': m.get_user_related_migrations(User.objects.get(username=username)),
         }

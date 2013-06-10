@@ -6,70 +6,66 @@
 <link rel="stylesheet" type="text/less" href="{% static "/static/css/profile_base_style.less" %}">
 <link rel="stylesheet" type="text/less" href="{% static "/static/css/home_style.less" %}">
 {% endblock css %}
-{% block title %}User{% endblock title %}
+{% block title %}Darkoob - {{ user.get_full_name }} page{% endblock title %}
 
 {% load avatar_tags %}
 
 {% block sidebar %}
 <div class="row-fluid">
   <div class="span12">
-    <div class="row-fluid">
-      <div class="span10 sidebox">
-        <legend>Profile Information</legend>
-        <p>
-          <a href='{% url "avatar_change" %}'>Change your avatar</a>
 
-          {% avatar user %}
+    <div class="media">
+      <a class="pull-left" href="#">
+        {% avatar user 100 %}          
+      </a>
+      <div class="media-body">
+        <h4 class="media-heading">{{user.first_name|capfirst}} {{user.last_name|capfirst}}</h4>
+        {{ user.userprofile.sex }}<br />
+        {{ user.userprofile.birthday }}<br />
+        {{ user.userprofile.city|capfirst }}/{{user.userprofile.city.country|capfirst}}
+        
+      </div>
+    </div>
 
-          list<br />
-          of<br />
-          groups
-          <h3>
-            {{ user}}
-          </h3>
-          <b> TODO </b>
-          <br />
-          Followers Link
-          Followers Link<br />
-          Following Link<br />
-          Favorite Book Link<br />
-        </p>
-      </div> <!-- span10 -->
-    </div> <!-- row -->
-    <div class="row-fluid">
-      <div class="span10 sidebox">
-        <legend>Groups</legend>
-        <p>
-          list<br />
-          of<br />
-          groups
-        </p>
-      </div> <!-- span10 -->
-    </div> <!-- row -->
-    <div class="row-fluid">
-      <div class="span10 sidebox">
-        <legend>Books</legend>
-        <p>
-          TODO: links
-          {% for book in favorite_book %}
-          {#{% url 'book:book_page' book_id=book.id book_name=book.title %}#}
-          <li><a href="TODO">{{ book.title }}</a></li>
-          {% endfor %}
-          salam
-        </p>
-      </div> <!-- span10 -->
-    </div> <!-- row -->
-  </div> <!-- span12 -->
-</div> <!-- row -->
-{% endblock sidebar %}
+    <br />
+    <ul class="nav nav-tabs nav-stacked">
+      <li>
+        <a href="{% url 'social:user_followers' username=user.username %}"><i class="icon-eye-open"></i> Followers 
+          <i class="icon-chevron-right" style="float:right"></i></a>
+        </li>
+        <li>
+          <a href="{% url 'social:user_following' username=user.username %}"><i class="icon-heart"></i> Following <i class="icon-chevron-right" style="float:right"></i></a>
+        </li>
+        <li>
+          <a href="{% url 'social:user_favorite_books' username=user.username %}"><i class="icon-star"></i> Favorite Books <i class="icon-chevron-right" style="float:right"></i></a>
+        </li>
+      </ul>
 
-{% block main %}
-<div class="row-fluid">
-  <div class="span12">
+    </div> <!-- span12 -->
+  </div> <!-- row -->
+  {% endblock sidebar %}
 
-    <div class="row-fluid">
-      <div class="span12 sidebox">
-        <legend>Migrations</legend>
+  {% block main %}
+  
+
+  <div class="row-fluid">
+    <div class="span12">
+
+      <div class="quote">
+        <blockquote>
+          <p>{{ user.userprofile.quote.text }}</p>
+          {% if user.userprofile.quote.author %}<small>{{ user.userprofile.quote.author }}</small>{% endif %}
+          {% if user.userprofile.quote.book %}<small>{{ user.userprofile.quote.book }}</small>{% endif %}
+        </blockquote>
+      </div>
+      {% block right_sidebox %}
+
+      <div class="sidebox-head">
+        <h4>Migrations</h4>
+      </div>
+      <div class="span12 simple_box">
+
+
         <p>
           {% for migration in migrations %}
           <hops>
@@ -115,32 +111,35 @@
 
           </script>
         </p>
-      </div> <!-- span10 -->
-    </div> <!-- row -->
 
-    <div class="row-fluid">
-      <div class="span12">
-        <div class="quote">
-          <blockquote>
-            <p>{{ user.userprofile.quote.text }}</p>
-            {% if user.userprofile.quote.author %}<small>{{ user.userprofile.quote.author }}</small>{% endif %}
-            {% if user.userprofile.quote.book %}<small>{{ user.userprofile.quote.book }}</small>{% endif %}
-          </blockquote>
-        </div>
-        {% block right_sidebox %}
-        <div class="sidebox post">
-          <p>
-            This is user's first post.
-          </p>
-        </div>
-        {% endblock right_sidebox %}
+      </div>
 
-
-      </div> <!-- span12 -->
-    </div> <!-- row -->
+      <div class="row-fluid">
+        <div class="span12 sidebox">
 
 
 
-  </div> <!-- span12 -->
-</div> <!-- row -->
-{% endblock main %}
+          <legend>Migrations</legend>
+            dgfdgfdg
+        </div> <!-- span10 -->
+      </div> <!-- row -->
+
+      <div class="row-fluid">
+        <div class="span12">
+          {% endblock right_sidebox %}
+
+          <div class="sidebox post">
+            <p>
+              This is user's first post.
+            </p>
+          </div>
+
+
+        </div> <!-- span12 -->
+      </div> <!-- row -->
+
+
+
+    </div> <!-- span12 -->
+  </div> <!-- row -->
+  {% endblock main %}
