@@ -57,9 +57,14 @@
               <!-- javascript code for raty -->     
               <script type="text/javascript" src="{% static "/static/js/jquery.raty.min.js" %}"></script>
               <script type="text/javascript">
-              function callback(data){
+              function rate_book_callback(data){
                 if (data.done){
-                  alert(data.done);
+                     $.pnotify({
+                      title: 'Book Rating',
+                      text: 'Your rate to this Book recorded',
+                      type:'success',
+                      opacity: .8
+                    })
                 }
               }
               $(function(){
@@ -67,7 +72,7 @@
                 $('#star').raty({
                   score: {{ rate }},
                   click: function(score, evt) {
-                    Dajaxice.darkoob.book.rate(callback,{'rate':score , 'book_id':{{ book.id }} });
+                    Dajaxice.darkoob.book.rate(rate_book_callback,{'rate':score , 'book_id':{{ book.id }} });
                   }
                 });
               });

@@ -6,7 +6,6 @@ from darkoob.book.models import Book, Review
 @dajaxice_register(method='POST')
 def rate(request, rate, book_id):
     done = False
-    errors = []
     book = ''
     try:
         book = Book.objects.get(id = book_id) 
@@ -14,15 +13,9 @@ def rate(request, rate, book_id):
     except:
         errors.append('An error occoured in record in database')
     else:
-        try: 
-            rate = book.rating.get_rating()
-        except:
-            errors.append('An error occoured in reading rate')
-            rate = 0
         done = True
 
-
-    return simplejson.dumps({'done':done , 'rate':rate, 'errors': errors })
+    return simplejson.dumps({'done':done})
 
 
 @dajaxice_register(method='POST')
