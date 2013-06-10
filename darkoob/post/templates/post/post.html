@@ -7,32 +7,22 @@
         <div class="span6">
           <div class="post_head">
             <div class="row-fluid">
-              <div class="span6">
-                <div class="row-fluid post-head-box">
-                  <div class="username">
-                    <a href="{% url 'social:user_profile' username=post.user.username %}"><strong>{{ post.user.first_name }} {{post.user.last_name }}</strong></a>
+              <a href="{% url 'social:user_profile' username=post.user.username %}">
+                <div class="thumb pull-left">
+                  {% avatar post.user %}
+                </div>
+              </a>
+              <div class="post-head-box">
+                <div class="username">
+                  <a href="{% url 'social:user_profile' username=post.user.username %}"><strong>{{ post.user.first_name }} {{post.user.last_name }}</strong></a>
+                </div>
+                <div class="row-fluid">
+                  <div class="submitted_time">
+                    <small>{{ post.submitted_time|timesince }}</small>
                   </div>
-                  <div class="row-fluid">
-                    <div class="submitted_time">
-                      <small>{{ post.submitted_time|timesince }}</small>
-                    </div>
-
-              <div class="noks">
-                <span>{{ post.noks.votes }}</span>
-                <i class="icon-chevron-right nok_btn" data-toggle="tooltip" onclick="Dajaxice.darkoob.post.nok(callback_nok_post,{'post_id':{{post.id}}})"></i>
-              </div>
-                  </div> <!-- row -->
 
                 </div> <!-- row -->
-              </div> <!-- span6 -->
-              <a href="{% url 'social:user_profile' username=post.user.username %}">
-                <div class="thumb-border pull-left">
-                  <div class="thumb">
-                    {% avatar post.user %}
-                  </div>
-                </div> <!-- thumb-border -->
-              </a>
-
+              </div> <!-- post-head-box -->
 
             </div> <!-- row -->
             <div class="span9">
@@ -44,10 +34,13 @@
         <div class="span10">
           <div class="post_content">
             <div class="row-fluid">
-              {{ post.text }} {{ post.id }}
+              {{ post.text }}
             </div>
-            <div class="row-fluid">
-            </div>
+
+                  <button class="btn  btn-mini noks" data-toggle="tooltip">
+                    <i class="icon-chevron-right" onclick="Dajaxice.darkoob.post.nok(callback_nok_post,{'post_id':{{post.id}}})"></i>
+                    <span>{{ post.noks.votes }}</span>
+                  </div>
           </div> <!-- content -->
         </div> <!-- span10 -->
       </div> <!-- row -->

@@ -45,11 +45,11 @@
           <p>
             
           </p>
-          <form action='{% url "group:create_group" %}' method='post' onsubmit="load_members()">
+          <form id="add_group_form" action='{% url "group:create_group" %}' method='post'>
            {% csrf_token %}
            {{ form.name }}
            {{ form.members }}
-           <input type="submit" value="Submit" >
+           <button type="button" id="add_group_button" onmousedown="load_members()" class="btn btn-primary">Add Group</button>
          </form>
          <style>
           .typeahead_wrapper { display: block; height: 30px; }
@@ -60,6 +60,18 @@
          </style>
          <script src="{% static "/static/js/underscore.min.js" %}"></script>
          <script type="text/javascript">
+         function duplicat_group (data) {
+          if(data.is_exist) {
+            $.pnotify({
+              title: 'Duplicated Group',
+              text: 'This group is already exist',
+              type: 'info',
+              opacity: .8
+            });
+            return false;
+          }
+          return true;
+         }
          function load_members(){
           var member_list = ''
 
@@ -67,7 +79,7 @@
             member_list+=$(this).attr('id') + ',';
           })
           $('#id_members').val(member_list);
-
+          Dajaxice.darkoob.group.is_group_exist(duplicat_group, {'group_name': $('#id_name').val()});
          }
 
          $(document).ready(function() {
