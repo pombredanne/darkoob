@@ -24,8 +24,16 @@
         {{ user.userprofile.city|capfirst }}/{{user.userprofile.city.country|capfirst}}
       </div>
     </div>
-    <br />
+    {%if user.userprofile.mobile %}
+        <b>Mobile</b> {{user.userprofile.mobile}}
+    {% endif%}
 
+    {% if user.userprofile.website %}
+    <address>
+      <b>Webpage</b> <a href="{{user.userprofile.website}}">{{user.userprofile.website|truncatechars:35}}</a>
+    </address>
+    {% endif%}
+    
     <a class="btn btn-small btn-block" href="#"><i class="icon-eye-close"></i> Follow {{user.first_name|capfirst}}</a>
     <br/>
     <ul class="nav nav-tabs nav-stacked">
