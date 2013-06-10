@@ -146,11 +146,11 @@ function submit_private_key_callback(data){
         <p>
           <ul>
             {% for group in admin_groups %}
-              <li><a href="{% url 'group:group_page' group_id=group.id group_name=group.name %}">{{ group.name }}</a></li>
+              <li style="display:block"><a href="{% url 'group:group_page' group_id=group.id group_name=group.name %}"><i class="icon-th"></i>   {{ group.name }}</a></li>
             {% endfor %}
 
             {% for group in groups %}
-              <li><a href="{% url 'group:group_page' group_id=group.id group_name=group.name %}">{{ group.name }}</a></li>
+              <li style="display:block"><a href="{% url 'group:group_page' group_id=group.id group_name=group.name %}"><i class="icon-th"></i>   {{ group.name }}</a></li>
             {% endfor %}
             <li style="display:block"><a href="{% url 'group:create_group' %}"><button type="button" class="btn btn-primary">Add Group</button></a></li>
           </ul>
@@ -160,27 +160,37 @@ function submit_private_key_callback(data){
     <div class="row-fluid">
       <div class="span10 sidebox">
         <legend>Deadlines</legend>
-        <ul>
 
+        <div class="accordion" id="deadlines">
           {% for book in book_deadlines %}
-            <li class="deadline"><a >{{ book.0 }}</a>
-              <span style="display: none;">
+          <div class="accordion-group">
+            <div class="accordion-heading">
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#deadlines" href="#collapseDetail">
+                <i class="icon-book"></i>   {{ book.0 }}
+              </a>
+            </div>
+            <div id="collapseDetail" class="accordion-body collapse">
+              <div class="accordion-inner">
+                <ul>
                 {% for deadline in book.1 %}
-                  <div class="progress 
+                <li style="display:block">
+                <div class="progress 
                     {% if deadline.time_percentage > 90 %} progress-danger
                     {% else %}{% if deadline.time_percentage > 60 %} progress-warning 
                     {% else %} progress-success
                     {% endif %} {% endif %}"
-                  style="width: 88%;">
+                    style="width: 88%;">
 
-                    <div class="bar" style="width: {% if deadline.time_percentage < 3 %} 3{% else %}{{ deadline.time_percentage }}{%endif%}%"></div>
-                  </div>
+                  <div class="bar" style="width: {% if deadline.time_percentage < 3 %} 3{% else %}{{ deadline.time_percentage }}{%endif%}%"></div>
+                </div>
+                </li>
                 {% endfor %}
-              </span>
-            </li>
+                </ul>
+              </div>
+            </div>
+          </div>
           {% endfor %}
-      
-        </ul>
+        </div>
       </div> <!-- span10 -->
     </div> <!-- row -->
   </div> <!-- span12 -->
