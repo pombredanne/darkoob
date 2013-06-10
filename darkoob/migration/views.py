@@ -17,7 +17,7 @@ def start_new_migration(request):
         if form.is_valid():
             cd = form.cleaned_data
             try:
-                book = Book.objects.get(title=cd['book_title'])
+                book = Book.objects.get(title=cd['book'])
             except:
                 return HttpResponse("this book no exist")
             else:

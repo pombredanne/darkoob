@@ -2,7 +2,18 @@ from django import forms
 from django.utils.translation import ugettext as _
 
 class StartNewMigrationForm(forms.Form):
-    # TODO: this field should be autho complete
+
+    book = forms.CharField(
+        label=_('Book'),
+        widget=forms.TextInput(attrs={
+            'placeholder': _('Book Name'),
+            'autocomplete': 'off',
+            'data-provide': 'typeahead',
+            'class': 'span6 typeahead',
+            'id': 'title-look',
+            'sdf': 'dfsdf',            
+        })
+    )
 
     starter_message = forms.CharField(
         label=_('Your Message '),

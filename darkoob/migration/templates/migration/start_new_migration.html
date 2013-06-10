@@ -112,16 +112,19 @@ $(document).ready(function() {
           <form id="new_migration_form" action="{% url 'migration:new_migration' %}" method='post'>
             {% csrf_token %}
 
-            <input
+            {{ form.book }}
+
+
+<!--             <input
             name="book_title"
             type="text"
             id="title-look"
-            class="span6 typeahead"
+            # class="span6 typeahead"
             placeholder="Username"
-            autocomplete="off"
+            # autocomplete="off"
             data-provide="typeahead"
             />
-
+ -->
 
             {{ form.starter_message }}<br />
             <div id="added-users"></div>
@@ -129,7 +132,7 @@ $(document).ready(function() {
             TODO: Redirect to started page(see Views.py)<br/>
             <input type="checkbox" id="accept">I Accept Todo: Accept migration lisence</input>
 
-            <button class="btn btn-large btn-block btn-primary" type="button" onclick="Dajaxice.darkoob.migration.book_status(book_status_callback,{'book_title':$('#id_book_title').val()})">Start New Migration</button>
+            <button class="btn btn-large btn-block btn-primary" type="button" onclick="Dajaxice.darkoob.migration.book_status(book_status_callback,{'book_title':$('#title-look').val()})">Start New Migration</button>
           </form>      
         </div> <!-- post -->
       </div> <!-- span12 -->
