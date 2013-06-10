@@ -1,4 +1,5 @@
 {% extends "base/profile_base.html" %}
+{% load avatar_tags %}
 
 {% load staticfiles %}
 {% load endless %}
@@ -60,7 +61,6 @@
         </ul>
 
 
-
     <div class="row-fluid">
       <div class="sidebox-head">
         <h4>Suggest To Follow</h4> 
@@ -68,8 +68,41 @@
       <div class="span12 simple_box">
 
 
+        <!--# TODO : ISSUE #54-->
+        <table class="thumbnails span10 offset1" cellspacing="10">
+          <tr>
+            <td class="span3">
+              <a href="#" class="thumbnail">
+                {% avatar suggestion.0 %}
+                <h5 style="text-align: center; margin: -.1em -.3em">{{ suggestion.0.get_full_name }}</h5>
+              </a>
+            </td>
+            <td class="span3">
+              <a href="#" class="thumbnail">
+                {% avatar suggestion.1 %}
 
-        # TODO : ISSUE #54
+                <h5 style="text-align: center; margin: -.1em -.3em">{{ suggestion.1.get_full_name }}</h5>
+              </a>
+            </td>
+          </tr>
+          <tr>
+            <td class="span3">
+              <a href="#" class="thumbnail">
+                {% avatar suggestion.2 %}
+                <h5 style="text-align: center; margin: -.1em -.3em">{{ suggestion.2.get_full_name }}</h5>
+              </a>
+            </td>
+            <td class="span3">
+              <a href="#" class="thumbnail">
+                {% avatar suggestion.3 %}
+                <h5 style="text-align: center; margin: -.1em -.3em">{{ suggestion.3.get_full_name }}</h5>
+              </a>
+            </td>
+          </tr>
+        </table>
+
+        <ul>
+          <!--
         <p id='person_box'>
           <div id='follow_suggestion_1'>
             <button class="close" id="close_button_1" onmousedown="close_1()">&times;</button>
@@ -83,7 +116,7 @@
             <button class="close">&times;</button>
             {{ suggestion_list.2 }} <a onmousedown="Dajaxice.darkoob.social.follow_request(follow_request_callback_3,{'following_id': {{suggestion_list.2.id }}})">Follow</a>
           </div>
-        </p>
+          </p>-->
       </div> <!-- span12 -->
     </div> <!-- row -->
 
