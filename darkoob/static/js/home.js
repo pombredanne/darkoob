@@ -1,6 +1,13 @@
 $(document).ready(function() {
   $('.migrations-link').click(function() {
     $('.migrations').slideToggle();
+    if ($('.migrations-link').hasClass('migrations-link-inactive')) {
+      $('.migrations-link').removeClass('migrations-link-inactive')
+        .addClass('migrations-link-active');
+    } else {
+      $('.migrations-link').removeClass('migrations-link-active')
+        .addClass('migrations-link-inactive');
+    }
   });
 });
 
