@@ -14,7 +14,7 @@
           </div> <!-- span2 -->
           <div class="span9">
             <div class="username">
-              <b>{{ user.first_name|capfirst }} {{ user.last_name|capfirst }}</b><br/>
+              <b><a href="{% url 'social:user_profile' username=user.username %}">{{ user.first_name|capfirst }} {{ user.last_name|capfirst }}</a></b><br/>
               {{ user.userprofile.sex }}<br/>
               {% if user.userprofile.city %}{{ user.userprofile.city|capfirst }}/{{user.userprofile.city.country|capfirst}}{% endif %}
             </div>
