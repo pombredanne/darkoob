@@ -1,11 +1,18 @@
 {% extends "social/user_profile.html" %}
 {% load staticfiles %}
 
-{% block right_sidebox %}
-<div class="sidebox post">
-  <p>
-    <b>{{ user.first_name|capfirst }}'s Followers</b>
-    {% include 'social/person_bar_page.html' %}
-  </p>
-</div>
-{% endblock right_sidebox %}
+{% block followers_active %}
+<li class="active">
+  <a href="{% url 'social:user_followers' username=user.username %}" ><i class="icon-eye-open"></i> Followers 
+  </a>
+</li>
+{% endblock followers_active%}
+
+  {% block right_sidebox %}
+  <div class="sidebox post">
+    <p>
+      <b>{{ user.first_name|capfirst }}'s Followers</b>
+      {% include 'social/person_bar_page.html' %}
+    </p>
+  </div>
+  {% endblock right_sidebox %}
