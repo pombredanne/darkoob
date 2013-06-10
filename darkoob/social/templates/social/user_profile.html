@@ -71,10 +71,21 @@
       <div class="span12 sidebox">
         <legend>Migrations</legend>
 
+ <a href="#" rel="tooltip" title="first tooltip">hover over me</a>
           <p>
             {% for migration in migrations %}
+
+            <script type="text/javascript">
+              $(document).ready(function () {
+                $("img#hop").tooltip({
+                  'placement': 'bottom'
+                });
+              });           
+            </script>
+
+
                 {% thumbnail migration.book.thumb "50x50" crop="center" as im %}
-                  <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+                  <img rel="tooltip" title="d" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
                 {% endthumbnail %}
               <b>{{ migration.book.title }}</b><i class="icon-road"></i> 
               {% if migration.starter == request.user %}

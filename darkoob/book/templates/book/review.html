@@ -31,6 +31,11 @@
       <div class="post_content">
         <div class="row-fluid">
             {{ review.text }}
+
+
+              <div class="star" review_id={{ review.id }} current_rate={{ review.rating.get_rating }}></div>  
+
+
         </div>
     </div>
 </div> <!-- content -->

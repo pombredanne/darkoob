@@ -1,6 +1,41 @@
 {% load endless %}
+
+{% load staticfiles %}
 {% paginate 3,1 reviews %}
-    {% for review in reviews %}
-      {% include 'book/review.html' with review=review only %}
-    {% endfor %}
+{% for review in reviews %}
+{% include 'book/review.html' with review=review only %}
+{% endfor %}
+<!-- javascript code for raty -->     
+<script type="text/javascript" src="{% static "/static/js/jquery.raty.min.js" %}"></script>
+<script type="text/javascript">
+function review_callback(data){
+  if (data.done){
+    $.pnotify({
+      title: 'Review Rating',
+      text: 'Your rate to this review recorded',
+      type:'success',
+      opacity: .8
+    })
+  }
+}
+$(function(){
+  $.fn.raty.defaults.path='/static/img';
+  $('.star').each(function(){
+    {
+        $(this).raty({
+        score: $(this).attr('current_rate'),
+        click: function(score, evt) {
+          Dajaxice.darkoob.book.review_rate(review_callback,
+          {
+            'rate':score, 
+            'review_id': $(this).attr('review_id'), 
+            });
+          }
+        });
+    }
+  })
+});
+</script>              
+<!-- javascript code for raty -->
+
 {% show_more %}
