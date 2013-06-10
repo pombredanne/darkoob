@@ -65,12 +65,12 @@ def change_password(request):
     ## Please Dont remove:D
     ##
     # print ',,,,,,,,,,,', UserNode.index.search(user_id=27)[0]
-    a = UserNode.index.get(user_id=200)
+    a = UserNode.index.get(user_id=1)
     # print '------------', a
-    b = UserNode.index.get(user_id=201)
-    c = UserNode.index.get(user_id=202)
-    print a, b , c
-    # a.save()
+    b = UserNode.index.get(user_id=2)
+    # c = UserNode.index.get(user_id=202)
+    # print a, b , c
+    a.save()
     # b.save()
 
     # d = UserNode.index.search(user_id=53)
@@ -81,12 +81,12 @@ def change_password(request):
     # e = UserNode.index.get(user_id=114)
 
 
-    a.follow_person(201)
+    # a.follow_person(201)
     # b.follow_person
-    print a.get_followers(), a.get_following()
+    # print a.get_followers(), a.get_following()
     # print b, c , d
     # a.follow_person(114)
-    print "-----------------------------------"
+    # print "-----------------------------------"
     # print b , c , d , e
     # print 
 
@@ -97,7 +97,7 @@ def change_password(request):
     # a.follow.connect(c)
     # a.follow.connect(d)
     # a[0].save()
-    print "-----------------------------------"
+    # print "-----------------------------------"
     # print UserNode.index.search(user_id=26)[0].get_follows()
     # from darkoob.migration.models import Migration, Hop
 
@@ -202,10 +202,10 @@ def user_following(request, username):
         count = range(1, len(following) + 1)
 
         if request.is_ajax():
-            template = 'social/user_following_page.html'
+            template = 'social/person_bar_page.html'
 
         return render(request, template, {
-            'following': following,
+            'person': following,
             'count': count[::-1],
         })
 
@@ -224,10 +224,10 @@ def user_followers(request, username):
         count = range(1, len(followers) + 1)
 
         if request.is_ajax():
-            template = 'social/user_following_page.html'
+            template = 'social/person_bar_page.html'
 
         return render(request, template, {
-            'followers': followers,
+            'person': followers,
             'count': count[::-1],
         })
 
@@ -243,10 +243,10 @@ def following(request):
     count = range(1, len(following) + 1)
 
     if request.is_ajax():
-        template = 'social/following_page.html'
+        template = 'social/person_bar_page.html'
 
     return render(request, template, {
-        'following': following,
+        'person': following,
         'count': count[::-1],
     })
 
@@ -261,10 +261,10 @@ def followers(request):
     count = range(1, len(followers) + 1)
 
     if request.is_ajax():
-        template = 'social/followers_page.html'
+        template = 'social/person_bar_page.html'
 
     return render(request, template, {
-        'followers': followers,
+        'person': followers,
         'count': count[::-1],
     })
     # end cleanup code 

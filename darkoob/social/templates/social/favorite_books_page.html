@@ -1,44 +1,45 @@
+
 {% load endless %}
 {% load thumbnail %}
+
 {% paginate 1,1 favorite_books %}
 {% for book in favorite_books %}
 <div class="row-fluid">
   <div class="span12">
     <div class="sidebox post">
       <div class="row-fluid">
-        <div class="post_head">
-          <div class="span2">
-            <div class="thumb">
+        <div class="media">
+          <a class="pull-left" href="#">
               {% thumbnail book.thumb "70x90" crop="center" as im %}
               <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
-              {% endthumbnail %}
-            </div>
-          </div> <!-- span2 -->
-          <div class="span9">
-            <div class="username">
-              <b><a href="">{{ book.title|capfirst }}</a></b><br />
+              {% endthumbnail %}          
+          </a>
+          <div class="media-body">
+            <b><a href="">{{ book.title|capfirst }}</a></b><br />
 
               <small>Authors:</small>
-              
+                      <a class="btn btn-medium" href="#" style="float:right"><i class="icon-star"></i></a>
+
             <ul class="inline">
             {% for author in book.authors.all %}
             <li>{{ author.name|capfirst }}</li> 
             {% endfor %}
             </ul>
-          </div>
-        </div> <!-- span9 -->
-        <br />
-        <a class="btn btn-medium" href="#"><i class="icon-star"></i></a>
+   
 
-        <div class="span1 pull-right">
-          <div class="submitted_time">
+
+
+
+
           </div>
-        </div> <!-- span1 -->
-      </div> <!-- post_head -->
+
+        </div>
+
+      </div> <!-- span12 -->
     </div> <!-- row -->
-    <div class="row-fluid">
-    </div> <!-- sidebox post -->
-  </div> <!-- span12 -->
-</div> <!-- row -->
+  </div>
+</div>
 {% endfor %}
 {% show_more %}
+
+
