@@ -42,7 +42,7 @@
       }
     </script>
 
-        <ul class="nav nav-tabs nav-stacked">
+        <ul class="nav nav-tabs nav-stacked" style="margin-left: .5em; margin-right: -.5em;">
           <li class="active">
             <a href="#"><i class="icon-home"></i> Home</a>
           </li>
@@ -250,41 +250,38 @@
     <div class="migrations">
       <div class="row-fluid">
         <div class="span12 sidebox">
-          <p>
+          <div>
             {% for migration in migrations %}
-            <hops>
-              <hop>
-                <a style="Display:none">{{ migration.book.title }}</a>
-                {% thumbnail migration.book.thumb "50x50" crop="center" as im %}
-                <img rel="tooltip" title="d" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
-                {% endthumbnail %}
-                <i class="icon-road"></i> 
-              </hop>
+              <div class="migration">
 
-              <hop>
-                <a style="Display:none">{{ migration.starter.get_full_name }}</a>
-                {% avatar migration.starter 30%}
-              </hop>
-              {% for hop in migration.hop_set.all|slice:":"|dictsort:"received_time" %}
-              <i class="icon-chevron-right"></i>
+                <div class="migration-book">
+                  <a style="Display:none">{{ migration.book.title }}</a>
+                  {% thumbnail migration.book.thumb "50x50" crop="center" as im %}
+                    <img rel="tooltip" title="d" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+                  {% endthumbnail %}
+                </div> <!-- migration-book -->
 
+                <div class="offset1" style="display: inline-block;">
+                  <div class="migration-hop" style="display: inline-block;">
+                    <a style="Display:none">{{ migration.starter.get_full_name }}</a>
+                    {% avatar migration.starter 30%}
+                  </div>
 
-              <hop>
-                <a style="Display:none">{{ hop.host.get_full_name }}</a>
-                {% avatar hop.host 30 %}
-              </hop>
-              {% endfor %}
+                  {% for hop in migration.hop_set.all|slice:":"|dictsort:"received_time" %}
+                    <i class="icon-chevron-right"></i>
+                    <div class="migration-hop" style="display: inline-block;">
+                      <a style="Display:none">{{ hop.host.get_full_name }}</a>
+                      {% avatar hop.host 30 %}
+                    </div>
+                  {% endfor %}
+                </div>
 
-
-            </hops>
-            <br />
+              </div> <!-- migration -->
             {% endfor %}
-
-
 
             <script type="text/javascript">         
 
-            $('hops hop').each(function(){
+            $('.migration-book, .migration-hop').each(function(){
 
               $($(this).children()[1]).removeAttr('data-original-title')
               $($(this).children()[1]).attr('title',$(this).children()[0].text)
@@ -294,7 +291,7 @@
             });
 
             </script>
-          </p>
+          </div>
         </div> <!-- span12 -->
       </div> <!-- row -->
     </div> <!-- migrations -->
