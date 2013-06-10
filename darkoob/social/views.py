@@ -377,11 +377,16 @@ def user_profile(request, username):
         #raise 404
     favorite_books = user.userprofile.favorite_books.all()
     m = Migration() 
+
+    posts = Post.objects.filter(user=user).order_by("-submitted_time")
+    count = range(1, len(posts) + 1)
     
     return render(request, 'social/user_profile.html', 
         {
             'request': request,
             'user': user,
+            'posts': posts,
+            'count': count,
             'favorite_books': favorite_books,
             'migrations': m.get_user_related_migrations(User.objects.get(username=username)),
         }
