@@ -21,11 +21,11 @@
         <h4 class="media-heading">{{user.first_name|capfirst}} {{user.last_name|capfirst}}</h4>
         {{ user.userprofile.sex }}<br />
         {{ user.userprofile.birthday }}<br />
-        {{ user.userprofile.city|capfirst }}/{{user.userprofile.city.country|capfirst}}
+        {% if user.userprofile.city %}{{ user.userprofile.city|capfirst }}/{{user.userprofile.city.country|capfirst}}{% endif %}
       </div>
     </div>
     {%if user.userprofile.mobile %}
-        <b>Mobile</b> {{user.userprofile.mobile}}
+    <b>Mobile</b> {{user.userprofile.mobile}}
     {% endif%}
 
     {% if user.userprofile.website %}
@@ -51,15 +51,15 @@
 
 
 
-       <div class="row-fluid">
+      <div class="row-fluid">
 
-      <div class="sidebox-head">
-        <h4>{{user.first_name|capfirst }}'s Group</h4>
-      </div>
-      <div class="span12 simple_box">
+        <div class="sidebox-head">
+          <h4>{{user.first_name|capfirst }}'s Group</h4>
+        </div>
+        <div class="span12 simple_box">
 
-      </div> <!-- span10 -->
-    </div> <!-- row -->
+        </div> <!-- span10 -->
+      </div> <!-- row -->
 
 
 
