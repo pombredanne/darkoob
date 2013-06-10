@@ -172,10 +172,17 @@ def home(request):
 
     # Todo: Change this part
     suggestion_list = User.objects.order_by('?')[0:4]    # TODO : ISSUE #54
+
+
     #
+    from darkoob.book.models import Book, Author
+    try:
+        quote = Quote.objects.order_by('?')[0]
+    except:
+        author= Author.objects.create(name='vahid')
+        quote = Quote.objects.create(author=author, text="... to sath abstractioneton")
 
     # print "--------------------", posts[0].noks._get_votes()
-    from darkoob.book.models import Book
     return render(request, template, {
         'new_post_form': NewPostForm(),
         'posts': posts,
@@ -183,8 +190,8 @@ def home(request):
         'groups': groups,
         'admin_groups': admin_groups,
         'book_deadlines': book_deadlines,
-        'quote': Quote.objects.order_by('?')[0],
-        'book': Book.objects.all()[0],
+        'quote': quote,
+        'book': book,
         'migrations': m.get_user_related_migrations(request.user),
         'suggestion_list': suggestion_list,
     })
