@@ -171,7 +171,7 @@ def home(request):
     # print m.get_user_related_migrations(request.user)
 
     # Todo: Change this part
-    suggestion_list = User.objects.order_by('?')[0:3]    # TODO : ISSUE #54
+    suggestion_list = User.objects.order_by('?')[0:4]    # TODO : ISSUE #54
     #
 
     # print "--------------------", posts[0].noks._get_votes()
@@ -185,7 +185,7 @@ def home(request):
         'book_deadlines': book_deadlines,
         'quote': Quote.objects.order_by('?')[0],
         'book': Book.objects.all()[0],
-        # 'migrations': m.get_user_related_migrations(request.user),
+        'migrations': m.get_user_related_migrations(request.user),
         'suggestion_list': suggestion_list,
     })
 
