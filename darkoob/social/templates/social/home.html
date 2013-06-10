@@ -85,10 +85,27 @@ function submit_private_key_callback(data){
       }
     </script>
 
+        <ul class="nav nav-tabs nav-stacked">
+          <li class="active">
+            <a href="#"><i class="icon-home"></i> Home</a>
+          </li>
+          <li>
+            <a href="{% url 'social:followers' %}"><i class="icon-user"></i> Followers 
+              <i class="icon-chevron-right" style="float:right"></i></a>
+          </li>
+          <li>
+            <a href="{% url 'social:following' %}"><i class="icon-eye-open"></i> Following <i class="icon-chevron-right" style="float:right"></i></a>
+          </li>
+          <li>
+            <a href="{% url 'social:favorite_books' %}"><i class="icon-star"></i> Favorite Books <i class="icon-chevron-right" style="float:right"></i></a>
+          </li>
+        </ul>
+
+
     <div class="row-fluid">
       <div class="span10 sidebox">
-        <legend>Suggest To Follow</legend> 
-
+        <legend>Suggest To Follow </legend> 
+        <i class="icon-search"></i>
 
         # TODO : ISSUE #54
         <p id='person_box'>
@@ -109,35 +126,35 @@ function submit_private_key_callback(data){
     </div> <!-- row -->
 
 
+    <div class="row-fluid">
+      <div class="span10 sidebox">
+        <legend>Choose</legend>
+        <p>
+
+        </p>
+      </div> <!-- span10 -->
+    </div> <!-- row -->
+
+
+
+
 
     <div class="row-fluid">
       <div class="span10 sidebox">
-        <legend>Hoping</legend>
+        <legend>Migration</legend>
         <p>
-          <!--
-          <script type="text/javascript">
-            $(document).ready(function() {
-              $("#vahid").typeahead({
-                source: function (query, process) {
-                  return $.get('/book/look', {  query: query }, function (data) {
-                    return process(data.options);
-                  });
-                }   
-              });
-            });
-          </script>
-          <input type="text" id="vahid" data-provide='typeahead'>
-        -->
+
           I Get a book( TODO: tooltip(private key is 10 digit key that writen in your book) )
           </br>
+        <form class="form-inline" onsubmit="return false;">
+          <input type="text" placeholder="Private Key" autocomplete="off" data-toggle="tooltip" id='private_key' > 
 
+          <button id='check_primary_key' data-toggle="button" data-loading-text="loading stuff..." class="btn btn-primary" data-complete-text="finished!" onclick="Dajaxice.darkoob.migration.submit_key(submit_private_key_callback,{'private_key': $('#private_key').val() })">Check</button>
+        </form>
+        You can <a href="{% url 'migration:new_migration' %}">Start New Book Migration</a>
+<!--         <button class="btn btn-large btn-block btn-primary" type="button">Start New Migration</button> -->
 
-
-
-          <input type="text" placeholder="Private Key" data-toggle="tooltip" id='private_key'> 
-          <button id='' class="btn btn-inverse" onmousedown="Dajaxice.darkoob.migration.submit_key(submit_private_key_callback,{'private_key': $('#private_key').val() })">Check</button>
         </p>
-        Find f
       </div> <!-- span10 -->
     </div> <!-- row -->
     <div class="row-fluid">

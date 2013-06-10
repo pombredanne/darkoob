@@ -27,6 +27,7 @@ def create_group(request):
                 user = User.objects.get(username=member)
                 group.members.add(user)
             group.save()
+            
     else:
         form = GroupForm()
     return render(request, 'group/create_group.html', {'form': form })
