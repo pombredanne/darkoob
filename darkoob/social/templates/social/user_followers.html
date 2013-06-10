@@ -2,9 +2,11 @@
 {% load staticfiles %}
 
 {% block right_sidebox %}
-  <div class="sidebox post">
-    <p>
-      {% include 'social/user_followers_page.html' %}
-    </p>
-  </div>
+<div class="sidebox post">
+  <p>
+    <b>{{ user.first_name|capfirst }}'s Followers</b>
+
+    {% include 'social/user_followers_page.html' %}
+  </p>
+</div>
 {% endblock right_sidebox %}

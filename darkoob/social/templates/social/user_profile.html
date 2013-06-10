@@ -13,7 +13,6 @@
 {% block sidebar %}
 <div class="row-fluid">
   <div class="span12">
-
     <div class="media">
       <a class="pull-left" href="#">
         {% avatar user 100 %}          
@@ -22,12 +21,21 @@
         <h4 class="media-heading">{{user.first_name|capfirst}} {{user.last_name|capfirst}}</h4>
         {{ user.userprofile.sex }}<br />
         {{ user.userprofile.birthday }}<br />
-        {{ user.userprofile.city|capfirst }}/{{user.userprofile.city.country|capfirst}}
-        
+        {% if user.userprofile.city %}{{ user.userprofile.city|capfirst }}/{{user.userprofile.city.country|capfirst}}{% endif %}
       </div>
     </div>
+    {%if user.userprofile.mobile %}
+    <b>Mobile</b> {{user.userprofile.mobile}}
+    {% endif%}
 
-    <br />
+    {% if user.userprofile.website %}
+    <address>
+      <b>Webpage</b> <a href="{{user.userprofile.website}}">{{user.userprofile.website|truncatechars:35}}</a>
+    </address>
+    {% endif%}
+    
+    <a class="btn btn-small btn-block" href="#"><i class="icon-eye-close"></i> Follow {{user.first_name|capfirst}}</a>
+    <br/>
     <ul class="nav nav-tabs nav-stacked">
       <li>
         <a href="{% url 'social:user_followers' username=user.username %}"><i class="icon-eye-open"></i> Followers 
@@ -41,12 +49,26 @@
         </li>
       </ul>
 
+
+
+      <div class="row-fluid">
+
+        <div class="sidebox-head">
+          <h4>{{user.first_name|capfirst }}'s Group</h4>
+        </div>
+        <div class="span12 simple_box">
+
+        </div> <!-- span10 -->
+      </div> <!-- row -->
+
+
+
     </div> <!-- span12 -->
   </div> <!-- row -->
   {% endblock sidebar %}
 
   {% block main %}
-  
+
 
   <div class="row-fluid">
     <div class="span12">
@@ -114,29 +136,23 @@
 
       </div>
 
-      <div class="row-fluid">
-        <div class="span12 sidebox">
 
-
-
-          <legend>Migrations</legend>
-            dgfdgfdg
-        </div> <!-- span10 -->
-      </div> <!-- row -->
 
       <div class="row-fluid">
         <div class="span12">
-          {% endblock right_sidebox %}
+          {% include 'post/posts.html' %}
+        </div>
+      </div>
 
-          <div class="sidebox post">
-            <p>
-              This is user's first post.
-            </p>
-          </div>
+      <div class="row-fluid">
+        <div class="span12">
 
 
         </div> <!-- span12 -->
       </div> <!-- row -->
+
+      {% endblock right_sidebox %}
+
 
 
 
