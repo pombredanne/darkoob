@@ -25,24 +25,23 @@
               </div> <!-- post-head-box -->
 
             </div> <!-- row -->
-            <div class="span9">
-            </div> <!-- span9 -->
           </div> <!-- post_head -->
         </div> <!-- span6 -->
       </div> <!-- row -->
       <div class="row-fluid">
-        <div class="span10">
+        <div class="span12">
           <div class="post_content">
             <div class="row-fluid">
               {{ post.text }}
             </div>
-
-                  <button class="btn  btn-mini noks" data-toggle="tooltip">
-                    <i class="icon-chevron-right" onclick="Dajaxice.darkoob.post.nok(callback_nok_post,{'post_id':{{post.id}}})"></i>
-                    <span>{{ post.noks.votes }}</span>
-                  </div>
-          </div> <!-- content -->
-        </div> <!-- span10 -->
+            <div class="row-fluid">
+              <button class="btn  btn-mini noks" data-toggle="tooltip">
+                <i class="icon-chevron-right" onclick="Dajaxice.darkoob.post.nok(callback_nok_post,{'post_id':{{post.id}}})"></i>
+                <span>{{ post.noks.votes }}</span>
+              </button>
+            </div>
+          </div> <!-- post_content -->
+        </div> <!-- span12 -->
       </div> <!-- row -->
     </div> <!-- sidebox post -->
   </div> <!-- span12 -->
