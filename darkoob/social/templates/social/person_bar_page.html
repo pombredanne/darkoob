@@ -5,27 +5,27 @@
 <div class="row-fluid">
   <div class="span12">
     <div class="sidebox post">
-        <div class="post_head">
-          <div class="span2">
-            <div class="thumb">
-              {% avatar user %}
-            </div>
-          </div> <!-- span2 -->
-          <div class="span9">
-            <div class="username">
-              <b><a href="{% url 'social:user_profile' username=user.username %}">{{ user.first_name|capfirst }} {{ user.last_name|capfirst }}</a></b><br/>
-              {{ user.userprofile.sex }}<br/>
-              {% if user.userprofile.city %}{{ user.userprofile.city|capfirst }}/{{user.userprofile.city.country|capfirst}}{% endif %}
-            </div>
-          </div> <!-- span9 -->
-          <br/>
-          <a class="btn btn-medium" href="#"><i class="icon-eye-open"></i></a>
+      <div class="row-fluid">
+        <div class="media">
+          <a class="pull-left" href="#">
+            {% avatar user 70%}
+          </a>
+          <div class="media-body">
+            <a href="{% url 'social:user_profile' username=user.username %}"><b>{{ user.first_name|capfirst }} {{ user.last_name|capfirst }}</b></a>
+            <br>
+            <a class="btn btn-medium" href="#" style="float:right"><i class="icon-eye-open"></i></a>
 
-          <div class="span1 pull-right">
-          </div> <!-- span1 -->
-        </div> <!-- post_head -->
+            {{ user.userprofile.sex }}<br/>
+            {% if user.userprofile.city %}{{ user.userprofile.city|capfirst }}/{{user.userprofile.city.country|capfirst}}{% endif %}
+          </div>
 
-    </div> <!-- span12 -->
-  </div> <!-- row -->
-  {% endfor %}
-  {% show_more %}
+        </div>
+
+      </div> <!-- span12 -->
+    </div> <!-- row -->
+  </div>
+</div>
+{% endfor %}
+{% show_more %}
+
+
