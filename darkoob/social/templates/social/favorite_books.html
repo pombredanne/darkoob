@@ -4,8 +4,9 @@
 {% block right_sidebox %}
   <div class="sidebox post">
     <p>
-      Favorite Books
+      <b>{{ user.first_name|capfirst }}'s Favorite Books</b>
       {% include 'social/favorite_books_page.html' %}
     </p>
+
   </div>
 {% endblock right_sidebox %}
