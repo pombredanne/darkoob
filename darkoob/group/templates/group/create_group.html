@@ -43,12 +43,13 @@
       <div class="span12">
         <div class="simple-box">
           <p>
-            TIMELINE
+            
           </p>
-          <form action='{% url "group:create_group" %}' method='post'>
+          <form action='{% url "group:create_group" %}' method='post' onsubmit="load_members()">
            {% csrf_token %}
            {{ form.name }}
-           <input type="submit" value="Submit">
+           {{ form.members }}
+           <input type="submit" value="Submit" >
          </form>
          <style>
           .typeahead_wrapper { display: block; height: 30px; }
@@ -59,6 +60,16 @@
          </style>
          <script src="{% static "/static/js/underscore.min.js" %}"></script>
          <script type="text/javascript">
+         function load_members(){
+          var member_list = ''
+
+          $('.media').each(function(){
+            member_list+=$(this).attr('id') + ',';
+          })
+          $('#id_members').val(member_list);
+
+         }
+
          $(document).ready(function() {
 
           $(function(){
@@ -144,6 +155,8 @@ function close_added_user(added_user)
 }
 </script>
 <div id="added-users"></div>
+<br />
+
 <input
   type="text"
   id="user-look"
@@ -152,6 +165,7 @@ function close_added_user(added_user)
   autocomplete="off"
   data-provide="typeahead"
 />
+
 <script type="text/javascript">
 function is_in_added_users(username)
 {
@@ -165,11 +179,22 @@ function is_in_added_users(username)
   }
   return result;
 }
+
 function is_user_callback(data)
 {
   if (data.is_exist ) {
     if (!is_in_added_users($('#user-look').val())) {
-      $('#added-users').append('<img src="'+data.url+'" /><div id='+$('#user-look').val()+'><p> '+$('#user-look').val()+'</p><button class="close" id="close_button" onmousedown="close_added_user(\'#'+$('#user-look').val()+'\')">&times;</button><a onmousedown="close_added_user(\'#'+$('#user-look').val()+'\')"></a></div>');
+      $('#added-users').append(
+        '<div class="media" id="'+ $('#user-look').val() +'" >' +
+        '<a class="pull-left" href="#">' +
+        '<img class="media-object" src="'+ data.url +'">'+
+        '</a><div class="media-body">' +
+        '<button class="close" id="close_button" onmousedown="close_added_user(\'#'+$('#user-look').val()+'\')">&times;</button>'+
+        '<b class="media-heading">'+ $('#user-look').val() +'</b><br/>' +
+        data.full_name +
+        '</div>' +
+        '</div>'
+        )
     } else {
       $.pnotify({
         title: 'Duplicated Username',
