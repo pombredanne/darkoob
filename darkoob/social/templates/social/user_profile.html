@@ -24,8 +24,10 @@
         {{ user.userprofile.city|capfirst }}/{{user.userprofile.city.country|capfirst}}
       </div>
     </div>
-
     <br />
+
+    <a class="btn btn-small btn-block" href="#"><i class="icon-eye-close"></i> Follow {{user.first_name|capfirst}}</a>
+    <br/>
     <ul class="nav nav-tabs nav-stacked">
       <li>
         <a href="{% url 'social:user_followers' username=user.username %}"><i class="icon-eye-open"></i> Followers 
@@ -38,6 +40,7 @@
           <a href="{% url 'social:user_favorite_books' username=user.username %}"><i class="icon-star"></i> Favorite Books <i class="icon-chevron-right" style="float:right"></i></a>
         </li>
       </ul>
+
 
 
        <div class="row-fluid">
