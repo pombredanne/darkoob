@@ -21,7 +21,12 @@ def create_group(request):
         form = GroupForm(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
-            Group(name=cd['name'], admin=request.user).save()
+            group = Group(name=cd['name'], admin=request.user)
+            group.save()
+            for member in cd['members'].strip(',').split(','):
+                user = User.objects.get(username=member)
+                group.members.add(user)
+            group.save()
     else:
         form = GroupForm()
     return render(request, 'group/create_group.html', {'form': form })

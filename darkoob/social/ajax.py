@@ -115,7 +115,7 @@ def is_user(request, username):
     try:
         user = User.objects.get(username=username)
         if user:
-            return simplejson.dumps({'is_exist': True, 'url': avatar_tags.avatar_url(user,40)})
+            return simplejson.dumps({'is_exist': True, 'url': avatar_tags.avatar_url(user,40), 'full_name': user.get_full_name()})
     except:
         return simplejson.dumps({'is_exist': False})
 @dajaxice_register(method='POST')
