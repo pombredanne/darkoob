@@ -45,11 +45,14 @@
             <a href="#"><i class="icon-home"></i> Home</a>
           </li>
           <li>
-            <a href="{% url 'social:followers' %}"><i class="icon-user"></i> Followers 
+            <a href="{% url 'social:profile' %}"><i class="icon-user"></i> Profile<i class="icon-chevron-right" style="float:right"></i></a>
+          </li>
+          <li>
+            <a href="{% url 'social:followers' %}"><i class="icon-eye-open"></i> Followers 
               <i class="icon-chevron-right" style="float:right"></i></a>
           </li>
           <li>
-            <a href="{% url 'social:following' %}"><i class="icon-eye-open"></i> Following <i class="icon-chevron-right" style="float:right"></i></a>
+            <a href="{% url 'social:following' %}"><i class="icon-heart"></i> Following <i class="icon-chevron-right" style="float:right"></i></a>
           </li>
           <li>
             <a href="{% url 'social:favorite_books' %}"><i class="icon-star"></i> Favorite Books <i class="icon-chevron-right" style="float:right"></i></a>
