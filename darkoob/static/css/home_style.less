@@ -59,6 +59,10 @@
 
 .migrations {
   display: none;
+
+  p {
+    margin: 1em;
+  }
 }
 
 .migrations-link {
@@ -87,3 +91,23 @@
     opacity: 1;
   }
 }
+
+.migration {
+  display: block;
+  margin: 1em;
+
+  .migration-book {
+    border: 1px solid @border;
+    padding: 2px;
+    display: inline-block;
+  }
+
+  .migration-hop {
+    display: inline-block;
+
+    img {
+      .border-radius(100%);
+    }
+  }
+}
+
