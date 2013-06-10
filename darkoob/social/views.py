@@ -370,18 +370,23 @@ def new_post(request):
 
 @login_required
 def user_profile(request, username):
+    template = 'social/user_profile.html'
+
     try:
         user = User.objects.get(username=username)
     except:
         pass
         #raise 404
+
+    if request.is_ajax():
+        template = 'post/posts.html'
     favorite_books = user.userprofile.favorite_books.all()
     m = Migration() 
 
     posts = Post.objects.filter(user=user).order_by("-submitted_time")
     count = range(1, len(posts) + 1)
     
-    return render(request, 'social/user_profile.html', 
+    return render(request, template,
         {
             'request': request,
             'user': user,
