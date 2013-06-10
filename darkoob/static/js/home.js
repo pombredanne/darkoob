@@ -1,3 +1,9 @@
+$(document).ready(function() {
+  $('.migrations-link').click(function() {
+    $('.migrations').slideToggle();
+  });
+});
+
 $(".deadline").children('a').bind("click", function () {
   span = $(this).parent().children('span');
   span.slideToggle(5000);

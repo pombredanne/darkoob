@@ -3,6 +3,7 @@
 
 {% load staticfiles %}
 {% load endless %}
+{% load thumbnail %}
 {% block css %}
 {{ block.super }}
 <link rel="stylesheet" type="text/less" href="{% static "/static/css/home_style.less" %}">
@@ -73,29 +74,29 @@
           <tr>
             <td class="span3">
               <a href="#" class="thumbnail">
-                {% avatar suggestion.0 %}
-                <h5 style="text-align: center; margin: -.1em -.3em">{{ suggestion.0.get_full_name }}</h5>
+                {% avatar suggestion_list.0 %}
+                <h5 style="text-align: center; margin: -.1em -.3em">Follow</h5>
               </a>
             </td>
             <td class="span3">
               <a href="#" class="thumbnail">
-                {% avatar suggestion.1 %}
+                {% avatar suggestion_list.1 %}
 
-                <h5 style="text-align: center; margin: -.1em -.3em">{{ suggestion.1.get_full_name }}</h5>
+                <h5 style="text-align: center; margin: -.1em -.3em">Follow</h5>
               </a>
             </td>
           </tr>
           <tr>
             <td class="span3">
               <a href="#" class="thumbnail">
-                {% avatar suggestion.2 %}
-                <h5 style="text-align: center; margin: -.1em -.3em">{{ suggestion.2.get_full_name }}</h5>
+                {% avatar suggestion_list.2 %}
+                <h5 style="text-align: center; margin: -.1em -.3em">Follow</h5>
               </a>
             </td>
             <td class="span3">
               <a href="#" class="thumbnail">
-                {% avatar suggestion.3 %}
-                <h5 style="text-align: center; margin: -.1em -.3em">{{ suggestion.3.get_full_name }}</h5>
+                {% avatar suggestion_list.3 %}
+                <h5 style="text-align: center; margin: -.1em -.3em">Follow</h5>
               </a>
             </td>
           </tr>
@@ -244,6 +245,59 @@
         </div> <!-- sidebox -->
       </div> <!-- span12 -->
     </div> <!-- row -->
+
+    <h4 class="migrations-link pull-right" style="">< MIGRATIONS</h4>
+    <div class="migrations">
+      <div class="row-fluid">
+        <div class="span12 sidebox">
+          <p>
+            {% for migration in migrations %}
+            <hops>
+              <hop>
+                <a style="Display:none">{{ migration.book.title }}</a>
+                {% thumbnail migration.book.thumb "50x50" crop="center" as im %}
+                <img rel="tooltip" title="d" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+                {% endthumbnail %}
+                <i class="icon-road"></i> 
+              </hop>
+
+              <hop>
+                <a style="Display:none">{{ migration.starter.get_full_name }}</a>
+                {% avatar migration.starter 30%}
+              </hop>
+              {% for hop in migration.hop_set.all|slice:":"|dictsort:"received_time" %}
+              <i class="icon-chevron-right"></i>
+
+
+              <hop>
+                <a style="Display:none">{{ hop.host.get_full_name }}</a>
+                {% avatar hop.host 30 %}
+              </hop>
+              {% endfor %}
+
+
+            </hops>
+            <br />
+            {% endfor %}
+
+
+
+            <script type="text/javascript">         
+
+            $('hops hop').each(function(){
+
+              $($(this).children()[1]).removeAttr('data-original-title')
+              $($(this).children()[1]).attr('title',$(this).children()[0].text)
+              $($(this).children()[1]).tooltip({
+                'placement': 'bottom'
+              });
+            });
+
+            </script>
+          </p>
+        </div> <!-- span12 -->
+      </div> <!-- row -->
+    </div> <!-- migrations -->
 
     <div id="id_new_post_position">
     </div>
