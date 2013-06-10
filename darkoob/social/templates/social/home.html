@@ -9,85 +9,17 @@
 {% endblock css %}
 
 {% block js %}
-
-<script>
-
-
-function set_my_quote_callback(data){
-  if (data.done){
-    $.pnotify({
-      title: 'Profile Updated',
-      text: data.message,
-      opacity: .8
-    })
-  }else{
-    for (i in data.errors){
-      $.pnotify({
-        title: 'Error',
-        type:'error',
-        text: data.errors[i],
-        opacity: .8
-      })
-    }
-  }
-}
-function submit_private_key_callback(data){
-  if (data.done){
-    $.pnotify({
-      type: 'success',
-      title: 'correct info',
-      text: data.message,
-      opacity: .8
-    })
-  }else{
-    for (i in data.errors){
-      $.pnotify({
-        title: 'Error',
-        type:'error',
-        text: data.errors[i],
-        opacity: .8
-      })
-    }
-  }
-}
-</script>
-
-
 {{ block.super }}
 {% endblock js %}
-
 
 {% block sidebar %}
 <div class="row-fluid">
   <div class="span12">
-    <script type="text/javascript">
-      //TODO: It's very dirty code
-      function close_1(){
-        $('#follow_suggestion_1').remove();
-      }
-      function close_2(){
-        $('#follow_suggestion_2').remove();
-      }
-      function close_3(){
-        $('#follow_suggestion_3').remove();
-      }
-      function follow_request_callback_1(data){
-        alert(data.done);
-        close_1();
-      }
-      function follow_request_callback_2(data){
-        alert(data.done);
-        close_2();
-      }
-      function follow_request_callback_3(data){
-        alert(data.done);
-        close_3();
-      }
-    </script>
-
     <div class="row-fluid">
-      <div class="span10 sidebox">
-        <legend>Suggest To Follow</legend> 
+      <div class="sidebox-head">
+        <h4>Suggest To Follow</h4> 
+      </div>
+      <div class="span12 simple_box">
 
 
         # TODO : ISSUE #54
@@ -105,14 +37,16 @@ function submit_private_key_callback(data){
             {{ suggestion_list.2 }} <a onmousedown="Dajaxice.darkoob.social.follow_request(follow_request_callback_3,{'following_id': {{suggestion_list.2.id }}})">Follow</a>
           </div>
         </p>
-      </div> <!-- span10 -->
+      </div> <!-- span12 -->
     </div> <!-- row -->
 
 
 
     <div class="row-fluid">
-      <div class="span10 sidebox">
-        <legend>Hoping</legend>
+      <div class="sidebox-head">
+        <h4>Hoping</h4>
+      </div>
+      <div class="span12 simple_box">
         <p>
           <!--
           <script type="text/javascript">
@@ -138,11 +72,13 @@ function submit_private_key_callback(data){
           <button id='' class="btn btn-inverse" onmousedown="Dajaxice.darkoob.migration.submit_key(submit_private_key_callback,{'private_key': $('#private_key').val() })">Check</button>
         </p>
         Find f
-      </div> <!-- span10 -->
+      </div> <!-- span12 -->
     </div> <!-- row -->
     <div class="row-fluid">
-      <div class="span10 sidebox">
-        <legend>Groups</legend>
+      <div class="sidebox-head">
+        <h4>Groups</h4>
+      </div>
+      <div class="span12 simple_box">
         <p>
           <ul>
             {% for group in admin_groups %}
@@ -155,12 +91,14 @@ function submit_private_key_callback(data){
             <li style="display:block"><a href="{% url 'group:create_group' %}"><button type="button" class="btn btn-primary">Add Group</button></a></li>
           </ul>
         </p>
-      </div> <!-- span10 -->
+      </div> <!-- span12 -->
     </div> <!-- row -->
     <div class="row-fluid">
-      <div class="span10 sidebox">
-        <legend>Deadlines</legend>
 
+      <div class="sidebox-head">
+        <h4>Deadlines</h4>
+      </div>
+      <div class="span12 simple_box">
         <div class="accordion" id="deadlines">
           {% for book in book_deadlines %}
           <div class="accordion-group">
@@ -196,19 +134,20 @@ function submit_private_key_callback(data){
   </div> <!-- span12 -->
 </div> <!-- row -->
 {% endblock sidebar %}
+
 {% block main %}
 <div class="row-fluid">
-  <div class="span12">
+  <div class="span11 offset1">
     <div class="row-fluid">
-
       <div class="span12">
-
         <div class="quote">
-
           <blockquote>
             <p>{{ quote.text }}</p><!-- Those who mind don't matter, and those who matter don't mind. -->
-            {% if quote.author %}<small>{{ quote.author }}{% if quote.book %} ({{ quote.book }}){% endif %}
-</small>{% endif %}<!-- Bernard M. Baruch -->
+            {% if quote.author %}
+              <small>
+                {{ quote.author }}{% if quote.book %} ({{ quote.book }}){% endif %}
+              </small>
+            {% endif %}<!-- Bernard M. Baruch -->
             
             <a href="#"
               onclick="javascript:Dajaxice.darkoob.social.set_my_quote(
@@ -217,18 +156,8 @@ function submit_private_key_callback(data){
               </i>
             </a>
           </blockquote>
-        </div>
-      </div>
-    </div> <!-- row -->
-    <div class="row-fluid suggestion">
-      <div class="span12">
-        <p>
-          I suggest you to read something.
-          <span>
-            <button class="close pull-right" onClick="remove_suggestion()">&times;</button>
-          </span>
-        </p>
-      </div>
+        </div> <!-- quote -->
+      </div> <!-- span12 -->
     </div> <!-- row -->
     <div class="row-fluid">
       <div class="span12">
@@ -250,8 +179,14 @@ function submit_private_key_callback(data){
 
     <div id="id_new_post_position">
     </div>
-    {% include 'post/posts.html' %}
-  </div> <!-- span8 -->
+
+    <div class="row-fluid">
+      <div class="span12">
+        {% include 'post/posts.html' %}
+      </div>
+    </div>
+
+  </div> <!-- span11 -->
 </div> <!-- row -->
 {% endblock main %}
 
@@ -268,9 +203,4 @@ function submit_private_key_callback(data){
   });
 </script>
 <script type="text/javascript" src="{% static "/static/js/home.js" %}"></script>
-<script>
-  function remove_suggestion() {
-    $('.suggestion').remove();
-  }
-</script>
 {% endblock bottom_js %}

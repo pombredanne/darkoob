@@ -33,8 +33,8 @@
 
 <div class="container-fluid">
   <div class="row-fluid">
-    <div class="span12">
-      <div class="navbar navbar-fixed-top navbar-inverse">
+    <div class="span8 offset2">
+      <div class="navbar">
         <div class="navbar-inner">
           <div class="container">
             <a class="brand pull-left logo" href="{% url "social:home" %}">Darkoob</a>
@@ -42,7 +42,7 @@
               show_search_res, {'text':$('#search').val()})">
               <ul class="nav">
                 <li>
-                <input id="search" type="text" class="search-query input-xxlarge dropdown-toggle"
+                <input id="search" type="text" class="search-query input-xlarge dropdown-toggle"
                 data-toggle="dropdown" autocomplete="off"
               onBlur="Dajaxice.darkoob.args_example(
               show_search_res, {'text':$('#search').val()})"
@@ -55,7 +55,7 @@
             <ul class="nav pull-right">
               <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">
-                  User
+                  {{ user.get_full_name }}
                   <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
@@ -73,11 +73,11 @@
   <div class="row-fluid" id="structure">
     <div class="span12">
       <div class="row-fluid">
-        <div class="span4 offset1">
+        <div class="span3 offset2">
           {% block sidebar %}
           {% endblock sidebar %}
         </div> <!-- span4 -->
-        <div class="span6" id="main">
+        <div class="span5 " id="main">
           {% block main %}
           {%endblock main %}
         </div> <!-- span6 -->
