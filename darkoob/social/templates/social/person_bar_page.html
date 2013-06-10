@@ -1,0 +1,33 @@
+{% load endless %}
+{% load avatar_tags %}
+{% paginate 1,1 person %}
+{% for user in person %}
+<div class="row-fluid">
+  <div class="span12">
+    <div class="sidebox post">
+      <div class="row-fluid">
+        <div class="post_head">
+          <div class="span2">
+            <div class="thumb">
+              {% avatar user %}
+            </div>
+          </div> <!-- span2 -->
+          <div class="span9">
+            <div class="username">
+              <b>{{ user.first_name|capfirst }} {{ user.last_name|capfirst }}</b><br/>
+              {{ user.userprofile.sex }}<br/>
+              {% if user.userprofile.city %}{{ user.userprofile.city|capfirst }}/{{user.userprofile.city.country|capfirst}}{% endif %}
+            </div>
+          </div> <!-- span9 -->
+          <br/>
+          <a class="btn btn-medium" href="#"><i class="icon-eye-open"></i></a>
+
+          <div class="span1 pull-right">
+          </div> <!-- span1 -->
+        </div> <!-- post_head -->
+      </div> <!-- row -->
+
+    </div> <!-- span12 -->
+  </div> <!-- row -->
+  {% endfor %}
+  {% show_more %}
