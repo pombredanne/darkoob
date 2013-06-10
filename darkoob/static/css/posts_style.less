@@ -1,23 +1,84 @@
 @import "common_style.less";
 
 .post_head {
-  margin-top: 1em;
+  margin-top: .5em;
+
+  .thumb-border {
+    margin-left: .5em;
+    background-color: white;
+    border: 1px solid darken(@middle_grey, 3);
+    width: 3.8em;
+    height: 3.8em;
+    display: inline-block;
+    margin-left: -.5em;
+  }
 
   .thumb {
-    margin-left: 1em;
+    margin-left: .22em;
+    margin-top: .18em;
+    width: 3.4em;
+    height: 3.4em;
+  }
+  
+  .post-head-box {
     background-color: @light_grey;
-    border: 1px solid darken(@middle_grey, 3);
-    width: 4em;
-    height: 4em;
+    margin-left: 0;
+    margin-top: .4em;
+    display: inline-block;
+    height: 3.1em;
+    border: 1px solid @middle_grey;
+
   }
+
   .username {
-    margin-left: 1em;
+    margin-top: .5em;
+    margin-left: .3em;
+    font-family: sans-serif;
+    display: inline;
+    font-size: 1em;
+
+    a {
+      color: @dark_grey;
+    }
+    
+    a:hover {
+      color: darken(#08c, 15%);//lighten(@dark_grey, 20);
+    }
   }
+
+  .submitted_time {
+    padding-left: .4em;
+    margin-top: -.5em;
+    display: inline;
+    font-size: .8em;
+  }
+}
+
+.post_content {
+  margin-left: 1em;
+  margin-top: -1em;
+  margin-bottom: 1em;
+  font-family: Courier;
+  font-size: .9em;
+}
+
+.noks {
+  margin: 0 0 0 0;
+  display: inline;
+  margin-left: 1.5em;
+  font-size: .9em;
+  font-family: serif;
+}
+
+.nok_btn {
+  margin-left: -.2em;
+  cursor: pointer;
+  display: inline-block;
 }
 
 .main-post {
     width:95%;
-    margin-left:4px;
+    margin-left: 1em;;
     margin-right:4px;
     height:100px;
     background-color:#FF00;
@@ -72,11 +133,4 @@
     height: 1.8em;
 }
 
-.noks {
-  margin: 0 0 0 0;
-}
 
-.nok_btn {
-  margin-left: -.2em;
-  cursor: pointer;
-}
