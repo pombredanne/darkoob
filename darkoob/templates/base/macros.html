@@ -14,7 +14,9 @@
         <div class="span12">
           <h4>{{ user_.get_full_name }}</h4>
           <small>@{{ user_.username }} &lt{{ user_.email }}&gt</small>
-          <em>{{ user_.userprofile.quote }}</em>
+          <blockquote>
+            <em>{{ user_.userprofile.quote }}</em>
+          </blockquote>
         </div>
       </div>
     </div>
