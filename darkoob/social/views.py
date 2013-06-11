@@ -65,12 +65,13 @@ def change_password(request):
     ## Please Dont remove:D
     ##
     # print ',,,,,,,,,,,', UserNode.index.search(user_id=27)[0]
-    a = UserNode.index.get(user_id=1)
+    a = UserNode.index.get(user_id=request.user.id)
+    print a.followers
     # print '------------', a
-    b = UserNode.index.get(user_id=2)
+    # b = UserNode.index.get(user_id=2)
     # c = UserNode.index.get(user_id=202)
     # print a, b , c
-    a.save()
+    # a.save()
     # b.save()
 
     # d = UserNode.index.search(user_id=53)
