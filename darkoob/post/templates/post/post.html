@@ -1,5 +1,8 @@
 {% load avatar_tags %}
 {% load staticfiles %}
+{% load kwacros %}
+{% loadkwacros "base/macros.html" %}
+
 <div class="row-fluid" id="id_post_id_{{ post.id }}">
   <div class="span12">
     <div class="sidebox post">
@@ -7,15 +10,19 @@
         <div class="span6">
           <div class="post-head">
             <div class="row-fluid">
+              {% usekwacro user_details user_=post.user placement='top' %}
               <a href="{% url 'social:user_profile' username=post.user.username %}">
-                <div class="thumb pull-left">
+                <div class="avatar pull-left">
                   {% avatar post.user %}
                 </div>
               </a>
+              </div> <!-- user-details -->
               <div class="post-head-box">
-                <div class="username">
-                  <a href="{% url 'social:user_profile' username=post.user.username %}"><strong>{{ post.user.first_name }} {{post.user.last_name }}</strong></a>
-                </div>
+                {% usekwacro user_details user_=post.user placement='top' %}
+                  <div class="username">
+                    <a href="{% url 'social:user_profile' username=post.user.username %}"><strong>{{ post.user.first_name }} {{post.user.last_name }}</strong></a>
+                  </div>
+                </div> <!-- user-details -->
                 <div class="row-fluid">
                   <div class="small-info">
                     <small>{{ post.submitted_time|timesince }}</small>

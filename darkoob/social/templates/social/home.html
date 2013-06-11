@@ -1,9 +1,13 @@
 {% extends "base/profile_base.html" %}
-{% load avatar_tags %}
 
+{% load avatar_tags %}
 {% load staticfiles %}
 {% load endless %}
 {% load thumbnail %}
+{% load kwacros %}
+
+{% loadkwacros "base/macros.html" %}
+
 {% block css %}
 {{ block.super }}
 <link rel="stylesheet" type="text/less" href="{% static "/static/css/home_style.less" %}">
@@ -82,22 +86,30 @@
 
         <!--# TODO : ISSUE #54-->
         <ul class="thumbnails span10 offset1">
-          <div class="row-fluid">
-            <li class="span3">
-              <a href="#" class="thumbnail">
-                {% avatar suggestion_list.0 %}
-              </a>
-            </li>
-            <div class="span9 suggestion-info">
-              <div class="username">
-                <a href="#">{{ suggestion_list.0.get_full_name }}</a>
+          {% for suggestion in suggestion_list %}
+            <div class="row-fluid">
+              <li class="span3">
+              {% usekwacro user_details user_=suggestion placement='left' %}
+                  <a href="#" class="thumbnail">
+                    {% avatar suggestion %}
+                  </a>
               </div>
-              <div class="small-info">
-                3 Mutual friends
+              </li>
+              <div class="span9 suggestion-info">
+                {% usekwacro user_details user_=suggestion placement='bottom' %}
+                  <div class="username">
+                    <a href="#">{{ suggestion.get_full_name }}</a>
+                  </div>
+                </div> <!-- user-details -->
+                <div class="small-info">
+                  2 Mutual friends
+                </div>
               </div>
             </div>
-          </div>
-          <div class="row-fluid">
+          {% empty %}
+            <p>Sorry, we have no information about you to suggest other users regarding them!</p>
+          {% endfor %}
+          {% comment %}<div class="row-fluid">
             <li class="span3">
               <a href="#" class="thumbnail">
                 {% avatar suggestion_list.1 %}
@@ -128,6 +140,7 @@
               </div>
             </div>
           </div>
+          {% endcomment %}
 
         </ul>
 
@@ -259,10 +272,13 @@
       </div> <!-- span12 -->
     </div> <!-- row -->
     <div class="row-fluid">
-      <div class="span12">
+      <div class="span2">
+        <h1 style="font-family: sans-serif;">"</h1>
+      </div>
+      <div class="span10">
         <div class="sidebox">
           <div class="row-fluid">
-            <div class="span7 new_post_container">
+            <div class="span9 new_post_container">
               <form method="post" action="{% url "social:new_post" %}">
                 {% csrf_token %}
                 {{ new_post_form.text }}
