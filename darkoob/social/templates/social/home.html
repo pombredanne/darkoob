@@ -155,19 +155,24 @@
     </div> <!-- row -->
     <div class="row-fluid">
       <h4 class="sidebox-head">Groups</h4>
-      <div class="span12 simple_box">
-        <p>
-          <ul>
-            {% for group in admin_groups %}
-              <li style="display:block"><a href="{% url 'group:group_page' group_id=group.id group_name=group.name %}"><i class="icon-th"></i>   {{ group.name }}</a></li>
-            {% endfor %}
-
-            {% for group in groups %}
-              <li style="display:block"><a href="{% url 'group:group_page' group_id=group.id group_name=group.name %}"><i class="icon-th"></i>   {{ group.name }}</a></li>
-            {% endfor %}
-            <li style="display:block"><a href="{% url 'group:create_group' %}"><button type="button"  class="btn btn-medium btn-block btn-primary">Add Group</button></a></li>
-          </ul>
-        </p>
+      <div class="span12 simple_box groups">
+        <p>You own</p>
+        <ul>
+          {% for group in admin_groups %}
+            <li>
+              <a href="{% url 'group:group_page' group_id=group.id group_name=group.name %}"><i class="icon-th"></i>{{ group.name }}</a>
+            </li>
+          {% endfor %}
+        </ul>
+        <p>You are a member of</p>
+        <ul>
+          {% for group in groups %}
+            <li>
+              <a href="{% url 'group:group_page' group_id=group.id group_name=group.name %}"><i class="icon-th"></i>   {{ group.name }}</a>
+            </li>
+          {% endfor %}
+        </ul>
+        <br /><em>or <a href="{% url 'group:create_group' %}">create a new group.</a></em>
       </div> <!-- span12 -->
     </div> <!-- row -->
     <div class="row-fluid">
