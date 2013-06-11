@@ -5,7 +5,7 @@
     <div class="sidebox post">
       <div class="row-fluid">
         <div class="span6">
-          <div class="post_head">
+          <div class="post-head">
             <div class="row-fluid">
               <a href="{% url 'social:user_profile' username=post.user.username %}">
                 <div class="thumb pull-left">
@@ -17,7 +17,7 @@
                   <a href="{% url 'social:user_profile' username=post.user.username %}"><strong>{{ post.user.first_name }} {{post.user.last_name }}</strong></a>
                 </div>
                 <div class="row-fluid">
-                  <div class="submitted_time">
+                  <div class="small-info">
                     <small>{{ post.submitted_time|timesince }}</small>
                   </div>
 
@@ -25,7 +25,7 @@
               </div> <!-- post-head-box -->
 
             </div> <!-- row -->
-          </div> <!-- post_head -->
+          </div> <!-- post-head -->
         </div> <!-- span6 -->
       </div> <!-- row -->
       <div class="row-fluid">

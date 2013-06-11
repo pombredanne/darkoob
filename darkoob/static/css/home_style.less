@@ -5,19 +5,24 @@
   border: 1px solid @border;
   text-align: left;
   margin-bottom: .5em;
+  display: block;
+  font-size: .8em;
 
-  p,textarea {
-    margin-left: .5em;
-    margin-top: .5em;
+  p, textarea, em, strong, small {
+    margin-left: 1em;
+    margin-top: 1em;
   }
 
+  form {
+    margin-left: 1em;
+  }
 }
 
 .sidebox-head {
   color: darken(@border, 50%);
-  margin-left: .6em;
+  //margin-left: .6em;
+  display: block;
   font-family: Verdana;
-  margin-bottom: -.6em;
 }
 
 .quote {
@@ -32,8 +37,16 @@
   .simple_box;
 }
 
+.groups {
+  ul {
+    margin-left: 2.5em;
+    margin-top: -.5em;
+  }
+}
+
 .sidebox {
   .simple_box;
+  font-size: 1em;
   .box-shadow(@middle_grey);
 }
 
@@ -52,9 +65,47 @@
 }
 
 .thumbnails {
-  li {
-    display: block;
+  .row-fluid {
+    margin-bottom: 1em;
     margin-left: 1em;
+    display: block;
+  }
+
+  .row-fluid:first-child {
+    margin-top: 1em;
+  }
+
+  .row-fluid:last-child {
+    margin-bottom: .3em;
+  }
+
+  .thumbnail {
+  }
+
+}
+
+.suggestion-info {
+  margin-top: .5em;
+  margin-left: 1em;
+  display: inline;
+
+  .username {
+    font-family: sans-serif;
+    font-size: 1;
+    font-weight: bold;
+
+    a:link, a:visited {
+      color: @dark_grey;
+    }
+    a:hover {
+      color: darken(#08c, 15%);//lighten(@dark_grey, 20);
+    }
+  }
+
+  .small-info {
+    font-family: sans-serif;
+    font-size: .8em;
+    margin-top: -.5em;
   }
 }
 

@@ -5,7 +5,6 @@
 {{ block.super }}
 <link rel="stylesheet" type="text/less" href="{% static "/static/css/profile_base_style.less" %}">
 <link rel="stylesheet" type="text/less" href="{% static "/static/css/home_style.less" %}">
-<link rel="stylesheet" type="text/less" href="{% static "/static/css/posts_style.less" %}">
 {% endblock css %}
 {% block title %}Darkoob - {{ user.get_full_name }} page{% endblock title %}
 
@@ -24,6 +23,7 @@
         {{ user.userprofile.birthday }}<br />
         {% if user.userprofile.city %}{{ user.userprofile.city|capfirst }}/{{user.userprofile.city.country|capfirst}}{% endif %}
       </div>
+
     </div>
     <br/>
     {%if user.userprofile.mobile %}
@@ -35,8 +35,35 @@
       <b>Webpage</b> <a href="{{user.userprofile.website}}">{{user.userprofile.website|truncatechars:35}}</a>
     </address>
     {% endif%}
+
+
+    {% if is_followers %}
+      {{user.first_name|capfirst}} follow you <br>
+    {% endif %}
+
+    {% if is_following %}
+      <button class="btn btn-small btn-block disabled" disabled="disabled" onclick="Dajaxice.darkoob.social.follow_person(follow_person_callback, {'user_id': {{user.id}}})"><i class="icon-eye-open"></i> You Follow {{user.first_name|capfirst}}
+      </button>
+
+    {% else %}
+      <script type="text/javascript">
+        function follow_person_callback(data){
+          if(data.done){
+            $.pnotify({
+              title: 'Following',
+              text: 'You follow {{user.get_full_name}} ',
+              type: 'success',
+              opacity: .8,
+            });
+            $('#follow_btn').attr('disabled', 'disabled');
+            $('#follow_btn').attr('class', 'btn btn-small btn-block disabled');
+          }
+        }
+      </script>
+      <button id="follow_btn" class="btn btn-small btn-block" onclick="Dajaxice.darkoob.social.follow_person(follow_person_callback, {'user_id': {{user.id}}})"><i class="icon-eye-close"></i> Follow {{user.first_name|capfirst}}</button>
+    {% endif %}
     
-    <a class="btn btn-small btn-block" href="#"><i class="icon-eye-close"></i> Follow {{user.first_name|capfirst}}</a>
+  
     <br/>
 
     <ul class="nav nav-tabs nav-stacked">
