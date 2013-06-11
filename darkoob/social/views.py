@@ -115,7 +115,7 @@ def home(request):
     # print m.get_user_related_migrations(request.user)
 
     # Todo: Change this part
-    suggestion_list = User.objects.order_by('?')[0:4]    # TODO : ISSUE #54
+    suggestion_list = list(User.objects.order_by('?')[0:4])    # TODO : ISSUE #54
 
 
     #
