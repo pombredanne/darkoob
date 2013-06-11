@@ -2,17 +2,19 @@
 {% load kwacros %}
 
 {% kwacro user_details user_=user placement='right' %}
-  <div class="user" data-placement="{{ placement }}"
+  <div class="user" data-container="body" data-placement="{{ placement }}"
     data-content='
     <div class="user-details">
       <div class="row-fluid">
         <div class="span12">
-          {% avatar user_ 64 %}
+          {% avatar user_ %}
         </div>
       </div>
       <div class="row-fluid">
         <div class="span12">
-          {{ user_.get_full_name }}
+          <h4>{{ user_.get_full_name }}</h4>
+          <small>@{{ user_.username }} &lt{{ user_.email }}&gt</small>
+          <em>{{ user_.userprofile.quote }}</em>
         </div>
       </div>
     </div>

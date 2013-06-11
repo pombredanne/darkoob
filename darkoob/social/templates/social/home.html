@@ -89,14 +89,14 @@
           {% for suggestion in suggestion_list %}
             <div class="row-fluid">
               <li class="span3">
-              {% usekwacro user_details user_=suggestion placement='left' %}
+              {% usekwacro user_details user_=suggestion placement='top' %}
                   <a href="#" class="thumbnail">
                     {% avatar suggestion %}
                   </a>
               </div>
               </li>
               <div class="span9 suggestion-info">
-                {% usekwacro user_details user_=suggestion placement='bottom' %}
+                {% usekwacro user_details user_=suggestion placement='top' %}
                   <div class="username">
                     <a href="#">{{ suggestion.get_full_name }}</a>
                   </div>
