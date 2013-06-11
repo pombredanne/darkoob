@@ -32,6 +32,26 @@ def submit_key(request, private_key):
     return simplejson.dumps({'done': done, 'errors': errors, 'message': message})
 
 
+import random
+import string 
+def generate_private_key(len=10):
+    return ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(len))
+
+@dajaxice_register(method='POST')
+def submit_new_migration_form(request, book, message):
+    done = True
+    try:
+        book = Book.objects.get(title=book)
+    except:
+        private_key = ''
+        book = ''            
+    else:
+        private_key = generate_private_key()
+        Migration.objects.create(book=book, starter=request.user,
+            starter_message=message, private_key=private_key
+        )
+    return simplejson.dumps({'done': done, 'private_key': private_key, 'book': book.title})
+
 
 
 # @dajaxice_register(method='POST')

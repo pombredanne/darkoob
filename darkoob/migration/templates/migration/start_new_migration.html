@@ -1,4 +1,4 @@
-{% extends "base/profile_base.html" %}
+{% extends "social/home.html" %}
 {% load staticfiles %}
 {% block css %}
 {{ block.super }}
@@ -9,9 +9,28 @@
 <link rel="stylesheet" href="{% static "css/sticky.css" %}" type="text/css" />
 
 <script type="text/javascript">
+function submit_new_migration_form_callback(data){
+  if(data.done){
+    $('#after_private_key').text(data.private_key)
+    $('#after_title').text(data.book)
+    $('#before_submit').remove()
+    $('#after_submit').attr('style',' ')
+  }else{
+    $.pnotify({
+      title: 'Error',
+      text: 'Try again later',
+      type: 'error',
+      opacity: .8
+    })
+  }
+}
+
+function submit_form(){
+  Dajaxice.darkoob.migration.submit_new_migration_form(submit_new_migration_form_callback, {'book':$('#title-look').val(), 'message':$('#id_starter_message').val() })
+}
 function book_status_callback(data){
   if (data.status){
-    document.getElementById("new_migration_form").submit();
+    submit_form();
   }
   else{
     $.pnotify({
@@ -94,46 +113,42 @@ $(document).ready(function() {
       <div class="span12">
         <div class="sidebox post">
           <legend>I want to start a new book migrtion</legend>
-          <dl>
-            <dt>What's Book migration?</dt>
-            <dd>
-              Bird migration is the regular seasonal movement, often north and south along a flyway between breeding and wintering grounds, undertaken by many species of birds. Migration, which carries high costs in predation and mortality, including from hunting by humans, is driven primarily by availability of food. Migration occurs mainly in the Northern Hemisphere where birds are funnelled on to specific routes by natural barriers such as the Mediterranean Sea.
-              <a  href="http://en.wikipedia.org/wiki/Bird_migration">read more</a>
-            </dd>
+          <div id="after_submit" style="Display:none">
+            <legend>You start a new migration</legend>
+            <p class="text-success">
+              you will start a new book migration for<b id="after_title"> </b> book.<br />
+              please write key in your book and give book to another person.<br />
+              will be used from this key to validate a person...
+            </p>
+            key is:
+            <div class="well">
+              <h2 id="after_private_key"></h2>
+            </div>
+          </div>
+          <div id="before_submit">
+            <dl>
+              <dt>What's Book migration?</dt>
+              <dd>
+                Bird migration is the regular seasonal movement, often north and south along a flyway between breeding and wintering grounds, undertaken by many species of birds. Migration, which carries high costs in predation and mortality, including from hunting by humans, is driven primarily by availability of food. Migration occurs mainly in the Northern Hemisphere where birds are funnelled on to specific routes by natural barriers such as the Mediterranean Sea.
+                <a  href="http://en.wikipedia.org/wiki/Bird_migration">read more</a>
+              </dd>
 
-            <dt>Migration Lisence</dt>
-            <dd>
-              A license may be granted by a party ("licensor") to another party ("licensee") as an element of an agreement between those parties. A shorthand definition of a license is "an authorization (by the licensor) to use the licensed material (by the licensee)."
-              In particular, a license may be issued by authorities, to allow an activity that would otherwise be forbidden. It may require paying a fee and/or proving a capability. The requirement may also serve to keep the authorities informed on a type of activity, and to give them the opportunity to set conditions and limitations.
-              <a href="http://en.wikipedia.org/wiki/License">read more</a>
-            </dd>
-          </dl>
+              <dt>Migration Lisence</dt>
+              <dd>
+                A license may be granted by a party ("licensor") to another party ("licensee") as an element of an agreement between those parties. A shorthand definition of a license is "an authorization (by the licensor) to use the licensed material (by the licensee)."
+                In particular, a license may be issued by authorities, to allow an activity that would otherwise be forbidden. It may require paying a fee and/or proving a capability. The requirement may also serve to keep the authorities informed on a type of activity, and to give them the opportunity to set conditions and limitations.
+                <a href="http://en.wikipedia.org/wiki/License">read more</a>
+              </dd>
+            </dl>
 
-          <form id="new_migration_form" action="{% url 'migration:new_migration' %}" method='post'>
-            {% csrf_token %}
+              {{ form.book }}
+              {{ form.starter_message }}<br />
 
-            {{ form.book }}
+              <!-- TODO: Redirect to started page(see Views.py)<br/>
+              <input type="checkbox" id="accept">I Accept Todo: Accept migration lisence</input> -->
 
-
-<!--             <input
-            name="book_title"
-            type="text"
-            id="title-look"
-            # class="span6 typeahead"
-            placeholder="Username"
-            # autocomplete="off"
-            data-provide="typeahead"
-            />
- -->
-
-            {{ form.starter_message }}<br />
-            <div id="added-users"></div>
-
-            TODO: Redirect to started page(see Views.py)<br/>
-            <input type="checkbox" id="accept">I Accept Todo: Accept migration lisence</input>
-
-            <button class="btn btn-large btn-block btn-primary" type="button" onclick="Dajaxice.darkoob.migration.book_status(book_status_callback,{'book_title':$('#title-look').val()})">Start New Migration</button>
-          </form>      
+              <button class="btn btn-large btn-block btn-primary" type="button" onclick="Dajaxice.darkoob.migration.book_status(book_status_callback,{'book_title':$('#title-look').val()})">Start New Migration</button>
+          </div> <!-- before submit -->
         </div> <!-- post -->
       </div> <!-- span12 -->
     </div> <!-- row -->
