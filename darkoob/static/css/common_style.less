@@ -23,8 +23,8 @@ a:hover {
   -webkit-box-shadow: inset 0 0 1px 2px @color;
 }
 
-.box-shadow(@color) {
-  box-shadow: 3px 3px 0 1px @color;
-  -moz-box-shadow: 0 0 1px 2px @color;
-  -webkit-box-shadow: 2px 2px 0 2px @color;
+.box-shadow(@color; @style: 3px 3px 0 1px) {
+  box-shadow: @style @color;
+  -moz-box-shadow: @style @color;
+  -webkit-box-shadow: @style @color;
 }
