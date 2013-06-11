@@ -1,0 +1,1 @@
+<b>{{ object.name }}</b> - {{ object.members.count }} member(s)
