@@ -17,18 +17,19 @@ class UserNode(StructuredNode):
     followers = RelationshipFrom('UserNode', 'FOLLOW')
 
     def follow_person(self, user_id):
+        ''' follow person that user.id=user_id'''
         followed_user = self.index.get(user_id=user_id)
         self.following.connect(followed_user, {'time': str(datetime.datetime.utcnow())})
+
     def is_following(self, user_id): 
         ''' return True if user in self.following.all() else False '''
         user = self.index.get(user_id=user_id)
         return True if user in self.following.all() else False
+
     def is_followers(self, user_id):
         ''' return True if user in self.followers.all() else False '''
         user = self.index.get(user_id=user_id)
         return True if user in self.followers.all() else False
-
-
 
 class Country(models.Model):
     name = models.CharField(max_length=50)
