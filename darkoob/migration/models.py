@@ -7,6 +7,9 @@ class Hop(models.Model):
     host = models.ForeignKey(User, related_name='host_set')
     received_time = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        unique_together = (("migration", "host"),)
+
     def __unicode__(self):
         return unicode("%s - %s" % (self.migration, self.host.username))
 
