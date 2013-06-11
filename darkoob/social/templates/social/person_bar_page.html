@@ -14,7 +14,8 @@
             <a href="{% url 'social:user_profile' username=person.username %}"><b>{{ person.first_name|capfirst }} {{ person.last_name|capfirst }}</b></a>
             <br>
 
-            {% if book in request_user_following_list %}
+            {% if person.id in request_user_following_list %}
+
               <button class="btn btn-success btn-primary disabled" disabled="disabled" href="#" style="float:right"><i class="icon-eye-open"></i></button>
             {% else %}
               <button id='follow_btn_{{person.id}}' class="btn btn-medium" href="#" style="float:right"

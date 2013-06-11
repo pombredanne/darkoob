@@ -21,11 +21,47 @@ from avatar.forms import PrimaryAvatarForm, DeleteAvatarForm
 # from avatar.models import Avatar
 from avatar.templatetags import avatar_tags
 
+def test():
+    from darkoob.book.models import Author
+    from datetime import date
+
+    vahid = Author.objects.create(name='vahid')
+    quote = []
+    users = []
+    for i in range(2,15):
+        q = Quote.objects.create(author=vahid, text='I love %d person, I think ...'%i)
+        quote.append(q)
+    for i in range(2,10):
+        print i
+        user = User.objects.create_user(username='user%d'%i, password = 'password', email ='email@yahoo.com')
+        user.first_name = 'user-%d-name'%i
+        user.last_name = 'user-%d-family'%i
+        UserProfile.objects.filter(user=user).update(birthday=date(1993, 4, 5))
+        if i%2:
+            UserProfile.objects.filter(user=user).update(mobile='09381442622')
+            UserProfile.objects.filter(user=user).update(sex = 'Female')
+        else:
+            UserProfile.objects.filter(user=user).update(quote=quote[i])
+            UserProfile.objects.filter(user=user).update(sex ='Male')
+        user.save()
+        users.append(user)
+    from random import randint
+    for i in range(1,9):
+        print i
+        random =[]
+        numbers = randint(5,6)
+        for j in range(numbers):
+            a = randint(2,9)
+            if a not in random:
+                random.append(a)
+        main = UserNode.index.get(user_id=i)
+        for k in random:
+            main.follow_person(k)
+   
 
 @login_required
 def profile(request):
     form = EditProfileForm(request.POST)
-
     return render_to_response('social/profile.html',{'user': request.user, 'form': form})
 
 def signup(request):
