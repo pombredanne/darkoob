@@ -1,6 +1,27 @@
 @import "common_style.less";
 
+.navbar-inner {
+  .border-radius(0 0 3px 3px);
+
+  .dropdown {
+    img {
+      margin-top: -.6em;
+      margin-bottom: -.4em;
+    }
+
+    .caret {
+      margin-top: .5em;
+    }
+  }
+}
+
+
 .logo {
+  font-weight: bold;
+  font-family: Courier;
+  font-size: 1.1em;
+  color: @light_grey;
+  text-shadow: 1px 1px 1px lighten(@dark_grey, 30%);
 }
 
 .search_form {
