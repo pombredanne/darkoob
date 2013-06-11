@@ -67,11 +67,11 @@ class EditProfileForm(forms.Form):
         })
     )
 
-    # sex = forms.ChoiceField(
-    #     choices = SEX_CHOICES,
-    # )
+    sex = forms.ChoiceField(
+        choices = SEX_CHOICES,
+    )
     
-    sex = forms.CharField(label=_('Sex'))
+    # sex = forms.CharField(label=_('Sex'))
     mobile = forms.CharField(
         label = _('Mobile'),
         min_length = 7,

@@ -44,24 +44,38 @@
         close_3();
       }
     </script>
-
         <ul class="nav nav-tabs nav-stacked" style="margin-left: .5em; margin-right: -.5em;">
+          {% block home_active %}
           <li class="active">
             <a href="#"><i class="icon-home"></i> Home</a>
           </li>
+          {% endblock home_active%}
+
+          {% block profile_active %}
           <li>
             <a href="{% url 'social:profile' %}"><i class="icon-user"></i> Profile<i class="icon-chevron-right" style="float:right"></i></a>
           </li>
+          {% endblock profile_active%}
+
+          {% block followers_active %}
           <li>
             <a href="{% url 'social:followers' %}"><i class="icon-eye-open"></i> Followers 
               <i class="icon-chevron-right" style="float:right"></i></a>
           </li>
+          {% endblock followers_active%}
+
+          {% block following_active %}
           <li>
             <a href="{% url 'social:following' %}"><i class="icon-heart"></i> Following <i class="icon-chevron-right" style="float:right"></i></a>
           </li>
+          {% endblock following_active%}
+
+          {% block favorite_books_active %}
           <li>
             <a href="{% url 'social:favorite_books' %}"><i class="icon-star"></i> Favorite Books <i class="icon-chevron-right" style="float:right"></i></a>
           </li>
+          {% endblock favorite_books_active %}
+
         </ul>
 
 
