@@ -19,11 +19,11 @@
           <p>
 
           </p>
-          <form id="add_group_form" action='{% url "group:create_group" %}' method='post'>
+          <form id="add_group_form" action='{% url "group:create_group" %}' method='post' class="form-inline">
            {% csrf_token %}
            {{ form.name }}
            {{ form.members }}
-           <button type="button" id="add_group_button" onmousedown="load_members()" class="btn btn-primary">Add Group</button>
+           <button type="button" id="add_group_button" onmousedown="load_members()" class="btn btn-primary">Create Group</button>
          </form>
          <style>
          .typeahead_wrapper { display: block; height: 30px; }
@@ -33,10 +33,15 @@
          .typeahead_secondary { font-size: .8em; margin-top: -5px; }
          </style>
          <script src="{% static "/static/js/underscore.min.js" %}"></script>
+        <b>Add primitive users before create</b>
+        <br />
 
+        You can select users and join them to your group.
+        Only type username and press enter.
+        <br />
          <div id="added-users"></div>
-         <br />
-
+         
+         <br/>
          <input
          type="text"
          id="user-look"
