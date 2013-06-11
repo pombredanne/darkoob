@@ -191,7 +191,6 @@ def home(request):
         'admin_groups': admin_groups,
         'book_deadlines': book_deadlines,
         'quote': quote,
-        'book': book,
         'migrations': m.get_user_related_migrations(request.user),
         'suggestion_list': suggestion_list,
     })
