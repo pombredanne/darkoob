@@ -64,57 +64,12 @@ def change_password(request):
     ##
     ## Please Dont remove:D
     ##
-    # print ',,,,,,,,,,,', UserNode.index.search(user_id=27)[0]
     a = UserNode.index.get(user_id=request.user.id)
-    # print a
-
+    print a
+    a.get_following_list()
     # print "User 1 follows {}".format(a.following.all())
     # print "User 1's followers {}".format(a.followers.all())
-    # print a.is_follow(2)
-    # print a.followers.all()
-    # a.follow_person(2)
-    # print a.follow_person(2)
-    # print a.follow_person(3)
 
-    # print '------------', a
-    # b = UserNode.index.get(user_id=2)
-    # c = UserNode.index.get(user_id=202)
-    # print a, b , c
-    # a.save()
-    # b.save()
-
-    # d = UserNode.index.search(user_id=53)
-    # e = UserNode(user_id=114)
-    # e = UserNode.index.get(user_id=114)
-    # print "eeeeeeeeee",e
-    # e.save()
-    # e = UserNode.index.get(user_id=114)
-
-
-    # a.follow_person(201)
-    # b.follow_person
-    # print a.get_followers(), a.get_following()
-    # print b, c , d
-    # a.follow_person(114)
-    # print "-----------------------------------"
-    # print b , c , d , e
-    # print 
-
-    # for i in  a.get_followed():
-        # print i.user_id
-
-    # a.follow.connect(b)
-    # a.follow.connect(c)
-    # a.follow.connect(d)
-    # a[0].save()
-    # print "-----------------------------------"
-    # print UserNode.index.search(user_id=26)[0].get_follows()
-    # from darkoob.migration.models import Migration, Hop
-
-    # # print Migration.objects.all()[0].hop_set.filter()
-    # # print "khkh", UserProfile.objects.get(user=request.user).get_related_migrations()
-    # m = Migration() 
-    # print m.get_user_related_migrations(request.user)
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
@@ -129,27 +84,6 @@ def change_password(request):
             comment.save()
     else:
         form = CommentForm()
-    # if this is a reply to a comment, not to a post
-    # if form.cleaned_data['parent_id'] != '':
-    #     comment.parent = Comment.objects.get(id=request.POST['parent_id'])
-    # comment.save()
-
-    # if request.method == 'POST':
-    #     form = ChangePasswordForm(request.POST)
-    #     if form.is_valid():
-    #         cd = form.cleaned_data
-    #         if request.user.check_password(cd['password']):
-    #             user = User.objects.get(username = request.user.username)
-    #             user.set_password(cd['new_password'])
-    #             user.save()
-    #             return HttpResponse('Succsessfull! Password has been changed')
-    #             #TODO: Send Email to user
-    #         else: 
-    #             pass
-    #             #TODO: Raise Error('Your Password is not correct')
-
-    # else:
-    #     form = ChangePasswordForm()
     return render_to_response('change_password.html', {'user': request.user, 'form': form})
 
 @login_required
@@ -185,14 +119,13 @@ def home(request):
 
 
     #
-    from darkoob.book.models import Book, Author
+    from darkoob.book.models import Author
     try:
         quote = Quote.objects.order_by('?')[0]
     except:
         author= Author.objects.create(name='vahid')
         quote = Quote.objects.create(author=author, text="... to sath abstractioneton")
 
-    # print "--------------------", posts[0].noks._get_votes()
     return render(request, template, {
         'new_post_form': NewPostForm(),
         'posts': posts,
@@ -205,49 +138,6 @@ def home(request):
         'suggestion_list': suggestion_list,
     })
 
-@login_required
-def user_following(request, username):
-    try:
-        user = User.objects.get(username=username)
-    except:
-        raise Http404
-    else:
-        template = 'social/user_following.html'
-        user_node = UserNode.index.get(user_id=user.id)
-        following = [User.objects.get(id=node.user_id) for node in user_node.following.all()]
-        count = range(1, len(following) + 1)
-
-        if request.is_ajax():
-            template = 'social/person_bar_page.html'
-
-        return render(request, template, {
-            'person': following,
-            'count': count[::-1],
-        })
-
-        return render(request, 'social/user_profile.html', {'username': username})
-
-@login_required
-def user_followers(request, username):
-    try:
-        user = User.objects.get(username=username)
-    except:
-        raise Http404
-    else:
-        template = 'social/user_followers.html'
-        user_node = UserNode.index.get(user_id=user.id)
-        followers = [User.objects.get(id=node.user_id) for node in user_node.followers.all()]
-        count = range(1, len(followers) + 1)
-
-        if request.is_ajax():
-            template = 'social/person_bar_page.html'
-
-        return render(request, template, {
-            'person': followers,
-            'count': count[::-1],
-        })
-
-        return render(request, 'social/user_profile.html', {'username': username})
 
 @login_required
 def following(request):
@@ -258,11 +148,14 @@ def following(request):
     following = [User.objects.get(id=node.user_id) for node in user_node.following.all()]
     count = range(1, len(following) + 1)
 
+    request_user_following_list = user_node.get_following_list()
+ 
     if request.is_ajax():
         template = 'social/person_bar_page.html'
 
     return render(request, template, {
-        'person': following,
+        'persons': following,
+        'request_user_following_list': request_user_following_list,
         'count': count[::-1],
     })
 
@@ -270,87 +163,21 @@ def following(request):
 def followers(request):
     '''A view for showing all followers users of logged in user'''
     
-    # start cleanup code 
     template = 'social/followers.html'
     user_node = UserNode.index.get(user_id=request.user.id)
     followers = [User.objects.get(id=node.user_id) for node in user_node.followers.all()]
     count = range(1, len(followers) + 1)
 
+    request_user_following_list = user_node.get_following_list()
+
     if request.is_ajax():
         template = 'social/person_bar_page.html'
 
     return render(request, template, {
-        'person': followers,
+        'persons': followers,
+        'request_user_following_list': request_user_following_list,
         'count': count[::-1],
     })
-    # end cleanup code 
-
-    # Dont remove plese. I know it's very dirty:D 
-
-    # template = 'social/followers.html'
-    # posts = Post.objects.order_by("-submitted_time")
-    # count = range(1, len(posts) + 1)
-    # a = UserNode.index.get(user_id=request.user.id)
-    # b = UserNode.index.get(user_id=2)
-    # c = UserNode.index.get(user_id=3)
-
-    # print a,b,c
-    # a.follow.connect(c)
-
-    # a.save()
-    # print 'find', UserNode.index.search(user_id=request.user.id)[0].get_following()
-    # print 'saladsm',UserNode.index.get(user_id=request.user.id).get_followers()
-    # u1 = UserNode.index.get(user_id=1)
-    # u1 = UserNode.index.get(user_id=2)
-
-    # u1 = UserNode(user_id=1).save()
-    # u2 = UserNode(user_id=5).save()
-    # u3 = UserNode(user_id=6).save()
-
-
-    # u1.follow_person(2)
-    # u2.follow_person(1)
-    # u1.follow_person(3)
-    # u3.follow_person(1)
-    # UserNode(user_id=3).save()
-    # UserNode(user_id=4).save()
-
-    
-    # u1.follow_person(2)
-    # u1.follow_person(5)
-    # u1.follow_person(6)
-    # print [User.objects.get(id=node.user_id) for node in u1.following.all()]
-    # # print type(u1.followers.all())
-    # print "User 1 follows {}".format(u1.following.all())
-    # print "User 1's followers {}".format(u1.followers.all())
-    # print "User 1 follows {}".format(u1.get_following())
-    # print "User 1's followers {}".format(u1.get_followers())
-    # u1 = UserNode(user_id=2).save()
-    # u2 = UserNode(user_id=3).save()
-    # u3 = UserNode(user_id=4).save()
-    # u4 = UserNode(user_id=5).save()
-
-    # u.follow_person(2)
-    # u.follow_person(3)
-    # u.follow_person(4)
-    # u.follow_person(5)
-    # print ")))))))((((((())))(((("
-    # print u.followers
-    # print u.following
-    # for i in u.get_following():
-        # print "i", dir(i)
-
-    # print "User 1 follows {}".format(u.get_following())
-    # print "User 1's followers {}".format(u.get_followers())
-
-    # if request.is_ajax():
-    #     template = 'post/posts.html'
-
-
-    # return render(request, template, {
-    #     'posts': posts,
-    #     'count': count[::-1],
-    # })
 
 @login_required
 def favorite_books(request):
@@ -366,19 +193,6 @@ def favorite_books(request):
         'count': count[::-1],
     })
 
-@login_required
-def user_favorite_books(request, username):
-    template = 'social/favorite_books.html'
-    favorite_books = User.objects.get(username=username).userprofile.favorite_books.all()
-    count = range(1, len(favorite_books) + 1)
-
-    if request.is_ajax():
-        template = 'social/favorite_books_page.html'
-
-    return render(request, template, {
-        'favorite_books': favorite_books,
-        'count': count[::-1],
-    })
 
 @login_required
 def new_post(request):
@@ -412,8 +226,7 @@ def user_profile(request, username):
     
     return render(request, template,
         {
-            'request': request,
-            'user': user,
+            'person_object': user,
             'is_following': is_following,
             'is_followers': is_followers,
             'posts': posts,
@@ -423,6 +236,107 @@ def user_profile(request, username):
         }
     )
  
+@login_required
+def user_favorite_books(request, username):
+    template = 'social/user_favorite_books.html'
+    user = User.objects.get(username=username)
+    favorite_books = user.userprofile.favorite_books.all()
+    count = range(1, len(favorite_books) + 1)
+
+    try:
+        user_node = UserNode.index.get(user_id=request.user.id)
+        is_following = user_node.is_following(user.id)
+        is_followers = user_node.is_followers(user.id)      
+    except:
+        is_following = False
+        is_followers = False
+
+    if request.is_ajax():
+        template = 'social/favorite_books_page.html'
+
+    request_user_favorite_books_list = request.user.userprofile.favorite_books.all()
+    print "dididididd", request_user_favorite_books_list
+
+    return render(request, template, {
+        'person_object': user,
+        'is_following': is_following,
+        'is_followers': is_followers,
+        'request_user_favorite_books_list': request_user_favorite_books_list,
+        'favorite_books': favorite_books,
+        'count': count[::-1],
+    })
+
+@login_required
+def user_following(request, username):
+    try:
+        user = User.objects.get(username=username)
+    except:
+        raise Http404
+    else:           
+        template = 'social/user_following.html'
+        user_node = UserNode.index.get(user_id=user.id)
+        following = [User.objects.get(id=node.user_id) for node in user_node.following.all()]
+        count = range(1, len(following) + 1)
+
+        request_user_following_list = UserNode.index.get(user_id=request.user.id).get_following_list()
+
+        if request.is_ajax():
+            template = 'social/person_bar_page.html'
+
+        try:
+            user_node = UserNode.index.get(user_id=request.user.id)
+            is_following = user_node.is_following(user.id)
+            is_followers = user_node.is_followers(user.id)      
+        except:
+            is_following = False
+            is_followers = False
+
+        return render(request, template, {
+            'person_object': user,
+            'persons': following,
+            'is_following': is_following,
+            'is_followers': is_followers,
+            'request_user_following_list': request_user_following_list,
+            'count': count[::-1],
+        })
+        return render(request, 'social/user_profile.html', {'username': username})
+
+@login_required
+def user_followers(request, username):
+    try:
+        user = User.objects.get(username=username)
+    except:
+        raise Http404
+    else:
+        template = 'social/user_followers.html'
+        user_node = UserNode.index.get(user_id=user.id)
+        followers = [User.objects.get(id=node.user_id) for node in user_node.followers.all()]
+        count = range(1, len(followers) + 1)
+
+        request_user_following_list = UserNode.index.get(user_id=request.user.id).get_following_list()
+
+        if request.is_ajax():
+            template = 'social/person_bar_page.html'
+
+        try:
+            user_node = UserNode.index.get(user_id=request.user.id)
+            is_following = user_node.is_following(user.id)
+            is_followers = user_node.is_followers(user.id)      
+        except:
+            is_following = False
+            is_followers = False
+
+        return render(request, template, {
+            'person_object': user,
+            'persons': followers,
+            'is_following': is_following,
+            'is_followers': is_followers,
+            'request_user_following_list': request_user_following_list,
+            'count': count[::-1],
+        })
+
+        return render(request, 'social/user_profile.html', {'username': username})
+
 def user_lookup(request):
     results = []
     if request.method == "GET":

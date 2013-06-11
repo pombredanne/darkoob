@@ -9,9 +9,9 @@
 <link rel="stylesheet" href="{% static "css/sticky.css" %}" type="text/css" />
 
 
-  <script src="{% static "js/jquery.min.js" %}" type="text/javascript" charset="utf-8" ></script>
-  <script src="{% static "js/endless.js" %}" type="text/javascript" charset="utf-8" ></script>
-  <script src="{% static "js/endless_on_scroll.js" %}" type="text/javascript" charset="utf-8" ></script>
+<script src="{% static "js/jquery.min.js" %}" type="text/javascript" charset="utf-8" ></script>
+<script src="{% static "js/endless.js" %}" type="text/javascript" charset="utf-8" ></script>
+<script src="{% static "js/endless_on_scroll.js" %}" type="text/javascript" charset="utf-8" ></script>
 {% endblock js %}
 
 {% block main %}
@@ -22,6 +22,29 @@
         <div class="sidebox post">
           <h4> Following </h4>
           {% include 'social/person_bar_page.html' %}
+
+
+          <script type="text/javascript">
+          function follow_person_in_user_page_callback(data){
+            if (data.done){
+              $('#follow_btn_'+data.user_id).attr('class','btn btn-success btn-primary disabled')
+              $('#follow_btn_'+data.user_id).attr('disabled', 'disabled')
+              $.pnotify({
+                title: 'Follow',
+                text: 'Added to your following list',
+                type:'success',
+                opacity: .8
+              })
+            }else{
+              $.pnotify({
+                title: 'Follow',
+                text: 'An error occured.please try again',
+                type:'error',
+                opacity: .8
+              })
+            }
+          }
+          </script>
         </div> <!-- post -->
       </div> <!-- span12 -->
     </div> <!-- row -->

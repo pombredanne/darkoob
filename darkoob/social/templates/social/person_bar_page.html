@@ -1,22 +1,30 @@
 {% load endless %}
 {% load avatar_tags %}
-{% paginate 1,1 person %}
-{% for user in person %}
+{% paginate 1,1 persons %}
+{% for person in persons %}
 <div class="row-fluid">
   <div class="span12">
     <div class="sidebox post">
       <div class="row-fluid">
         <div class="media">
           <a class="pull-left" href="#">
-            {% avatar user 70%}
+            {% avatar person 70 %}
           </a>
           <div class="media-body">
-            <a href="{% url 'social:user_profile' username=user.username %}"><b>{{ user.first_name|capfirst }} {{ user.last_name|capfirst }}</b></a>
+            <a href="{% url 'social:user_profile' username=person.username %}"><b>{{ person.first_name|capfirst }} {{ person.last_name|capfirst }}</b></a>
             <br>
-            <a class="btn btn-medium" href="#" style="float:right"><i class="icon-eye-open"></i></a>
 
-            {{ user.userprofile.sex }}<br/>
-            {% if user.userprofile.city %}{{ user.userprofile.city|capfirst }}/{{user.userprofile.city.country|capfirst}}{% endif %}
+            {% if book in request_user_following_list %}
+              <button class="btn btn-success btn-primary disabled" disabled="disabled" href="#" style="float:right"><i class="icon-eye-open"></i></button>
+            {% else %}
+              <button id='follow_btn_{{person.id}}' class="btn btn-medium" href="#" style="float:right"
+              onclick="Dajaxice.darkoob.social.follow_person(follow_person_in_user_page_callback, {'user_id':{{person.id}}})"
+              ><i class="icon-eye-open"></i></button>
+            {% endif %}
+
+
+            {{ person.userprofile.sex }}<br/>
+            {% if person.userprofile.city %}{{ person.userprofile.city|capfirst }}/{{person.userprofile.city.country|capfirst}}{% endif %}
           </div>
 
         </div>

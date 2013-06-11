@@ -3,16 +3,38 @@
 
 {% block followers_active %}
 <li class="active">
-  <a href="{% url 'social:user_followers' username=user.username %}" ><i class="icon-eye-open"></i> Followers 
+  <a><i class="icon-eye-open"></i> Followers 
   </a>
 </li>
 {% endblock followers_active%}
 
-  {% block right_sidebox %}
-  <div class="sidebox post">
-    <p>
-      <b>{{ user.first_name|capfirst }}'s Followers</b>
-      {% include 'social/person_bar_page.html' %}
-    </p>
-  </div>
-  {% endblock right_sidebox %}
+{% block right_sidebox %}
+<div class="sidebox post">
+  <p>
+    <b>{{ person_object.first_name|capfirst }}'s Followers</b>
+    {% include 'social/person_bar_page.html' %}
+  </p>
+</div>
+
+<script type="text/javascript">
+function follow_person_in_user_page_callback(data){
+  if (data.done){
+    $('#follow_btn_'+data.user_id).attr('class','btn btn-success btn-primary disabled')
+    $('#follow_btn_'+data.user_id).attr('disabled', 'disabled')
+    $.pnotify({
+      title: 'Follow',
+      text: 'Added to your following list',
+      type:'success',
+      opacity: .8
+    })
+  }else{
+    $.pnotify({
+      title: 'Follow',
+      text: 'An error occured.please try again',
+      type:'error',
+      opacity: .8
+    })
+  }
+}
+</script>
+{% endblock right_sidebox %}

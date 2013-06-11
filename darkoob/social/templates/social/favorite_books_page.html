@@ -10,31 +10,31 @@
       <div class="row-fluid">
         <div class="media">
           <a class="pull-left" href="#">
-              {% thumbnail book.thumb "70x90" crop="center" as im %}
-              <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
-              {% endthumbnail %}          
+            {% thumbnail book.thumb "70x90" crop="center" as im %}
+            <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+            {% endthumbnail %}          
           </a>
           <div class="media-body">
             <b><a href="">{{ book.title|capfirst }}</a></b><br />
 
-              <small>Authors:</small>
-                      <a class="btn btn-medium" href="#" style="float:right"><i class="icon-star"></i></a>
+            <small>Authors:</small>
+
+
+            {% if book in request_user_favorite_books_list %}
+            <button class="btn btn-success btn-primary disabled" disabled="disabled" href="#" style="float:right"><i class="icon-star"></i></button>
+            {% else %}
+            <button id='star_btn_{{book.id}}' class="btn btn-medium" href="#" style="float:right"
+            onclick="Dajaxice.darkoob.social.star_book(star_book_callback, {'book_id':{{book.id}}})"
+            ><i class="icon-star"></i></button>
+            {% endif %}
 
             <ul class="inline">
-            {% for author in book.authors.all %}
-            <li>{{ author.name|capfirst }}</li> 
-            {% endfor %}
+              {% for author in book.authors.all %}
+              <li>{{ author.name|capfirst }}</li> 
+              {% endfor %}
             </ul>
-   
-
-
-
-
-
           </div>
-
         </div>
-
       </div> <!-- span12 -->
     </div> <!-- row -->
   </div>
