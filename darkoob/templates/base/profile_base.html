@@ -31,7 +31,26 @@
       $('#search').after(lis);
     }
   }
+
+  $(document).ready(function() {
+    $('.panel-btn').click(function() {
+      $('#panel').toggle().animate({width: '25%'}, 'slow');
+      $(this).hide();
+    });
+
+    $('.panel-hide-btn').click(function() {
+      $('#panel').animate({width: '0'}, 'slow').toggle();
+      $('.panel-btn').show();
+    });
+
+  });
 </script>
+
+<i class="icon-chevron-right panel-btn"></i>
+<div id="panel">
+  <h1>HELLO</h1>
+  <i class="icon-chevron-left panel-hide-btn"></i>
+</div> <!-- panel -->
 
 <div class="container-fluid">
   <div class="row-fluid">
