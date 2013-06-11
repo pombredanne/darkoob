@@ -1,31 +1,27 @@
 @import "common_style.less";
 
-#panel {
-  display: none;
-  position: fixed;
-  height: 100%;
-  width: 0;
+.navbar-inner {
+  .border-radius(0 0 3px 3px);
 
-  background-color: @middle_grey;
-  border: 3px solid white;
-  .box-shadow(darken(@border, 50%); 0 10px 70px 25px);
+  .dropdown {
+    img {
+      margin-top: -.6em;
+      margin-bottom: -.4em;
+    }
+
+    .caret {
+      margin-top: .5em;
+    }
+  }
 }
 
-.panel-btn {
-  position: fixed;
-  float: left;
-  cursor: pointer;
-  margin-top: 10em;
-}
-
-.panel-hide-btn {
-  position: relative;
-  float: right;
-  cursor: pointer;
-  margin-top: 10em;
-}
 
 .logo {
+  font-weight: bold;
+  font-family: Courier;
+  font-size: 1.1em;
+  color: @light_grey;
+  text-shadow: 1px 1px 1px lighten(@dark_grey, 30%);
 }
 
 .search_form {

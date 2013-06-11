@@ -32,49 +32,7 @@
       $('#search').after(lis);
     }
   }
-
-  $(document).ready(function() {
-    $('.panel-btn').click(function() {
-      $('#panel').toggle().animate({width: '25%'}, 'slow');
-      $(this).hide();
-    });
-
-    $('.panel-hide-btn').click(function() {
-      $('#panel').animate({width: '0'}, 'slow').toggle();
-      $('.panel-btn').show();
-    });
-
-  });
 </script>
-
-<i class="icon-chevron-right panel-btn"></i>
-<div id="panel">
-  <h1>HELLO</h1>
-
-    <div class="row-fluid">
-
-      <div class="sidebox-head">
-        <h4>Hoping</h4>
-      </div>
-      <div class="span12 simple_box">
-
-        <p>
-
-          I Get a book( TODO: tooltip(private key is 10 digit key that writen in your book) )
-          </br>
-        <form class="form-inline" onsubmit="return false;">
-          <input type="text" class="input-medium" placeholder="Private Key" autocomplete="off" data-toggle="tooltip" id='private_key' > 
-
-          <button id='check_primary_key' data-toggle="button" data-loading-text="loading stuff..." class="btn btn-primary" data-complete-text="finished!" onclick="Dajaxice.darkoob.migration.submit_key(submit_private_key_callback,{'private_key': $('#private_key').val() })">Check</button>
-        </form>
-        You can <a href="{% url 'migration:new_migration' %}">Start New Book Migration</a>
-<!--         <button class="btn btn-large btn-block btn-primary" type="button">Start New Migration</button> -->
-
-        </p>
-      </div> <!-- span10 -->
-    </div> <!-- row -->
-  <i class="icon-chevron-left panel-hide-btn"></i>
-</div> <!-- panel -->
 
 <div class="container-fluid">
   <div class="row-fluid">
@@ -82,7 +40,7 @@
       <div class="navbar">
         <div class="navbar-inner">
           <div class="container">
-            <a class="brand pull-left logo" href="{% url "social:home" %}">Darkoob</a>
+            <a class="brand pull-left" href="{% url "social:home" %}"><strong class="logo">darkoob</strong></a>
             <form class="nav-search search_form pull-left" onSubmit="Dajaxice.darkoob.args_example(
               show_search_res, {'text':$('#search').val()})">
               <ul class="nav">
@@ -97,10 +55,10 @@
             </form>
             </li>
           </ul>
-            <ul class="nav pull-right ">
+            <ul class="nav pull-right">
               <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" role="button" href="#">
-                  {{ user.get_full_name }}
+                  {% avatar user 32 %}
                   <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
@@ -109,7 +67,6 @@
                   <li><a href="{% url "social:logout" %}"><i class="icon-off"></i> Logout</a></li>
                 </ul>
               </li> <!-- dropdown -->
-              {% avatar user 30 %}
             </ul> <!-- nav -->
           </div> <!-- container -->
         </div> <!-- navbar-inner -->

@@ -9,6 +9,12 @@ $(document).ready(function() {
         .addClass('migrations-link-inactive');
     }
   });
+
+  $('#id_private_key').tooltip({
+    title: 'Private key is composed of 10 digits, and is written in the book you received.',
+    placement: 'left',
+    trigger: 'focus',
+  });
 });
 
 $(".deadline").children('a').bind("click", function () {
