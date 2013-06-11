@@ -1,6 +1,8 @@
 {% extends "social/home.html" %}
 {% load staticfiles %}
 {% block css %}
+{% load avatar_tags %}
+
 {{ block.super }}
 <link rel="stylesheet" type="text/less" href="{% static "/static/css/home_style.less" %}">
 <style type="text/css">
@@ -107,9 +109,14 @@ function edit_website_callback(data){
     <div class="row-fluid">
       <div class="span12">
         <div class="sidebox post">
-          <length>{{ user.get_full_name}} Profile</length> 
-          
+          <b>{{ user.get_full_name}} Profile</b> 
+          <br />
 
+          <br />
+          <br />
+
+          {% avatar user 120 %}
+          <a href="{% url 'avatar_change' %}">Change your avatar</a>
           <div class="input-append">
             <input class="span5" id="appendedInputButton" type="text">
             <button class="btn" type="button">Go!</button>
