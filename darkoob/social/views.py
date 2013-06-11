@@ -215,19 +215,6 @@ def followers(request):
         'count': count[::-1],
     })
 
-@login_required
-def favorite_books(request):
-    template = 'social/favorite_books.html'
-    favorite_books = User.objects.get(username=request.user).userprofile.favorite_books.all()
-    count = range(1, len(favorite_books) + 1)
-
-    if request.is_ajax():
-        template = 'social/favorite_books_page.html'
-
-    return render(request, template, {
-        'favorite_books': favorite_books,
-        'count': count[::-1],
-    })
 
 
 @login_required
@@ -298,6 +285,20 @@ def user_favorite_books(request, username):
         'is_following': is_following,
         'is_followers': is_followers,
         'request_user_favorite_books_list': request_user_favorite_books_list,
+        'favorite_books': favorite_books,
+        'count': count[::-1],
+    })
+@login_required
+def favorite_books(request):
+    template = 'social/favorite_books.html'
+    favorite_books = request.user.userprofile.favorite_books.all()
+    count = range(1, len(favorite_books) + 1)
+
+    if request.is_ajax():
+        template = 'social/favorite_books_page.html'
+
+    return render(request, template, {
+        'person_object': request.user,
         'favorite_books': favorite_books,
         'count': count[::-1],
     })
