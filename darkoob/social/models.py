@@ -28,10 +28,14 @@ class UserNode(StructuredNode):
     def follow_person(self, user_id):
         followed_user = self.index.get(user_id=user_id)
         self.following.connect(followed_user, {'time': str(datetime.datetime.utcnow())})
-    def is_follow(self, user_id):
-        user = self.index.get(user=user_id)
-        print self.following
-
+    def is_following(self, user_id): 
+        ''' return True if user in self.following.all() else False '''
+        user = self.index.get(user_id=user_id)
+        return True if user in self.following.all() else False
+    def is_followers(self, user_id):
+        ''' return True if user in self.followers.all() else False '''
+        user = self.index.get(user_id=user_id)
+        return True if user in self.followers.all() else False
 
 
 

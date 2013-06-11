@@ -11,16 +11,27 @@ from darkoob.post.models import Post
 from avatar.templatetags import avatar_tags
 
 @dajaxice_register(method='POST')
-def follow_request(request, following_id):
-    # TODO : ISSUE #54
+def follow_person(request, user_id):
     try:
         user = UserNode.index.get(user_id=request.user.id)
-        user.follow_person(following_id)
-        done = True 
+        user.follow_person(user_id)
     except:
-        print "nashhod"
         done = False
-    return simplejson.dumps({'done':done})
+    else:
+        done = True
+    return simplejson.dumps({'done': done})
+    
+# @dajaxice_register(method='POST')
+# def follow_request(request, following_id):
+#     # TODO : ISSUE #54
+#     try:
+#         user = UserNode.index.get(user_id=request.user.id)
+#         user.follow_person(following_id)
+#         done = True 
+#     except:
+#         print "nashhod"
+#         done = False
+#     return simplejson.dumps({'done':done})
 
 
 

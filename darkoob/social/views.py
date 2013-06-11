@@ -66,7 +66,16 @@ def change_password(request):
     ##
     # print ',,,,,,,,,,,', UserNode.index.search(user_id=27)[0]
     a = UserNode.index.get(user_id=request.user.id)
-    print a.followers
+    # print a
+
+    # print "User 1 follows {}".format(a.following.all())
+    # print "User 1's followers {}".format(a.followers.all())
+    # print a.is_follow(2)
+    # print a.followers.all()
+    # a.follow_person(2)
+    # print a.follow_person(2)
+    # print a.follow_person(3)
+
     # print '------------', a
     # b = UserNode.index.get(user_id=2)
     # c = UserNode.index.get(user_id=202)
@@ -385,6 +394,14 @@ def user_profile(request, username):
         pass
         #raise 404
 
+    try:
+        user_node = UserNode.index.get(user_id=request.user.id)
+        is_following = user_node.is_following(user.id)
+        is_followers = user_node.is_followers(user.id)      
+    except:
+        is_following = False
+        is_followers = False
+
     if request.is_ajax():
         template = 'post/posts.html'
     favorite_books = user.userprofile.favorite_books.all()
@@ -397,6 +414,8 @@ def user_profile(request, username):
         {
             'request': request,
             'user': user,
+            'is_following': is_following,
+            'is_followers': is_followers,
             'posts': posts,
             'count': count,
             'favorite_books': favorite_books,
