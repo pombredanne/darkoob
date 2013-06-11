@@ -1,4 +1,4 @@
-{% extends "base/profile_base.html" %}
+{% extends "social/home.html" %}
 {% load staticfiles %}
 {% block css %}
 {{ block.super }}
@@ -10,32 +10,6 @@
 
 {% block title %}Group{% endblock title %}
 
-{% block sidebar %}
-<div class="row-fluid">
-  <div class="span12">
-    <div class="row-fluid">
-      <div class="span10 sidebox">
-        <legend>Groups</legend>
-        <p>
-          list<br />
-          of<br />
-          groups
-        </p>
-      </div> <!-- span10 -->
-    </div> <!-- row -->
-    <div class="row-fluid">
-      <div class="span10 sidebox">
-        <legend>Books</legend>
-        <p>
-          some<br />
-          books
-        </p>
-      </div> <!-- span10 -->
-    </div> <!-- row -->
-  </div> <!-- span12 -->
-</div> <!-- row -->
-{% endblock sidebar %}
-
 {% block main %}
 <div class="row-fluid">
   <div class="span12">
@@ -43,7 +17,7 @@
       <div class="span12">
         <div class="simple-box">
           <p>
-            
+
           </p>
           <form id="add_group_form" action='{% url "group:create_group" %}' method='post'>
            {% csrf_token %}
@@ -52,187 +26,31 @@
            <button type="button" id="add_group_button" onmousedown="load_members()" class="btn btn-primary">Add Group</button>
          </form>
          <style>
-          .typeahead_wrapper { display: block; height: 30px; }
-          .typeahead_photo { float: left; max-width: 30px; max-height: 30px; margin-right: 5px; }
-          .typeahead_labels { float: left; height: 30px; }
-          .typeahead_primary { font-weight: bold; }
-          .typeahead_secondary { font-size: .8em; margin-top: -5px; }
+         .typeahead_wrapper { display: block; height: 30px; }
+         .typeahead_photo { float: left; max-width: 30px; max-height: 30px; margin-right: 5px; }
+         .typeahead_labels { float: left; height: 30px; }
+         .typeahead_primary { font-weight: bold; }
+         .typeahead_secondary { font-size: .8em; margin-top: -5px; }
          </style>
          <script src="{% static "/static/js/underscore.min.js" %}"></script>
-         <script type="text/javascript">
-         function duplicat_group (data) {
-          if(data.is_exist) {
-            $.pnotify({
-              title: 'Duplicated Group',
-              text: 'This group is already exist',
-              type: 'info',
-              opacity: .8
-            });
-            return false;
-          }
-          return true;
-         }
-         function load_members(){
-          var member_list = ''
 
-          $('.media').each(function(){
-            member_list+=$(this).attr('id') + ',';
-          })
-          $('#id_members').val(member_list);
-          Dajaxice.darkoob.group.is_group_exist(duplicat_group, {'group_name': $('#id_name').val()});
-         }
+         <div id="added-users"></div>
+         <br />
 
-         $(document).ready(function() {
+         <input
+         type="text"
+         id="user-look"
+         class="span6 typeahead"
+         placeholder="Username"
+         autocomplete="off"
+         data-provide="typeahead"
+         />
 
-          $(function(){
+         <script src="{% static "/static/js/create_group.js" %}"></script>
 
-            var bondObjs = {};
-            var bondNames = [];
-
-      //get the data to populate the typeahead (plus an id value)
-      var throttledRequest = _.debounce(function(query, process){
-        //get the data to populate the typeahead (plus an id value)
-        $.ajax({
-          url: '/group/look'
-          ,type: "GET"
-          ,data: { query: $('#user-look').val()}
-          ,cache: false
-          ,success: function(data){
-            //reset these containers every time the user searches
-            //because we're potentially getting entirely different results from the api
-            bondObjs = {};
-            bondNames = [];
-
-            //Using underscore.js for a functional approach at looping over the returned data.
-            _.each( data, function(item, ix, list){
-
-              //for each iteration of this loop the "item" argument contains
-              //1 bond object from the array in our json, such as:
-              // { "id":7, "name":"Pierce Brosnan" }
-
-              //add the label to the display array
-              bondNames.push( item.username );
-
-              //also store a hashmap so that when bootstrap gives us the selected
-              //name we can map that back to an id value
-              bondObjs[ item.username ] = item;
-            });
-
-            //send the array of results to bootstrap for display
-            process( bondNames );
-          }
-        });
-});
-
-
-$(".typeahead").typeahead({
-  source: function ( query, process ) {
-
-          //here we pass the query (search) and process callback arguments to the throttled function
-          throttledRequest( query, process );
-
-        }
-        ,highlighter: function( item ){
-          var bond = bondObjs[ item ];
-          
-          return '<div class="bond">'
-          + "<div class='typeahead_wrapper'>"
-          +'<img class=\'typeahead_photo\' src="' + bond.photo + '" />'
-          + "<div class='typeahead_labels'>"
-          +'<div class=\'typeahead_primary\'>' + bond.username + '</div>'
-          + "<div class='typeahead_secondary'>" + bond.full_name + "</div>"
-          +'</div>'
-          +'</div>';
-        }
-        , updater: function ( selectedName ) {
-
-          //note that the "selectedName" has nothing to do with the markup provided
-          //by the highlighter function. It corresponds to the array of names
-          //that we sent from the source function.
-
-          //save the id value into the hidden field
-          $( "#user-look" ).val( bondObjs[ selectedName ].id );
-
-          //return the string you want to go into the textbox (the name)
-          return selectedName;
-        }
-      });
-  });
-});
-
-function close_added_user(added_user)
-{
-  $(added_user).remove();
-
-}
-</script>
-<div id="added-users"></div>
-<br />
-
-<input
-  type="text"
-  id="user-look"
-  class="span6 typeahead"
-  placeholder="Username"
-  autocomplete="off"
-  data-provide="typeahead"
-/>
-
-<script type="text/javascript">
-function is_in_added_users(username)
-{
-  var result = false
-  if($('#added-users').children().length > 0) {
-    $('#added-users').children().each(function(index, user) {
-      if (user.id == username) {
-        result = true;
-      }
-    });
-  }
-  return result;
-}
-
-function is_user_callback(data)
-{
-  if (data.is_exist ) {
-    if (!is_in_added_users($('#user-look').val())) {
-      $('#added-users').append(
-        '<div class="media" id="'+ $('#user-look').val() +'" >' +
-        '<a class="pull-left" href="#">' +
-        '<img class="media-object" src="'+ data.url +'">'+
-        '</a><div class="media-body">' +
-        '<button class="close" id="close_button" onmousedown="close_added_user(\'#'+$('#user-look').val()+'\')">&times;</button>'+
-        '<b class="media-heading">'+ $('#user-look').val() +'</b><br/>' +
-        data.full_name +
-        '</div>' +
-        '</div>'
-        )
-    } else {
-      $.pnotify({
-        title: 'Duplicated Username',
-        text: 'This user is already added',
-        type: 'info',
-        opacity: .8
-      });
-    }
-  } else {
-    $.pnotify({
-      title: 'Not Exist',
-      text: 'Wrong username , be sure what you looking for!',
-      type: 'error',
-      opacity: .8
-    });
-  }
-}
-$('#user-look').keypress(function(e) {
-  if(e.which == 13) {
-    Dajaxice.darkoob.social.is_user(is_user_callback, {'username': $('#user-look').val()});
-  }
-});
-</script>
-</div>
-</div> <!-- span12 -->
-</div> <!-- row -->
-</div> <!-- span -->
+       </div>
+     </div> <!-- span12 -->
+   </div> <!-- row -->
+ </div> <!-- span -->
 </div> <!-- row -->
 {% endblock main %}
