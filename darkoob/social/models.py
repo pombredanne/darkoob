@@ -13,18 +13,9 @@ SEX_CHOICES = (
 
 class UserNode(StructuredNode):
     user_id = IntegerProperty(required=True, index=True)
-    # follow = RelationshipTo('UserNode', 'FOLLOW')
     following = RelationshipTo('UserNode', 'FOLLOW')
     followers = RelationshipFrom('UserNode', 'FOLLOW')
 
-    # def get_followers(self):
-    #     results, metadata = self.cypher("START a=node({self}) MATCH a<-[:FOLLOW]-(b) RETURN b");
-    #     return [self.__class__.inflate(row[0]) for row in results]
-
-    # def get_following(self):
-    #     results, metadata = self.cypher("START a=node({self}) MATCH b-[:FOLLOW]->(a) RETURN b");
-    #     return [self.__class__.inflate(row[0]) for row in results]
-    
     def follow_person(self, user_id):
         followed_user = self.index.get(user_id=user_id)
         self.following.connect(followed_user, {'time': str(datetime.datetime.utcnow())})
