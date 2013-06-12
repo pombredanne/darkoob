@@ -227,6 +227,8 @@ def user_profile(request, username):
 
     try:
         user = User.objects.get(username=username)
+        groups = request.user.group_set.all()
+        admin_groups = request.user.admin_set.all()
     except:
         pass
         #raise 404
@@ -252,6 +254,8 @@ def user_profile(request, username):
             'person_object': user,
             'is_following': is_following,
             'is_followers': is_followers,
+            'groups': groups,
+            'admin_groups':admin_groups,
             'posts': posts,
             'count': count,
             'favorite_books': favorite_books,
