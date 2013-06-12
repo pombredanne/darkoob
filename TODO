@@ -1,0 +1,13 @@
+PJAX ISSUE
+----------
+vahid: i think different! :D
+Chrome is a good web browser but support only 86% of CSS3 's facilities.62 percent is good for new web technologies.
+
+i test PJAX on ie, but it haven't any error on page, in ie9 when you use from PJAX page reload fully. if we use it people that use from ie like web browsers should wait to reload page(It have no problem) but other user's(Majority of people)  enjoy from Darkoob speed, so i think using PJAX causes any problem and it's necessary because empty home page size is about 410kb and this size unfortunately,too(Note that is not yet complete). we had to use each way for reduction of size and speed up loading.
+
+
+GROUP THUMB ISSUE
+-----------------
+It's good.
+I add thumb field to group model and upload a default thumb for group. 
+if group hasn't thumb we should show de 
