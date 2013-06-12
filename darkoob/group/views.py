@@ -5,13 +5,19 @@ from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from darkoob.group.forms import GroupForm
 from darkoob.group.models import Group
+from darkoob.book.models import Quote
 
 def group(request, group_id, group_name):
     group = Group.objects.get(id=group_id, name=group_name)
+    quote = Quote.get_random_quote()
+
     if group:
         group.admins = group.admin.admin_set.all()
         #group.members = group.members.all()
-        return render(request, "group/group_page.html" ,{'group': group})
+        return render(request, "group/group_page.html", {
+            'group': group,
+            'quote': quote
+        })
     else:
         return HttpResponse("Group Is not exist!")
 
