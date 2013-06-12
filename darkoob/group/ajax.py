@@ -8,11 +8,12 @@ from darkoob.group.models import Group
 
 @dajaxice_register(method='POST')
 def is_group_exist(request, group_name):
-    status = True
+    status = False
     try:
-        print Group.objects.filter(name=group_name)
+        if Group.objects.filter(name=group_name):
+            status = True
+        else:
+            status = False 
     except:
         status = False
-    else:
-        status = True
     return simplejson.dumps({'is_exist': status})
