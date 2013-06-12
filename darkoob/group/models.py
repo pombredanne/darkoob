@@ -10,8 +10,7 @@ class Group(models.Model):
     admin = models.ForeignKey(User, related_name='admin_set')
     members = models.ManyToManyField(User, related_name='group_set', null=True)
     created_time = models.DateTimeField(default=timezone.now())
-    thumb =  models.ImageField(upload_to='groups/')
-
+    thumb =  models.ImageField(upload_to='groups/', null=True, blank=True)
 
     def __unicode__(self):
         return unicode(self.name)
