@@ -1,0 +1,3 @@
+{{ object.user.get_full_name }}
+{{ object.user.get_username }}
+{{ object.user.get_short_name }}
