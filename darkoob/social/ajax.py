@@ -100,7 +100,6 @@ def set_my_quote(request, quote_id):
     errors = []
     done = False
     message = ''
-    print "0000000000000000000000---",quote_id
     try:
         quote = Quote.objects.get(id=int(quote_id))
         UserProfile.objects.filter(user=request.user).update(quote=quote)
@@ -160,7 +159,6 @@ def is_user(request, username):
 @dajaxice_register(method='POST')
 def edit_website(request, website):
     errors = []
-    print "---------------",website
     done = False
     from django.core.validators import URLValidator
     from django.core.exceptions import ValidationError
