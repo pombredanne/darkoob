@@ -11,6 +11,6 @@ class GroupForm(forms.Form):
             'required': '',
         })
     )
-    members = forms.CharField(widget=forms.HiddenInput())
+    members = forms.CharField(required=False, widget=forms.HiddenInput())
 
 

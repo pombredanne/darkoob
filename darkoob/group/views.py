@@ -24,8 +24,11 @@ def create_group(request):
             group = Group(name=cd['name'], admin=request.user)
             group.save()
             for member in cd['members'].strip(',').split(','):
-                user = User.objects.get(username=member)
-                group.members.add(user)
+                try:
+                    user = User.objects.get(username=member)
+                    group.members.add(user)
+                except:
+                    pass
             group.save()
             
     else:
