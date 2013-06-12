@@ -8,6 +8,7 @@ function duplicat_group (data) {
     });
     return false;
   }
+  $('#add_group_form').submit()
   return true;
 }
 function load_members(){
