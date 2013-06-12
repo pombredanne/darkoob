@@ -273,21 +273,21 @@
     </div> <!-- row -->
     <div class="row-fluid">
       <div class="span1">
-        <img class="new-post-icon new-post-icon-active" src="{% static "/static/img/Pen-black-32.png" %}" alt="Text"/>
-        <img class="new-post-icon" src="{% static "/static/img/Quote-black-32.png" %}" alt="Quote"/>
-        <img class="new-post-icon" src="{% static "/static/img/Cronometer-black-32.png" %}" alt="Deadline"/>
+        <img id="post_type_0" class="new-post-icon new-post-icon-active" src="{% static "/static/img/Pen-black-32.png" %}" alt="Text" onclick="change_post_type(0)"/>
+        <img id="post_type_1" class="new-post-icon" src="{% static "/static/img/Quote-black-32.png" %}" alt="Quote" onclick="change_post_type(1)" />
+        <img id="post_type_2" class="new-post-icon" src="{% static "/static/img/Cronometer-black-32.png" %}" alt="Deadline" onclick="change_post_type(2)"/>
       </div>
       <div class="span11">
         <div class="sidebox">
           <div class="row-fluid">
             <div class="span9 new_post_container">
-              <form method="post" action="{% url "social:new_post" %}">
+              <form method="post" action="{% url "social:new_post" %}" id="post_form" type='0'>
                 {% csrf_token %}
                 {{ new_post_form.text }}
               </form>
             </div>
             <div class="span1 new_post_button">
-              <button class="btn btn-inverse" onclick="Dajaxice.darkoob.social.submit_post(Dajax.process, {'text': $('#id_text').val()})">Post</button>
+              <button id="post_button" class="btn btn-inverse" onclick="Dajaxice.darkoob.social.submit_post(Dajax.process, {'text': $('#id_text').val(), 'type':$('#post_form').attr('type')})">Post</button>
             </div>
           </div> <!-- row -->
         </div> <!-- sidebox -->

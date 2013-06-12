@@ -1,3 +1,14 @@
+function change_post_type(type){
+  $('.new-post-icon').each(function(index,value){
+    if (index==type){
+      $(this).attr('class','new-post-icon new-post-icon-active');
+      $('#post_form').attr('type',index);
+    }else{
+      $(this).attr('class','new-post-icon');
+    }
+  })
+}
+
 $(document).ready(function() {
   $('.migrations-link').click(function() {
     $('.migrations').slideToggle();

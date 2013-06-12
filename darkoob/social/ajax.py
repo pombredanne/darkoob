@@ -48,23 +48,27 @@ def follow_person(request, user_id):
 
 
 @dajaxice_register(method='POST')
-def submit_post(request, text):
-    post = None
+def submit_post(request, text, type):
     dajax = Dajax()
-    try:
+    post = None
+
+    if type == '0':
+        # post type
         post = Post.objects.create(user_id=request.user, text=text)
-    except:
-        print "nashod"
-        done = 'Fase'
-    else:
-        done = True
-    print "text is", text
-    t_rendered = render_to_string('post/post.html', {'post': post})
-    dajax.append('#id_new_post_position', 'innerHTML', t_rendered)
-    dajax.clear('#id_text', 'value')
+        t_rendered = render_to_string('post/post.html', {'post': post})
+        dajax.append('#id_new_post_position', 'innerHTML', t_rendered)
+        dajax.clear('#id_text', 'value')
+
+    if type == '1':
+        # qoute type
+        pass
+    if type == '2':
+        # deadline type 
+        pass
+
 
     return dajax.json()
-    #return simplejson.dumps({'done': done, 'post': post})
+    # return simplejson.dumps({'done': True, 'post': 'df'})
 
 @dajaxice_register(method='POST')
 def edit_sex(request,sex):
