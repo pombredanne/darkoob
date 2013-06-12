@@ -13,4 +13,6 @@ class SimpleTest(TestCase):
         """
         Tests that 1 + 1 always equals 2.
         """
+        from darkoob.social.models import Country
+        self.s = Country.objects.create(name="salam")
         self.assertEqual(1 + 1, 2)

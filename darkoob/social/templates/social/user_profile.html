@@ -6,7 +6,7 @@
 <link rel="stylesheet" type="text/less" href="{% static "/static/css/profile_base_style.less" %}">
 <link rel="stylesheet" type="text/less" href="{% static "/static/css/home_style.less" %}">
 {% endblock css %}
-{% block title %}Darkoob - {{ user.get_full_name }} page{% endblock title %}
+{% block title %}Darkoob - {{ person_object.get_full_name }} page{% endblock title %}
 
 {% load avatar_tags %}
 
@@ -15,34 +15,34 @@
   <div class="span12">
     <div class="media">
       <a class="pull-left" href="#">
-        {% avatar user 100 %}          
+        {% avatar person_object 100 %}          
       </a>
       <div class="media-body">
-        <h4 class="media-heading"><a href="{% url 'social:user_profile' username=user.username %}">{{user.first_name|capfirst}} {{user.last_name|capfirst}}</a></h4>
-        {{ user.userprofile.sex }}<br />
-        {{ user.userprofile.birthday }}<br />
-        {% if user.userprofile.city %}{{ user.userprofile.city|capfirst }}/{{user.userprofile.city.country|capfirst}}{% endif %}
+        <h4 class="media-heading"><a href="{% url 'social:user_profile' username=user.username %}">{{person_object.first_name|capfirst}} {{person_object.last_name|capfirst}}</a></h4>
+        {{ person_object.userprofile.sex }}<br />
+        {{ person_object.userprofile.birthday }}<br />
+        {% if person_object.userprofile.city %}{{ person_object.userprofile.city|capfirst }}/{{person_object.userprofile.city.country|capfirst}}{% endif %}
       </div>
 
     </div>
     <br/>
-    {%if user.userprofile.mobile %}
-    <b>Mobile</b> {{user.userprofile.mobile}}
+    {%if person_object.userprofile.mobile %}
+    <b>Mobile</b> {{person_object.userprofile.mobile}}
     {% endif%}
 
-    {% if user.userprofile.website %}
+    {% if person_object.userprofile.website %}
     <address>
-      <b>Webpage</b> <a href="{{user.userprofile.website}}">{{user.userprofile.website|truncatechars:35}}</a>
+      <b>Webpage</b> <a href="{{person_object.userprofile.website}}">{{person_object.userprofile.website|truncatechars:35}}</a>
     </address>
     {% endif%}
 
 
     {% if is_followers %}
-      {{user.first_name|capfirst}} follow you <br>
+      {{person_object.first_name|capfirst}} follow you <br>
     {% endif %}
 
     {% if is_following %}
-      <button class="btn btn-small btn-block disabled" disabled="disabled" onclick="Dajaxice.darkoob.social.follow_person(follow_person_callback, {'user_id': {{user.id}}})"><i class="icon-eye-open"></i> You Follow {{user.first_name|capfirst}}
+      <button class="btn btn-small btn-block disabled" disabled="disabled" onclick="Dajaxice.darkoob.social.follow_person(follow_person_callback, {'user_id': {{person_object.id}}})"><i class="icon-eye-open"></i> You Follow {{person_object.first_name|capfirst}}
       </button>
 
     {% else %}
@@ -51,16 +51,23 @@
           if(data.done){
             $.pnotify({
               title: 'Following',
-              text: 'You follow {{user.get_full_name}} ',
+              text: 'You follow {{person_object.get_full_name}} ',
               type: 'success',
               opacity: .8,
             });
             $('#follow_btn').attr('disabled', 'disabled');
             $('#follow_btn').attr('class', 'btn btn-small btn-block disabled');
+          }else{
+            $.pnotify({
+              title: 'Following',
+              text: 'An error occured, Try again',
+              type: 'error',
+              opacity: .8,
+            });
           }
         }
       </script>
-      <button id="follow_btn" class="btn btn-small btn-block" onclick="Dajaxice.darkoob.social.follow_person(follow_person_callback, {'user_id': {{user.id}}})"><i class="icon-eye-close"></i> Follow {{user.first_name|capfirst}}</button>
+      <button id="follow_btn" class="btn btn-small btn-block" onclick="Dajaxice.darkoob.social.follow_person(follow_person_callback, {'user_id': {{person_object.id}}})"><i class="icon-eye-close"></i> Follow {{person_object.first_name|capfirst}}</button>
     {% endif %}
     
   
@@ -69,18 +76,18 @@
     <ul class="nav nav-tabs nav-stacked">
         {% block followers_active %}
         <li>
-        <a href="{% url 'social:user_followers' username=user.username %}" ><i class="icon-eye-open"></i> Followers 
+        <a href="{% url 'social:user_followers' username=person_object.username %}" ><i class="icon-eye-open"></i> Followers
           <i class="icon-chevron-right" style="float:right"></i></a>
         </li>
         {% endblock followers_active%}
         {% block following_active %}
         <li>
-          <a href="{% url 'social:user_following' username=user.username %}"><i class="icon-heart"></i> Following <i class="icon-chevron-right" style="float:right"></i></a>
+          <a href="{% url 'social:user_following' username=person_object.username %}"><i class="icon-heart"></i> Following <i class="icon-chevron-right" style="float:right"></i></a>
         </li>
         {% endblock following_active%}
         {% block favorite_book_active %}
         <li>
-          <a href="{% url 'social:user_favorite_books' username=user.username %}"><i class="icon-star"></i> Favorite Books <i class="icon-chevron-right" style="float:right"></i></a>
+          <a href="{% url 'social:user_favorite_books' username=person_object.username %}"><i class="icon-star"></i> Favorite Books <i class="icon-chevron-right" style="float:right"></i></a>
         </li>
         {% endblock favorite_book_active %}
 
@@ -91,7 +98,7 @@
       <div class="row-fluid">
 
         <div class="sidebox-head">
-          <h4>{{user.first_name|capfirst }}'s Group</h4>
+          <h4>{{person_object.first_name|capfirst }}'s Group</h4>
         </div>
         <div class="span12 simple_box">
 
@@ -112,9 +119,9 @@
 
       <div class="quote">
         <blockquote>
-          <p>{{ user.userprofile.quote.text }}</p>
-          {% if user.userprofile.quote.author %}<small>{{ user.userprofile.quote.author }}</small>{% endif %}
-          {% if user.userprofile.quote.book %}<small>{{ user.userprofile.quote.book }}</small>{% endif %}
+          <p>{{ person_object.userprofile.quote.text }}</p>
+          {% if person_object.userprofile.quote.author %}<small>{{ person_object.userprofile.quote.author }}</small>{% endif %}
+          {% if person_object.userprofile.quote.book %}<small>{{ person_object.userprofile.quote.book }}</small>{% endif %}
         </blockquote>
       </div>
       {% block right_sidebox %}

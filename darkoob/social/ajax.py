@@ -6,9 +6,21 @@ from dajax.core import Dajax
 
 from darkoob.social.models import UserProfile, UserNode
 from django.contrib.auth.models import User
-from darkoob.book.models import Quote
+from darkoob.book.models import Quote, Book
 from darkoob.post.models import Post
 from avatar.templatetags import avatar_tags
+
+
+@dajaxice_register(method='POST')
+def star_book(request, book_id):
+    try:
+        book = Book.objects.get(id=book_id)
+        request.user.userprofile.favorite_books.add(book)
+    except:
+        done = False
+    else:
+        done = True
+    return simplejson.dumps({'done': done, 'book_id': book_id})
 
 @dajaxice_register(method='POST')
 def follow_person(request, user_id):
@@ -19,7 +31,7 @@ def follow_person(request, user_id):
         done = False
     else:
         done = True
-    return simplejson.dumps({'done': done})
+    return simplejson.dumps({'done': done, 'user_id': user_id})
     
 # @dajaxice_register(method='POST')
 # def follow_request(request, following_id):

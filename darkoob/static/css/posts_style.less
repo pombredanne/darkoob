@@ -1,18 +1,14 @@
 @import "common_style.less";
 
 .post-head {
-  margin-top: .5em;
+  margin-top: 1em;
 
-  .thumb {
+  .avatar {
+    .thumb;
     width: 3em;
     height: 3em;
-    padding: 2px 2px 2px 2px;
-    background-color: white;
-    border: 1px solid darken(@border, 10%);
-    .border-radius(3px);
     margin-left: 1em;
     display: inline;
-    float: left;
   }
   
   .post-head-box {
@@ -25,9 +21,9 @@
   }
 
   .username {
-    font-family: sans-serif;
+    font-family: "TitilliumText25L600wt", sans-serif;
     display: inline;
-    font-size: 1em;
+    font-size: 1.1em;
 
     a {
       color: @dark_grey;
@@ -39,15 +35,16 @@
   }
 
   .small-info {
+    font-family: "TitilliumText25L400wt", sans-serif;
     padding-left: .4em;
     margin-top: -.5em;
-    font-size: .8em;
+    font-size: .9em;
   }
 }
 
 .post_content {
   margin: 1.5em;
-  font-family: Courier;
+  font-family:"TitilliumText25L400wt", serif;
   font-size: .9em;
   word-wrap: break-word;
 }

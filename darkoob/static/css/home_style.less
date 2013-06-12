@@ -6,11 +6,12 @@
   text-align: left;
   margin-bottom: .5em;
   display: block;
-  font-size: .8em;
+  font-size: .9em;
 
   p, textarea, em, strong, small {
     margin-left: 1em;
     margin-top: 1em;
+    margin-right: 1em;
   }
 
   form {
@@ -19,14 +20,44 @@
 }
 
 .sidebox-head {
-  color: darken(@border, 50%);
-  //margin-left: .6em;
+  color: lighten(@dark_grey, 20%);
+  margin-left: .6em;
+  display: inline-block;
+  font-family: "QuicksandLight";//"TitilliumText25L1wt", sans-serif;//"LeagueGothicRegular";
+  font-size: 1.4em;
+  margin-top: .5em;
+  margin-bottom: .1em;
+  //letter-spacing: 2px;
+
+  //text-shadow: 0 0 2px @dark_grey;
+}
+
+.new-post-icon {
+  opacity: .2;
+  margin-bottom: .5em;
+  margin-left: .5em;
   display: block;
-  font-family: Verdana;
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.new-post-icon-active {
+  opacity: 1;
 }
 
 .quote {
   height: auto;
+  
+  p {
+    font-family: "JournalRegular";
+    font-size: 2.3em;
+    
+  }
 }
 
 .close {
@@ -37,17 +68,53 @@
   .simple_box;
 }
 
+.hopping {
+  em {
+    float: right;
+    margin-right: 1em;
+    margin-bottom: 1em;
+  }
+}
+
 .groups {
   ul {
     margin-left: 2.5em;
     margin-top: -.5em;
+    list-style-type: none;
+
+    i {
+      margin-top: -.1em;
+    }
+  }
+
+  em {
+    float: right;
+    margin-right: 1em;
+    margin-bottom: 1em;
+
+  }
+}
+
+#deadlines {
+  margin-top: 1em;
+  margin-bottom: 1em;
+
+  .accordion-group {
+    border-right: 0;
+    border-left: 0;
+  }
+
+  .progress {
+    width: 70%;
+    margin-top: 1em;
   }
 }
 
 .sidebox {
   .simple_box;
   font-size: 1em;
-  .box-shadow(@middle_grey);
+  margin-bottom: 1em;
+  .box-shadow(darken(@middle_grey, 2%), 1px 1px 0 1px);
 }
 
 .new_post_container {
@@ -90,8 +157,9 @@
   display: inline;
 
   .username {
-    font-family: sans-serif;
-    font-size: 1;
+    font-family: "TitilliumText25L600wt", sans-serif;
+    font-size: 1.1em;
+    margin-top: .1em;
     font-weight: bold;
 
     a:link, a:visited {
@@ -103,9 +171,9 @@
   }
 
   .small-info {
-    font-family: sans-serif;
-    font-size: .8em;
-    margin-top: -.5em;
+    font-family: "TitilliumText25L400wt", sans-serif;
+    font-size: .9em;
+    margin-top: -.6em;
   }
 }
 
@@ -118,10 +186,12 @@
 }
 
 .migrations-link {
-  margin-right: -8.8em;
+  margin-right: -8em;
   margin-top: -.8em;
   cursor: pointer;
   color: darken(@light_grey, 20%);
+  font-family: "QuicksandLight";
+  font-size: 1.5em;
 
   i {
     margin-top: .1em;

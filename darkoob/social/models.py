@@ -31,6 +31,11 @@ class UserNode(StructuredNode):
         user = self.index.get(user_id=user_id)
         return True if user in self.followers.all() else False
 
+    def get_following_list(self):
+        ''' return list of all user_id that followed by this user '''
+        return [user.user_id for user in self.following.all()]
+    
+
 class Country(models.Model):
     name = models.CharField(max_length=50)
 

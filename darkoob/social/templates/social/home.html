@@ -1,9 +1,13 @@
 {% extends "base/profile_base.html" %}
-{% load avatar_tags %}
 
+{% load avatar_tags %}
 {% load staticfiles %}
 {% load endless %}
 {% load thumbnail %}
+{% load kwacros %}
+
+{% loadkwacros "base/macros.html" %}
+
 {% block css %}
 {{ block.super }}
 <link rel="stylesheet" type="text/less" href="{% static "/static/css/home_style.less" %}">
@@ -40,50 +44,72 @@
         close_3();
       }
     </script>
-
         <ul class="nav nav-tabs nav-stacked" style="margin-left: .5em; margin-right: -.5em;">
+          {% block home_active %}
           <li class="active">
             <a href="#"><i class="icon-home"></i> Home</a>
           </li>
+          {% endblock home_active%}
+
+          {% block profile_active %}
           <li>
             <a href="{% url 'social:profile' %}"><i class="icon-user"></i> Profile<i class="icon-chevron-right" style="float:right"></i></a>
           </li>
+          {% endblock profile_active%}
+
+          {% block followers_active %}
           <li>
             <a href="{% url 'social:followers' %}"><i class="icon-eye-open"></i> Followers 
               <i class="icon-chevron-right" style="float:right"></i></a>
           </li>
+          {% endblock followers_active%}
+
+          {% block following_active %}
           <li>
             <a href="{% url 'social:following' %}"><i class="icon-heart"></i> Following <i class="icon-chevron-right" style="float:right"></i></a>
           </li>
+          {% endblock following_active%}
+
+          {% block favorite_books_active %}
           <li>
             <a href="{% url 'social:favorite_books' %}"><i class="icon-star"></i> Favorite Books <i class="icon-chevron-right" style="float:right"></i></a>
           </li>
+          {% endblock favorite_books_active %}
+
         </ul>
 
 
     <div class="row-fluid">
-      <h4 class="sidebox-head">Do you know...?</h4> 
+      <h4 class="sidebox-head">DO YOU KNOW. . .?</h4> 
       <div class="span12 simple_box">
 
 
         <!--# TODO : ISSUE #54-->
         <ul class="thumbnails span10 offset1">
-          <div class="row-fluid">
-            <li class="span3">
-              <a href="#" class="thumbnail">
-                {% avatar suggestion_list.0 %}
-              </a>
-            </li>
-            <div class="span9 suggestion-info">
-              <div class="username">
-                <a href="#">{{ suggestion_list.0.get_full_name }}</a>
+          {% for suggestion in suggestion_list %}
+            <div class="row-fluid">
+              <li class="span3">
+              {% usekwacro user_details user_=suggestion placement='top' %}
+                  <a href="#" class="thumbnail">
+                    {% avatar suggestion %}
+                  </a>
               </div>
-              <div class="small-info">
-                3 Mutual friends
+              </li>
+              <div class="span9 suggestion-info">
+                {% usekwacro user_details user_=suggestion placement='top' %}
+                  <div class="username">
+                    <a href="#">{{ suggestion.get_full_name }}</a>
+                  </div>
+                </div> <!-- user-details -->
+                <div class="small-info">
+                  2 Mutual friends
+                </div>
               </div>
             </div>
-          </div>
-          <div class="row-fluid">
+          {% empty %}
+            <p>Sorry, we have no information about you to suggest other users regarding them!</p>
+          {% endfor %}
+          {% comment %}<div class="row-fluid">
             <li class="span3">
               <a href="#" class="thumbnail">
                 {% avatar suggestion_list.1 %}
@@ -114,6 +140,7 @@
               </div>
             </div>
           </div>
+          {% endcomment %}
 
         </ul>
 
@@ -137,8 +164,8 @@
 
     <div class="row-fluid">
 
-      <h4 class="sidebox-head">Received a book?</h4>
-      <div class="span12 simple_box">
+      <h4 class="sidebox-head">RECEIVED A BOOK?</h4>
+      <div class="span12 simple_box hopping">
 
         <p>
           Did a book hop to you? Submit the private key here:
@@ -147,20 +174,20 @@
 
           <button id='check_primary_key' data-toggle="button" data-loading-text="loading stuff..." class="btn btn-primary" data-complete-text="finished!" onclick="Dajaxice.darkoob.migration.submit_key(submit_private_key_callback,{'private_key': $('#private_key').val() })">Submit</button>
         </form>
-        <em>or <a href="{% url 'migration:new_migration' %}">Start a new book migration</a></em>
+        <em><a href="{% url 'migration:new_migration' %}">Start a new book migration</a></em>
 <!--         <button class="btn btn-large btn-block btn-primary" type="button">Start New Migration</button> -->
 
         </p>
       </div> <!-- span10 -->
     </div> <!-- row -->
     <div class="row-fluid">
-      <h4 class="sidebox-head">Groups</h4>
+      <h4 class="sidebox-head">GROUPS</h4>
       <div class="span12 simple_box groups">
         <p>You own</p>
         <ul>
           {% for group in admin_groups %}
             <li>
-              <a href="{% url 'group:group_page' group_id=group.id group_name=group.name %}"><i class="icon-th"></i>{{ group.name }}</a>
+              <a href="{% url 'group:group_page' group_id=group.id group_name=group.name %}"><i class="icon-th"></i> {{ group.name }}</a>
             </li>
           {% endfor %}
         </ul>
@@ -168,41 +195,46 @@
         <ul>
           {% for group in groups %}
             <li>
-              <a href="{% url 'group:group_page' group_id=group.id group_name=group.name %}"><i class="icon-th"></i>   {{ group.name }}</a>
+              <a href="{% url 'group:group_page' group_id=group.id group_name=group.name %}"><i class="icon-th"></i> {{ group.name }}</a>
             </li>
           {% endfor %}
         </ul>
-        <br /><em>or <a href="{% url 'group:create_group' %}">create a new group.</a></em>
+        <em><a href="{% url 'group:create_group' %}">create a new group</a></em>
       </div> <!-- span12 -->
     </div> <!-- row -->
     <div class="row-fluid">
 
-      <h4 class="sidebox-head">Deadlines</h4>
-      <div class="span12 simple_box">
+      <h4 class="sidebox-head">DEADLINES</h4>
+      <div class="span12 simple_box deadlines">
         <div class="accordion" id="deadlines">
           {% for book in book_deadlines %}
           <div class="accordion-group">
             <div class="accordion-heading">
-              <a class="accordion-toggle" data-toggle="collapse" data-parent="#deadlines" href="#collapseDetail">
-                <i class="icon-book"></i>   {{ book.0 }}
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#deadlines" href="#deadline_details_{{ forloop.counter }}">
+                <i class="icon-book"></i> {{ book.0 }}
               </a>
             </div>
-            <div id="collapseDetail" class="accordion-body collapse">
+            <div id="deadline_details_{{ forloop.counter }}" class="accordion-body collapse">
               <div class="accordion-inner">
-                <ul>
-                {% for deadline in book.1 %}
-                <li style="display:block">
-                <div class="progress 
-                    {% if deadline.time_percentage > 90 %} progress-danger
-                    {% else %}{% if deadline.time_percentage > 60 %} progress-warning 
-                    {% else %} progress-success
-                    {% endif %} {% endif %}"
-                    style="width: 88%;">
+                <ul style="margin-left: -1em;">
+                  {% for deadline in book.1 %}
+                    <li style="display: block">
+                      <div class="row-fluid">
+                        <div class="span4 offset1">
+                          <p style="float: left; display: inline-block; position: relative;">{{ deadline.from_page }} to {{ deadline.to_page }}</p>
+                        </div>
+                        <div class="span7">
+                          <div class="progress 
+                            {% if deadline.time_percentage > 90 %}progress-danger
+                            {% elif deadline.time_percentage > 60 %}progress-warning
+                            {% else %}progress-success{% endif %}">
 
-                  <div class="bar" style="width: {% if deadline.time_percentage < 3 %} 3{% else %}{{ deadline.time_percentage }}{%endif%}%"></div>
-                </div>
-                </li>
-                {% endfor %}
+                            <div class="bar" style="width: {% if deadline.time_percentage < 3 %} 3{% else %}{{ deadline.time_percentage }}{%endif%}%"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                  {% endfor %}
                 </ul>
               </div>
             </div>
@@ -240,10 +272,15 @@
       </div> <!-- span12 -->
     </div> <!-- row -->
     <div class="row-fluid">
-      <div class="span12">
+      <div class="span1">
+        <img class="new-post-icon new-post-icon-active" src="{% static "/static/img/Pen-black-32.png" %}" alt="Text"/>
+        <img class="new-post-icon" src="{% static "/static/img/Quote-black-32.png" %}" alt="Quote"/>
+        <img class="new-post-icon" src="{% static "/static/img/Cronometer-black-32.png" %}" alt="Deadline"/>
+      </div>
+      <div class="span11">
         <div class="sidebox">
           <div class="row-fluid">
-            <div class="span7 new_post_container">
+            <div class="span9 new_post_container">
               <form method="post" action="{% url "social:new_post" %}">
                 {% csrf_token %}
                 {{ new_post_form.text }}

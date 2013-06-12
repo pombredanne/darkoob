@@ -1,0 +1,18 @@
+{% extends "social/user_profile.html" %}
+{% load staticfiles %}
+{% block favorite_book_active %}
+<li class="active">
+  <a ><i class="icon-star"></i> Favorite Books</a>
+</li>
+{% endblock favorite_book_active %}
+
+{% block right_sidebox %}
+<div class="sidebox post">
+  <p>
+    <b>{{ person_object.first_name|capfirst }}'s Favorite Books</b>
+    {% include 'social/favorite_books_page.html' %}
+  </p>
+  <script type="text/javascript" src="{% static "js/star_callback.js" %}"></script>
+
+</div>
+{% endblock right_sidebox %}

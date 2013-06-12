@@ -1,4 +1,4 @@
-{% extends "base/profile_base.html" %}
+{% extends "social/home.html" %}
 {% load staticfiles %}
 {% block css %}
 {{ block.super }}
@@ -9,11 +9,21 @@
 <link rel="stylesheet" href="{% static "css/sticky.css" %}" type="text/css" />
 
 
-  <script src="{% static "js/jquery.min.js" %}" type="text/javascript" charset="utf-8" ></script>
-  <script src="{% static "js/endless.js" %}" type="text/javascript" charset="utf-8" ></script>
-  <script src="{% static "js/endless_on_scroll.js" %}" type="text/javascript" charset="utf-8" ></script>
+<script src="{% static "js/jquery.min.js" %}" type="text/javascript" charset="utf-8" ></script>
+<script src="{% static "js/endless.js" %}" type="text/javascript" charset="utf-8" ></script>
+<script src="{% static "js/endless_on_scroll.js" %}" type="text/javascript" charset="utf-8" ></script>
 {% endblock js %}
-
+{% block home_active %}
+<li >
+  <a href="{% url 'social:home' %}"><i class="icon-home"></i> Home<i class="icon-chevron-right" style="float:right"></i></a>
+</li>
+{% endblock home_active%}
+{% block followers_active %}
+<li class="active">
+  <a href="#"><i class="icon-eye-open"></i> Followers 
+    </a>
+</li>
+{% endblock followers_active%}
 {% block main %}
 <div class="row-fluid">
   <div class="span12">
@@ -22,6 +32,8 @@
         <div class="sidebox post">
           <h4> Followers </h4>
           {% include 'social/person_bar_page.html' %}
+          <script type="text/javascript" src="{% static "js/follow_callback.js" %}"></script>
+
         </div> <!-- post -->
       </div> <!-- span12 -->
     </div> <!-- row -->
