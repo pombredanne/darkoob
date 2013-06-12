@@ -1,0 +1,7 @@
+{% load endless %}
+
+{% paginate other_entries using other_entries_page %}
+{% for entry in other_entries %}
+    {{entry}}
+{% endfor %}
+{% show_pages %}

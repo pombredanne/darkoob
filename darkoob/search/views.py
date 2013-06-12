@@ -5,7 +5,11 @@ from django.contrib.auth.models import User
 
 import re
 
+def entry_index1( request ):
+    return render_to_response('entry_index1.html', {}, context_instance = RequestContext(request))
 
+def entry_index( request ):
+    return render_to_response('entry_index.html', {}, context_instance = RequestContext(request))
 
 def search_user( request ):
     return render_to_response('search_user.html', {}, context_instance = RequestContext(request))

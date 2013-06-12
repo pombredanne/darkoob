@@ -197,6 +197,7 @@ INSTALLED_APPS = (
     'darkoob.migration', 
     'postman',
     'sorl.thumbnail',
+    'easy_pjax',
 )
 
 
