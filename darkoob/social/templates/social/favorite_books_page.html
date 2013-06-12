@@ -18,8 +18,6 @@
             <b><a href="">{{ book.title|capfirst }}</a></b><br />
 
             <small>Authors:</small>
-
-
             {% if book in request_user_favorite_books_list %}
             <button class="btn btn-success btn-primary disabled" disabled="disabled" href="#" style="float:right"><i class="icon-star"></i></button>
             {% else %}

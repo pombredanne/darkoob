@@ -278,7 +278,6 @@ def user_favorite_books(request, username):
         template = 'social/favorite_books_page.html'
 
     request_user_favorite_books_list = request.user.userprofile.favorite_books.all()
-    print "dididididd", request_user_favorite_books_list
 
     return render(request, template, {
         'person_object': user,
@@ -297,9 +296,12 @@ def favorite_books(request):
     if request.is_ajax():
         template = 'social/favorite_books_page.html'
 
+    request_user_favorite_books_list = request.user.userprofile.favorite_books.all()
+    
     return render(request, template, {
         'person_object': request.user,
         'favorite_books': favorite_books,
+        'request_user_favorite_books_list': request_user_favorite_books_list,
         'count': count[::-1],
     })
 
