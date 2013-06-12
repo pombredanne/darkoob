@@ -12,20 +12,25 @@
 {% block sidebar %}
 <div class="row-fluid">
   <div class="span12">
-    <div class="row-fluid">
-      <h4 class="sidebox-head">DETAILS</h4>
-      <div class="span10 sidebox">
-      </div> <!-- span10 -->
-    </div> <!-- row -->
+    <ul class="nav nav-tabs nav-stacked left-nav">
+      <li>
+        <a href="{% url 'group:members' %}"><i class="icon-user"></i> Members<i class="icon-chevron-right" style="float:right"></i></a>
+      </li>
+
+      <li>
+        <a href="{% url 'group:schedules' %}"><i class="icon-tasks"></i> Schedules
+          <i class="icon-chevron-right" style="float:right"></i></a>
+      </li>
+    </ul>
     <div class="row-fluid">
       <h4 class="sidebox-head">SCHEDULES</h4>
-      <div class="span10 sidebox">
+      <div class="span12 sidebox">
         
       </div> <!-- span10 -->
     </div> <!-- row -->
      <div class="row-fluid">
       <h4 class="sidebox-head">Members</h4>
-      <div class="span10 sidebox">
+      <div class="span12 sidebox">
           <ul>
             <li><a>{{ group.admin }}</a></li>
             {% for member in group.members.all %}
@@ -65,8 +70,53 @@
 
     <div class="row-fluid">
       <div class="span12">
-        <div class="simple-box">
-        </div>
+        <div class="details group-details">
+          <div class="row-fluid">
+            <div class="span2">
+              <div class="thumb">
+              </div>
+            </div>
+            <div class="span4">
+              {{ group.name }}
+            </div>
+          </div> <!-- row -->
+          <div class="row-fluid">
+            <div class="span6 offset 3">
+              <div class="info-block">has {{ group.members|length }} members</div>
+              <div class="info-block">{{ group.schedules|length }} schedules</div>
+              <div class="info-block">{{ group.deadlines|length }} deadlines</div>
+            </div>
+          </div>
+        </div> <!-- details -->
+      </div> <!-- span12 -->
+    </div> <!-- row -->
+
+    <div class="row-fluid">
+      <div class="span1">
+        <img class="new-post-icon new-post-icon-active" src="{% static "/static/img/Pen-black-32.png" %}" alt="Text"/>
+        <img class="new-post-icon" src="{% static "/static/img/Quote-black-32.png" %}" alt="Quote"/>
+        <img class="new-post-icon" src="{% static "/static/img/Cronometer-black-32.png" %}" alt="Deadline"/>
+      </div>
+      <div class="span11">
+        <div class="sidebox">
+          <div class="row-fluid">
+            <div class="span9 new_post_container">
+              <form method="post" action="{% url "social:new_post" %}">
+                {% csrf_token %}
+                {{ new_post_form.text }}
+              </form>
+            </div>
+            <div class="span1 new_post_button">
+              <button class="btn btn-inverse" onclick="Dajaxice.darkoob.social.submit_post(Dajax.process, {'text': $('#id_text').val()})">Post</button>
+            </div>
+          </div> <!-- row -->
+        </div> <!-- sidebox -->
+      </div> <!-- span11 -->
+    </div> <!-- row -->
+
+    <div class="row-fluid">
+      <div class="span12">
+        {% comment %}{% include "post/posts.html" %}{% endcomment %}
       </div> <!-- span12 -->
     </div> <!-- row -->
   </div> <!-- span -->

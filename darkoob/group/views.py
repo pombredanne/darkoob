@@ -42,3 +42,10 @@ def create_group(request):
     return render(request, 'group/create_group.html', {'form': form })
 
 
+@login_required
+def members(request):
+    pass
+
+@login_required
+def schedules(request):
+    pass
