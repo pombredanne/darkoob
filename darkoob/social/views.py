@@ -153,14 +153,7 @@ def home(request):
     # Todo: Change this part
     suggestion_list = list(User.objects.order_by('?')[0:4])    # TODO : ISSUE #54
 
-
-    #
-    from darkoob.book.models import Author
-    try:
-        quote = Quote.objects.order_by('?')[0]
-    except:
-        author= Author.objects.create(name='vahid')
-        quote = Quote.objects.create(author=author, text="... to sath abstractioneton")
+    quote = Quote.get_random_quote()
 
     return render(request, template, {
         'new_post_form': NewPostForm(),
