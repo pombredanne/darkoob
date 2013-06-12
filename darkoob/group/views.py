@@ -5,13 +5,19 @@ from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from darkoob.group.forms import GroupForm
 from darkoob.group.models import Group
+from darkoob.book.models import Quote
 
 def group(request, group_id, group_name):
     group = Group.objects.get(id=group_id, name=group_name)
+    quote = Quote.get_random_quote()
+
     if group:
         group.admins = group.admin.admin_set.all()
         #group.members = group.members.all()
-        return render(request, "group/group_page.html" ,{'group': group})
+        return render(request, "group/group_page.html", {
+            'group': group,
+            'quote': quote
+        })
     else:
         return HttpResponse("Group Is not exist!")
 
@@ -24,8 +30,11 @@ def create_group(request):
             group = Group(name=cd['name'], admin=request.user)
             group.save()
             for member in cd['members'].strip(',').split(','):
-                user = User.objects.get(username=member)
-                group.members.add(user)
+                try:
+                    user = User.objects.get(username=member)
+                    group.members.add(user)
+                except:
+                    pass
             group.save()
             
     else:
@@ -33,3 +42,10 @@ def create_group(request):
     return render(request, 'group/create_group.html', {'form': form })
 
 
+@login_required
+def members(request):
+    pass
+
+@login_required
+def schedules(request):
+    pass

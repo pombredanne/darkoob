@@ -1,0 +1,1 @@
+<b>{{ object.name }}</b> wrote {{ object.book_set.count }} book(s)

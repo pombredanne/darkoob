@@ -44,7 +44,7 @@
         close_3();
       }
     </script>
-        <ul class="nav nav-tabs nav-stacked" style="margin-left: .5em; margin-right: -.5em;">
+        <ul class="nav nav-tabs nav-stacked left-nav">
           {% block home_active %}
           <li class="active">
             <a href="#"><i class="icon-home"></i> Home</a>
@@ -181,28 +181,9 @@
         </p>
       </div> <!-- span10 -->
     </div> <!-- row -->
-    <div class="row-fluid">
-      <h4 class="sidebox-head">GROUPS</h4>
-      <div class="span12 simple_box groups">
-        <p>You own</p>
-        <ul>
-          {% for group in admin_groups %}
-            <li>
-              <a href="{% url 'group:group_page' group_id=group.id group_name=group.name %}"><i class="icon-th"></i> {{ group.name }}</a>
-            </li>
-          {% endfor %}
-        </ul>
-        <p>You are a member of</p>
-        <ul>
-          {% for group in groups %}
-            <li>
-              <a href="{% url 'group:group_page' group_id=group.id group_name=group.name %}"><i class="icon-th"></i> {{ group.name }}</a>
-            </li>
-          {% endfor %}
-        </ul>
-        <em><a href="{% url 'group:create_group' %}">create a new group</a></em>
-      </div> <!-- span12 -->
-    </div> <!-- row -->
+
+    {% include "base/group_box.html" with admin_groups=admin_groups groups=groups first_name='' %}
+
     <div class="row-fluid">
 
       <h4 class="sidebox-head">DEADLINES</h4>
@@ -253,7 +234,7 @@
   <div class="span11 offset1">
     <div class="row-fluid">
       <div class="span12">
-        <div class="quote">
+        <div class="top-quote">
           <blockquote>
             <p>{{ quote.text }}</p><!-- Those who mind don't matter, and those who matter don't mind. -->
             {% if quote.author %}
@@ -269,7 +250,7 @@
               </i>
             </a>
           </blockquote>
-        </div> <!-- quote -->
+        </div> <!-- top-quote -->
       </div> <!-- span12 -->
     </div> <!-- row -->
     <div class="row-fluid">

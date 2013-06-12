@@ -70,5 +70,20 @@ class Quote(models.Model):
     book = models.ForeignKey(Book, null=True, blank=True)
     text = models.TextField()
 
+    @classmethod
+    def get_random_quote(cls):
+        try:
+            quote = cls.objects.order_by('?')[0]
+        except:
+            author= Author.objects.create(name='Albert Einstein')
+            quote = Quote.objects.create(
+                author=author,
+                text="Two things are infinite: the universe and human stupidity\
+                ; and I'm not sure about the universe."
+            )
+
+        return quote
+
     def __unicode__(self):
         return unicode(self.text)
+

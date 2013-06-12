@@ -153,14 +153,7 @@ def home(request):
     # Todo: Change this part
     suggestion_list = list(User.objects.order_by('?')[0:4])    # TODO : ISSUE #54
 
-
-    #
-    from darkoob.book.models import Author
-    try:
-        quote = Quote.objects.order_by('?')[0]
-    except:
-        author= Author.objects.create(name='vahid')
-        quote = Quote.objects.create(author=author, text="... to sath abstractioneton")
+    quote = Quote.get_random_quote()
 
     return render(request, template, {
         'new_post_form': NewPostForm(),
@@ -227,6 +220,8 @@ def user_profile(request, username):
 
     try:
         user = User.objects.get(username=username)
+        groups = user.group_set.all()
+        admin_groups = user.admin_set.all()
     except:
         pass
         #raise 404
@@ -246,12 +241,13 @@ def user_profile(request, username):
 
     posts = Post.objects.filter(user=user).order_by("-submitted_time")
     count = range(1, len(posts) + 1)
-    
     return render(request, template,
         {
             'person_object': user,
             'is_following': is_following,
             'is_followers': is_followers,
+            'groups': groups,
+            'admin_groups':admin_groups,
             'posts': posts,
             'count': count,
             'favorite_books': favorite_books,

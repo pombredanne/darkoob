@@ -95,15 +95,7 @@
 
 
 
-      <div class="row-fluid">
-
-        <div class="sidebox-head">
-          <h4>{{person_object.first_name|capfirst }}'s Group</h4>
-        </div>
-        <div class="span12 simple_box">
-
-        </div> <!-- span10 -->
-      </div> <!-- row -->
+      {% include "base/group_box.html" with admin_groups=admin_groups groups=groups first_name=person_object.first_name %}
 
 
 

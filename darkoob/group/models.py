@@ -6,6 +6,7 @@ from django.utils import timezone
 
 class Group(models.Model):
     name = models.CharField(max_length=255)
+    comment = models.TextField(help_text=u'Description of Group')
     admin = models.ForeignKey(User, related_name='admin_set')
     members = models.ManyToManyField(User, related_name='group_set', null=True)
     created_time = models.DateTimeField(default=timezone.now())
