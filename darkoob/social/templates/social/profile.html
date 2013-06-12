@@ -44,7 +44,6 @@ $(function() {
 function edit_sex_callback(data){
   // alert(data.done)
   if (data.done){
-    $.sticky('<B> your gender changed</b>');
     $('#sex_field').slideUp('normal');
     $('#sex_box').slideDown('normal');
     document.getElementById("sex_text").innerHTML = data.sex;	
@@ -201,10 +200,6 @@ function edit_website_callback(data){
             </form>
           </span>
           {%endif%}
-
-
-
-
 
 <!--           <h4> Educations </h4>
           {% for education in user.userprofile.education_set.all %}
