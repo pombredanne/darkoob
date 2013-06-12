@@ -18,7 +18,9 @@
         {% avatar person_object 100 %}          
       </a>
       <div class="media-body">
-        <h4 class="media-heading"><a href="{% url 'social:user_profile' username=user.username %}">{{person_object.first_name|capfirst}} {{person_object.last_name|capfirst}}</a></h4>
+        <h4 class="media-heading"><a href="{% url 'social:user_profile' username=user.username %}">
+        It is {% now "c" %} 
+        {{person_object.first_name|capfirst}} {{person_object.last_name|capfirst}}</a></h4>
         {{ person_object.userprofile.sex }}<br />
         {{ person_object.userprofile.birthday }}<br />
         {% if person_object.userprofile.city %}{{ person_object.userprofile.city|capfirst }}/{{person_object.userprofile.city.country|capfirst}}{% endif %}
@@ -38,7 +40,9 @@
 
 
     {% if is_followers %}
-      {{person_object.first_name|capfirst}} follow you <br>
+      <br />
+      <i class="icon-eye-open"></i>
+      {{person_object.first_name|capfirst}} follow you <br/>
     {% endif %}
 
     {% if is_following %}

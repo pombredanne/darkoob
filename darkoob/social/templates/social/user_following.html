@@ -1,4 +1,4 @@
-{% extends "social/user_profile.html" %}
+{% extends "social/user_profile.html"|pjax:request %}
 {% load staticfiles %}
 
 {% block following_active %}
