@@ -1,7 +1,8 @@
 <div class="row-fluid">
   <h4 class="sidebox-head">GROUPS</h4>
   <div class="span12 simple_box groups">
-    <p>You own</p>
+    {% if not admin_groups|length == 0 %}
+    <p>{% if first_name != '' %}{{ first_name }}{% else %}You{% endif %} own</p>
     <ul>
       {% for group in admin_groups %}
       <li>
@@ -9,7 +10,9 @@
       </li>
       {% endfor %}
     </ul>
-    <p>You are a member of</p>
+    {% endif %}
+    {% if not groups|length == 0 %}
+    <p>{% if first_name != '' %}{{ first_name }} is {% else %} You are {% endif %} a member of</p>
     <ul>
       {% for group in groups %}
       <li>
@@ -17,6 +20,7 @@
       </li>
       {% endfor %}
     </ul>
+    {% endif %}
     <em><a href="{% url 'group:create_group' %}">create a new group</a></em>
   </div> <!-- span12 -->
 </div> <!-- row -->

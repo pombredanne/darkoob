@@ -227,8 +227,8 @@ def user_profile(request, username):
 
     try:
         user = User.objects.get(username=username)
-        groups = request.user.group_set.all()
-        admin_groups = request.user.admin_set.all()
+        groups = user.group_set.all()
+        admin_groups = user.admin_set.all()
     except:
         pass
         #raise 404
@@ -248,7 +248,6 @@ def user_profile(request, username):
 
     posts = Post.objects.filter(user=user).order_by("-submitted_time")
     count = range(1, len(posts) + 1)
-    
     return render(request, template,
         {
             'person_object': user,
