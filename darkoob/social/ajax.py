@@ -6,6 +6,7 @@ from dajax.core import Dajax
 
 from darkoob.social.models import UserProfile, UserNode
 from django.contrib.auth.models import User
+from darkoob.social.models import UserProfile
 from darkoob.book.models import Quote, Book
 from darkoob.post.models import Post
 from avatar.templatetags import avatar_tags
@@ -45,7 +46,18 @@ def follow_person(request, user_id):
 #         done = False
 #     return simplejson.dumps({'done':done})
 
-
+@dajaxice_register(method='POST')
+def get_quote(request):
+    dajax = Dajax()
+    quote = Quote.get_random_quote()
+    detail = quote.author.name 
+    if quote.book:
+        detail += ' (' + quote.book.title + ')'
+    dajax.assign('#quote_text', 'innerHTML', quote.text)
+    dajax.assign('#quote_detail', 'innerHTML', detail)
+    dajax.script("$('#random_quote').attr('quote_id','%d')"%quote.id)
+ 
+    return dajax.json()
 
 @dajaxice_register(method='POST')
 def submit_post(request, text, type):
@@ -88,10 +100,10 @@ def set_my_quote(request, quote_id):
     errors = []
     done = False
     message = ''
+    print "0000000000000000000000---",quote_id
     try:
-        quote = Quote.objects.get(id=quote_id)
-        request.user.userprofile.quote = quote
-        request.user.userprofile.save()
+        quote = Quote.objects.get(id=int(quote_id))
+        UserProfile.objects.filter(user=request.user).update(quote=quote)
     except:
         errors.append(_('an error occoured in saving to database'))
     else:

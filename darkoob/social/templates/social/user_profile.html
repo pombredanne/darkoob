@@ -19,10 +19,11 @@
       </a>
       <div class="media-body">
         <h4 class="media-heading"><a href="{% url 'social:user_profile' username=user.username %}">
-        It is {% now "c" %} 
         {{person_object.first_name|capfirst}} {{person_object.last_name|capfirst}}</a></h4>
         {{ person_object.userprofile.sex }}<br />
         {{ person_object.userprofile.birthday }}<br />
+        It is {% now "c" %} 
+
         {% if person_object.userprofile.city %}{{ person_object.userprofile.city|capfirst }}/{{person_object.userprofile.city.country|capfirst}}{% endif %}
       </div>
 

@@ -1,3 +1,6 @@
+function change_fuck(){
+  alert("fuck")
+}
 function change_post_type(type){
   $('.new-post-icon').each(function(index,value){
     if (index==type){

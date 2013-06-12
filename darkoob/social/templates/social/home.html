@@ -235,17 +235,17 @@
     <div class="row-fluid">
       <div class="span12">
         <div class="top-quote">
-          <blockquote>
-            <p>{{ quote.text }}</p><!-- Those who mind don't matter, and those who matter don't mind. -->
-            {% if quote.author %}
-              <small>
+          <a onclick="Dajaxice.darkoob.social.get_quote(Dajax.process,{})"> next </a>
+          <blockquote id="random_quote" quote_id="{{ quote.id }}">
+
+            <p id="quote_text">{{ quote.text }}</p>
+              <small id="quote_detail">
                 {{ quote.author }}{% if quote.book %} ({{ quote.book }}){% endif %}
               </small>
-            {% endif %}<!-- Bernard M. Baruch -->
             
             <a href="#"
               onclick="javascript:Dajaxice.darkoob.social.set_my_quote(
-              set_my_quote_callback, {'quote_id': {{ quote.id }} })">
+              set_my_quote_callback, {'quote_id': $('#random_quote').attr('quote_id') })">
               <i data-toggle="tooltip" id="set_quote" class="icon-ok pull-right">
               </i>
             </a>
