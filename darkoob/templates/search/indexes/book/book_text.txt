@@ -1,1 +1,5 @@
 {{ object.title }}
+{{ object.tag }}
+{{ object.tag }}
+{{ object.tag }}
+{{ object.language }}
