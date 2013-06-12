@@ -62,6 +62,7 @@ def test():
 @login_required
 def profile(request):
     form = EditProfileForm(request.POST)
+    # test()
     return render_to_response('social/profile.html',{'user': request.user, 'form': form})
 
 def signup(request):
