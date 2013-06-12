@@ -4,3 +4,9 @@
 dardb
 darkoob/media/
 avatars/
+CACHE/
+TODO.save
+django.contrib.auth.html
+django.contrib.html
+django.html
+.shell_history
