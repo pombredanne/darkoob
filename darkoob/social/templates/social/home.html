@@ -171,8 +171,9 @@
           Did a book hop to you? Submit the private key here:
         <form class="form-inline" onsubmit="return false;">
           <input type="text" class="input-medium" placeholder="Private Key" autocomplete="off" data-toggle="tooltip" id='id_private_key' > 
+      
 
-          <button id='check_primary_key' data-toggle="button" data-loading-text="loading stuff..." class="btn btn-primary" data-complete-text="finished!" onclick="Dajaxice.darkoob.migration.submit_key(submit_private_key_callback,{'private_key': $('#private_key').val() })">Submit</button>
+          <button id='check_primary_key' data-toggle="button" data-loading-text="loading stuff..." class="btn btn-primary" data-complete-text="finished!" onclick="Dajaxice.darkoob.migration.submit_key(submit_private_key_callback,{'private_key': $('#id_private_key').val() })">Submit</button>
         </form>
         <em><a href="{% url 'migration:new_migration' %}">Start a new book migration</a></em>
 <!--         <button class="btn btn-large btn-block btn-primary" type="button">Start New Migration</button> -->
@@ -359,15 +360,5 @@
 
 {% block bottom_js %}
 {{ block.super }}
-<script>
-  $("#set_quote").tooltip({
-    title: "Set as favorite",
-    placement: "right",
-  });
-  $('.noks').tooltip({
-    title: 'Nok',
-    placement: 'right',
-  });
-</script>
 <script type="text/javascript" src="{% static "/static/js/home.js" %}"></script>
 {% endblock bottom_js %}

@@ -109,102 +109,111 @@ function edit_website_callback(data){
     <div class="row-fluid">
       <div class="span12">
         <div class="sidebox post">
-          <b>{{ user.get_full_name}} Profile</b> 
           <br />
+          <div class="media">
+            <a class="pull-left" href="#">
+            {% avatar user 80 %}
 
-          <br />
-          <br />
-
-          {% avatar user 120 %}
-          <a href="{% url 'avatar_change' %}">Change your avatar</a>
-          <div class="input-append">
-            <input class="span5" id="appendedInputButton" type="text">
-            <button class="btn" type="button">Go!</button>
-          </div>
-          <br />
-
-
-          <div id="sex_box">
-            <vahid id="sex_text">{{ user.userprofile.sex }}</vahid> <a id="edit_sex"  alt="Edit"><img alt="Edit" src="{%static "img/Edit.ico" %}" class="ico-edit"/></a>
+            </a>
+            <div class="media-body">
+              <h4 class="media-heading">{{ user.get_full_name }}</h4>
+              <a href="{% url 'avatar_change' %}">Change your avatar</a>    
+            </div>
           </div>
 
-          <div id='sex_field'>
+
+          <h4> Basic Information </h4>
+
+
+          <b>Gender: </b>
+          <span id="sex_box">
+            <vahid id="sex_text">{{ user.userprofile.sex }}</vahid> <a id="edit_sex"  alt="Edit"><i class="icon-edit"></i></a>
+          </span>
+
+          <span id='sex_field'>
+            <form class="form-inline">
             {{ form.sex }} <button class="btn" type="button" onmousedown="Dajaxice.darkoob.social.edit_sex(edit_sex_callback,{'sex':$('#id_sex').val()})">change</button>
-          </div>
+          </form>
+          </span>
+          <br/>
 
-
-          <br />
-          <br />
-
-
-          <div id="birthday_box">
-            <vahid id='birthday_text'>{{ user.userprofile.birthday}}</vahid><a id="edit_birthday" alt="Edit"><img alt="Edit" src="{%static "img/Edit.ico" %}" class="ico-edit"/></a>
-          </div>
-          <div id='birthday_field'>
+          <b>Birthday: </b>
+          <span id="birthday_box">
+            <vahid id='birthday_text'>{{ user.userprofile.birthday}}</vahid><a id="edit_birthday" alt="Edit"><i class="icon-edit"></i></a>
+          </span>
+          <span id='birthday_field'>
             <br />
+            <form class="form-inline">
             {{ form.year }}	{{ form.month}}{{ form.day}}	
             <button class="btn" type="button" onmousedown="Dajaxice.darkoob.social.edit_birthday(edit_birthday_callback,{'day':$('#id_day').val(),'year':$('#id_year').val(),'month':$('#id_month').val()} )">change</button>
+            </form>
             <br />
-          </div>
+          </span>
 
 
 
           <h4> Contact Information </h4>
-
+          <b>Mobile: </b>
           {% if user.userprofile.mobile%}
 
-          <div id="mobile_box">
-            <vahid id='mobile_text'>{{ user.userprofile.mobile }}</vahid><a id="edit_mobile" alt="Edit"><img alt="Edit" src="{%static "img/Edit.ico" %}" class="ico-edit"/></a>
-          </div>
-          <div id="mobile_field">
+          <span id="mobile_box">
+            <vahid id='mobile_text'>{{ user.userprofile.mobile }}</vahid><a id="edit_mobile" alt="Edit"><i class="icon-edit"></i></a>
+          </span>
+          <span id="mobile_field">
+            <form class="form-inline">
             {{form.mobile}}
 
             <button class="btn" type="button" onmousedown="Dajaxice.darkoob.social.edit_mobile(edit_mobile_callback,{'mobile':$('#id_mobile').val()} )">change</button>
-
-          </div>
+            </form>
+          </span>
 
 
           {%else%}
-          <div id='mobile_text'>
+          <span id='mobile_text'>
             {{form.mobile}} <!-- // #TODO: Re edit is not work -->
             <button class="btn" type="button" onmousedown="Dajaxice.darkoob.social.edit_mobile(edit_mobile_callback,{'mobile':$('#id_mobile').val()} )">change</button>
-          </div>
+          </span>
           {%endif%}
 
 
+          <br />
 
+          <b>Website: </b>
           {% if user.userprofile.website%}
 
-          <div id="website_box">
-            <vahid id='website_text'>{{ user.userprofile.website }}</vahid><a id="edit_website" alt="Edit"><img alt="Edit" src="{%static "img/Edit.ico" %}" class="ico-edit"/></a>
-          </div>
-          <div id="website_field">
+          <span id="website_box">
+            <vahid id='website_text'>{{ user.userprofile.website }} </vahid> <a id="edit_website" alt="Edit"><i class="icon-edit"></i> </a>
+          </span>
+          <span id="website_field">
+            <form class="form-inline">
             {{form.website}}
 
             <button class="btn" type="button" onmousedown="Dajaxice.darkoob.social.edit_website(edit_website_callback,{'website':$('#id_website').val()} )">change</button>
-
-          </div>
+            </form>
+          </span>
 
 
           {%else%}
-          <div id='website_text'>
-            {{form.website}} <!-- // #TODO: Re edit is not work -->
-            <button class="btn" type="button" onmousedown="Dajaxice.darkoob.social.edit_website(edit_website_callback,{'website':$('#id_website').val()} )">change</button>
-          </div>
+          <span id='website_text'>
+            <form class="form-inline">
+              {{form.website}} <!-- // #TODO: Re edit is not work -->
+              <button class="btn" type="button" onmousedown="Dajaxice.darkoob.social.edit_website(edit_website_callback,{'website':$('#id_website').val()} )">change</button>
+            </form>
+          </span>
           {%endif%}
 
 
 
 
 
-          <h4> Educations </h4>
+<!--           <h4> Educations </h4>
           {% for education in user.userprofile.education_set.all %}
 
           {{ education.school.name }}
         </br>
         {%endfor%}
         <h4> Location </h4>
-        {{ user.userprofile.city }}, {{ user.userprofile.city.country }}
+        {{ user.userprofile.city }}, {{ user.userprofile.city.country }} -->
 
       </div> <!-- post -->
     </div> <!-- span12 -->

@@ -11,8 +11,8 @@ $(document).ready(function() {
   });
 
   $('#id_private_key').tooltip({
-    title: 'Private key is composed of 10 digits, and is written in the book you received.',
-    placement: 'left',
+    title: 'Private key is composed of 10 digits and characters, and is written in the book you received.',
+    placement: 'bottom',
     trigger: 'focus',
   });
 });
@@ -21,6 +21,16 @@ $(".deadline").children('a').bind("click", function () {
   span = $(this).parent().children('span');
   span.slideToggle(5000);
   //span.slideToggle('slow');
+});
+
+
+$("#set_quote").tooltip({
+  title: "Set as favorite",
+  placement: "right",
+});
+$('.noks').tooltip({
+  title: 'Nok',
+  placement: 'right',
 });
 
 function set_my_quote_callback(data){
