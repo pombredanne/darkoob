@@ -1,46 +1,66 @@
 {% load avatar_tags %}
 {% load staticfiles %}
 
-<div class="row-fluid" id="id_post_id_{{ post.id }}">
+{% load kwacros %}
+{% loadkwacros "base/macros.html" %}
+
+<div class="row-fluid" id="id_post_id_{{ review.id }}">
   <div class="span12">
     <div class="sidebox post">
       <div class="row-fluid">
-        <div class="post_head">
-          <div class="span2">
-            <div class="thumb">
-                {% avatar review.user %}
-            </div>
-        </div> <!-- span2 -->
-        <div class="span9">
+        <div class="span6">
+          <div class="post-head">
+            <div class="row-fluid">
+              {% usekwacro user_details user_=review.user placement='top' %}
+              <a href="{% url 'social:user_profile' username=review.user.username %}">
+                <div class="avatar pull-left">
+                  {% avatar review.user %}
+                </div>
+              </a>
+            </div> <!-- user-details -->
+            <div class="post-head-box">
+              {% usekwacro user_details user_=review.user placement='top' %}
+              <div class="username">
+                <a href="{% url 'social:user_profile' username=review.user.username %}"><strong>{{ review.user.first_name }} {{review.user.last_name }}</strong></a>
+              </div>
+            </div> <!-- user-details -->
+            <div class="row-fluid">
+              <div class="small-info">
+                <small>{{ review.submitted_time|timesince }}</small>
+              </div>
 
-            <div class="username">
-              <legend>{{review.title}}</legend>
-              {{ review.user.get_full_name|capfirst }}
+            </div> <!-- row -->
+          </div> <!-- post-head-box -->
 
-          </div>
-      </div> <!-- span9 -->
-      <div class="span1 pull-right">
-        <div class="submitted_time" style="left-right: -3em;">
-          <small>{{ review.submitted_time|timesince }}</small>
-      </div>
-  </div> <!-- span1 -->
-</div> <!-- post_head -->
-</div> <!-- row -->
-<div class="row-fluid">
+        </div> <!-- row -->
+      </div> <!-- post-head -->
+    </div> <!-- span6 -->
+  </div> <!-- row -->
+  <div class="row-fluid">
     <div class="span12">
+      <hr/>
+      <div class="row" style="margin-left:20px">
+        <div class="span8">
+          <b>{{ review.title }}</b>
+        </div>
+        <div class="span4">
+          <div class="star" style="float:right" review_id={{ review.id }} current_rate={{ review.rating.get_rating }}></div>
+        </div>
+      </div>
       <div class="post_content">
         <div class="row-fluid">
-            {{ review.text }}
-
-
-              <div class="star" review_id={{ review.id }} current_rate={{ review.rating.get_rating }}></div>  
-
-
-        </div>
-    </div>
-</div> <!-- content -->
-</div> <!-- span12 -->
-</div> <!-- sidebox post -->
+          {{ review.text }}
+        </div> <!-- post_content -->
+      </div> <!-- span12 -->
+    </div> <!-- row -->
+  </div> <!-- sidebox post -->
 </div> <!-- span12 -->
 </div> <!-- row -->
+
+
+
+
+
+
+ 
 
