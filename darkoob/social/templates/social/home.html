@@ -262,8 +262,10 @@
               <form method="post" action="{% url "social:new_post" %}" id="post_form" type='0'>
                 {% csrf_token %}
                 {{ new_post_form.text }}
-                {{ new_post_form.book }}
-                {{ new_post_form.author }}
+                <div id="quote-detail"  style='display:none;'>
+                  {{ new_post_form.book }}
+                  {{ new_post_form.author }}
+                </div>
               </form>
             </div>
             <div class="span1 new_post_button">

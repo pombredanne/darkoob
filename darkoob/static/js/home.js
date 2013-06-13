@@ -1,10 +1,12 @@
 function change_post_type(type){
-  $('#id_text').attr('placeholder',$('#type_'+type).attr('placeholder'))
+  $('#id_text').attr('placeholder',$('#type_'+type).attr('placeholder'));
+
   if (type==1){
-    // TODO:Animate to show author and book field 
+    $('#quote-detail').slideDown('slow');
   }else{
-    // TODO:Animate to hide author and book field 
+    $('#quote-detail').slideUp('slow');
   }
+
   $('.new-post-icon').each(function(index,value){
     if (index==type){
       $(this).attr('class','new-post-icon new-post-icon-active');
