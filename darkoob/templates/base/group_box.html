@@ -11,7 +11,8 @@
       <li>
         <a href="{% url 'group:group_page' group_id=group.id group_name=group.name %}"><i class="icon-th"></i> {{ group.name }}</a>
       </li>
-        # gand zadam be inja:D
+        # start
+         gand zadam be inja:D
         <div class="thumb">
           {% thumbnail group.thumb "60x60" crop="center" as im %}
             <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}"/>
@@ -19,6 +20,7 @@
             <img src="{% static "/static/img/default-group.png" %}" width="60" height="60"/>
           {% endthumbnail %}
         </div>
+        # end:D
       {% endfor %}
     </ul>
     {% endif %}
