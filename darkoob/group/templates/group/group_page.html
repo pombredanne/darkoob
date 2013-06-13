@@ -50,19 +50,22 @@
       <div class="span12">
         <div class="top-quote">
           <blockquote>
-            <p>{{ quote.text }}</p><!-- Those who mind don't matter, and those who matter don't mind. -->
-            {% if quote.author %}
-              <small>
-                {{ quote.author }}{% if quote.book %} ({{ quote.book }}){% endif %}
-              </small>
-            {% endif %}<!-- Bernard M. Baruch -->
-            
-            <a href="#"
-              onclick="javascript:Dajaxice.darkoob.social.set_my_quote(
-              set_my_quote_callback, {'quote_id': {{ quote.id }} })">
-              <i data-toggle="tooltip" id="set_quote" class="icon-ok pull-right">
-              </i>
-            </a>
+            <b>Group Quote:</b>
+            {% if group.quote %}
+              <p>{{ group.quote.text }}</p>
+              {% if group.quote.author %}
+                <small>
+                  {{ group.quote.author }}{% if group.quote.book %} ({{ group.quote.book }}){% endif %}
+                </small>
+              {% endif %}
+              
+              <a href="#"
+                onclick="javascript:Dajaxice.darkoob.social.set_my_quote(
+                set_my_quote_callback, {'quote_id': {{ group.quote.id }} })">
+                <i data-toggle="tooltip" id="set_quote" class="icon-ok pull-right">
+                </i>
+              </a>
+            {% endif %}
           </blockquote>
         </div> <!-- top-quote -->
       </div> <!-- span12 -->
