@@ -1,3 +1,6 @@
+{% load thumbnail %}
+{% load staticfiles %}
+
 <div class="row-fluid">
   <h4 class="sidebox-head">GROUPS</h4>
   <div class="span12 simple_box groups">
@@ -8,6 +11,14 @@
       <li>
         <a href="{% url 'group:group_page' group_id=group.id group_name=group.name %}"><i class="icon-th"></i> {{ group.name }}</a>
       </li>
+        # gand zadam be inja:D
+        <div class="thumb">
+          {% thumbnail group.thumb "60x60" crop="center" as im %}
+            <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}"/>
+          {% empty %}
+            <img src="{% static "/static/img/default-group.png" %}" width="60" height="60"/>
+          {% endthumbnail %}
+        </div>
       {% endfor %}
     </ul>
     {% endif %}
