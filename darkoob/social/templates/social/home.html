@@ -235,7 +235,7 @@
     <div class="row-fluid">
       <div class="span12">
         <div class="top-quote">
-          <a onclick="Dajaxice.darkoob.social.get_quote(Dajax.process,{})"> next </a>
+         
           <blockquote id="random_quote" quote_id="{{ quote.id }}">
 
             <p id="quote_text">{{ quote.text }}</p>
@@ -248,6 +248,10 @@
               set_my_quote_callback, {'quote_id': $('#random_quote').attr('quote_id') })">
               <i data-toggle="tooltip" id="set_quote" class="icon-ok pull-right">
               </i>
+            </a>
+             <a href="#" 
+             onclick="Dajaxice.darkoob.social.get_quote(Dajax.process,{})">
+             <i data-toggle="tooltip" class="icon-play"></i> 
             </a>
           </blockquote>
         </div> <!-- top-quote -->
