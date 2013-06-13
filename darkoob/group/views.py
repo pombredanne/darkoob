@@ -6,6 +6,7 @@ from django.template import RequestContext
 from darkoob.group.forms import GroupForm
 from darkoob.group.models import Group
 from darkoob.book.models import Quote
+from darkoob.social.forms import NewPostForm
 
 def group(request, group_id, group_name):
     group = Group.objects.get(id=group_id, name=group_name)
@@ -16,7 +17,8 @@ def group(request, group_id, group_name):
         #group.members = group.members.all()
         return render(request, "group/group_page.html", {
             'group': group,
-            'quote': quote
+            'quote': quote,
+            'new_post_form': NewPostForm,
         })
     else:
         return HttpResponse("Group Is not exist!")

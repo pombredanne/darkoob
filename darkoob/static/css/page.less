@@ -1,0 +1,39 @@
+@import "common_style.less";
+
+.details {
+  .dark-link;
+
+  margin-top: .3em;
+  margin-bottom: 1.5em;
+
+  color: darken(@border, 60%);
+  font-weight: bold;
+}
+
+.group-details {
+  .thumb {
+    border: 2px solid white;
+    .box-shadow(@border);
+  }
+
+  .stats {
+    display: inline-block;
+    margin-top: .8em;
+
+    .info-block {
+      display: inline-block;
+      margin: 0;
+      padding-right: .3em;
+      border-right: 1px solid @dark_grey;
+      padding-left: .3em;
+
+      background:url(
+        data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAHklEQVQIW2NkQAXGjEh8YyD7LEwAzAFJggTgHJAAAE+uAzjGgU3wAAAAAElFTkSuQmCC
+      ) repeat;
+    }
+
+    .info-block:last-child {
+      border-right: 0;
+    }
+  }
+}
