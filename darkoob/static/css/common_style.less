@@ -12,6 +12,16 @@ a:hover {
   text-decoration: none;
 }
 
+.dark-link {
+  a:visited, a:link {
+    color: @dark_grey;
+  }
+
+  a:hover {
+    color: darken(#08c, 15%);//lighten(@dark_grey, 20);
+  }
+}
+
 .border-radius(@radius) {
   border-radius: @radius;
   -moz-border-radius: @radius;
