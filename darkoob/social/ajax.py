@@ -33,18 +33,6 @@ def follow_person(request, user_id):
     else:
         done = True
     return simplejson.dumps({'done': done, 'user_id': user_id})
-    
-# @dajaxice_register(method='POST')
-# def follow_request(request, following_id):
-#     # TODO : ISSUE #54
-#     try:
-#         user = UserNode.index.get(user_id=request.user.id)
-#         user.follow_person(following_id)
-#         done = True 
-#     except:
-#         print "nashhod"
-#         done = False
-#     return simplejson.dumps({'done':done})
 
 @dajaxice_register(method='POST')
 def get_quote(request):
@@ -96,15 +84,8 @@ def submit_post(request, text, type, author, book):
             $('#id_text').val('');
             $('#title-look').val('');
             $('#author-look').val('');
-        ''')
-        
-    if type == '2':
-        # deadline type 
-        pass
-
-
+        ''')        
     return dajax.json()
-    # return simplejson.dumps({'done': True, 'post': 'df'})
 
 @dajaxice_register(method='POST')
 def edit_sex(request,sex):
