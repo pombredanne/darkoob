@@ -61,13 +61,14 @@ class Review(models.Model):
     submitted_time = models.DateTimeField(default=timezone.now())
     rating = RatingField(range=5, can_change_vote=True, allow_delete=False, allow_anonymous=False)
 
-
     def __unicode__(self):
         return unicode(self.book) + unicode(self.user)
 
 class Quote(models.Model):
-    author = models.ForeignKey(Author)
+    author = models.ForeignKey(Author, null=True)
     book = models.ForeignKey(Book, null=True, blank=True)
+    user = models.ForeignKey(User, null=True, blank=True)
+    submitted_time = models.DateTimeField(default=timezone.now())
     text = models.TextField()
 
     @classmethod
