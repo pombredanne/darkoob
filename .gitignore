@@ -10,3 +10,4 @@ django.contrib.auth.html
 django.contrib.html
 django.html
 .shell_history
+src/
