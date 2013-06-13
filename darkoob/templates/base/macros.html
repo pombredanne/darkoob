@@ -47,9 +47,13 @@
   <!-- used in post.html -->
   <blockquote>
     <p id="quote_text">{{ post.text }}</p>
-    <small id="quote_detail">
+    <small>
       {{ post.author }}{% if post.book %} ({{ post.book }}){% endif %}
     </small>
-
+    <i data-toggle="tooltip" id="set-quote-icon" class="icon-ok pull-right"
+        onclick="javascript:Dajaxice.darkoob.social.set_my_quote(
+      set_my_quote_callback, {'quote_id': {{ post.id}} })">
+    </i>
   </blockquote>
+
 {% endkwacro %}
