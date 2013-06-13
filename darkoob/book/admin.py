@@ -31,8 +31,8 @@ class ReviewAdmin(admin.ModelAdmin):
     list_display = ('book', 'user', 'submitted_time')
 
 class QuoteAdmin(admin.ModelAdmin):
-    search_fields = ('author', 'text', 'book') 
-    list_display = ('author', 'text', 'book')
+    search_fields = ('author', 'text', 'book', 'user') 
+    list_display = ('author', 'text', 'book', 'user', 'submitted_time')
 
 admin.site.register(Book, BookAdmin)
 admin.site.register(Publisher, PublisherAdmin)
