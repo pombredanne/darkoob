@@ -279,4 +279,24 @@ class NewPostForm(forms.Form):
             'style': 'resize: none;',
         })
     )
+    book = forms.CharField(
+        label=_('Book'),
+        widget=forms.TextInput(attrs={
+            'placeholder': _('Book Name'),
+            'autocomplete': 'off',
+            'data-provide': 'typeahead',
+            'class': 'span6 typeahead',
+            'id': 'title-look',
+        })
+    )    
+    author = forms.CharField(
+        label=_('Author'),
+        widget=forms.TextInput(attrs={
+            'placeholder': _('Author Name'),
+            'autocomplete': 'off',
+            'data-provide': 'typeahead',
+            'class': 'span6 typeahead',
+            'id': 'author-look',
+        })
+    )
 

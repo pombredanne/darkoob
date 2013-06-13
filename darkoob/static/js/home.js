@@ -1,7 +1,10 @@
-function change_fuck(){
-  alert("fuck")
-}
 function change_post_type(type){
+  $('#id_text').attr('placeholder',$('#type_'+type).attr('placeholder'))
+  if (type==1){
+    // TODO:Animate to show author and book field 
+  }else{
+    // TODO:Animate to hide author and book field 
+  }
   $('.new-post-icon').each(function(index,value){
     if (index==type){
       $(this).attr('class','new-post-icon new-post-icon-active');

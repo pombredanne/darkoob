@@ -7,7 +7,7 @@ from dajax.core import Dajax
 from darkoob.social.models import UserProfile, UserNode
 from django.contrib.auth.models import User
 from darkoob.social.models import UserProfile
-from darkoob.book.models import Quote, Book
+from darkoob.book.models import Quote, Book, Author
 from darkoob.post.models import Post
 from avatar.templatetags import avatar_tags
 
@@ -60,7 +60,7 @@ def get_quote(request):
     return dajax.json()
 
 @dajaxice_register(method='POST')
-def submit_post(request, text, type):
+def submit_post(request, text, type, author, book):
     dajax = Dajax()
     post = None
 
@@ -73,7 +73,31 @@ def submit_post(request, text, type):
 
     if type == '1':
         # qoute type
-        pass
+        try: 
+            author = Author.objects.get(name=author)
+        except Author.DoesNotExist:
+            #TODO: Check user reputation and error error if user score less than ?
+            author = Author.objects.create(name=author)
+
+        try:
+            book = Book.objects.get(title=book)
+        except Book.DoesNotExist:
+            #TODO: Check user reputation and error error if user score less than ?
+            Quote.objects.create(user=request.user, text=text, author=author)
+        else:
+            Quote.objects.create(user=request.user, text=text, book=book) # set author, book  
+        dajax.script('''
+            $.pnotify({
+            title: 'Sharing',
+            type:'success',
+            text: 'your comment shared',
+            opacity: .8
+          });
+            $('#id_text').val('');
+            $('#title-look').val('');
+            $('#author-look').val('');
+        ''')
+        
     if type == '2':
         # deadline type 
         pass

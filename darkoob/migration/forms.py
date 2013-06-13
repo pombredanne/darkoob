@@ -11,7 +11,6 @@ class StartNewMigrationForm(forms.Form):
             'data-provide': 'typeahead',
             'class': 'span6 typeahead',
             'id': 'title-look',
-            'sdf': 'dfsdf',            
         })
     )
 
