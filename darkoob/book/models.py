@@ -65,7 +65,7 @@ class Review(models.Model):
         return unicode(self.book) + unicode(self.user)
 
 class Quote(models.Model):
-    author = models.ForeignKey(Author, null=True)
+    author = models.ForeignKey(Author, null=True, blank=True)
     book = models.ForeignKey(Book, null=True, blank=True)
     user = models.ForeignKey(User, null=True, blank=True)
     submitted_time = models.DateTimeField(default=timezone.now())

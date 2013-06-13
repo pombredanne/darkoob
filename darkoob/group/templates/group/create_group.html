@@ -25,13 +25,7 @@
            {{ form.members }}
            <button type="button" id="add_group_button" onmousedown="load_members()" class="btn btn-primary">Create Group</button>
          </form>
-         <style>
-         .typeahead_wrapper { display: block; height: 30px; }
-         .typeahead_photo { float: left; max-width: 30px; max-height: 30px; margin-right: 5px; }
-         .typeahead_labels { float: left; height: 30px; }
-         .typeahead_primary { font-weight: bold; }
-         .typeahead_secondary { font-size: .8em; margin-top: -5px; }
-         </style>
+         <link rel="stylesheet" type="text/less" href="{% static "/static/css/typeahead_suggestion_with_photo.css" %}">
          <script src="{% static "/static/js/underscore.min.js" %}"></script>
         <b>Add primitive users before create</b>
         <br />
@@ -52,6 +46,7 @@
          />
 
          <script src="{% static "/static/js/create_group.js" %}"></script>
+         <script src="{% static "/static/js/user_typeahead_suggestion.js" %}"></script>
 
        </div>
      </div> <!-- span12 -->
