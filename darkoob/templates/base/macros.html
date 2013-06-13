@@ -22,3 +22,23 @@
     </div>
     '>
 {% endkwacro %}
+
+{% kwacro top_quote quote_=quote %}
+  <div class="top-quote">
+    <blockquote quote-id="{{ quote.id }}">
+      <p id="quote_text">{{ quote.text }}</p>
+      <small id="quote_detail">
+        {{ quote.author }}{% if quote.book %} ({{ quote.book }}){% endif %}
+      </small>
+
+      <i data-toggle="tooltip" id="set-quote-icon" class="icon-ok pull-right"
+        onclick="javascript:Dajaxice.darkoob.social.set_my_quote(
+        set_my_quote_callback, {'quote_id': $('.top-quote blockquote').attr('quote-id') })">
+      </i>
+      <i data-toggle="tooltip" id="get-quote-icon" class="icon-play pull-right"
+        onclick="Dajaxice.darkoob.social.get_quote(Dajax.process,{})">
+      </i> 
+    </blockquote>
+  </div> <!-- top-quote -->
+
+{% endkwacro %}

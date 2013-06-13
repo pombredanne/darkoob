@@ -234,33 +234,13 @@
   <div class="span11 offset1">
     <div class="row-fluid">
       <div class="span12">
-        <div class="top-quote">
-         
-          <blockquote id="random_quote" quote_id="{{ quote.id }}">
-
-            <p id="quote_text">{{ quote.text }}</p>
-              <small id="quote_detail">
-                {{ quote.author }}{% if quote.book %} ({{ quote.book }}){% endif %}
-              </small>
-            
-            <a href="#"
-              onclick="javascript:Dajaxice.darkoob.social.set_my_quote(
-              set_my_quote_callback, {'quote_id': $('#random_quote').attr('quote_id') })">
-              <i data-toggle="tooltip" id="set_quote" class="icon-ok pull-right">
-              </i>
-            </a>
-             <a href="#"
-             onclick="Dajaxice.darkoob.social.get_quote(Dajax.process,{})">
-             <i data-toggle="tooltip" class="icon-play"></i> 
-            </a>
-          </blockquote>
-        </div> <!-- top-quote -->
+        {% usekwacro top_quote quote_=quote %}
       </div> <!-- span12 -->
     </div> <!-- row -->
     <div class="row-fluid">
       <div class="span1">
-        <img id="type_0" placeholder="Say it!" class="new-post-icon new-post-icon-active" src="{% static "/static/img/Pen-black-32.png" %}" alt="Text" onclick="change_post_type(0)"/>
-        <img id="type_1" placeholder="Share a quote" class="new-post-icon" src="{% static "/static/img/Quote-black-32.png" %}" alt="Quote" onclick="change_post_type(1)" />
+        <img id="type_0" placeholder="Say it!" class="new-post-icon new-post-icon-active" src="{% static "/static/img/Pen-black-32.png" %}" alt="Text" onclick="change_post_type(0);"/>
+        <img id="type_1" placeholder="Share a quote" class="new-post-icon" src="{% static "/static/img/Quote-black-32.png" %}" alt="Quote" onclick="change_post_type(1);" />
         <!-- <img id="post_type_2" class="new-post-icon" src="{% static "/static/img/Cronometer-black-32.png" %}" alt="Deadline" onclick="change_post_type(2)"/> -->
       </div>
       <div class="span11">
