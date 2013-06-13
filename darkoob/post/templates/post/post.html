@@ -1,5 +1,7 @@
 {% load avatar_tags %}
 {% load staticfiles %}
+{% load util %}
+
 {% load kwacros %}
 {% loadkwacros "base/macros.html" %}
 
@@ -16,41 +18,48 @@
                   {% avatar post.user %}
                 </div>
               </a>
-              </div> <!-- user-details -->
-              <div class="post-head-box">
-                {% usekwacro user_details user_=post.user placement='top' %}
-                  <div class="username">
-                    <a href="{% url 'social:user_profile' username=post.user.username %}"><strong>{{ post.user.first_name }} {{post.user.last_name }}</strong></a>
-                  </div>
-                </div> <!-- user-details -->
-                <div class="row-fluid">
-                  <div class="small-info">
-                    <small>{{ post.submitted_time|timesince }}</small>
-                  </div>
-
-                </div> <!-- row -->
-              </div> <!-- post-head-box -->
+            </div> <!-- user-details -->
+            <div class="post-head-box">
+              {% usekwacro user_details user_=post.user placement='top' %}
+              <div class="username">
+                <a href="{% url 'social:user_profile' username=post.user.username %}"><strong>{{ post.user.first_name }} {{post.user.last_name }}</strong></a>
+              </div>
+            </div> <!-- user-details -->
+            <div class="row-fluid">
+              <div class="small-info">
+                <small>{{ post.submitted_time|timesince }}</small>
+              </div>
 
             </div> <!-- row -->
-          </div> <!-- post-head -->
-        </div> <!-- span6 -->
-      </div> <!-- row -->
+          </div> <!-- post-head-box -->
+
+        </div> <!-- row -->
+      </div> <!-- post-head -->
+    </div> <!-- span6 -->
+  </div> <!-- row -->
+  <div class="row-fluid">
+    <div class="span12">
+      <div class="post_content">
+        <div class="row-fluid">
+          {% if post|get_type == 'Quote' %}
+          {% usekwacro simple_quote post_=post %}
+        </div>
+
+        {% elif post|get_type == 'Post' %}
+        {{ post.text }}
+      </div>
       <div class="row-fluid">
-        <div class="span12">
-          <div class="post_content">
-            <div class="row-fluid">
-              {{ post.text }}
-            </div>
-            <div class="row-fluid">
-              <button class="btn  btn-mini noks" data-toggle="tooltip">
-                <i class="icon-chevron-right" onclick="Dajaxice.darkoob.post.nok(callback_nok_post,{'post_id':{{post.id}}})"></i>
-                <span>{{ post.noks.votes }}</span>
-              </button>
-            </div>
-          </div> <!-- post_content -->
-        </div> <!-- span12 -->
-      </div> <!-- row -->
-    </div> <!-- sidebox post -->
+        <button class="btn  btn-mini noks" data-toggle="tooltip">
+          <i class="icon-chevron-right" onclick="Dajaxice.darkoob.post.nok(callback_nok_post,{'post_id':{{post.id}}})"></i>
+          <span>{{ post.noks.votes }}</span>
+        </button>
+      </div>
+      {% endif %}
+
+    </div> <!-- post_content -->
   </div> <!-- span12 -->
+</div> <!-- row -->
+</div> <!-- sidebox post -->
+</div> <!-- span12 -->
 </div> <!-- row -->
 

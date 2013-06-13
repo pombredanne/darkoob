@@ -71,3 +71,14 @@
     </div> <!-- span12 -->
   </div> <!-- row -->
 {% endkwacro %}
+
+{% kwacro simple_quote post_=post %}
+  <!-- used in post.html -->
+  <blockquote>
+    <p id="quote_text">{{ post.text }}</p>
+    <small id="quote_detail">
+      {{ post.author }}{% if post.book %} ({{ post.book }}){% endif %}
+    </small>
+
+  </blockquote>
+{% endkwacro %}

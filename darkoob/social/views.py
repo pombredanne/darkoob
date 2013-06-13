@@ -126,8 +126,17 @@ def change_password(request):
 @login_required
 def home(request):
     template = 'social/home.html'
-    posts = Post.objects.order_by("-submitted_time")
-    count = range(1, len(posts) + 1)
+
+    #TODO: if two import fixed i should move them to top of page 
+    from itertools import chain
+    import operator
+
+    posts = Post.objects.order_by("submitted_time")
+    quotes = Quote.objects.order_by("submitted_time")
+    thing = list(chain(posts, quotes))
+    thing = sorted(thing, key=operator.attrgetter('submitted_time'))
+    count = range(1, len(thing) + 1) 
+
     groups = request.user.group_set.all()
     admin_groups = request.user.admin_set.all()
     book_deadlines = []
@@ -158,7 +167,7 @@ def home(request):
 
     return render(request, template, {
         'new_post_form': NewPostForm(),
-        'posts': posts,
+        'posts': thing,
         'count': count[::-1],
         'groups': groups,
         'admin_groups': admin_groups,
