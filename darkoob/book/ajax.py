@@ -41,7 +41,7 @@ def submit_review(request, book_id, title, text):
             $.pnotify({
             title: 'Review',
             type:'error',
-            text: 'Complete your review',
+            text: 'Complete your review. We need some checks',
             opacity: .8
           });
           $('#id_text').val('');
