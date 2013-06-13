@@ -42,11 +42,6 @@ $(".deadline").children('a').bind("click", function () {
   //span.slideToggle('slow');
 });
 
-
-$("#set_quote").tooltip({
-  title: "Set as favorite",
-  placement: "right",
-});
 $('.noks').tooltip({
   title: 'Nok',
   placement: 'right',

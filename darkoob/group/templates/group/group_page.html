@@ -2,6 +2,7 @@
 
 {% load staticfiles %}
 {% load thumbnail %}
+{% load avatar_tags %}
 {% load kwacros %}
 {% loadkwacros "base/macros.html" %}
 
@@ -32,19 +33,22 @@
     </ul>
     <div class="row-fluid">
       <h4 class="sidebox-head">SCHEDULES</h4>
-      <div class="span12 sidebox">
+      <div class="span12 simple_box">
         
       </div> <!-- span10 -->
     </div> <!-- row -->
      <div class="row-fluid">
-      <h4 class="sidebox-head">Members</h4>
-      <div class="span12 sidebox">
-          <ul>
-            <li><a>{{ group.admin }}</a></li>
-            {% for member in group.members.all %}
-              <li><a>{{ member }}</a></li>
-            {% endfor %}
-          </ul>
+      <h4 class="sidebox-head">MEMBERS</h4>
+      <div class="span12 simple_box members">
+        <ul class="thumbnails">
+          {% for member in group.members.all|slice:":10" %}
+            <li class="span2">
+              {% usekwacro user_details user_=member placement='top' %}
+                <a class="thumbnail">{% avatar member %}</a>
+              </div>
+            </li>
+          {% endfor %}
+        </ul>
       </div> <!-- span10 -->
     </div> <!-- row -->
   </div> <!-- span12 -->
@@ -78,23 +82,23 @@
                 <div class="span5">
                   <h4>{{ group.name }}</h4>
                 </div>
-                <div class="span1 offset5">
-                  <button id="group-toggle-btn" class="btn btn-primary btn-mini"
+              </div>
+                
+              <div class="row-fluid stats">
+                <div class="span10">
+                  <div class="info-block"><a href="{% url 'group:members' %}">{{ group.members.all|length }} members</a></div>
+                  <div class="info-block"><a href="{% url 'group:schedules' %}">{{ group.schedules|length }} schedules</a></div>
+                  <div class="info-block"><a href="{% url 'group:schedules' %}">{{ group.deadlines|length }} deadlines</a></div>
+                </div>
+                <div class="span1 offset1">
+                  <button id="group-toggle-btn" class="btn btn-primary btn-mini pull-right"
                     onclick="Dajaxice.darkoob.group.group_toggle(group_toggle_cb,
                     {group_id: {{ group.id }},
                     user_id: {{ user.id }},
                     is_member: {% if is_member %}true{% else %}false{% endif %}})">
                     {% if is_member %}Leave{% else %}Join{% endif %}
                   </button>
-                </div>
-              </div>
-                
-              <div class="row-fluid stats">
-                <div class="span10 offset2">
-                  <div class="info-block"><a href="{% url 'group:members' %}">{{ group.members.all|length }} members</a></div>
-                  <div class="info-block"><a href="{% url 'group:schedules' %}">{{ group.schedules|length }} schedules</a></div>
-                  <div class="info-block"><a href="{% url 'group:schedules' %}">{{ group.deadlines|length }} deadlines</a></div>
-                </div>
+
               </div>
             </div> <!-- span10 -->
           </div> <!-- row -->
