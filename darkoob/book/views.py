@@ -14,7 +14,7 @@ from django.utils import simplejson
 from darkoob.book.models import Review
 
 def page(request, book_id, book_title):
-    book = Book.objects.get(id = book_id, title = book_title)
+    book = Book.objects.get(id = book_id)
     template = 'book/book_page.html'
     reviews = Review.objects.filter(book=book).order_by("-submitted_time")
     count = range(1, len(reviews) + 1)

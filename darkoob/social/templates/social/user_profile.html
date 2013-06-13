@@ -1,14 +1,23 @@
 {% extends "base/profile_base.html" %}
+
 {% load staticfiles %}
 {% load thumbnail %}
+{% load avatar_tags %}
+{% load kwacros %}
+{% loadkwacros "base/macros.html" %}
+
 {% block css %}
 {{ block.super }}
 <link rel="stylesheet" type="text/less" href="{% static "/static/css/profile_base_style.less" %}">
 <link rel="stylesheet" type="text/less" href="{% static "/static/css/home_style.less" %}">
 {% endblock css %}
+
+{% block js %}
+{{ block.super }}
+{% endblock js %}
+
 {% block title %}Darkoob - {{ person_object.get_full_name }} page{% endblock title %}
 
-{% load avatar_tags %}
 
 {% block sidebar %}
 <div class="row-fluid">
@@ -98,11 +107,7 @@
 
       </ul>
 
-
-
-      {% include "base/group_box.html" with admin_groups=admin_groups groups=groups first_name=person_object.first_name %}
-
-
+      {% usekwacro group_box admin_groups=admin_groups groups=groups first_name=person_object.first_name %}
 
     </div> <!-- span12 -->
   </div> <!-- row -->
@@ -113,14 +118,17 @@
 
   <div class="row-fluid">
     <div class="span11 offset1">
-
-      <div class="quote">
-        <blockquote>
-          <p>{{ person_object.userprofile.quote.text }}</p>
-          {% if person_object.userprofile.quote.author %}<small>{{ person_object.userprofile.quote.author }}</small>{% endif %}
-          {% if person_object.userprofile.quote.book %}<small>{{ person_object.userprofile.quote.book }}</small>{% endif %}
-        </blockquote>
+      <div class="row-fluid">
+        <div class="span12">
+          {% usekwacro top_quote quote_=person_object.userprofile.quote %}
+          {% if not person_object.userprofile.quote %}
+            <script type="text/javascript">
+              Dajaxice.darkoob.social.get_quote(Dajax.process);
+            </script>
+          {% endif %}
+        </div>
       </div>
+
       {% block right_sidebox %}
 
       <div class="sidebox-head" style="margin-left: 0;">

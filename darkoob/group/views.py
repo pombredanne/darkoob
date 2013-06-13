@@ -9,7 +9,7 @@ from darkoob.book.models import Quote
 from darkoob.social.forms import NewPostForm
 
 def group(request, group_id, group_name):
-    group = Group.objects.get(id=group_id, name=group_name)
+    group = Group.objects.get(id=group_id)
     quote = Quote.get_random_quote()
 
     if group:

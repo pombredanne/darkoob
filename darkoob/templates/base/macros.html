@@ -25,20 +25,49 @@
 
 {% kwacro top_quote quote_=quote %}
   <div class="top-quote">
-    <blockquote quote-id="{{ quote.id }}">
-      <p id="quote_text">{{ quote.text }}</p>
+    <blockquote quote-id="{{ quote_.id }}">
+      <p id="quote_text">{{ quote_.text }}</p>
       <small id="quote_detail">
-        {{ quote.author }}{% if quote.book %} ({{ quote.book }}){% endif %}
+        {{ quote_.author }}{% if quote_.book %} ({{ quote_.book }}){% endif %}
       </small>
 
       <i data-toggle="tooltip" id="set-quote-icon" class="icon-ok pull-right"
         onclick="javascript:Dajaxice.darkoob.social.set_my_quote(
         set_my_quote_callback, {'quote_id': $('.top-quote blockquote').attr('quote-id') })">
       </i>
-      <i data-toggle="tooltip" id="get-quote-icon" class="icon-play pull-right"
+      <i data-toggle="tooltip" id="next-quote-icon" class="icon-circle-arrow-right pull-right"
         onclick="Dajaxice.darkoob.social.get_quote(Dajax.process,{})">
       </i> 
     </blockquote>
   </div> <!-- top-quote -->
 
+{% endkwacro %}
+
+{% kwacro group_box admin_groups=admin_groups groups=groups first_name='' %}
+  <div class="row-fluid">
+    <h4 class="sidebox-head">GROUPS</h4>
+    <div class="span12 simple_box groups">
+      {% if not admin_groups|length == 0 %}
+      <p>{% if first_name != '' %}{{ first_name }} is{% else %}You are{% endif %} the admin of</p>
+      <ul>
+        {% for group in admin_groups %}
+        <li>
+          <a href="{% url 'group:group_page' group_id=group.id group_name=group.name|slugify %}"><i class="icon-th"></i> {{ group.name }}</a>
+        </li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      {% if not groups|length == 0 %}
+      <p>{% if first_name != '' %}{{ first_name }} is {% else %} You are {% endif %} a member of</p>
+      <ul>
+        {% for group in groups %}
+        <li>
+          <a href="{% url 'group:group_page' group_id=group.id group_name=group.name|slugify %}"><i class="icon-th"></i> {{ group.name }}</a>
+        </li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      <em><a href="{% url 'group:create_group' %}">create a new group</a></em>
+    </div> <!-- span12 -->
+  </div> <!-- row -->
 {% endkwacro %}

@@ -23,9 +23,11 @@
   .stats {
     display: inline-block;
     margin-top: .8em;
+    margin-left: .3em;
 
     .info-block {
       display: inline-block;
+      float: left;
       margin: 0;
       padding-right: .3em;
       border-right: 1px solid @dark_grey;
@@ -34,6 +36,11 @@
       background:url(
         data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAHklEQVQIW2NkQAXGjEh8YyD7LEwAzAFJggTgHJAAAE+uAzjGgU3wAAAAAElFTkSuQmCC
       ) repeat;
+      background-origin: content-box;
+    }
+
+    button {
+      margin-top: -.2em;
     }
 
     .info-block:last-child {
