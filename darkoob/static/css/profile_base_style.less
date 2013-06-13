@@ -102,3 +102,47 @@
   margin-left: .52em;
   margin-right: -.5em;
 }
+
+.sidebox-head {
+  color: lighten(@dark_grey, 20%);
+  margin-left: .6em;
+  display: inline-block;
+  font-family: "QuicksandLight";//"TitilliumText25L1wt", sans-serif;//"LeagueGothicRegular";
+  font-size: 1.4em;
+  margin-top: .5em;
+  margin-bottom: .1em;
+  text-transform: uppercase;
+  //letter-spacing: 2px;
+
+  //text-shadow: 0 0 2px @dark_grey;
+}
+
+.simple_box {
+  background-color: white;
+  border: 1px solid @border;
+  text-align: left;
+  margin-bottom: .5em;
+  display: block;
+  font-size: .9em;
+
+  p, textarea, em, strong, small {
+    margin-left: 1em;
+    margin-top: 1em;
+    margin-right: 1em;
+  }
+
+  form {
+    margin-left: 1em;
+  }
+
+  .thumbnails {
+  }
+}
+
+.sidebox {
+  .simple_box;
+  font-size: 1em;
+  margin-bottom: 1em;
+  .box-shadow(darken(@middle_grey, 2%), 1px 1px 0 1px);
+}
+

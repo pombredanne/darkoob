@@ -2,6 +2,7 @@
 
 {% load staticfiles %}
 {% load thumbnail %}
+{% load avatar_tags %}
 {% load kwacros %}
 {% loadkwacros "base/macros.html" %}
 
@@ -32,19 +33,22 @@
     </ul>
     <div class="row-fluid">
       <h4 class="sidebox-head">SCHEDULES</h4>
-      <div class="span12 sidebox">
+      <div class="span12 simple_box">
         
       </div> <!-- span10 -->
     </div> <!-- row -->
      <div class="row-fluid">
-      <h4 class="sidebox-head">Members</h4>
-      <div class="span12 sidebox">
-          <ul>
-            <li><a>{{ group.admin }}</a></li>
-            {% for member in group.members.all %}
-              <li><a>{{ member }}</a></li>
-            {% endfor %}
-          </ul>
+      <h4 class="sidebox-head">MEMBERS</h4>
+      <div class="span12 simple_box members">
+        <ul class="thumbnails">
+          {% for member in group.members.all|slice:":10" %}
+            <li class="span2">
+              {% usekwacro user_details user_=member placement='top' %}
+                <a class="thumbnail">{% avatar member %}</a>
+              </div>
+            </li>
+          {% endfor %}
+        </ul>
       </div> <!-- span10 -->
     </div> <!-- row -->
   </div> <!-- span12 -->
