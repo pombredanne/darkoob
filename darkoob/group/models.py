@@ -1,16 +1,17 @@
 from django.db import models
 from darkoob.social.models import User
-from darkoob.book.models import Book
+from darkoob.book.models import Book, Quote
 from django.utils import timezone
    
 
 class Group(models.Model):
     name = models.CharField(max_length=255)
-    comment = models.TextField(help_text=u'Description of Group')
+    # comment = models.TextField(help_text=u'Description of Group') # <@vahid> i add quote instead, comment 
     admin = models.ForeignKey(User, related_name='admin_set')
     members = models.ManyToManyField(User, related_name='group_set', null=True)
     created_time = models.DateTimeField(default=timezone.now())
     thumb =  models.ImageField(upload_to='groups/', null=True, blank=True)
+    quote = models.ForeignKey(Quote, related_name='group_set', blank=True, null=True, help_text=u'Quote of Group')
 
     def __unicode__(self):
         return unicode(self.name)

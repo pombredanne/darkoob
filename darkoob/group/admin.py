@@ -3,7 +3,7 @@ from models import Group, Schedule, Deadline
 
 class GroupAdmin(admin.ModelAdmin):
     search_fields = ('name', 'admin')
-    list_display = ('name', 'admin','comment')
+    list_display = ('name', 'admin')
 
 class ScheduleAdmin(admin.ModelAdmin):
     search_fields = ('group', 'book', 'members')

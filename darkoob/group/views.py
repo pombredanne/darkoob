@@ -27,7 +27,10 @@ def create_group(request):
         form = GroupForm(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
-            group = Group(name=cd['name'], admin=request.user)
+            if not request.user.userprofile.quote:
+                group = Group(name=cd['name'], admin=request.user)
+            else:
+                group = Group(name=cd['name'], admin=request.user, quote=request.user.userprofile.quote)
             group.save()
             for member in cd['members'].strip(',').split(','):
                 try:
