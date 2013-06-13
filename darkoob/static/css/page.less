@@ -5,15 +5,19 @@
 
   margin-top: .3em;
   margin-bottom: 1.5em;
-
   color: darken(@border, 60%);
   font-weight: bold;
+
+  h4 {
+    margin-top: .3em;
+    margin-bottom: 0;
+  }
 }
 
 .group-details {
   .thumb {
     border: 2px solid white;
-    .box-shadow(@border);
+    .box-shadow(darken(@border, 7%); 0 0 10px);
   }
 
   .stats {

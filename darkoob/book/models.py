@@ -1,9 +1,9 @@
 from django.db import models
-from darkoob.social.models import User
+from django.utils import timezone
 from taggit.managers import TaggableManager
 from djangoratings.fields import RatingField
-from django.utils import timezone  
 from sorl.thumbnail import ImageField
+from darkoob.social.models import User
 
 class Book(models.Model):
     title = models.CharField(max_length=255)
@@ -75,8 +75,10 @@ class Quote(models.Model):
     def get_random_quote(cls):
         try:
             quote = cls.objects.order_by('?')[0]
-        except:
+        except Exception, e:
+            print e
             author= Author.objects.create(name='Albert Einstein')
+            u = User.objects.get(pk=1)
             quote = Quote.objects.create(
                 author=author,
                 text="Two things are infinite: the universe and human stupidity\

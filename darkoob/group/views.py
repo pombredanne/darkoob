@@ -15,10 +15,16 @@ def group(request, group_id, group_name):
     if group:
         group.admins = group.admin.admin_set.all()
         #group.members = group.members.all()
+
+        is_member = False
+        if group in request.user.group_set.all():
+            is_member = True
+
         return render(request, "group/group_page.html", {
             'group': group,
             'quote': quote,
             'new_post_form': NewPostForm,
+            'is_member': is_member,
         })
     else:
         return HttpResponse("Group Is not exist!")
