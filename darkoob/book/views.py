@@ -8,13 +8,18 @@ from django.contrib.auth.models import User
 from django.template import RequestContext
 
 from darkoob.book.models import Book
+from darkoob.book.forms import NewReviewForm
 from django.utils import simplejson
 
 
 from darkoob.book.models import Review
 
 def page(request, book_id, book_title):
-    book = Book.objects.get(id = book_id)
+    try:
+        book = Book.objects.get(id = book_id, title = book_title)
+    except Book.DoesNotExist:
+        raise Http404
+
     template = 'book/book_page.html'
     reviews = Review.objects.filter(book=book).order_by("-submitted_time")
     count = range(1, len(reviews) + 1)
@@ -22,15 +27,14 @@ def page(request, book_id, book_title):
     if request.is_ajax():
         template = 'book/reviews.html'
 
-    if book:
-        return render(request, template ,{
-            'book': book,
-            'rate': book.rating.get_rating(),
-            'reviews': reviews,
-            'count': count[::-1],
-        })
-    else:
-        raise Http404
+
+    return render(request, template ,{
+        'new_review_form': NewReviewForm(),
+        'book': book,
+        'rate': book.rating.get_rating(),
+        'reviews': reviews,
+        'count': count[::-1],
+    })
 
 
 from avatar.templatetags import avatar_tags

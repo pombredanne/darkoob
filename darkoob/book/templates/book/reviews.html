@@ -1,10 +1,14 @@
 {% load endless %}
 
 {% load staticfiles %}
-{% paginate 3,1 reviews %}
-{% for review in reviews %}
-{% include 'book/review.html' with review=review only %}
-{% endfor %}
+{% paginate 1,1 reviews %}
+  {% if not reviews %}
+     <h5>Not found any review for this book. You can be the first!</h5>
+  {% else%}
+    {% for review in reviews %}
+      {% include 'book/review.html' with review=review only %}
+    {% endfor %}
+  {% endif %}
 <!-- javascript code for raty -->     
 <script type="text/javascript" src="{% static "/static/js/jquery.raty.min.js" %}"></script>
 <script type="text/javascript">
@@ -38,4 +42,4 @@ $(function(){
 </script>              
 <!-- javascript code for raty -->
 
-{% show_more %}
+{% show_more "Get More" "Please Wait" %}

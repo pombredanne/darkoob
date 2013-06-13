@@ -127,14 +127,14 @@ def change_password(request):
 def home(request):
     template = 'social/home.html'
 
-    #TODO: if two import fixed i should move them to top of page 
+    #TODO: if two import fixed i should move them to top of page
     from itertools import chain
     import operator
 
-    posts = Post.objects.order_by("submitted_time")
-    quotes = Quote.objects.order_by("submitted_time")
+    posts = Post.objects.order_by("-submitted_time")
+    quotes = Quote.objects.order_by("-submitted_time")
     thing = list(chain(posts, quotes))
-    thing = sorted(thing, key=operator.attrgetter('submitted_time'))
+    thing = sorted(thing, key=operator.attrgetter('submitted_time'), reverse=True)
     count = range(1, len(thing) + 1) 
 
     groups = request.user.group_set.all()

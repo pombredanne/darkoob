@@ -11,7 +11,7 @@ class Book(models.Model):
     language = models.ForeignKey('Language')
     authors = models.ManyToManyField('Author')
     tags = TaggableManager()
-    thumb =  models.ImageField(upload_to='books/')
+    thumb =  models.ImageField(upload_to='books/', null=True, blank=True)
     rating = RatingField(range=5, can_change_vote=True, allow_delete=False, allow_anonymous=False)
     
     def author_names(self):

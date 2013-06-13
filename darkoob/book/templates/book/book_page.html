@@ -93,6 +93,34 @@
 
 
 
+ <div class="row-fluid">
+      <div class="span1">
+        <img id="type_0" class="new-post-icon new-post-icon-active" src="{% static "/static/img/Pen-black-32.png" %}" alt="Text"/>
+        <!-- <img id="type_1" placeholder="Share a quote" class="new-post-icon" src="{% static "/static/img/Quote-black-32.png" %}" alt="Quote" onclick="change_post_type(1);" /> -->
+        <!-- <img id="post_type_2" class="new-post-icon" src="{% static "/static/img/Cronometer-black-32.png" %}" alt="Deadline" onclick="change_post_type(2)"/> -->
+      </div>
+      <div class="span11">
+        <div class="sidebox">
+          <div class="row-fluid">
+            <div class="span9 new_post_container">              
+
+              <form method="post" action="" id="post_form" type='0'>
+                {{ new_review_form.text }}
+              {{ new_review_form.title }}
+              </form>
+            </div>
+            <div class="span1 new_post_button">
+              <button id="post_button" class="btn btn-inverse" onclick="Dajaxice.darkoob.book.submit_review(Dajax.process, {'book_id':{{ book.id }}, 'text': $('#id_text').val(), 'title': $('#id_title').val()})">Post</button>
+            </div>
+          </div> <!-- row -->
+        </div> <!-- sidebox -->
+      </div>
+
+
+
+
+
+      <h4 class="sidebox-head">REVIEWS</h4>
         {% include 'book/reviews.html' %}
 
       </div> <!-- span -->
