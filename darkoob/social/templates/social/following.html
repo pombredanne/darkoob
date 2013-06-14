@@ -29,18 +29,14 @@
 {% endblock following_active%}
 
 {% block main %}
+<h4 class="sidebox-head">FOLLOWING</h4>
+
 <div class="row-fluid">
   <div class="span12">
-    <div class="row-fluid">
-      <div class="span12">
-        <div class="sidebox post">
-          <h4> Following </h4>
-          {% include 'social/person_bar_page.html' %}
-          <script type="text/javascript" src="{% static "js/follow_callback.js" %}"></script>
 
-        </div> <!-- post -->
-      </div> <!-- span12 -->
-    </div> <!-- row -->
+      {% include 'social/person_bar_page.html' %}
+      <script type="text/javascript" src="{% static "js/follow_callback.js" %}"></script>
+
   </div> <!-- span12 -->
 </div> <!-- row -->
 {% endblock %}

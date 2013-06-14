@@ -5,36 +5,37 @@
 <div class="row-fluid">
   <div class="span12">
     <div class="sidebox post">
-      <div class="row-fluid">
-        <div class="media">
-          <a class="pull-left" href="#">
+      <div class="row-fluid" style="padding:10px">
+
+        <div class="span2" >
+          <div class="thumb">
             {% avatar person 70 %}
-          </a>
-          <div class="media-body">
-            <a href="{% url 'social:user_profile' username=person.username %}"><b>{{ person.first_name|capfirst }} {{ person.last_name|capfirst }}</b></a>
-            <br>
+          </div> <!-- thumb -->
+        </div> <!-- span2 -->
 
-            {% if person.id in request_user_following_list %}
-
-              <button class="btn btn-success btn-primary disabled" disabled="disabled" href="#" style="float:right"><i class="icon-eye-open"></i></button>
-            {% else %}
-              <button id='follow_btn_{{person.id}}' class="btn btn-medium" href="#" style="float:right"
-              onclick="Dajaxice.darkoob.social.follow_person(follow_person_in_user_page_callback, {'user_id':{{person.id}}})"
-              ><i class="icon-eye-open"></i></button>
-            {% endif %}
-
-
-            {{ person.userprofile.sex }}<br/>
-            {% if person.userprofile.city %}{{ person.userprofile.city|capfirst }}/{{person.userprofile.city.country|capfirst}}{% endif %}
+        <div class="span8">
+          <div class="username">
+            <a href="{% url 'social:user_profile' username=person.username %}">
+              <b>{{ person.first_name|capfirst }} {{ person.last_name|capfirst }}</b>
+            </a>
+            <br/>
+            {{ person.userprofile.sex }}
           </div>
-
         </div>
 
-      </div> <!-- span12 -->
-    </div> <!-- row -->
+        <div class="span2">
+          {% if person.id in request_user_following_list %}
+            <button class="btn btn-success btn-primary disabled" disabled="disabled" href="#" ><i class="icon-eye-open"></i></button>
+          {% else %}
+            <button id='follow_btn_{{person.id}}' class="btn btn-medium" href="#" onclick="Dajaxice.darkoob.social.follow_person(follow_person_in_user_page_callback, {'user_id':{{person.id}}})"
+              ><i class="icon-eye-open"></i></button>
+          {% endif %}
+        </div>
+
+      </div>
+    </div>
   </div>
 </div>
 {% endfor %}
-{% show_more %}
-
+{% show_more "Get More" "Please Wait" %}
 

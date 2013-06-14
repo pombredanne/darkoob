@@ -9,13 +9,16 @@
 {% endblock followers_active%}
 
 {% block right_sidebox %}
-<div class="sidebox post">
-  <p>
-    <b>{{ person_object.first_name|capfirst }}'s Followers</b>
-    {% include 'social/person_bar_page.html' %}
-  </p>
-</div>
+<h4 class="sidebox-head">{{ person_object.first_name|capfirst }}'s FOLLOWERS</h4>
 
-<script type="text/javascript" src="{% static "js/follow_callback.js" %}"></script>
+
+<div class="row-fluid">
+  <div class="span12">
+
+    {% include 'social/person_bar_page.html' %}
+      <script type="text/javascript" src="{% static "js/follow_callback.js" %}"></script>
+
+  </div> <!-- span12 -->
+</div> <!-- row -->
 
 {% endblock right_sidebox %}
