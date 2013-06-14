@@ -11,7 +11,6 @@
 
 
 {% block sidebar %}
-
 {% endblock sidebar %}
 
 {% block main %}
@@ -20,93 +19,81 @@
 
     <div class="row-fluid">
       <div class="span12 sidebox">
-        <div class="media">
-          <a class="pull-left" href="#">
-            {% thumbnail book.thumb "150x200" crop="center" as im %}
-            <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
-            {% endthumbnail %}          
-          </a>
-          <div class="media-body">
-            <h4 class="media-heading">{{ book.title|capfirst }}</h4>
+        <div class="row-fluid" style="margin:10px">
 
-            <dl>
-              <dt>Authors</dt>
+          <div class="span2" >
+            <div class="thumb">
+              {% thumbnail book.thumb "160x220" crop="center" as im %}
+              <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+              {% empty %}
+                <img src="{% static "/static/img/default-group.png" %}" width="160" height="220"/>
+              {% endthumbnail %}  
+            </div> <!-- thumb -->
+          </div> <!-- span2 -->
+          <div class="span10">
+            <div class="row-fluid">
+              <div class="span8">
+                <h4>{{ book.title|capfirst }}</h4>
+              </div><!-- span8 -->
+              <div class="span4">
+                <div id="star" style="margin-top:10px"></div>  
+                  <!-- javascript code for raty -->     
+                  <script type="text/javascript" src="{% static "/static/js/jquery.raty.min.js" %}"></script>
+                  <script type="text/javascript">
+                    function rate_book_callback(data){
+                      if (data.done){
+                       $.pnotify({
+                        title: 'Book Rating',
+                        text: 'Your rate to this Book recorded',
+                        type:'success',
+                        opacity: .8
+                      })
+                     }
+                    }
+                    $(function(){
+                      $.fn.raty.defaults.path='/static/img';
+                      $('#star').raty({
+                        score: {{ rate }},
+                        click: function(score, evt) {
+                          Dajaxice.darkoob.book.rate(rate_book_callback,{'rate':score , 'book_id':{{ book.id }} });
+                        }
+                      });
+                    });
+                  </script>
+                  <!-- javascript code for raty -->
+              </div><!-- span4 -->
+            </div><!-- row-fluid -->
+              <b>Author(s):</b>
               {% for author in book.authors.all %}
-              <dd>{{ author.name }}</dd>
-              {% endfor %}
+                {{ author.name|capfirst }}{% if not forloop.last %}, {% endif %}
+              {% endfor %}<br/>
+              <b>Publisher:</b>
+              {% if book.publisher %}
+                {{ book.publisher.name}}
+              {% endif %}
+          </div><!-- span10 -->
+        </div><!-- row-fluid -->
 
-              <dt>Publisher</dt>
-              <dd>{{ book.publisher.name}}</dd>
+        <div style="margin:10px">
+          <i class="icon-tags"></i>
+            <b>Tags:</b>
+            {% for tag in book.tags.all %}
+              {{ tag|lower }}{% if not forloop.last %}, {% endif %}
+            {%endfor %}
+        </div>
+      </div> <!-- span12 sidebox -->
+    </div> <!-- row -->
 
-              <dt>Language</dt>
-              <dd>{{ book.language.name }}
-
-                <dt>Tags</dt>
-
-                <ul class="inline">
-                  {% for tag in book.tags.all %}
-                  <li>{{tag}}</li>
-                  {%endfor %}
-                </ul>
-
-              </dl>
-
-              <br/>
-
-              <div id="star"></div>  
-              <!-- javascript code for raty -->     
-              <script type="text/javascript" src="{% static "/static/js/jquery.raty.min.js" %}"></script>
-              <script type="text/javascript">
-              function rate_book_callback(data){
-                if (data.done){
-                     $.pnotify({
-                      title: 'Book Rating',
-                      text: 'Your rate to this Book recorded',
-                      type:'success',
-                      opacity: .8
-                    })
-                }
-              }
-              $(function(){
-                $.fn.raty.defaults.path='/static/img';
-                $('#star').raty({
-                  score: {{ rate }},
-                  click: function(score, evt) {
-                    Dajaxice.darkoob.book.rate(rate_book_callback,{'rate':score , 'book_id':{{ book.id }} });
-                  }
-                });
-              });
-              </script>              
-              <!-- javascript code for raty -->
-            </div> <!-- media-body -->
-          </div><!-- media -->
-        </div> <!-- span10 -->
-      </div> <!-- row -->
-
-      <div class="row-fluid">
-        <div class="span12">
-          <div class="simple-box">
-          </div> <!-- span12 -->
-        </div> <!-- row -->
-
-    
-
-
-
- <div class="row-fluid">
-      <div class="span1">
-        <img id="type_0" class="new-post-icon new-post-icon-active" src="{% static "/static/img/Pen-black-32.png" %}" alt="Text"/>
-        <!-- <img id="type_1" placeholder="Share a quote" class="new-post-icon" src="{% static "/static/img/Quote-black-32.png" %}" alt="Quote" onclick="change_post_type(1);" /> -->
-        <!-- <img id="post_type_2" class="new-post-icon" src="{% static "/static/img/Cronometer-black-32.png" %}" alt="Deadline" onclick="change_post_type(2)"/> -->
-      </div>
-      <div class="span11">
+    <h4 class="sidebox-head">WRITE A REVIEW</h4>
+    <div class="row-fluid">
+      <div class="span12">
         <div class="sidebox">
           <div class="row-fluid">
             <div class="span9 new_post_container">              
 
               <form method="post" action="" id="post_form" type='0'>
                 {{ new_review_form.text }}
-              {{ new_review_form.title }}
+                {{ new_review_form.title }}
               </form>
             </div>
             <div class="span1 new_post_button">
@@ -114,18 +101,15 @@
             </div>
           </div> <!-- row -->
         </div> <!-- sidebox -->
-      </div>
+      </div> <!-- span11 -->
+    </div> <!-- row-fluid -->
 
+    <h4 class="sidebox-head">REVIEWS</h4>
+    {% include 'book/reviews.html' %}
 
-
-
-
-      <h4 class="sidebox-head">REVIEWS</h4>
-        {% include 'book/reviews.html' %}
-
-      </div> <!-- span -->
-    </div> <!-- row -->
-    {% endblock main %}
+  </div> <!-- span12 -->
+</div> <!-- row-fluid -->
+{% endblock main %}
 
 
 

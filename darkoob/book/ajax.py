@@ -21,6 +21,7 @@ def rate(request, rate, book_id):
 
 @dajaxice_register(method='POST')
 def review_rate(request, rate, review_id):
+    print "review id",review_id
     done = False
     try:
         review = Review.objects.get(id=review_id)
