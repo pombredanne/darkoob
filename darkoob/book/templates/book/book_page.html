@@ -23,10 +23,10 @@
 
           <div class="span2" >
             <div class="thumb">
-              {% thumbnail book.thumb "160x220" crop="center" as im %}
+              {% thumbnail book.thumb "170x220" crop="center" as im %}
               <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
               {% empty %}
-                <img src="{% static "/static/img/default-book.png" %}" width="160" height="220"/>
+                <img src="{% static "/static/img/default-book.jpg" %}" width="170" height="220"/>
               {% endthumbnail %}  
             </div> <!-- thumb -->
           </div> <!-- span2 -->
