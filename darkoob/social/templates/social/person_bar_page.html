@@ -19,7 +19,9 @@
               <b>{{ person.first_name|capfirst }} {{ person.last_name|capfirst }}</b>
             </a>
             <br/>
-            {{ person.userprofile.sex }}
+            {{ person.userprofile.sex }}<br/>
+            {% if person.userprofile.city %}{{ person.userprofile.city|capfirst }}/{{person.userprofile.city.country|capfirst}}{% endif %}
+
           </div>
         </div>
 
