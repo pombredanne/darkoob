@@ -7,12 +7,14 @@ from darkoob.social.models import User
 
 class Book(models.Model):
     title = models.CharField(max_length=255)
-    publisher = models.ForeignKey('Publisher')
-    language = models.ForeignKey('Language')
+    publisher = models.ForeignKey('Publisher',null=True, blank=True)
+    language = models.ForeignKey('Language', null=True, blank=True)
     authors = models.ManyToManyField('Author')
     tags = TaggableManager()
     thumb =  models.ImageField(upload_to='books/', null=True, blank=True)
     rating = RatingField(range=5, can_change_vote=True, allow_delete=False, allow_anonymous=False)
+    creation_time = models.DateTimeField(default=timezone.now())
+    user = models.ForeignKey(User)
     
     def author_names(self):
         return ', '.join([a.name for a in self.authors.all()])
