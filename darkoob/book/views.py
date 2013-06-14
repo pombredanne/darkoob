@@ -21,7 +21,7 @@ def page(request, book_id, book_title):
         raise Http404
 
     template = 'book/book_page.html'
-    reviews = Review.objects.filter(book=book).order_by("-submitted_time")
+    reviews = Review.objects.filter(book=book).order_by("-rating_score")
     count = range(1, len(reviews) + 1)
 
     if request.is_ajax():
