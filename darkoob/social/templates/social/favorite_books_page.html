@@ -2,41 +2,42 @@
 {% load endless %}
 {% load thumbnail %}
 
-{% paginate 1,1 favorite_books %}
+{% paginate 4,1 favorite_books %}
 {% for book in favorite_books %}
-<div class="row-fluid">
-  <div class="span12">
+  <div class="span6 favorite-books">
     <div class="sidebox post">
       <div class="row-fluid">
         <div class="media">
-          <a class="pull-left" href="#">
-            {% thumbnail book.thumb "70x90" crop="center" as im %}
-            <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
-            {% endthumbnail %}          
+          <a class="pull-left" href="{% url 'book:book_page' book_id=book.id book_title=book.title|slugify %}">
+            <div >
+              {% thumbnail book.thumb "64x64" crop="center" as im %}
+              <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+              {% endthumbnail %}          
+            </div>
           </a>
           <div class="media-body">
-            <b><a href="">{{ book.title|capfirst }}</a></b><br />
+            <strong><a href="{% url 'book:book_page' book_id=book.id book_title=book.title|slugify %}">{{ book.title|capfirst }}</a></strong>
 
-            <small>Authors:</small>
-            {% if book in request_user_favorite_books_list %}
-            <button class="btn btn-success btn-primary disabled" disabled="disabled" href="#" style="float:right"><i class="icon-star"></i></button>
-            {% else %}
-            <button id='star_btn_{{book.id}}' class="btn btn-medium" href="#" style="float:right"
-            onclick="Dajaxice.darkoob.social.star_book(star_book_callback, {'book_id':{{book.id}}})"
-            ><i class="icon-star"></i></button>
-            {% endif %}
-
-            <ul class="inline">
+            <ul>
               {% for author in book.authors.all %}
               <li>{{ author.name|capfirst }}</li> 
               {% endfor %}
             </ul>
+
+            <div class="fav-icon pull-right">
+              {% if book in request_user_favorite_books_list %}
+                <button class="btn btn-success btn-primary btn-mini disabled" disabled="disabled" href="#" style="float:right"><i class="icon-star"></i></button>
+              {% else %}
+                <button id='star_btn_{{book.id}}' class="btn btn-mini btn-info" href="#" style="float:right"
+                onclick="Dajaxice.darkoob.social.star_book(star_book_callback, {'book_id':{{book.id}}})"
+                ><i class="icon-star"></i></button>
+              {% endif %}
+            </div>
           </div>
         </div>
       </div> <!-- span12 -->
     </div> <!-- row -->
   </div>
-</div>
 {% endfor %}
 {% show_more %}
 

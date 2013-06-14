@@ -81,6 +81,7 @@ class Quote(models.Model):
             u = User.objects.get(pk=1)
             quote = Quote.objects.create(
                 author=author,
+                user=u,
                 text="Two things are infinite: the universe and human stupidity\
                 ; and I'm not sure about the universe."
             )

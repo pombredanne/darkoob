@@ -18,6 +18,8 @@ function change_post_type(type){
 }
 
 $(document).ready(function() {
+  $(document).pjax('[data-pjax]a, a[data-pjax]', '#pjax-container');
+
   $('.migrations-link').click(function() {
     $('.migrations').slideToggle();
     if ($('.migrations-link').hasClass('migrations-link-inactive')) {
