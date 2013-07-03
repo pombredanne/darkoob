@@ -1,20 +1,23 @@
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
 from taggit.managers import TaggableManager
 from djangoratings.fields import RatingField
 from sorl.thumbnail import ImageField
-from darkoob.social.models import User
+
+def first_user():
+    return User.objects.get(pk=1)
 
 class Book(models.Model):
     title = models.CharField(max_length=255)
     publisher = models.ForeignKey('Publisher',null=True, blank=True)
     language = models.ForeignKey('Language', null=True, blank=True)
     authors = models.ManyToManyField('Author')
-    tags = TaggableManager()
+    tags = TaggableManager(blank=True)
     thumb =  models.ImageField(upload_to='books/', null=True, blank=True)
     rating = RatingField(range=5, can_change_vote=True, allow_delete=False, allow_anonymous=False)
     creation_time = models.DateTimeField(default=timezone.now())
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, default=first_user)
     
     def author_names(self):
         return ', '.join([a.name for a in self.authors.all()])
