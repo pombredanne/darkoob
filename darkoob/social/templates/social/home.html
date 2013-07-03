@@ -259,7 +259,7 @@
 
       <div class="row-fluid">
         <div class="span12">
-          {% include 'post/posts.html' %}
+          {% include 'post/posts.html' with posts=posts request=request only %}
         </div>
       </div>
     </div> <!-- pjax-container -->

@@ -2,5 +2,8 @@
 {% paginate 3,1 posts %}
     {% for post in posts %}
       {% include 'post/post.html' with post=post only %}
+    {% empty %}
+      No post available.
     {% endfor %}
+
 {% show_more "Get More" "Please Wait" %}
