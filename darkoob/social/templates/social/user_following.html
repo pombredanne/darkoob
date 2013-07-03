@@ -10,13 +10,17 @@
 
 
 {% block right_sidebox %}
-<div class="sidebox post">
-  <p>
-    <b>{{ person_object.first_name|capfirst }}'s Following</b>
-    {% include 'social/person_bar_page.html' %}
-  </p>
-</div>
 
-<script type="text/javascript" src="{% static "js/follow_callback.js" %}"></script>
+<h4 class="sidebox-head">{{ person_object.first_name|capfirst }}'s FOLLOWING</h4>
+
+
+<div class="row-fluid">
+  <div class="span12">
+
+    {% include 'social/person_bar_page.html' %}
+    <script type="text/javascript" src="{% static "js/follow_callback.js" %}"></script>
+
+  </div> <!-- span12 -->
+</div> <!-- row -->
 
 {% endblock right_sidebox %}

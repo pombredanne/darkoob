@@ -21,7 +21,7 @@ from avatar.forms import PrimaryAvatarForm, DeleteAvatarForm
 # from avatar.models import Avatar
 from avatar.templatetags import avatar_tags
 
-def test():
+def test(user):
     from darkoob.book.models import Author
     from datetime import date
 
@@ -29,7 +29,7 @@ def test():
     quote = []
     users = []
     for i in range(2,15):
-        q = Quote.objects.create(author=vahid, text='I love %d person, I think ...'%i)
+        q = Quote.objects.create(author=vahid, text='I love %d person, I think ...'%i, user=user)
         quote.append(q)
     for i in range(2,10):
         print i
@@ -62,7 +62,7 @@ def test():
 @login_required
 def profile(request):
     form = EditProfileForm(request.POST)
-    # test()
+    # test(request.user)
     return render_to_response('social/profile.html',{'user': request.user, 'form': form})
 
 def signup(request):

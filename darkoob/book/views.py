@@ -27,8 +27,8 @@ def page(request, book_id, book_title):
     if request.is_ajax():
         template = 'book/reviews.html'
 
-
     return render(request, template ,{
+        # 'is_favorite_book': is_favorite_book,
         'new_review_form': NewReviewForm(),
         'book': book,
         'rate': book.rating.get_rating(),
