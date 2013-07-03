@@ -8,11 +8,10 @@ from darkoob.group.models import Group
 from darkoob.book.models import Quote
 from darkoob.social.forms import NewPostForm
 
-def group(request, group_id, group_name):
+def group(request, group_id, group_slug):
     group = Group.objects.get(id=group_id)
     quote = Quote.get_random_quote()
-
-    if group:
+    if group and group_slug.lower() == '-'.join(group.name.lower().split()):
         group.admins = group.admin.admin_set.all()
         #group.members = group.members.all()
 

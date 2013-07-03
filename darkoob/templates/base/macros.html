@@ -52,7 +52,7 @@
       <ul>
         {% for group in admin_groups %}
         <li>
-          <a href="{% url 'group:group_page' group_id=group.id group_name=group.name|slugify %}"><i class="icon-th"></i> {{ group.name }}</a>
+          <a href="{% url 'group:group_page' group_id=group.id group_slug=group.name|slugify %}"><i class="icon-th"></i> {{ group.name }}</a>
         </li>
         {% endfor %}
       </ul>
@@ -62,7 +62,7 @@
       <ul>
         {% for group in groups %}
         <li>
-          <a href="{% url 'group:group_page' group_id=group.id group_name=group.name|slugify %}"><i class="icon-th"></i> {{ group.name }}</a>
+          <a href="{% url 'group:group_page' group_id=group.id group_slug=group.name|slugify %}"><i class="icon-th"></i> {{ group.name }}</a>
         </li>
         {% endfor %}
       </ul>
