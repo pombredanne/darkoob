@@ -21,6 +21,13 @@ AVATARS_DIR = 'media/avatars'
 BOOKS_DIR = 'media/books'
 
 # Add users
+try:
+    first_user = User.objects.get(pk=1)
+    first_user.first_name = "First"
+    first_user.last_name = "Last"
+except:
+    pass
+
 afshin_rodgar = User.objects.create(
     username='afshinrodgar',
     password='afshinrodgar',
@@ -94,8 +101,17 @@ pride_and_prejudice.authors.add(jane_austen)
 pride_and_prejudice.tags.add('Classics', 'Romance')
 
 # Add quotes
-q1 = Quote.objects.create(author=albert_einstein, text="Two things are infinite: the universe and human stupidity; and I'm not sure about the universe.")
-q2 = Quote.objects.create(author=dr_seuss, text="Don't cry because it's over, smile because it happened.")
+q1 = Quote.objects.create(
+    author=albert_einstein,
+    user=sina_mahmoodi,
+    text="Two things are infinite: the universe and human stupidity; and I'm\
+    not sure about the universe.",
+)
+q2 = Quote.objects.create(
+    author=dr_seuss,
+    user=User.objects.get(pk=1),
+    text="Don't cry because it's over, smile because it happened.",
+)
 
 # Add groups
 bookworms = Group.objects.create(name='Bookworms', admin=sina_mahmoodi, created_time=timezone.now())
