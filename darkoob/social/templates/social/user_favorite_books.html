@@ -10,8 +10,12 @@
 <div class="sidebox post">
   <p>
     <b>{{ person_object.first_name|capfirst }}'s Favorite Books</b>
-    {% include 'social/favorite_books_page.html' %}
   </p>
+    <div class="row-fluid">
+      <div class="span10 offset2">
+        {% include 'social/favorite_books_page.html' %}
+      </div>
+    </div>
   <script type="text/javascript" src="{% static "js/star_callback.js" %}"></script>
 
 </div>

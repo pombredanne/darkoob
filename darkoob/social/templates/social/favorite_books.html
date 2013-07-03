@@ -1,12 +1,12 @@
-{% extends "social/home.html" %}
+{% extends "social/home.html,base/pjax_base.html"|pjax:request %}
 {% load staticfiles %}
 {% block css %}
 {{ block.super }}
 <link rel="stylesheet" type="text/less" href="{% static "/static/css/home_style.less" %}">
+<link rel="stylesheet" href="{% static "css/sticky.css" %}" type="text/css" />
 {% endblock css %}
 {% block js %}
 <script type="text/javascript" src="{% static "js/sticky.js" %}"></script>
-<link rel="stylesheet" href="{% static "css/sticky.css" %}" type="text/css" />
 
 
 <script src="{% static "js/jquery.min.js" %}" type="text/javascript" charset="utf-8" ></script>
@@ -29,15 +29,12 @@
 
 {% block main %}
 <div class="row-fluid">
-  <div class="span12">
+  <div class="span11 offset1">
+    <h4> Favorite Books </h4>
     <div class="row-fluid">
       <div class="span12">
-        <div class="sidebox post">
-          <h4> Favorite Book </h4>
-          {% include 'social/favorite_books_page.html' %}
-          <script type="text/javascript" src="{% static "js/star_callback.js" %}"></script>
-
-        </div> <!-- post -->
+        {% include 'social/favorite_books_page.html' %}
+        <script type="text/javascript" src="{% static "js/star_callback.js" %}"></script>
       </div> <!-- span12 -->
     </div> <!-- row -->
   </div> <!-- span12 -->

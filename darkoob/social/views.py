@@ -300,6 +300,8 @@ def favorite_books(request):
     count = range(1, len(favorite_books) + 1)
 
     if request.is_ajax():
+        if request.META.get('HTTP_X_PJAX', 'false') == 'true':
+            pass
         template = 'social/favorite_books_page.html'
 
     request_user_favorite_books_list = request.user.userprofile.favorite_books.all()
