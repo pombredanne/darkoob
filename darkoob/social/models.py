@@ -7,8 +7,8 @@ from darkoob.book.models import Quote, Book
 import datetime
 from django.utils.timezone import utc
 SEX_CHOICES = (
-        ('Male', 'Male'),
-        ('Female', 'Female'),
+        ('M', 'Male'),
+        ('F', 'Female'),
 )
 
 class UserNode(StructuredNode):
@@ -50,8 +50,8 @@ class City(models.Model):
         return self.name 
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(User)
-    sex = models.CharField(max_length=6, choices=SEX_CHOICES)
+    user = models.OneToOneField(User, db_index=True)
+    sex = models.CharField(max_length=1, choices=SEX_CHOICES)
     birthday = models.DateField(null=True)
     mobile = models.CharField(max_length=20, null=True, blank=True)
     website = models.URLField(null=True, blank=True)

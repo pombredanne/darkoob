@@ -9,7 +9,7 @@ def first_user():
     return User.objects.get(pk=1)
 
 class Book(models.Model):
-    title = models.CharField(max_length=255)
+    title = models.CharField(max_length=255, db_index=True)
     publisher = models.ForeignKey('Publisher',null=True, blank=True)
     language = models.ForeignKey('Language', null=True, blank=True)
     authors = models.ManyToManyField('Author')
@@ -59,11 +59,11 @@ class Translation(models.Model):
         return unicode(self.book)
 
 class Review(models.Model):
-    book = models.ForeignKey(Book)
-    user = models.ForeignKey(User)
+    book = models.ForeignKey(Book, db_index=True)
+    user = models.ForeignKey(User, db_index=True)
     title = models.TextField()
     text = models.TextField()
-    submitted_time = models.DateTimeField(default=timezone.now())
+    submitted_time = models.DateTimeField(default=timezone.now(), db_index=True)
     rating = RatingField(range=5, can_change_vote=True, allow_delete=False, allow_anonymous=False)
 
     def __unicode__(self):
@@ -72,8 +72,8 @@ class Review(models.Model):
 class Quote(models.Model):
     author = models.ForeignKey(Author, null=True, blank=True)
     book = models.ForeignKey(Book, null=True, blank=True)
-    user = models.ForeignKey(User, null=True, blank=True)
-    submitted_time = models.DateTimeField(default=timezone.now())
+    user = models.ForeignKey(User, null=True, blank=True, db_index=True)
+    submitted_time = models.DateTimeField(default=timezone.now(), db_index=True)
     text = models.TextField()
 
     @classmethod
