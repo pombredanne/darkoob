@@ -5,6 +5,7 @@ from django.utils import timezone
 from djangoratings.fields import RatingField
 
 from mptt.models import MPTTModel, TreeForeignKey
+
 class Post(models.Model):
     user = models.ForeignKey(User, related_name='post_set')
     text = models.TextField()
@@ -26,24 +27,3 @@ class Comment(MPTTModel):
     class MPTTMeta:
         # comments on one level will be ordered by date of creation
         order_insertion_by=['added']
-
-class GroupPostStream(models.Model):
-    group = models.ForeignKey(Group)
-    post = models.ForeignKey(Post)
-
-    def __unicode__(self):
-        return unicode("group: %d    post: %d"%(self.group, self.post))
-
-class CommentStream(models.Model):
-    post = models.ForeignKey(Post)
-    parent = models.ForeignKey(Post, related_name='comment_stream_set')
-
-    def __unicode__(self):
-        return unicode("Comment with post: %d comes for Post with id: %s"%(self.post, parent))
-
-class ProfilePostStream(models.Model):
-    user = models.ForeignKey(User, related_name='profile_post_set')
-    post = models.ForeignKey(Post)
-
-    def __unicode__(self):
-        return unicode("Post with id: %d belong to user with id: %d"%(self.post, self.user))
