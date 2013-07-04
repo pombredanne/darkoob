@@ -3,6 +3,7 @@ from django.shortcuts import render, render_to_response
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.utils.text import slugify
+from django.utils import timezone
 from django.template import RequestContext
 from darkoob.group.forms import GroupForm
 from darkoob.group.models import Group
@@ -27,12 +28,21 @@ def group(request, group_id, group_slug):
             is_member = True
 
         posts = Post.objects.filter(group=group).order_by("-submitted_time").all()
+
+        # Calculate Deadlines for group
+        book_deadlines = []
+        for schedule in group.schedule_set.all():
+            deadline_set = schedule.deadline_set.all()
+            for i in range(len(deadline_set)):
+                deadline_set[i].time_percentage = (timezone.now() - deadline_set[i].start_time).total_seconds()  / (deadline_set[i].end_time - deadline_set[i].start_time).total_seconds() * 100
+            book_deadlines.append([ schedule.book , deadline_set])
         return render(request, template, {
             'group': group,
             'posts': posts,
             'quote': quote,
             'new_post_form': NewPostForm,
             'is_member': is_member,
+            'book_deadlines': book_deadlines,
         })
 
     else:
