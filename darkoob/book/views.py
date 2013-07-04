@@ -26,6 +26,10 @@ def page(request, book_id, book_title):
 
     if request.is_ajax():
         template = 'book/reviews.html'
+    from darkoob.migration.models import Migration
+
+    m = Migration() 
+    print 
 
     return render(request, template ,{
         # 'is_favorite_book': is_favorite_book,
@@ -34,6 +38,7 @@ def page(request, book_id, book_title):
         'rate': book.rating.get_rating(),
         'reviews': reviews,
         'count': count[::-1],
+        'migrations': Migration.objects.filter(book=book),
     })
 
 

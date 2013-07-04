@@ -2,6 +2,8 @@
 {% load staticfiles %}
 {% load thumbnail %}
 {% block css %}
+{% load avatar_tags %}
+
 {{ block.super }}
 <link rel="stylesheet" type="text/less" href="{% static "/static/css/profile_base_style.less" %}">
 <link rel="stylesheet" type="text/less" href="{% static "/static/css/home_style.less" %}">
@@ -89,6 +91,60 @@
 
       </div> <!-- span12 sidebox -->
     </div> <!-- row -->
+
+
+    <h4 class="migrations-link migrations-link-inactive pull-right"><i class="icon-chevron-left"></i>MIGRATIONS</h4>
+      <div class="migrations">
+        <div class="row-fluid">
+          <div class="span12 sidebox">
+            <div>
+              {% for migration in migrations %}
+                <div class="migration">
+
+                  <div class="migration-book">
+                    <a style="Display:none">{{ migration.book.title }}</a>
+                    {% thumbnail migration.book.thumb "50x50" crop="center" as im %}
+                      <img rel="tooltip" title="d" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+                    {% endthumbnail %}
+                  </div> <!-- migration-book -->
+
+                  <div class="offset1" style="display: inline-block;">
+                    <div class="migration-hop" style="display: inline-block;">
+                      <a style="Display:none">{{ migration.starter.get_full_name }}</a>
+                      {% avatar migration.starter 30%}
+                    </div>
+
+                    {% for hop in migration.hop_set.all|slice:":"|dictsort:"received_time" %}
+                      <i class="icon-chevron-right"></i>
+                      <div class="migration-hop" style="display: inline-block;">
+                        <a style="Display:none">{{ hop.host.get_full_name }}</a>
+                        {% avatar hop.host 30 %}
+                      </div>
+                    {% endfor %}
+                  </div>
+
+                </div> <!-- migration -->
+              {% endfor %}
+
+              <script type="text/javascript">         
+
+              $('.migration-book, .migration-hop').each(function(){
+
+                $($(this).children()[1]).removeAttr('data-original-title')
+                $($(this).children()[1]).attr('title',$(this).children()[0].text)
+                $($(this).children()[1]).tooltip({
+                  'placement': 'bottom'
+                });
+              });
+
+            </script>
+          </div>
+        </div> <!-- span12 -->
+      </div> <!-- row -->
+    </div> <!-- migrations -->
+
+
+
 
     <h4 class="sidebox-head">WRITE A REVIEW</h4>
     <div class="row-fluid">
