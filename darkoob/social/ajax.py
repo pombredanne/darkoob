@@ -54,9 +54,16 @@ def submit_post(request, text, type, author, book):
     if type == '0':
         post = Post.objects.create(user=request.user, text=text)
         t_rendered = render_to_string('post/post.html', {'post': post})
-        dajax.append('#id_new_post_position', 'innerHTML', t_rendered)
-        dajax.clear('#id_text', 'value')
-
+        dajax.prepend('#id_new_post_position', 'innerHTML', t_rendered)
+        dajax.script('''
+            $.pnotify({
+            title: 'Sharing',
+            type:'success',
+            text: 'Your Post shared',
+            opacity: .8
+          });
+            $('#id_text').val('');
+        ''')  
 
     if type == '1':
         # qoute type
@@ -75,11 +82,7 @@ def submit_post(request, text, type, author, book):
             quote = Quote.objects.create(user=request.user, text=text, book=book) # set author, book  
 
         t_rendered = render_to_string('post/post.html', {'post': quote})
-        dajax.append('#id_new_post_position', 'innerHTML', t_rendered)
-        dajax.clear('#id_text', 'value')
-
-
-        print t_rendered
+        dajax.prepend('#id_new_post_position', 'innerHTML', t_rendered)
         dajax.script('''
             $.pnotify({
             title: 'Sharing',
