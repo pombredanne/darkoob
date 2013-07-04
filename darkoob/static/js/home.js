@@ -88,6 +88,15 @@ function submit_private_key_callback(data){
   }
 }
 
+function left_nav_highlight(cls) {
+  var cur_active = $('.left-nav li.active');
+  cur_active.children('a').append('<i class="icon-chevron-right pull-right"></i>');
+  cur_active.toggleClass('active');
+  var next_active = $('.left-nav .' + cls);
+  next_active.toggleClass('active');
+  $('.icon-chevron-right', '.left-nav li.active').remove();
+}
+
 //TODO: It's very dirty code
 function close_1(){
   $('#follow_suggestion_1').remove();

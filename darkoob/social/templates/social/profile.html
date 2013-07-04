@@ -92,18 +92,6 @@ function edit_website_callback(data){
 </script>
 {% endblock js %}
 
-
-{% block home_active %}
-<li>
-  <a href="{% url 'social:home' %}"><i class="icon-home"></i> Home<i class="icon-chevron-right" style="float:right"></i></a>
-</li>
-{% endblock home_active%}
-{% block profile_active %}
-<li class="active">
-  <a href="#"><i class="icon-user"></i> Profile</a>
-</li>
-{% endblock profile_active%}
-
 {% block pjax_container %}
 <div class="row-fluid">
   <div class="span12">
@@ -218,4 +206,11 @@ function edit_website_callback(data){
 </div> <!-- span12 -->
 </div> <!-- row -->
 {% endblock pjax_container %}
+
+{% block bottom_js %}
+{{ block.super }}
+<script type="text/javascript">
+  left_nav_highlight('li-profile');
+</script>
+{% endblock bottom_js %}
 
