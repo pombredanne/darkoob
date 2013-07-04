@@ -42,6 +42,7 @@ class Deadline(models.Model):
 
 class Post(models.Model):
     user = models.ForeignKey(User, related_name='group_post_set')
+    group = models.ForeignKey(Group)
     text = models.TextField()
     submitted_time = models.DateTimeField(default=timezone.now(), db_index=True)
     noks = RatingField(range=1, can_change_vote=True, allow_delete=True, allow_anonymous=False)

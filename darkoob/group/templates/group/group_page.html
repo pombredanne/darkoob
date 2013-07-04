@@ -122,16 +122,20 @@
               </form>
             </div>
             <div class="span1 new_post_button">
-              <button class="btn btn-inverse" onclick="Dajaxice.darkoob.social.submit_post(Dajax.process, {'text': $('#id_text').val()})">Post</button>
+              <button class="btn btn-inverse" onclick="Dajaxice.darkoob.group.submit_post(Dajax.process, {'text': $('#id_text').val(), 'group_id': {{ group.id }} })">Post</button>
             </div>
           </div> <!-- row -->
         </div> <!-- sidebox -->
       </div> <!-- span11 -->
     </div> <!-- row -->
 
+
+      <div id="id_new_post_position">
+      </div>
+
     <div class="row-fluid">
       <div class="span12">
-        {% comment %}{% include "post/posts.html" %}{% endcomment %}
+        {% include "post/posts.html" %}
       </div> <!-- span12 -->
     </div> <!-- row -->
   </div> <!-- span -->

@@ -1,10 +1,13 @@
+from django.utils.translation import ugettext as _
 from django.utils import simplejson
 from dajaxice.decorators import dajaxice_register
-from django.utils.translation import ugettext as _
+from django.template.loader import render_to_string
+from dajax.core import Dajax
 
 from darkoob.migration.models import Migration, Hop
-from darkoob.group.models import Group
+from darkoob.group.models import Group, Post
 from darkoob.social.models import User
+
 
 
 @dajaxice_register(method='POST')
@@ -47,3 +50,24 @@ def group_toggle(request, group_id, user_id, is_member):
     else:
         is_member = not is_member
     return simplejson.dumps({'error': error, 'is_member': is_member})
+
+
+@dajaxice_register(method='POST')
+def submit_post(request, text, group_id):
+    dajax = Dajax()
+    post = None
+    group = Group.objects.get(id=group_id)
+    post = Post.objects.create(user=request.user, text=text, group=group)
+    t_rendered = render_to_string('post/post.html', {'post': post})
+    dajax.prepend('#id_new_post_position', 'innerHTML', t_rendered)
+    dajax.script('''
+        $.pnotify({
+            title: 'Sharing',
+            type:'success',
+            text: 'Your Post shared to group',
+            opacity: .8
+        });
+        $('#id_text').val('');
+    ''')
+    return dajax.json()
+  
