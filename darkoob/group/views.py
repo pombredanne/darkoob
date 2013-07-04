@@ -20,7 +20,7 @@ def group(request, group_id, group_slug):
         template = 'post/posts.html'
 
     if group and group_slug == slugify(group.name):
-        group.admins = group.admin.admin_set.all()
+        #group.admins = group.admin.admin_set.all()
         #group.members = group.members.all()
 
         is_member = False
@@ -36,12 +36,18 @@ def group(request, group_id, group_slug):
             for i in range(len(deadline_set)):
                 deadline_set[i].time_percentage = (timezone.now() - deadline_set[i].start_time).total_seconds()  / (deadline_set[i].end_time - deadline_set[i].start_time).total_seconds() * 100
             book_deadlines.append([ schedule.book , deadline_set])
+
+        # Is this user admin of group?
+        is_admin = False
+        if request.user == group.admin:
+            is_admin = True
         return render(request, template, {
             'group': group,
             'posts': posts,
             'quote': quote,
             'new_post_form': NewPostForm,
             'is_member': is_member,
+            'is_admin': is_admin,
             'book_deadlines': book_deadlines,
         })
 
@@ -62,7 +68,8 @@ def create_group(request):
             for member in cd['members'].strip(',').split(','):
                 try:
                     user = User.objects.get(username=member)
-                    group.members.add(user)
+                    if user.id != request.user.id:
+                        group.members.add(user)
                 except:
                     pass
             group.save()
