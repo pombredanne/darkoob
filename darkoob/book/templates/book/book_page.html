@@ -101,14 +101,9 @@
               {% for migration in migrations %}
                 <div class="migration">
 
-                  <div class="migration-book">
-                    <a style="Display:none">{{ migration.book.title }}</a>
-                    {% thumbnail migration.book.thumb "50x50" crop="center" as im %}
-                      <img rel="tooltip" title="d" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
-                    {% endthumbnail %}
-                  </div> <!-- migration-book -->
 
-                  <div class="offset1" style="display: inline-block;">
+
+                  <div  style="display: inline-block;">
                     <div class="migration-hop" style="display: inline-block;">
                       <a style="Display:none">{{ migration.starter.get_full_name }}</a>
                       {% avatar migration.starter 30%}
