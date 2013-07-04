@@ -29,7 +29,6 @@ def page(request, book_id, book_title):
     from darkoob.migration.models import Migration
 
     m = Migration() 
-    print 
 
     return render(request, template ,{
         # 'is_favorite_book': is_favorite_book,

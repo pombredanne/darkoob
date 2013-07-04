@@ -1,6 +1,7 @@
 import os
 import sys
 import datetime
+import shutil
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath('test.py')), '..'))
 sys.path.append(ROOT)
@@ -18,8 +19,8 @@ from darkoob.group.models import Group, Schedule, Deadline
 from darkoob.post.models import Post
 
 
-AVATARS_DIR = 'media/avatars'
-BOOKS_DIR = 'media/books'
+AVATARS_DIR = 'avatars'
+BOOKS_DIR = 'books'
 
 # Add users
 first_user = None
@@ -64,7 +65,7 @@ if not first_user:
     first_user = User.objects.get(pk=1)
 
 # Add avatars
-ad = os.path.dirname(AVATARS_DIR)
+ad = os.path.join('media', AVATARS_DIR)
 if not os.path.exists(ad):
     os.makedirs(ad)
 
@@ -84,15 +85,25 @@ modern_library = Publisher.objects.create(name='Modern Library')
 english = Language.objects.create(name='English')
 
 # Add books
-bd = os.path.dirname(BOOKS_DIR)
+bd = os.path.join('media', BOOKS_DIR)
 if not os.path.exists(bd):
     os.makedirs(bd)
+book_thumbs = {
+    'the_alchemist': 'the_alchemist.jpg',
+    'pride_and_prejudice': 'pride_and_prejudice.jpg',
+}
+for k in book_thumbs:
+    shutil.copy(
+        os.path.join('test', BOOKS_DIR, book_thumbs[k]),
+        os.path.join('media', BOOKS_DIR)
+    )
+    book_thumbs[k] = os.path.join(BOOKS_DIR, book_thumbs[k])
 
 the_alchemist = Book.objects.create(
     title='The Alchemist',
     publisher=harpercollins,
     language=english,
-    thumb=bd + 'the_alchemist.jpg',
+    thumb=os.path.join(BOOKS_DIR, 'the_alchemist.jpg'),
 )
 the_alchemist.authors.add(paulo_coelho)
 the_alchemist.tags.add('Fantasy', 'Spirituality')
@@ -101,7 +112,7 @@ pride_and_prejudice = Book.objects.create(
     title='Pride and Prejudice',
     publisher=modern_library,
     language=english,
-    thumb=bd + 'pride_and_prejudice.jpg',
+    thumb=os.path.join(BOOKS_DIR, 'pride_and_prejudice.jpg'),
 )
 pride_and_prejudice.authors.add(jane_austen)
 pride_and_prejudice.tags.add('Classics', 'Romance')
@@ -139,6 +150,7 @@ tas_deadline_1 = Deadline.objects.create(
     to_page=45,
     start_time=timezone.now(),
     end_time=timezone.now() + datetime.timedelta(days=5),
+    submitted_time=timezone.now(),
 )
 
 # Add posts
