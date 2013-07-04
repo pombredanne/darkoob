@@ -11,10 +11,11 @@ SEX_CHOICES = (
         ('F', 'Female'),
 )
 
-def node():
-    print "node"
 
-User.add_to_class('node', node)
+def node(self):
+    '''return node of a User'''
+    return UserNode.index.get(user_id=self.id) 
+User.add_to_class('node', node) 
 
 class UserNode(StructuredNode):
     user_id = IntegerProperty(required=True, index=True)
