@@ -1,10 +1,13 @@
 from django.utils import simplejson
 from dajaxice.decorators import dajaxice_register
 from dajax.core import Dajax
+from django.db import transaction
+
 from darkoob.book.models import Book, Review
 
 
 @dajaxice_register(method='POST')
+@transaction.commit_manually
 def rate(request, rate, book_id):
     done = False
     book = ''
@@ -13,13 +16,16 @@ def rate(request, rate, book_id):
         book.rating.add(score=rate, user=request.user, ip_address=request.META['REMOTE_ADDR'])
     except:
         errors.append('An error occoured in record in database')
+        transaction.rollback()
     else:
         done = True
+        transaction.commit()
 
     return simplejson.dumps({'done':done})
 
 
 @dajaxice_register(method='POST')
+@transaction.commit_manually
 def review_rate(request, rate, review_id):
     print "review id",review_id
     done = False
@@ -28,8 +34,10 @@ def review_rate(request, rate, review_id):
         review.rating.add(score=rate, user=request.user, ip_address=request.META['REMOTE_ADDR'])
     except:
         errors.append('An error occoured in record in database')
+        transaction.rollback()
     else:
         done = True
+        transaction.commit()
 
     return simplejson.dumps({'done': done})
 

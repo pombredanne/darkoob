@@ -6,6 +6,7 @@ from django.utils.translation import ugettext as _
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.template import RequestContext
+from django.db import transaction
 
 from darkoob.book.models import Book
 from darkoob.book.forms import NewReviewForm

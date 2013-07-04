@@ -3,6 +3,7 @@ from django.utils.translation import ugettext as _
 from django.template.loader import render_to_string
 from dajaxice.decorators import dajaxice_register
 from dajax.core import Dajax
+from django.db import transaction
 
 from darkoob.social.models import UserProfile, UserNode
 from django.contrib.auth.models import User
@@ -13,25 +14,31 @@ from avatar.templatetags import avatar_tags
 
 
 @dajaxice_register(method='POST')
+@transaction.commit_manually
 def star_book(request, book_id):
     try:
         book = Book.objects.get(id=book_id)
         request.user.userprofile.favorite_books.add(book)
     except:
         done = False
+        transaction.rollback()
     else:
         done = True
+        transaction.commit()
     return simplejson.dumps({'done': done, 'book_id': book_id})
 
 @dajaxice_register(method='POST')
+@transaction.commit_manually
 def follow_person(request, user_id):
     try:
         user = UserNode.index.get(user_id=request.user.id)
         user.follow_person(user_id)
     except:
         done = False
+        transaction.rollback()
     else:
         done = True
+        transaction.commit()
     return simplejson.dumps({'done': done, 'user_id': user_id})
 
 @dajaxice_register(method='POST')
@@ -48,55 +55,70 @@ def get_quote(request):
     return dajax.json()
 
 @dajaxice_register(method='POST')
+@transaction.commit_manually
 def submit_post(request, text, type, author, book):
     dajax = Dajax()
     post = None
     if type == '0':
-        post = Post.objects.create(user=request.user, text=text)
-        t_rendered = render_to_string('post/post.html', {'post': post})
-        dajax.prepend('#id_new_post_position', 'innerHTML', t_rendered)
-        dajax.script('''
-            $.pnotify({
-            title: 'Sharing',
-            type:'success',
-            text: 'Your Post shared',
-            opacity: .8
-          });
-            $('#id_text').val('');
-        ''')  
+        if text:
+            post = Post.objects.create(user=request.user, text=text)
+            t_rendered = render_to_string('post/post.html', {'post': post})
+            dajax.prepend('#id_new_post_position', 'innerHTML', t_rendered)
+            dajax.script('''
+                $.pnotify({
+                title: 'Sharing',
+                type:'success',
+                text: 'Your Post shared',
+                opacity: .8
+              });
+                $('#id_text').val('');
+            ''')  
+            transaction.commit()
+        else:
+            transaction.rollback()
+            #TODO: must check for input to be not null
+            pass
 
     if type == '1':
         # qoute type
-        try: 
-            author = Author.objects.get(name=author)
-        except Author.DoesNotExist:
-            #TODO: Check user reputation and error error if user score less than ?
-            author = Author.objects.create(name=author)
+        if text:
+            try: 
+                author = Author.objects.get(name=author)
+            except Author.DoesNotExist:
+                #TODO: Check user reputation and error error if user score less than ?
+                author = Author.objects.create(name=author)
 
-        try:
-            book = Book.objects.get(title=book)
-        except Book.DoesNotExist:
-            #TODO: Check user reputation and error error if user score less than ?
-            quote = Quote.objects.create(user=request.user, text=text, author=author)
+            try:
+                book = Book.objects.get(title=book)
+            except Book.DoesNotExist:
+                #TODO: Check user reputation and error error if user score less than ?
+                quote = Quote.objects.create(user=request.user, text=text, author=author)
+            else:
+                quote = Quote.objects.create(user=request.user, text=text, book=book) # set author, book  
+
+            transaction.commit()
+
+            t_rendered = render_to_string('post/post.html', {'post': quote})
+            dajax.prepend('#id_new_post_position', 'innerHTML', t_rendered)
+            dajax.script('''
+                $.pnotify({
+                title: 'Sharing',
+                type:'success',
+                text: 'your comment shared',
+                opacity: .8
+              });
+                $('#id_text').val('');
+                $('#title-look').val('');
+                $('#author-look').val('');
+            ''')        
         else:
-            quote = Quote.objects.create(user=request.user, text=text, book=book) # set author, book  
+            transaction.rollback()
+            pass
 
-        t_rendered = render_to_string('post/post.html', {'post': quote})
-        dajax.prepend('#id_new_post_position', 'innerHTML', t_rendered)
-        dajax.script('''
-            $.pnotify({
-            title: 'Sharing',
-            type:'success',
-            text: 'your comment shared',
-            opacity: .8
-          });
-            $('#id_text').val('');
-            $('#title-look').val('');
-            $('#author-look').val('');
-        ''')        
     return dajax.json()
 
 @dajaxice_register(method='POST')
+@transaction.commit_manually
 def edit_sex(request,sex):
     #TODO: In I18N should save only Male an Female in database 
     errors = []
@@ -104,12 +126,15 @@ def edit_sex(request,sex):
         UserProfile.objects.filter(user=request.user).update(sex=sex)
     except:
         errors.append(_('an error occoured in saving to database'))
+        transaction.rollback() 
     else:
+        transaction.commit() 
         done = True
 
     return simplejson.dumps({'done':done, 'sex':sex , 'errors':errors })
 
 @dajaxice_register(method='POST')
+@transaction.commit_manually
 def set_my_quote(request, quote_id):
     errors = []
     done = False
@@ -119,9 +144,11 @@ def set_my_quote(request, quote_id):
         UserProfile.objects.filter(user=request.user).update(quote=quote)
     except:
         errors.append(_('an error occoured in saving to database'))
+        transaction.rollback()
     else:
         done = True
         message = 'You change your favaorite quote'
+        transaction.commit()
 
     return simplejson.dumps({'done': done, 'errors': errors, 'message': message})
 
@@ -133,6 +160,7 @@ def date_validators(date):
     return errors
 
 @dajaxice_register(method='POST')
+@transaction.commit_manually
 def edit_birthday(request, day, year, month):
     errors = []
     done = False
@@ -143,12 +171,15 @@ def edit_birthday(request, day, year, month):
         UserProfile.objects.filter(user=request.user).update(birthday=birthday)
     except: 
         errors.append(_('Please enter a valid date'))
+        transaction.rollback()
     else: 
         done = True
+        transaction.commit()
 
     return simplejson.dumps({'done': done, 'birthday': birthday.strftime('%m/%d/%Y') , 'errors': errors})
 
 @dajaxice_register(method='POST')
+@transaction.commit_manually
 def edit_mobile(request, mobile):
     errors = []
     done = False
@@ -157,8 +188,10 @@ def edit_mobile(request, mobile):
     except: 
         errors.append(_('Please enter a valid date mobile number'))
         #TODO: a phone number validator
+        transaction.rollback()
     else: 
         done = True
+        transaction.commit()
 
     return simplejson.dumps({'done': done, 'mobile': mobile , 'errors': errors})
 
@@ -170,7 +203,9 @@ def is_user(request, username):
             return simplejson.dumps({'is_exist': True, 'url': avatar_tags.avatar_url(user,40), 'full_name': user.get_full_name()})
     except:
         return simplejson.dumps({'is_exist': False})
+
 @dajaxice_register(method='POST')
+@transaction.commit_manually
 def edit_website(request, website):
     errors = []
     done = False
@@ -181,6 +216,7 @@ def edit_website(request, website):
         validate(website)
     except ValidationError, e:
         errors.append(_('Please enter a valid website'))
+        transaction.rollback()
         return simplejson.dumps({'done': done, 'website': website , 'errors': errors})
 
 
@@ -188,6 +224,9 @@ def edit_website(request, website):
         UserProfile.objects.filter(user=request.user).update(website=website)
     except: 
         errors.append(_('Cannot store to database'))
+        transaction.rollback()
     else: 
         done = True
+        transaction.commit()
+
     return simplejson.dumps({'done': done, 'website': website , 'errors': errors})

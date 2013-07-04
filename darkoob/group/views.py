@@ -3,6 +3,8 @@ from django.shortcuts import render, render_to_response
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
+from django.db import transaction
+
 from darkoob.group.forms import GroupForm
 from darkoob.group.models import Group
 from darkoob.book.models import Quote
@@ -38,6 +40,7 @@ def group(request, group_id, group_slug):
         return HttpResponse("Group Is not exist!")
 
 @login_required
+@transaction.commit_manually
 def create_group(request):
     if request.method == 'POST':
         form = GroupForm(request.POST)
@@ -55,12 +58,13 @@ def create_group(request):
                 except:
                     pass
             group.save()
-            
     else:
         form = GroupForm()
+        transaction.rollback()
 
     groups = request.user.group_set.all()
     admin_groups = request.user.admin_set.all()
+    transaction.commit()
     return render(request, 'group/create_group.html', {'form': form, 'groups': groups, 'admin_groups': admin_groups })
 
 
