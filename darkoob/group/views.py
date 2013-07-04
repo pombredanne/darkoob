@@ -7,7 +7,7 @@ from django.utils import timezone
 from django.template import RequestContext
 from django.db import transaction
 
-from darkoob.group.forms import GroupForm
+from darkoob.group.forms import GroupForm, NewScheduleForm
 from darkoob.group.models import Group
 from darkoob.book.models import Quote
 from darkoob.social.forms import NewPostForm
@@ -51,6 +51,7 @@ def group(request, group_id, group_slug):
             'is_member': is_member,
             'is_admin': is_admin,
             'book_deadlines': book_deadlines,
+            'new_schedule_form': NewScheduleForm(),
         })
 
     else:
