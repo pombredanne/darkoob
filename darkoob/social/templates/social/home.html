@@ -53,26 +53,33 @@
 
           {% block profile_active %}
           <li>
-            <a href="{% url 'social:profile' %}"><i class="icon-user"></i> Profile<i class="icon-chevron-right" style="float:right"></i></a>
+            <a data-pjax href="{% url 'social:profile' %}">
+              <i class="icon-user"></i> Profile<i class="icon-chevron-right" style="float:right"></i>
+            </a>
           </li>
           {% endblock profile_active%}
 
           {% block followers_active %}
           <li>
-            <a href="{% url 'social:followers' %}"><i class="icon-eye-open"></i> Followers 
-              <i class="icon-chevron-right" style="float:right"></i></a>
+            <a data-pjax href="{% url 'social:followers' %}"><i class="icon-eye-open"></i> Followers 
+              <i class="icon-chevron-right" style="float:right"></i>
+            </a>
           </li>
           {% endblock followers_active%}
 
           {% block following_active %}
           <li>
-            <a href="{% url 'social:following' %}"><i class="icon-heart"></i> Following <i class="icon-chevron-right" style="float:right"></i></a>
+            <a data-pjax href="{% url 'social:following' %}">
+              <i class="icon-heart"></i> Following <i class="icon-chevron-right" style="float:right"></i>
+            </a>
           </li>
           {% endblock following_active%}
 
           {% block favorite_books_active %}
           <li>
-            <a data-pjax href="{% url 'social:favorite_books' %}"><i class="icon-star"></i> Favorite Books <i class="icon-chevron-right" style="float:right"></i></a>
+            <a data-pjax href="{% url 'social:favorite_books' %}">
+              <i class="icon-star"></i> Favorite Books <i class="icon-chevron-right" style="float:right"></i>
+            </a>
           </li>
           {% endblock favorite_books_active %}
 
@@ -165,103 +172,13 @@
         </div> <!-- span12 -->
       </div> <!-- row -->
     <div id="pjax-container">
-      <div class="row-fluid">
-        <div class="span1">
-          <img id="type_0" placeholder="Say it!" class="new-post-icon new-post-icon-active" src="{% static "/static/img/Pen-black-32.png" %}" alt="Text" onclick="change_post_type(0);"/>
-          <img id="type_1" placeholder="Share a quote" class="new-post-icon" src="{% static "/static/img/Quote-black-32.png" %}" alt="Quote" onclick="change_post_type(1);" />
-          <!-- <img id="post_type_2" class="new-post-icon" src="{% static "/static/img/Cronometer-black-32.png" %}" alt="Deadline" onclick="change_post_type(2)"/> -->
-        </div>
-        <div class="span11">
-          <div class="sidebox">
-            <div class="row-fluid">
-              <div class="span9 new_post_container">
-
-                <!-- TODO: author suggestion -->
-
-                <!-- start  TODO: this part should load after user click on quote-icon -->
-                  <link rel="stylesheet" type="text/less" href="{% static "/static/css/typeahead_suggestion_with_photo.css" %}">
-                  <script src="{% static "/static/js/underscore.min.js" %}"></script>
-                  <script src="{% static "/static/js/book_typeahead_suggestion.js" %}"></script>
-                <!-- end TODO: this part should load after user click on quote-icon -->
-                
-
-
-
-                <form method="post" action="{% url "social:new_post" %}" id="post_form" type='0'>
-                  {% csrf_token %}
-                  {{ new_post_form.text }}
-                  <div id="quote-detail"  style='display:none;'>
-                    {{ new_post_form.book }}
-                    {{ new_post_form.author }}
-                  </div>
-                </form>
-              </div>
-              <div class="span1 new_post_button">
-                <button id="post_button" class="btn btn-inverse" onclick="Dajaxice.darkoob.social.submit_post(Dajax.process, {'text': $('#id_text').val(), 'type': $('#post_form').attr('type'), 'book': $('#title-look').val(), 'author':$('#author-look').val()})">Post</button>
-              </div>
-            </div> <!-- row -->
-          </div> <!-- sidebox -->
-        </div> <!-- span12 -->
-      </div> <!-- row -->
-
-      <h4 class="migrations-link migrations-link-inactive pull-right"><i class="icon-chevron-left"></i>MIGRATIONS</h4>
-      <div class="migrations">
-        <div class="row-fluid">
-          <div class="span12 sidebox">
-            <div>
-              {% for migration in migrations %}
-                <div class="migration">
-
-                  <div class="migration-book">
-                    <a style="Display:none">{{ migration.book.title }}</a>
-                    {% thumbnail migration.book.thumb "50x50" crop="center" as im %}
-                      <img rel="tooltip" title="d" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
-                    {% endthumbnail %}
-                  </div> <!-- migration-book -->
-
-                  <div class="offset1" style="display: inline-block;">
-                    <div class="migration-hop" style="display: inline-block;">
-                      <a style="Display:none">{{ migration.starter.get_full_name }}</a>
-                      {% avatar migration.starter 30%}
-                    </div>
-
-                    {% for hop in migration.hop_set.all|slice:":"|dictsort:"received_time" %}
-                      <i class="icon-chevron-right"></i>
-                      <div class="migration-hop" style="display: inline-block;">
-                        <a style="Display:none">{{ hop.host.get_full_name }}</a>
-                        {% avatar hop.host 30 %}
-                      </div>
-                    {% endfor %}
-                  </div>
-
-                </div> <!-- migration -->
-              {% endfor %}
-
-              <script type="text/javascript">         
-
-              $('.migration-book, .migration-hop').each(function(){
-
-                $($(this).children()[1]).removeAttr('data-original-title')
-                $($(this).children()[1]).attr('title',$(this).children()[0].text)
-                $($(this).children()[1]).tooltip({
-                  'placement': 'bottom'
-                });
-              });
-
-              </script>
-            </div>
-          </div> <!-- span12 -->
-        </div> <!-- row -->
-      </div> <!-- migrations -->
-
-      <div id="id_new_post_position">
-      </div>
-
-      <div class="row-fluid">
-        <div class="span12">
-          {% include 'post/posts.html' with posts=posts request=request only %}
-        </div>
-      </div>
+      {% block pjax_container %}
+        <script type="text/javascript">
+          $(document).ready(function() {
+            $.pjax({url: "{% url 'social:home_stream' %}", container: '#pjax-container'});
+          });
+        </script>
+      {% endblock pjax_container %}
     </div> <!-- pjax-container -->
   </div> <!-- span11 -->
 </div> <!-- row -->

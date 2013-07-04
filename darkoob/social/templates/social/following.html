@@ -1,21 +1,16 @@
-{% extends "social/home.html" %}
+{% extends "social/home.html,base/pjax_base.html"|pjax:request %}
 {% load staticfiles %}
 {% block css %}
 {{ block.super }}
 <link rel="stylesheet" type="text/less" href="{% static "/static/css/home_style.less" %}">
+<link rel="stylesheet" href="{% static "css/sticky.css" %}" type="text/css" />
 {% endblock css %}
 {% block js %}
 <script type="text/javascript" src="{% static "js/sticky.js" %}"></script>
-<link rel="stylesheet" href="{% static "css/sticky.css" %}" type="text/css" />
-
-
 <script src="{% static "js/jquery.min.js" %}" type="text/javascript" charset="utf-8" ></script>
 <script src="{% static "js/endless.js" %}" type="text/javascript" charset="utf-8" ></script>
 <script src="{% static "js/endless_on_scroll.js" %}" type="text/javascript" charset="utf-8" ></script>
-
-
 {% endblock js %}
-
 
 {% block home_active %}
 <li >
@@ -28,7 +23,7 @@
 </li>
 {% endblock following_active%}
 
-{% block main %}
+{% block pjax_container %}
 <h4 class="sidebox-head">FOLLOWING</h4>
 
 <div class="row-fluid">
@@ -39,9 +34,5 @@
 
   </div> <!-- span12 -->
 </div> <!-- row -->
-{% endblock %}
-
-
-
-
+{% endblock pjax_container %}
 

@@ -1,3 +1,5 @@
+import operator
+from itertools import chain
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render, render_to_response
 from django.core.urlresolvers import reverse
@@ -58,16 +60,84 @@ def test(user):
         main = UserNode.index.get(user_id=i)
         for k in random:
             main.follow_person(k)
-   
+
+def common_context(request, context):
+    quotes = Quote.objects.order_by("-submitted_time")
+    quote = Quote.get_random_quote()
+    groups = request.user.group_set.all()
+    admin_groups = request.user.admin_set.all()
+    book_deadlines = []
+    for group in admin_groups:
+        for schedule in group.schedule_set.all():
+            deadline_set = schedule.deadline_set.all()
+            for i in range(len(deadline_set)):
+                deadline_set[i].time_percentage = (timezone.now() - deadline_set[i].start_time).total_seconds()  / (deadline_set[i].end_time - deadline_set[i].start_time).total_seconds() * 100
+            book_deadlines.append([ schedule.book , deadline_set])
+    for group in groups:
+        for schedule in group.schedule_set.all():
+            deadline_set = schedule.deadline_set.all()
+            for i in range(len(deadline_set)):
+                deadline_set[i].time_percentage = (timezone.now() - deadline_set[i].start_time).total_seconds()  / (deadline_set[i].end_time - deadline_set[i].start_time).total_seconds() * 100
+
+            book_deadlines.append([ schedule.book , deadline_set])
+
+    # Todo: Change this part
+    suggestion_list = list(User.objects.order_by('?')[0:4])    # TODO : ISSUE #54
+
+    common = {
+        'groups': groups,
+        'quote': quote,
+        'groups': groups,
+        'admin_groups': admin_groups,
+        'book_deadlines': book_deadlines,
+        'quote': quote,
+        'suggestion_list': suggestion_list,
+    }
+    context.update(common)
 
 @login_required
 def profile(request):
+    template = 'social/profile.html'
     form = EditProfileForm(request.POST)
-    # test(request.user)
-    return render_to_response('social/profile.html',{'user': request.user,
-                                                     'form': form,
-                                                     'groups': request.user.group_set.all(),
-                                                     'admin_groups': request.user.admin_set.all()})
+    context = {
+        'user': request.user,
+        'form': form,
+        'groups': request.user.group_set.all(),
+        'admin_groups': request.user.admin_set.all()
+    }
+    if request.is_ajax():
+        pass
+    else:
+        common_context(request, context)
+
+    return render(request, template, context)
+
+@login_required
+def home_stream(request):
+    template = 'social/home_stream.html'
+
+    quotes = Quote.objects.order_by("-submitted_time")
+    posts = Post.objects.order_by("-submitted_time")
+    thing = list(chain(posts, quotes))
+    thing = sorted(thing, key=operator.attrgetter('submitted_time'), reverse=True)
+    count = range(1, len(thing) + 1) 
+    migrations = Migration().get_user_related_migrations(request.user)
+    context = {
+        'user': request.user,
+        'new_post_form': NewPostForm(),
+        'posts': thing,
+        'count': count[::-1],
+        'migrations': migrations,
+        'quotes': quotes,
+    }
+
+    if request.is_ajax():
+        if not request.META.get('HTTP_X_PJAX', 'false') == 'true':
+            template = 'post/posts.html'
+    else:
+        common_context(request, context)
+
+    return render(request, template, context)
 
 def signup(request):
     if request.method == 'POST':
@@ -131,55 +201,10 @@ def change_password(request):
 def home(request):
     template = 'social/home.html'
 
-    #TODO: if two import fixed i should move them to top of page
-    from itertools import chain
-    import operator
+    context = {}
+    common_context(request, context)
 
-    posts = Post.objects.order_by("-submitted_time")
-    quotes = Quote.objects.order_by("-submitted_time")
-    thing = list(chain(posts, quotes))
-    thing = sorted(thing, key=operator.attrgetter('submitted_time'), reverse=True)
-    count = range(1, len(thing) + 1) 
-
-    groups = request.user.group_set.all()
-    admin_groups = request.user.admin_set.all()
-    book_deadlines = []
-    for group in admin_groups:
-        for schedule in group.schedule_set.all():
-            deadline_set = schedule.deadline_set.all()
-            for i in range(len(deadline_set)):
-                deadline_set[i].time_percentage = (timezone.now() - deadline_set[i].start_time).total_seconds()  / (deadline_set[i].end_time - deadline_set[i].start_time).total_seconds() * 100
-            book_deadlines.append([ schedule.book , deadline_set])
-    for group in groups:
-        for schedule in group.schedule_set.all():
-            deadline_set = schedule.deadline_set.all()
-            for i in range(len(deadline_set)):
-                deadline_set[i].time_percentage = (timezone.now() - deadline_set[i].start_time).total_seconds()  / (deadline_set[i].end_time - deadline_set[i].start_time).total_seconds() * 100
-
-            book_deadlines.append([ schedule.book , deadline_set])
-        
-    if request.is_ajax():
-        template = 'post/posts.html'
-
-    m = Migration() 
-    # print m.get_user_related_migrations(request.user)
-
-    # Todo: Change this part
-    suggestion_list = list(User.objects.order_by('?')[0:4])    # TODO : ISSUE #54
-
-    quote = Quote.get_random_quote()
-
-    return render(request, template, {
-        'new_post_form': NewPostForm(),
-        'posts': thing,
-        'count': count[::-1],
-        'groups': groups,
-        'admin_groups': admin_groups,
-        'book_deadlines': book_deadlines,
-        'quote': quote,
-        'migrations': m.get_user_related_migrations(request.user),
-        'suggestion_list': suggestion_list,
-    })
+    return render(request, template, context)
 
 
 @login_required
@@ -300,6 +325,7 @@ def user_favorite_books(request, username):
         'favorite_books': favorite_books,
         'count': count[::-1],
     })
+
 @login_required
 def favorite_books(request):
     template = 'social/favorite_books.html'

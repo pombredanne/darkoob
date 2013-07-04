@@ -1,4 +1,4 @@
-{% extends "social/home.html,base/pjax_base.html"|pjax:request %}
+{% extends "social/home.html" %}
 {% load staticfiles %}
 {% block css %}
 {{ block.super }}
@@ -27,7 +27,7 @@
 </li>
 {% endblock favorite_books_active %}
 
-{% block main %}
+{% block pjax_container %}
 <div class="row-fluid">
   <div class="span11 offset1">
     <h4> Favorite Books </h4>
@@ -39,17 +39,5 @@
     </div> <!-- row -->
   </div> <!-- span12 -->
 </div> <!-- row -->
-{% endblock %}
-
-
-
-
-
-
-
-
-
-
-
-
+{% endblock pjax_container %}
 
