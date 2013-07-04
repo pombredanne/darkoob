@@ -105,3 +105,9 @@
   </div>
 {% endblock pjax_container %}
 
+{% block bottom_js %}
+{{ block.super }}
+<script type="text/javascript">
+  left_nav_highlight('li-home');
+</script>
+{% endblock bottom_js %}

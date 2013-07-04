@@ -223,39 +223,44 @@ def following(request):
     user_node = UserNode.index.get(user_id=request.user.id)
     following = [User.objects.get(id=node.user_id) for node in user_node.following.all()]
     count = range(1, len(following) + 1)
-
     request_user_following_list = user_node.get_following_list()
- 
-    if request.is_ajax():
-        template = 'social/person_bar_page.html'
-
-    return render(request, template, {
+    context = {
         'persons': following,
         'request_user_following_list': request_user_following_list,
         'count': count[::-1],
-    })
+    }
+ 
+    if request.is_ajax():
+        if not request.META.get('HTTP_X_PJAX', 'false') == 'true':
+            template = 'social/person_bar_page.html'
+    else:
+        common_context(request, context)
+
+    return render(request, template, context)
 
 @login_required
 def followers(request):
     '''A view for showing all followers users of logged in user'''
-    
+
     template = 'social/followers.html'
+
     user_node = UserNode.index.get(user_id=request.user.id)
     followers = [User.objects.get(id=node.user_id) for node in user_node.followers.all()]
     count = range(1, len(followers) + 1)
-
     request_user_following_list = user_node.get_following_list()
-
-    if request.is_ajax():
-        template = 'social/person_bar_page.html'
-
-    return render(request, template, {
+    context = {
         'persons': followers,
         'request_user_following_list': request_user_following_list,
         'count': count[::-1],
-    })
+    }
 
+    if request.is_ajax():
+        if not request.META.get('HTTP_X_PJAX', 'false') == 'true':
+            template = 'social/person_bar_page.html'
+    else:
+        common_context(request, context)
 
+    return render(request, template, context)
 
 @login_required
 def new_post(request):
@@ -337,22 +342,24 @@ def user_favorite_books(request, username):
 @login_required
 def favorite_books(request):
     template = 'social/favorite_books.html'
+
     favorite_books = request.user.userprofile.favorite_books.all()
     count = range(1, len(favorite_books) + 1)
-
-    if request.is_ajax():
-        if request.META.get('HTTP_X_PJAX', 'false') == 'true':
-            pass
-        template = 'social/favorite_books_page.html'
-
     request_user_favorite_books_list = request.user.userprofile.favorite_books.all()
-    
-    return render(request, template, {
+    context = {
         'person_object': request.user,
         'favorite_books': favorite_books,
         'request_user_favorite_books_list': request_user_favorite_books_list,
         'count': count[::-1],
-    })
+    }
+
+    if request.is_ajax():
+        if not request.META.get('HTTP_X_PJAX', 'false') == 'true':
+            template = 'social/favorite_books_page.html'
+    else:
+        common_context(request, context)
+
+    return render(request, template, context)
 
 @login_required
 def user_following(request, username):
