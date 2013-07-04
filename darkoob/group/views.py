@@ -2,6 +2,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, render_to_response
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.utils.text import slugify
 from django.template import RequestContext
 from darkoob.group.forms import GroupForm
 from darkoob.group.models import Group
@@ -17,7 +18,7 @@ def group(request, group_id, group_slug):
     if request.is_ajax():
         template = 'post/posts.html'
 
-    if group and group_slug.lower() == '-'.join(group.name.lower().split()):
+    if group and group_slug == slugify(group.name):
         group.admins = group.admin.admin_set.all()
         #group.members = group.members.all()
 
@@ -55,13 +56,15 @@ def create_group(request):
                 except:
                     pass
             group.save()
-            
+            groups = request.user.group_set.all()
+            admin_groups = request.user.admin_set.all()
+            return HttpResponseRedirect('/group/%i/%s'%(group.id,slugify(group.name)))
+
     else:
         form = GroupForm()
-
-    groups = request.user.group_set.all()
-    admin_groups = request.user.admin_set.all()
-    return render(request, 'group/create_group.html', {'form': form, 'groups': groups, 'admin_groups': admin_groups })
+        groups = request.user.group_set.all()
+        admin_groups = request.user.admin_set.all()
+        return render(request, 'group/create_group.html', {'form': form, 'groups': groups, 'admin_groups': admin_groups })
 
 
 @login_required
