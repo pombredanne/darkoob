@@ -4,9 +4,9 @@ from django.template.loader import render_to_string
 from dajaxice.decorators import dajaxice_register
 from dajax.core import Dajax
 from django.db import transaction
+from django.contrib.auth.models import User
 
 from darkoob.social.models import UserProfile, UserNode
-from django.contrib.auth.models import User
 from darkoob.social.models import UserProfile
 from darkoob.book.models import Quote, Book, Author
 from darkoob.post.models import Post
@@ -54,19 +54,28 @@ def get_quote(request):
  
     return dajax.json()
 
+#@dajaxice_register(method='GET')
+#def submit_post(request, text, type, author, book):
+    #print 'type', type
+    #print 'text', text
+    #print 'author', author
+    #print 'book', book
+
 @dajaxice_register(method='POST')
 @transaction.commit_manually
 def submit_post(request, text, type, author, book):
     dajax = Dajax()
     post = None
     if type == '0':
+        pring 'type', type
         if text:
+            print "text is", text
             post = Post.objects.create(user=request.user, text=text)
             t_rendered = render_to_string('post/post.html', {'post': post})
             dajax.prepend('#id_new_post_position', 'innerHTML', t_rendered)
             dajax.script('''
                 $.pnotify({
-                title: 'Sharing',
+                title: 'Sharing Post',
                 type:'success',
                 text: 'Your Post shared',
                 opacity: .8
@@ -75,13 +84,22 @@ def submit_post(request, text, type, author, book):
             ''')  
             transaction.commit()
         else:
+            print "text doesn't exists"
+            dajax.script('''
+                         $.pnotify({
+                         title: 'Post',
+                         type:'error',
+                         text: 'Write something to post',
+                         opacity: .8
+                        });
+                         $('#id_text').val('');
+                         ''')
             transaction.rollback()
-            #TODO: must check for input to be not null
-            pass
-
     if type == '1':
+        print 'type1', type
         # qoute type
         if text:
+            print "text is", text
             try: 
                 author = Author.objects.get(name=author)
             except Author.DoesNotExist:
@@ -102,7 +120,7 @@ def submit_post(request, text, type, author, book):
             dajax.prepend('#id_new_post_position', 'innerHTML', t_rendered)
             dajax.script('''
                 $.pnotify({
-                title: 'Sharing',
+                title: 'Sharing Quote',
                 type:'success',
                 text: 'your comment shared',
                 opacity: .8
@@ -112,10 +130,18 @@ def submit_post(request, text, type, author, book):
                 $('#author-look').val('');
             ''')        
         else:
+            print "text doesn't exists"
+            dajax.script('''
+                         $.pnotify({
+                         title: 'Quote',
+                         type:'error',
+                         text: 'Write something to quote',
+                         opacity: .8
+                        });
+                         $('#id_text').val('');
+                         ''')  
             transaction.rollback()
-            pass
-
-    return dajax.json()
+            return dajax.json()
 
 @dajaxice_register(method='POST')
 @transaction.commit_manually
@@ -157,7 +183,7 @@ def date_validators(date):
     errors = []
     if not (date.year > 1900 and date.year < 2030):
         errors.append('year is not valid')
-    return errors
+        return errors
 
 @dajaxice_register(method='POST')
 @transaction.commit_manually
