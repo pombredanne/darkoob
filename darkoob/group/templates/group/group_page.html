@@ -31,12 +31,7 @@
           <i class="icon-chevron-right" style="float:right"></i></a>
       </li>
     </ul>
-    <div class="row-fluid">
-      <h4 class="sidebox-head">SCHEDULES</h4>
-      <div class="span12 simple_box">
-        
-      </div> <!-- span10 -->
-    </div> <!-- row -->
+    {% usekwacro deadline_box book_deadlines=book_deadlines is_admin=is_admin%}
      <div class="row-fluid">
       <h4 class="sidebox-head">MEMBERS</h4>
       <div class="span12 simple_box members">

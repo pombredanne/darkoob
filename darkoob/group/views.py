@@ -2,7 +2,11 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, render_to_response
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.utils.text import slugify
+from django.utils import timezone
 from django.template import RequestContext
+from django.db import transaction
+
 from darkoob.group.forms import GroupForm
 from darkoob.group.models import Group
 from darkoob.book.models import Quote
@@ -17,8 +21,8 @@ def group(request, group_id, group_slug):
     if request.is_ajax():
         template = 'post/posts.html'
 
-    if group and group_slug.lower() == '-'.join(group.name.lower().split()):
-        group.admins = group.admin.admin_set.all()
+    if group and group_slug == slugify(group.name):
+        #group.admins = group.admin.admin_set.all()
         #group.members = group.members.all()
 
         is_member = False
@@ -26,18 +30,34 @@ def group(request, group_id, group_slug):
             is_member = True
 
         posts = Post.objects.filter(group=group).order_by("-submitted_time").all()
+
+        # Calculate Deadlines for group
+        book_deadlines = []
+        for schedule in group.schedule_set.all():
+            deadline_set = schedule.deadline_set.all()
+            for i in range(len(deadline_set)):
+                deadline_set[i].time_percentage = (timezone.now() - deadline_set[i].start_time).total_seconds()  / (deadline_set[i].end_time - deadline_set[i].start_time).total_seconds() * 100
+            book_deadlines.append([ schedule.book , deadline_set])
+
+        # Is this user admin of group?
+        is_admin = False
+        if request.user == group.admin:
+            is_admin = True
         return render(request, template, {
             'group': group,
             'posts': posts,
             'quote': quote,
             'new_post_form': NewPostForm,
             'is_member': is_member,
+            'is_admin': is_admin,
+            'book_deadlines': book_deadlines,
         })
 
     else:
         return HttpResponse("Group Is not exist!")
 
 @login_required
+@transaction.commit_manually
 def create_group(request):
     if request.method == 'POST':
         form = GroupForm(request.POST)
@@ -51,17 +71,22 @@ def create_group(request):
             for member in cd['members'].strip(',').split(','):
                 try:
                     user = User.objects.get(username=member)
-                    group.members.add(user)
+                    if user.id != request.user.id:
+                        group.members.add(user)
                 except:
                     pass
             group.save()
-            
-    else:
-        form = GroupForm()
+            transaction.commit()
+            groups = request.user.group_set.all()
+            admin_groups = request.user.admin_set.all()
+            return HttpResponseRedirect('/group/%i/%s'%(group.id,slugify(group.name)))
 
-    groups = request.user.group_set.all()
-    admin_groups = request.user.admin_set.all()
-    return render(request, 'group/create_group.html', {'form': form, 'groups': groups, 'admin_groups': admin_groups })
+    else:
+        transaction.rollback()
+        form = GroupForm()
+        groups = request.user.group_set.all()
+        admin_groups = request.user.admin_set.all()
+        return render(request, 'group/create_group.html', {'form': form, 'groups': groups, 'admin_groups': admin_groups })
 
 
 @login_required

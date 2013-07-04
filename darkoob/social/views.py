@@ -10,6 +10,8 @@ from django.template import RequestContext
 from django.contrib.auth import authenticate
 from django.utils import timezone
 from django.db.models import Q
+from django.db import transaction
+from django.utils import simplejson
 # from django.shortcuts import get_object_or_404 # use this!!!
 
 from darkoob.social.models import UserProfile, UserNode
@@ -18,7 +20,6 @@ from darkoob.post.models import Post, Comment
 from darkoob.book.models import Quote
 from darkoob.migration.models import Migration
 from darkoob.group.models import Schedule
-from django.utils import simplejson
 
 from avatar.forms import PrimaryAvatarForm, DeleteAvatarForm
 # from avatar.models import Avatar
@@ -139,6 +140,7 @@ def home_stream(request):
 
     return render(request, template, context)
 
+@transaction.commit_manually
 def signup(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
@@ -155,10 +157,13 @@ def signup(request):
             else:
                 UserProfile.objects.filter(user=user).update(sex = 'Male')
             user.save()
+
+            transaction.commit()
             # u = authenticate(email, cd['password'])
             # return HttpResponseRedirect(reverse('social:home'))
             return render_to_response('registered.html',{'firstname':cd['first_name']})
         else:
+            transaction.rollback()
             return HttpResponseRedirect(reverse('index'))
 
     elif request.method == 'GET':
@@ -171,6 +176,7 @@ def signup(request):
         return HttpResponseRedirect(reverse('index'))
 
 @login_required
+@transaction.commit_manually
 def change_password(request):
     ##
     ## Please Dont remove:D
@@ -193,7 +199,9 @@ def change_password(request):
             if form.cleaned_data['parent_id'] != '':
                 comment.parent = Comment.objects.get(id=request.POST['parent_id'])
             comment.save()
+            transaction.commit()
     else:
+        transaction.rollback()
         form = CommentForm()
     return render_to_response('change_password.html', {'user': request.user, 'form': form})
 
@@ -427,7 +435,7 @@ def user_lookup(request):
                 Q(last_name__icontains=value) |
                 Q(username__icontains=value)
             )
-            results = [ {'username': x.username , 'photo': avatar_tags.avatar_url(x,30), 'full_name': x.get_full_name()}  for x in model_results]
+            results = [{'username': x.username , 'photo': avatar_tags.avatar_url(x,30), 'full_name': x.get_full_name()}  for x in model_results if x.id!=request.user.id ]
     to_json = []
     jt=simplejson.dumps(results)
     return HttpResponse(jt, mimetype='application/json')
