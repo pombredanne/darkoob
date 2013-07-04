@@ -51,13 +51,12 @@ def get_quote(request):
 def submit_post(request, text, type, author, book):
     dajax = Dajax()
     post = None
-
     if type == '0':
-        # post type
-        post = Post.objects.create(user_id=request.user, text=text)
+        post = Post.objects.create(user=request.user, text=text)
         t_rendered = render_to_string('post/post.html', {'post': post})
         dajax.append('#id_new_post_position', 'innerHTML', t_rendered)
         dajax.clear('#id_text', 'value')
+
 
     if type == '1':
         # qoute type
@@ -71,9 +70,16 @@ def submit_post(request, text, type, author, book):
             book = Book.objects.get(title=book)
         except Book.DoesNotExist:
             #TODO: Check user reputation and error error if user score less than ?
-            Quote.objects.create(user=request.user, text=text, author=author)
+            quote = Quote.objects.create(user=request.user, text=text, author=author)
         else:
-            Quote.objects.create(user=request.user, text=text, book=book) # set author, book  
+            quote = Quote.objects.create(user=request.user, text=text, book=book) # set author, book  
+
+        t_rendered = render_to_string('post/post.html', {'post': quote})
+        dajax.append('#id_new_post_position', 'innerHTML', t_rendered)
+        dajax.clear('#id_text', 'value')
+
+
+        print t_rendered
         dajax.script('''
             $.pnotify({
             title: 'Sharing',
