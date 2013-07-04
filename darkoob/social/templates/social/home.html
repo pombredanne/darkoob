@@ -150,47 +150,8 @@
 
     {% usekwacro group_box admin_groups=admin_groups groups=groups first_name='' %}
 
-    <div class="row-fluid">
+    {% usekwacro deadline_box book_deadlines=book_deadlines %}
 
-      <h4 class="sidebox-head">DEADLINES</h4>
-      <div class="span12 simple_box deadlines">
-        <div class="accordion" id="deadlines">
-          {% for book in book_deadlines %}
-          <div class="accordion-group">
-            <div class="accordion-heading">
-              <a class="accordion-toggle" data-toggle="collapse" data-parent="#deadlines" href="#deadline_details_{{ forloop.counter }}">
-                <i class="icon-book"></i> {{ book.0 }}
-              </a>
-            </div>
-            <div id="deadline_details_{{ forloop.counter }}" class="accordion-body collapse">
-              <div class="accordion-inner">
-                <ul style="margin-left: -1em;">
-                  {% for deadline in book.1 %}
-                    <li style="display: block">
-                      <div class="row-fluid">
-                        <div class="span4 offset1">
-                          <p style="float: left; display: inline-block; position: relative;">{{ deadline.from_page }} to {{ deadline.to_page }}</p>
-                        </div>
-                        <div class="span7">
-                          <div class="progress 
-                            {% if deadline.time_percentage > 90 %}progress-danger
-                            {% elif deadline.time_percentage > 60 %}progress-warning
-                            {% else %}progress-success{% endif %}">
-
-                            <div class="bar" style="width: {% if deadline.time_percentage < 3 %} 3{% else %}{{ deadline.time_percentage }}{%endif%}%"></div>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                  {% endfor %}
-                </ul>
-              </div>
-            </div>
-          </div>
-          {% endfor %}
-        </div>
-      </div> <!-- span10 -->
-    </div> <!-- row -->
   </div> <!-- span12 -->
 </div> <!-- row -->
 {% endblock sidebar %}
@@ -298,7 +259,7 @@
 
       <div class="row-fluid">
         <div class="span12">
-          {% include 'post/posts.html' %}
+          {% include 'post/posts.html' with posts=posts request=request only %}
         </div>
       </div>
     </div> <!-- pjax-container -->

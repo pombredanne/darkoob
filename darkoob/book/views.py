@@ -16,7 +16,7 @@ from darkoob.book.models import Review
 
 def page(request, book_id, book_title):
     try:
-        book = Book.objects.get(id = book_id, title = book_title)
+        book = Book.objects.get(id=book_id)
     except Book.DoesNotExist:
         raise Http404
 

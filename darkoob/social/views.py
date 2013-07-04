@@ -8,6 +8,7 @@ from django.template import RequestContext
 from django.contrib.auth import authenticate
 from django.utils import timezone
 from django.db.models import Q
+# from django.shortcuts import get_object_or_404 # use this!!!
 
 from darkoob.social.models import UserProfile, UserNode
 from darkoob.social.forms import RegisterForm, ChangePasswordForm, EditProfileForm, NewPostForm, CommentForm
@@ -63,7 +64,10 @@ def test(user):
 def profile(request):
     form = EditProfileForm(request.POST)
     # test(request.user)
-    return render_to_response('social/profile.html',{'user': request.user, 'form': form})
+    return render_to_response('social/profile.html',{'user': request.user,
+                                                     'form': form,
+                                                     'groups': request.user.group_set.all(),
+                                                     'admin_groups': request.user.admin_set.all()})
 
 def signup(request):
     if request.method == 'POST':
@@ -230,6 +234,8 @@ def user_profile(request, username):
 
     try:
         user = User.objects.get(username=username)
+        if user.id == request.user.id:
+            return HttpResponseRedirect('/profile/')
         groups = user.group_set.all()
         admin_groups = user.admin_set.all()
     except:
@@ -251,6 +257,7 @@ def user_profile(request, username):
 
     posts = Post.objects.filter(user=user).order_by("-submitted_time")
     count = range(1, len(posts) + 1)
+
     return render(request, template,
         {
             'person_object': user,
