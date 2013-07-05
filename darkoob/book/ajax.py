@@ -42,40 +42,50 @@ def review_rate(request, rate, review_id):
     return simplejson.dumps({'done': done})
 
 @dajaxice_register(method='POST')
+@transaction.commit_manually
 def submit_review(request, book_id, title, text):
     dajax = Dajax()
-    # TODO: checks
-    if len(text) < 200:
+    #TODO: checks if you have permission for posting review
+    try:
+        book = Book.objects.get(id=book_id)
+    except Book.DoesNotExist:
         dajax.script('''
             $.pnotify({
             title: 'Review',
             type:'error',
-            text: 'Complete your review. We need some checks',
+            text: 'This Book doesn\'t exsist.',
             opacity: .8
           });
           $('#id_text').val('');
           $('#id_title').val('');
-        ''')    
-    try:
-        book = Book.objects.get(id=book_id)
-    except Book.DoesNotExist:
-        pass
+        ''') 
+        transaction.rollback()
     else:
-        Review.objects.create(book=book, user=request.user, title=title, text=text)
-        dajax.script('''
-            $.pnotify({
-            title: 'Review',
-            type:'success',
-            text: 'Your review record',
-            opacity: .8
-          });
-          $('#id_text').val('');
-          $('#id_title').val('');
-     
-        ''')    
-        #    $('#id_text').val('');
-        # $('#title-look').val('');
-        # $('#author-look').val('');   
+        if len(text) < 200:
+            transaction.rollback()
+            dajax.script('''
+                $.pnotify({
+                title: 'Review',
+                type:'error',
+                text: 'Complete your review. We need some checks',
+                opacity: .8
+              });
+              $('#id_text').val('');
+              $('#id_title').val('');
+            ''')    
+        else:
+            Review.objects.create(book=book, user=request.user, title=title, text=text)
+            transaction.commit()
+            dajax.script('''
+                $.pnotify({
+                title: 'Review',
+                type:'success',
+                text: 'Your review record',
+                opacity: .8
+              });
+              $('#id_text').val('');
+              $('#id_title').val('');
+            ''')    
     return dajax.json()
 
 

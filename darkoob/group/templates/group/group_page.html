@@ -101,17 +101,30 @@
       </div> <!-- span12 -->
     </div> <!-- row -->
 
+    <script type="text/javascript">
+      function change_group_post_type(type){
+          $('#group_post_form').toggle();
+          $('#group_schedule_form').toggle();
+        $('.new-post-icon').each(function(index,value){
+          if (index==type){
+            $(this).attr('class','new-post-icon new-post-icon-active');
+          }else{
+            $(this).attr('class','new-post-icon');
+          }
+        })
+      }
+    </script>
+
     <div class="row-fluid">
       <div class="span1">
-        <img class="new-post-icon new-post-icon-active" src="{% static "/static/img/Pen-black-32.png" %}" alt="Text"/>
-        <img class="new-post-icon" src="{% static "/static/img/Quote-black-32.png" %}" alt="Quote"/>
-        <img class="new-post-icon" src="{% static "/static/img/Cronometer-black-32.png" %}" alt="Deadline"/>
+        <img class="new-post-icon new-post-icon-active" src="{% static "/static/img/Pen-black-32.png" %}" alt="Text" onclick="change_group_post_type(0);" />
+        <img class="new-post-icon" src="{% static "/static/img/Cronometer-black-32.png" %}" alt="Deadline" onclick="change_group_post_type(1);"/>
       </div>
       <div class="span11">
         <div class="sidebox">
-          <div class="row-fluid">
+          <div id="group_post_form" class="row-fluid">
             <div class="span9 new_post_container">
-              <form method="post" action="{% url "social:new_post" %}">
+              <form  method="post" action="{% url "social:new_post" %}">
                 {% csrf_token %}
                 {{ new_post_form.text }}
               </form>
@@ -120,6 +133,19 @@
               <button class="btn btn-inverse" onclick="Dajaxice.darkoob.group.submit_post(Dajax.process, {'text': $('#id_text').val(), 'group_id': {{ group.id }} })">Post</button>
             </div>
           </div> <!-- row -->
+
+          <div id="group_schedule_form" class="row-fluid" style="Display:None">
+            <div class="span9 new_post_container">
+              <form  method="post" action="{% url "social:new_post" %}">
+                {% csrf_token %}
+                {{ schedule_form.book }}
+              </form>
+            </div>
+            <div class="span1 new_post_button">
+              <button class="btn btn-inverse" onclick="Dajaxice.darkoob.group.submit_post(Dajax.process, {'text': $('#id_text').val(), 'group_id': {{ group.id }} })">SCHEDULE</button>
+            </div>
+          </div> <!-- row -->
+
         </div> <!-- sidebox -->
       </div> <!-- span11 -->
     </div> <!-- row -->

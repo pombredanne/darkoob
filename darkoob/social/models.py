@@ -11,10 +11,20 @@ SEX_CHOICES = (
         ('F', 'Female'),
 )
 
+
+def node(self):
+    '''return node of a User'''
+    return UserNode.index.get(user_id=self.id) 
+User.add_to_class('node', node) 
+
 class UserNode(StructuredNode):
     user_id = IntegerProperty(required=True, index=True)
     following = RelationshipTo('UserNode', 'FOLLOW')
     followers = RelationshipFrom('UserNode', 'FOLLOW')
+
+    def user(self):
+        ''' return user object of a node '''
+        return User.objects.get(id=user_id)
 
     def follow_person(self, user_id):
         ''' follow person that user.id=user_id'''
@@ -34,7 +44,8 @@ class UserNode(StructuredNode):
     def get_following_list(self):
         ''' return list of all user_id that followed by this user '''
         return [user.user_id for user in self.following.all()]
-    
+
+
 
 class Country(models.Model):
     name = models.CharField(max_length=50)
@@ -70,7 +81,9 @@ class UserProfile(models.Model):
     #     from darkoob.migration.models import Migration, Hop
     #     print Hop.objects.filter(host=user)
 
-
+    def node(self):
+        '''return node of a UserProfile'''
+        return UserNode.index.get(user_id=user.id) 
     def __unicode__(self):
         return self.user.get_full_name()
 
