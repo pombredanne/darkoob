@@ -39,6 +39,7 @@ $(document).ready(function() {
       }
       , updater: function ( selectedName ) {
         $( "#title-look" ).val( bondObjs[ selectedName ].id );
+        $( "#title-look" ).attr("id",bondObjs[ selectedName ].book_id)
         return selectedName;
       }
     });
