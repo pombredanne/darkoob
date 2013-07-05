@@ -7,7 +7,7 @@ from django.utils import timezone
 from django.template import RequestContext
 from django.db import transaction
 
-from darkoob.group.forms import GroupForm, NewScheduleForm
+from darkoob.group.forms import GroupForm, ScheduleForm
 from darkoob.group.models import Group
 from darkoob.book.models import Quote
 from darkoob.social.forms import NewPostForm
@@ -34,10 +34,11 @@ def group(request, group_id, group_slug):
         # Calculate Deadlines for group
         book_deadlines = []
         for schedule in group.schedule_set.all():
-            deadline_set = schedule.deadline_set.all()
+            deadline_set = schedule.deadline_set.exclude(end_time__lte=timezone.now())
             for i in range(len(deadline_set)):
                 deadline_set[i].time_percentage = (timezone.now() - deadline_set[i].start_time).total_seconds()  / (deadline_set[i].end_time - deadline_set[i].start_time).total_seconds() * 100
-            book_deadlines.append([ schedule.book , deadline_set])
+            if deadline_set:
+                book_deadlines.append([ schedule.book , deadline_set])
 
         # Is this user admin of group?
         is_admin = False
@@ -89,7 +90,6 @@ def create_group(request):
         admin_groups = request.user.admin_set.all()
         return render(request, 'group/create_group.html', {'form': form, 'groups': groups, 'admin_groups': admin_groups })
 
-
 @login_required
 def members(request):
     pass
@@ -97,3 +97,32 @@ def members(request):
 @login_required
 def schedules(request):
     pass
+
+@login_required
+def add_schedule(request, group_id, group_slug):
+    group = Group.objects.get(id=group_id)
+    if group and group_slug == slugify(group.name):
+        if request.method == 'POST':
+            form = ScheduleForm(request.POST)
+            if group.admin.id == request.user.id:
+                if form.is_valid():
+                    cd = form.cleaned_data
+                    book = Book.objects.get(name=cd['book'])
+                    if book:
+                        schedule = Schedule(group.id, book.id)
+                        schedule.save()
+                    groups = request.user.group_set.all()
+                    admin_groups = request.user.admin_set.all()
+                    return HttpResponseRedirect('/group/%i/%s'%(group.id,slugify(group.name)))
+            else:
+                pass
+                # Permisson Denied
+        else:
+            if group.admin.id == request.user.id:
+                form = ScheduleForm()
+                groups = request.user.group_set.all()
+                admin_groups = request.user.admin_set.all()
+                return render(request, '/group/add_schedule.html', {'form': form, 'groups': groups, 'admin_groups': admin_groups, 'group': group })
+            else:
+                pass
+                #permisson denied
