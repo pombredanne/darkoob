@@ -67,7 +67,6 @@ def submit_post(request, text, type, author, book):
     dajax = Dajax()
     post = None
     if type == '0':
-        pring 'type', type
         if text:
             print "text is", text
             post = Post.objects.create(user=request.user, text=text)
