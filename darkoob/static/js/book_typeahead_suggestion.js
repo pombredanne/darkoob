@@ -21,7 +21,7 @@ $(document).ready(function() {
       });
     });
 
-    $(".typeahead").typeahead({
+    $("#title-look").typeahead({
       source: function ( query, process ) {
         throttledRequest( query, process );
       }
