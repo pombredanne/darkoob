@@ -52,7 +52,7 @@ def group(request, group_id, group_slug):
             'is_member': is_member,
             'is_admin': is_admin,
             'book_deadlines': book_deadlines,
-            'new_schedule_form': NewScheduleForm(),
+            'schedule_form': ScheduleForm(),
         })
 
     else:
