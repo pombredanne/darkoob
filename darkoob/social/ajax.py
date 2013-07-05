@@ -61,6 +61,9 @@ def get_quote(request):
     #print 'author', author
     #print 'book', book
 
+
+
+
 @dajaxice_register(method='POST')
 @transaction.commit_manually
 def submit_post(request, text, type, author, book):
@@ -159,6 +162,59 @@ def edit_sex(request,sex):
     return simplejson.dumps({'done':done, 'sex':sex , 'errors':errors })
 
 @dajaxice_register(method='POST')
+def sex(request, sex):
+    dajax = Dajax()
+    if sex=='Male':
+        UserProfile.objects.filter(user=request.user).update(sex='M')
+    else:
+        UserProfile.objects.filter(user=request.user).update(sex='F')
+
+    dajax.script('''
+         $.pnotify({
+         title: 'Quote',
+         type:'success',
+         text: 'your Sex Updated',
+         opacity: .8
+        });
+    ''') 
+    return dajax.json()
+
+@dajaxice_register(method='POST')
+def edit_birthday(request, day, year, month):
+    print "month", month
+    print "day", day
+    print "year", year
+    from datetime import date
+    dajax = Dajax()
+
+    try:
+        birthday = date(int(year), int(month), int(day))
+    except:
+        dajax.script('''
+            $.pnotify({
+            type:'error',
+            text: 'Please enter a valid date',
+            opacity: .8
+            });
+        ''')
+    else:
+        dajax.script('''
+            $.pnotify({
+            title: 'Quote',
+            type:'success',
+            text: 'your Birthday Updated',
+            opacity: .8
+            });
+        ''')
+
+    # UserProfile.objects.filter(user=request.user).update(birthday=birthday)
+
+     
+    return dajax.json()
+
+
+
+@dajaxice_register(method='POST')
 @transaction.commit_manually
 def set_my_quote(request, quote_id):
     errors = []
@@ -184,24 +240,24 @@ def date_validators(date):
         errors.append('year is not valid')
         return errors
 
-@dajaxice_register(method='POST')
-@transaction.commit_manually
-def edit_birthday(request, day, year, month):
-    errors = []
-    done = False
-    birthday = ''
-    from datetime import date
-    try:
-        birthday = date(int(year), int(month), int(day))
-        UserProfile.objects.filter(user=request.user).update(birthday=birthday)
-    except: 
-        errors.append(_('Please enter a valid date'))
-        transaction.rollback()
-    else: 
-        done = True
-        transaction.commit()
+# @dajaxice_register(method='POST')
+# @transaction.commit_manually
+# def edit_birthday(request, day, year, month):
+#     errors = []
+#     done = False
+#     birthday = ''
+#     from datetime import date
+#     try:
+#         birthday = date(int(year), int(month), int(day))
+#         UserProfile.objects.filter(user=request.user).update(birthday=birthday)
+#     except: 
+#         errors.append(_('Please enter a valid date'))
+#         transaction.rollback()
+#     else: 
+#         done = True
+#         transaction.commit()
 
-    return simplejson.dumps({'done': done, 'birthday': birthday.strftime('%m/%d/%Y') , 'errors': errors})
+#     return simplejson.dumps({'done': done, 'birthday': birthday.strftime('%m/%d/%Y') , 'errors': errors})
 
 @dajaxice_register(method='POST')
 @transaction.commit_manually
