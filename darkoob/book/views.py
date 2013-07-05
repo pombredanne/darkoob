@@ -51,9 +51,12 @@ def book_lookup(request):
         if request.GET.has_key(u'query'):
             value = request.GET[u'query']
             model_results = Book.objects.filter(title__icontains=value)
-            results = [ {'book_title': x.title , 'photo': x.thumb.url , 'author_name': x.author_names() }  for x in model_results]
+            for model_result in model_results:
+                print model_result.thumb
+            results = [ {'book_title': x.title ,'photo': x.thumb.url , 'author_name': x.author_names() }  for x in model_results]
 
     to_json = []
 
     jt=simplejson.dumps(results)
+    print jt
     return HttpResponse(jt, mimetype='application/json')

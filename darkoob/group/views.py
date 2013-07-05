@@ -7,7 +7,7 @@ from django.utils import timezone
 from django.template import RequestContext
 from django.db import transaction
 
-from darkoob.group.forms import GroupForm, ScheduleForm
+from darkoob.group.forms import GroupForm, NewScheduleForm
 from darkoob.group.models import Group
 from darkoob.book.models import Quote
 from darkoob.social.forms import NewPostForm
@@ -103,7 +103,7 @@ def add_schedule(request, group_id, group_slug):
     group = Group.objects.get(id=group_id)
     if group and group_slug == slugify(group.name):
         if request.method == 'POST':
-            form = ScheduleForm(request.POST)
+            form = NewScheduleForm(request.POST)
             if group.admin.id == request.user.id:
                 if form.is_valid():
                     cd = form.cleaned_data
@@ -119,7 +119,7 @@ def add_schedule(request, group_id, group_slug):
                 # Permisson Denied
         else:
             if group.admin.id == request.user.id:
-                form = ScheduleForm()
+                form = NewScheduleForm()
                 groups = request.user.group_set.all()
                 admin_groups = request.user.admin_set.all()
                 return render(request, '/group/add_schedule.html', {'form': form, 'groups': groups, 'admin_groups': admin_groups, 'group': group })
