@@ -42,8 +42,9 @@ def group(request, group_id, group_slug):
 
         # Is this user admin of group?
         is_admin = False
-        if request.user == group.admin:
+        if request.user.id == group.admin.id:
             is_admin = True
+        print is_admin
         return render(request, template, {
             'group': group,
             'posts': posts,
