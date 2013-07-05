@@ -12,6 +12,8 @@ function callback_nok_post(data){
     $.pnotify({
       title: 'Noking failed!',
       text: 'Please try again later'
+      opacity: .8,
+      type: 'info',
     });
   }
 }

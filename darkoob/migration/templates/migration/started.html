@@ -1,13 +1,13 @@
 {% extends "social/home.html" %}
+
 {% load staticfiles %}
+
 {% block css %}
 {{ block.super }}
 <link rel="stylesheet" type="text/less" href="{% static "/static/css/home_style.less" %}">
 {% endblock css %}
-{% block js %}
-<script type="text/javascript" src="{% static "js/sticky.js" %}"></script>
-<link rel="stylesheet" href="{% static "css/sticky.css" %}" type="text/css" />
 
+{% block js %}
 {% endblock js %}
 
 {% block main %}

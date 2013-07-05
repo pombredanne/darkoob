@@ -43,10 +43,10 @@ def test(user):
         UserProfile.objects.filter(user=user).update(birthday=date(1993, 4, 5))
         if i%2:
             UserProfile.objects.filter(user=user).update(mobile='09381442622')
-            UserProfile.objects.filter(user=user).update(sex = 'Female')
+            UserProfile.objects.filter(user=user).update(gender = 'Female')
         else:
             UserProfile.objects.filter(user=user).update(quote=quote[i])
-            UserProfile.objects.filter(user=user).update(sex ='Male')
+            UserProfile.objects.filter(user=user).update(gender ='Male')
         user.save()
         users.append(user)
     from random import randint
@@ -153,10 +153,10 @@ def signup(request):
             user.first_name = cd['first_name']
             user.last_name = cd['last_name']
             UserProfile.objects.filter(user = user).update(birthday = date(cd['year'], cd['month'], cd['day']))
-            if cd['sex'] == 'Female':
-                UserProfile.objects.filter(user=user).update(sex = 'Female')
+            if cd['gender'] == 'Female':
+                UserProfile.objects.filter(user=user).update(gender = 'Female')
             else:
-                UserProfile.objects.filter(user=user).update(sex = 'Male')
+                UserProfile.objects.filter(user=user).update(gender = 'Male')
             user.save()
 
             transaction.commit()

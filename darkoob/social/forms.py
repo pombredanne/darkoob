@@ -3,7 +3,7 @@ from django.utils.translation import ugettext as _
 from django.core.validators import validate_email
 from django.contrib.auth.forms import AuthenticationForm
 
-SEX_CHOICES = (
+GENDER_CHOICES = (
     ('Male', 'Male'),
     ('Female', 'Female'),
 )
@@ -72,11 +72,11 @@ class EditProfileForm(forms.Form):
         })
     )
 
-    sex = forms.ChoiceField(
-        choices = SEX_CHOICES,
+    gender = forms.ChoiceField(
+        choices = GENDER_CHOICES,
     )
     
-    # sex = forms.CharField(label=_('Sex'))
+    # gender = forms.CharField(label=_('Gender'))
     mobile = forms.CharField(
         label = _('Mobile'),
         min_length = 7,
@@ -199,7 +199,7 @@ class RegisterForm(forms.Form):
         })
     )
 
-    sex = forms.ChoiceField(choices=SEX_CHOICES)
+    gender = forms.ChoiceField(choices=GENDER_CHOICES)
 
     month = forms.ChoiceField(choices=MONTH_CHOICES,
         widget=forms.Select(attrs={

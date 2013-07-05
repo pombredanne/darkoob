@@ -5,11 +5,9 @@
 {% block css %}
 {{ block.super }}
 <link rel="stylesheet" type="text/less" href="{% static "/static/css/home_style.less" %}">
-<link rel="stylesheet" href="{% static "css/sticky.css" %}" type="text/css" />
 {% endblock css %}
 
 {% block js %}
-<script type="text/javascript" src="{% static "js/sticky.js" %}"></script>
 <script src="{% static "js/jquery.min.js" %}" type="text/javascript" charset="utf-8" ></script>
 <script src="{% static "js/endless.js" %}" type="text/javascript" charset="utf-8" ></script>
 <script src="{% static "js/endless_on_scroll.js" %}" type="text/javascript" charset="utf-8" ></script>

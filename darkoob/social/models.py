@@ -6,7 +6,7 @@ from darkoob.book.models import Quote, Book
 
 import datetime
 from django.utils.timezone import utc
-SEX_CHOICES = (
+GENDER_CHOICES = (
         ('M', 'Male'),
         ('F', 'Female'),
 )
@@ -62,7 +62,7 @@ class City(models.Model):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, db_index=True)
-    sex = models.CharField(max_length=1, choices=SEX_CHOICES)
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
     birthday = models.DateField(null=True)
     mobile = models.CharField(max_length=20, null=True, blank=True)
     website = models.URLField(null=True, blank=True)
