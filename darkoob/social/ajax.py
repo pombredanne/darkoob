@@ -144,11 +144,11 @@ def submit_post(request, text, type, author, book):
 
 @dajaxice_register(method='POST')
 @transaction.commit_manually
-def edit_sex(request,sex):
+def edit_gender(request,gender):
     #TODO: In I18N should save only Male an Female in database 
     errors = []
     try:
-        UserProfile.objects.filter(user=request.user).update(sex=sex)
+        UserProfile.objects.filter(user=request.user).update(gender=gender)
     except:
         errors.append(_('an error occoured in saving to database'))
         transaction.rollback() 
@@ -156,7 +156,7 @@ def edit_sex(request,sex):
         transaction.commit() 
         done = True
 
-    return simplejson.dumps({'done':done, 'sex':sex , 'errors':errors })
+    return simplejson.dumps({'done':done, 'gender':gender , 'errors':errors })
 
 @dajaxice_register(method='POST')
 @transaction.commit_manually

@@ -7,7 +7,7 @@
 {{ block.super }}
 <link rel="stylesheet" type="text/less" href="{% static "/static/css/home_style.less" %}">
 <style type="text/css">
-#sex_field{
+#gender_field{
   Display:none;
 }
 #birthday_field{
@@ -33,7 +33,7 @@ function edit_animation(editbox, hidebox, showbox){
   });
 }
 $(function() {
-  edit_animation('#edit_sex','#sex_box','#sex_field');
+  edit_animation('#edit_gender','#gender_box','#gender_field');
   edit_animation('#edit_birthday','#birthday_box','#birthday_field');
   edit_animation('#edit_mobile','#mobile_box','#mobile_field');
   edit_animation('#edit_website','#website_box','#website_field');
@@ -41,12 +41,12 @@ $(function() {
 </script>
 
 <script>
-function edit_sex_callback(data){
+function edit_gender_callback(data){
   // alert(data.done)
   if (data.done){
-    $('#sex_field').slideUp('normal');
-    $('#sex_box').slideDown('normal');
-    document.getElementById("sex_text").innerHTML = data.sex;	
+    $('#gender_field').slideUp('normal');
+    $('#gender_box').slideDown('normal');
+    document.getElementById("gender_text").innerHTML = data.gender;	
   }else{
     $.pnotify({
       title: 'Failed',
@@ -148,13 +148,13 @@ function edit_website_callback(data){
 
 
           <b>Gender: </b>
-          <span id="sex_box">
-            <vahid id="sex_text">{{ user.userprofile.sex }}</vahid> <a id="edit_sex"  alt="Edit"><i class="icon-edit"></i></a>
+          <span id="gender_box">
+            <vahid id="gender_text">{{ user.userprofile.gender }}</vahid> <a id="edit_gender"  alt="Edit"><i class="icon-edit"></i></a>
           </span>
 
-          <span id='sex_field'>
+          <span id='gender_field'>
             <form class="form-inline">
-            {{ form.sex }} <button class="btn" type="button" onmousedown="Dajaxice.darkoob.social.edit_sex(edit_sex_callback,{'sex':$('#id_sex').val()})">change</button>
+            {{ form.gender }} <button class="btn" type="button" onmousedown="Dajaxice.darkoob.social.edit_gender(edit_gender_callback,{'gender':$('#id_gender').val()})">change</button>
           </form>
           </span>
           <br/>
