@@ -1,4 +1,3 @@
-$(document).ready(function() {
   $(function(){
     var bondObjs = {};
     var bondNames = [];
@@ -44,4 +43,3 @@ $(document).ready(function() {
       }
     });
   });
-});
