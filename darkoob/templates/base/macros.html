@@ -129,7 +129,7 @@
         {% endfor %}
       </div>
       {% if is_admin %}
-      <em><a href="#">add new schedule</a></em>
+      <em><a href="{% url 'group:add_schedule' group_id=group.id group_slug=group.name|slugify %}">add new schedule</a></em>
       {% endif %}
     </div> <!-- span10 -->
   </div> <!-- row -->

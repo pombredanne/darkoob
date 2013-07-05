@@ -42,8 +42,9 @@ def group(request, group_id, group_slug):
 
         # Is this user admin of group?
         is_admin = False
-        if request.user == group.admin:
+        if request.user.id == group.admin.id:
             is_admin = True
+
         return render(request, template, {
             'group': group,
             'posts': posts,
@@ -52,7 +53,7 @@ def group(request, group_id, group_slug):
             'is_member': is_member,
             'is_admin': is_admin,
             'book_deadlines': book_deadlines,
-            'schedule_form': ScheduleForm(),
+            'schedule_form': NewScheduleForm(),
         })
 
     else:
