@@ -24,8 +24,6 @@
 {% endblock css %}
 {% block js %}
 {{ block.super }}
-<script type="text/javascript" src="{% static "js/sticky.js" %}"></script>
-<link rel="stylesheet" href="{% static "css/sticky.css" %}" type="text/css" />
 
 <script type="text/javascript">
 function edit_animation(editbox, hidebox, showbox){
@@ -50,42 +48,77 @@ function edit_sex_callback(data){
     $('#sex_box').slideDown('normal');
     document.getElementById("sex_text").innerHTML = data.sex;	
   }else{
-    $.sticky(data.errors);
+    $.pnotify({
+      title: 'Failed',
+      text: data.error,
+      opacity: .8,
+      type: 'info',
+    });
   }
 }
 
 function edit_birthday_callback(data){
   if (data.done) {
-    $.sticky('<B> your birthday changed</b>');
+    $.pnotify({
+      title: 'Birthday changed',
+      text: 'Your birthday has successfully changed',
+      type: 'info',
+      opacity: .8,
+    });
     $('#birthday_field').slideUp('normal');
     $('#birthday_box').slideDown('normal');
     document.getElementById("birthday_text").innerHTML = data.birthday;	
   } else {
-    $.sticky(data.errors);
+    $.pnotify({
+      title: 'Failed',
+      text: data.errors,
+      opacity: .8,
+      type: 'info',
+    });
   }
 }
 
 function edit_mobile_callback(data){
   // alert(data.done)
   if (data.done){
-    $.sticky('<B> your mobile changed</b>');
+    $.pnotify({
+      title: 'Mobile number changed',
+      text: 'Your mobile number has successfully changed
+      opacity: .8,
+      type: 'info',
+    });
     $('#mobile_field').slideUp('normal');
     $('#mobile_box').slideDown('normal');
     document.getElementById("mobile_text").innerHTML = data.mobile;	
   }else{
-    $.sticky(data.errors);
+    $.pnotify({
+      title: 'Failed',
+      text: data.errors,
+      opacity: .8,
+      type: 'info',
+    });
   }
 }
 
 function edit_website_callback(data){
   // alert(data.done)
   if (data.done){
-    $.sticky('<B> your website changed</b>');
+    $.pnotify({
+      title: 'Website changed',
+      text: 'Your website has successfully changed
+      opacity: .8,
+      type: 'info',
+    });
     $('#website_field').slideUp('normal');
     $('#website_box').slideDown('normal');
     document.getElementById("website_text").innerHTML = data.website;	
   }else{
-    $.sticky(data.errors);
+    $.pnotify({
+      title: 'Failed',
+      text: data.errors,
+      opacity: .8,
+      type: 'info',
+    });
   }
 }
 
