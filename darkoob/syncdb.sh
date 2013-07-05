@@ -15,8 +15,7 @@ python darkoob/test/drop_nodes.py
 if [ $? -eq 0 ]; then
   python manage.py syncdb
   if [ $? -eq 0 ]; then
-    python darkoob/test/test.py
+    cd darkoob
+    python test/test.py
   fi
 fi
-
-cd darkoob
