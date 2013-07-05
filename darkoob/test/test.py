@@ -17,6 +17,7 @@ from darkoob.social.models import UserNode
 from darkoob.book.models import Author, Quote, Publisher, Book, Language
 from darkoob.group.models import Group, Schedule, Deadline
 from darkoob.post.models import Post
+from darkoob.migration.models import Migration, Hop
 
 
 AVATARS_DIR = 'avatars'
@@ -199,4 +200,25 @@ p4 = Post.objects.create(
     submitted_time=timezone.now(),
 )
 
+# Add migrations
+m1 = Migration.objects.create(
+    book=the_alchemist,
+    starter=first_user,
+    starter_message="I really enjoyed reading this book, somehow you understand\
+    what the writer is saying, the pains the character is feeling, etc.",
+    private_key="E31AFAD4",
+)
 
+# Add hops
+h1 = Hop.objects.create(
+    migration=m1,
+    host=aryan_baghi,
+)
+h2 = Hop.objects.create(
+    migration=m1,
+    host=vahid_kharazi,
+)
+h2 = Hop.objects.create(
+    migration=m1,
+    host=afshin_rodgar,
+)

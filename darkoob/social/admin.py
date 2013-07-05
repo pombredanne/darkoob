@@ -3,7 +3,7 @@ from models import UserProfile, Education, School, City, Country
 
 class UserProfileAdmin(admin.ModelAdmin):
     search_fields = ('user', 'city', 'mobile')
-    list_display = ('user', 'sex', 'birthday', 'city')
+    list_display = ('user', 'gender', 'birthday', 'city')
 
 class EducationAdmin(admin.ModelAdmin):
     list_display = ('user_profile', 'school')

@@ -29,7 +29,7 @@
       <div class="media-body">
         <h4 class="media-heading"><a href="{% url 'social:user_profile' username=user.username %}">
         {{person_object.first_name|capfirst}} {{person_object.last_name|capfirst}}</a></h4>
-        {{ person_object.userprofile.sex }}<br />
+        {{ person_object.userprofile.gender }}<br />
         {{ person_object.userprofile.birthday }}<br />
         It is {% now "c" %} 
 
