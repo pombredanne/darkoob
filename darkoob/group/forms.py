@@ -14,7 +14,7 @@ class GroupForm(forms.Form):
     members = forms.CharField(required=False, widget=forms.HiddenInput())
 
 
-class NewScheduleForm(forms.Form):
+class ScheduleForm(forms.Form):
     book = forms.CharField(
         widget=forms.TextInput(attrs={
             'placeholder': _('Book Name'),

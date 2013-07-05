@@ -1,0 +1,50 @@
+{% extends "social/home.html" %}
+{% load staticfiles %}
+{% block css %}
+{{ block.super }}
+<link rel="stylesheet" type="text/less" href="{% static "/static/css/profile_base_style.less" %}">
+<link rel="stylesheet" type="text/less" href="{% static "/static/css/home_style.less" %}">
+{% endblock css %}
+
+
+
+{% block title %}Group{% endblock title %}
+
+{% block main %}
+<div class="row-fluid">
+  <div class="span12">
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="simple-box">
+          <p>
+
+          </p>
+          <form id="add_schedule_form" action='{% url "group:add_schedule" group.id group.name|slugify %}' method='post' class="form-inline">
+           {% csrf_token %}
+           {{ form.book }}
+           <button type="button" id="add_schedule_button" onmousedown="#" class="btn btn-primary">Add Schedule</button>
+         </form>
+         <link rel="stylesheet" type="text/less" href="{% static "/static/css/typeahead_suggestion_with_photo.css" %}">
+         <script src="{% static "/static/js/underscore.min.js" %}"></script>
+
+         <div id="added-books"></div>
+         
+         <br/>
+         <input
+         type="text"
+         id="user-look"
+         class="span6 typeahead"
+         placeholder="Username"
+         autocomplete="off"
+         data-provide="typeahead"
+         />
+
+         <script src="{% static "/static/js/create_group.js" %}"></script>
+         <script src="{% static "/static/js/user_typeahead_suggestion.js" %}"></script>
+
+       </div>
+     </div> <!-- span12 -->
+   </div> <!-- row -->
+ </div> <!-- span -->
+</div> <!-- row -->
+{% endblock main %}
