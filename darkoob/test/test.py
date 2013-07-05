@@ -65,12 +65,41 @@ aryan_baghi = User.objects.create(
 if not first_user:
     first_user = User.objects.get(pk=1)
 
+users = {
+    'first_user': first_user,
+    'afshin_rodgar': afshin_rodgar,
+    'sina_mahmoodi': sina_mahmoodi,
+    'vahid_kharazi': vahid_kharazi,
+    'aryan_baghi': aryan_baghi,
+}
+
 # Add avatars
 ad = os.path.join('media', AVATARS_DIR)
 if not os.path.exists(ad):
     os.makedirs(ad)
 
+avatars = {}
+for user in users:
+    shutil.copy(
+        os.path.join('test', AVATARS_DIR, user + '.jpg'),
+        os.path.join('media', AVATARS_DIR)
+    )
+    avatars[user] = Avatar.objects.create(
+        user=users[user],
+        primary=True,
+        avatar=os.path.join(AVATARS_DIR, user + '.jpg'),
+        date_uploaded=timezone.now(),
+    )
+
 # Add userprofiles
+
+# User followings
+#first_user.node().follow_person(vahid_kharazi.id)
+#aryan_baghi.node().follow_person(first_user.id)
+#afshin_rodgar.node().follow_person(vahid_kharazi.id)
+#aryan_baghi.node().follow_person(first_user.id)
+#vahid_kharazi.node().follow_person(first_user.id)
+#first_user.node().follow_person(afshin_rodgar.id)
 
 # Add authors
 albert_einstein = Author.objects.create(name='Albert Einstein')
