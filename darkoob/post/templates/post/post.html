@@ -49,8 +49,8 @@
             {{ post.text }}
             </div>
             <div class="row-fluid">
-              <button class="btn  btn-mini noks" data-toggle="tooltip">
-                <i class="icon-chevron-right" onclick="Dajaxice.darkoob.post.nok(callback_nok_post,{'post_id':{{post.id}}})"></i>
+              <button class="btn  btn-mini noks" data-toggle="tooltip" onclick="Dajaxice.darkoob.post.nok(callback_nok_post,{'post_id':{{post.id}}})">
+                <i class="icon-chevron-right"></i>
                 <span>{{ post.noks.votes }}</span>
               </button>
             </div>

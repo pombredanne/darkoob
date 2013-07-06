@@ -20,7 +20,7 @@ function change_post_type(type){
 $(document).ready(function() {
   $(document).pjax('[data-pjax]a, a[data-pjax]', '#pjax-container');
 
-  $('.migrations-link').click(function() {
+  $(document).on('click', '.migrations-link', function() {
     $('.migrations').slideToggle();
     if ($('.migrations-link').hasClass('migrations-link-inactive')) {
       $('.migrations-link').removeClass('migrations-link-inactive')
@@ -42,11 +42,6 @@ $(".deadline").children('a').bind("click", function () {
   span = $(this).parent().children('span');
   span.slideToggle(5000);
   //span.slideToggle('slow');
-});
-
-$('.noks').tooltip({
-  title: 'Nok',
-  placement: 'right',
 });
 
 function set_my_quote_callback(data){

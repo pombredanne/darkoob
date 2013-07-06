@@ -203,7 +203,7 @@ p2 = Post.objects.create(
     like (not restricted to just what they look like).\
     So you provide the system with a huge amount of data so that the\
     system can itself learn from that data.",
-    submitted_time=timezone.now() - datetime.timedelta(days=-2),
+    submitted_time=timezone.now() - datetime.timedelta(days=2),
 )
 
 p3 = Post.objects.create(
@@ -212,7 +212,7 @@ p3 = Post.objects.create(
     work helping the lawyers a lot. This is because there is a lot of legal\
     work that doesn't require a huge amount of skill (or finding loopholes)\
     but a lot of knowledge and can be automated.""",
-    submitted_time=timezone.now() - datetime.timedelta(hours=-5),
+    submitted_time=timezone.now() - datetime.timedelta(hours=5),
 )
 
 p4 = Post.objects.create(
