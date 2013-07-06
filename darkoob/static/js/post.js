@@ -5,7 +5,7 @@ $(document).ready(function() {
   });
 });
 
-function callback_nok_post(data){
+function callback_nok_post(data) {
   if (data.ok) {
     $('#id_post_id_' + data.pid + ' .noks span').html(data.noks);
   } else {

@@ -24,18 +24,18 @@
 {% endkwacro %}
 
 {% kwacro top_quote quote_=quote %}
-  <div class="top-quote">
+  <div id="top-quote">
     <blockquote quote-id="{{ quote_.id }}">
-      <p id="quote_text">{{ quote_.text }}</p>
-      <small id="quote_detail">
+      <p id="quote-text">{{ quote_.text }}</p>
+      <small id="quote-detail">
         {{ quote_.author }}{% if quote_.book %} ({{ quote_.book }}){% endif %}
       </small>
 
-      <i data-toggle="tooltip" id="set-quote-icon" class="icon-ok pull-right"
+      <i data-toggle="tooltip" class="icon-ok pull-right set-quote-icon"
         onclick="javascript:Dajaxice.darkoob.social.set_my_quote(
-        set_my_quote_callback, {'quote_id': $('.top-quote blockquote').attr('quote-id') })">
+        set_my_quote_callback, {'quote_id': $('#top-quote blockquote').attr('quote-id') })">
       </i>
-      <i data-toggle="tooltip" id="next-quote-icon" class="icon-circle-arrow-right pull-right"
+      <i data-toggle="tooltip" class="icon-circle-arrow-right pull-right next-quote-icon"
         onclick="Dajaxice.darkoob.social.get_quote(Dajax.process,{})">
       </i> 
     </blockquote>

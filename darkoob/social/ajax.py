@@ -45,12 +45,12 @@ def follow_person(request, user_id):
 def get_quote(request):
     dajax = Dajax()
     quote = Quote.get_random_quote()
-    detail = quote.author.name 
+    detail = quote.author.name
     if quote.book:
         detail += ' (' + quote.book.title + ')'
-    dajax.assign('#quote_text', 'innerHTML', quote.text)
-    dajax.assign('#quote_detail', 'innerHTML', detail)
-    dajax.script("$('#random_quote').attr('quote_id','%d')"%quote.id)
+    dajax.assign('#quote-text', 'innerHTML', quote.text)
+    dajax.assign('#quote-detail', 'innerHTML', detail)
+    dajax.script("$('#top-quote blockquote').attr('quote-id','%d')" % quote.id)
  
     return dajax.json()
 

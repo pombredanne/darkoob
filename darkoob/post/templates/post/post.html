@@ -42,18 +42,29 @@
       <div class="post_content">
         <div class="row-fluid">
           {% if post|get_type == 'Quote' %}
-            {% usekwacro simple_quote post_=post %}
+            <div class="quote">
+              <blockquote quote-id="{{ post.id }}">
+                <p>{{ post.text }}</p>
+                <small>
+                  {{ post.author }}{% if post.book %} ({{ post.book }}){% endif %}
+                </small>
+              </blockquote>
+              <i data-toggle="tooltip" class="icon-ok pull-right set-quote-icon"
+                            onclick="javascript:Dajaxice.darkoob.social.set_my_quote(
+                            set_my_quote_callback, {'quote_id': {{ post.id }} })">
+              </i>
             </div>
-
           {% elif post|get_type == 'Post' %}
-            {{ post.text }}
-            </div>
-            <div class="row-fluid">
-              <button class="btn  btn-mini noks" data-toggle="tooltip" onclick="Dajaxice.darkoob.post.nok(callback_nok_post,{'post_id':{{post.id}}})">
-                <i class="icon-chevron-right"></i>
-                <span>{{ post.noks.votes }}</span>
-              </button>
-            </div>
+            <p>
+              {{ post.text }}
+            </p>
+        </div>
+        <div class="row-fluid">
+          <button class="btn  btn-mini noks" data-toggle="tooltip" onclick="Dajaxice.darkoob.post.nok(callback_nok_post,{'post_id':{{post.id}}})">
+            <i class="icon-chevron-right"></i>
+            <span>{{ post.noks.votes }}</span>
+          </button>
+        </div>
           {% endif %}
 
     </div> <!-- post_content -->
