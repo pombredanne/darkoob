@@ -35,10 +35,10 @@
               {% csrf_token %}
               {{ new_post_form.text }}
               <div id="quote-detail"  style='display:none;'>
-                {{ new_post_form.book }}
 
-      
                 {{ new_post_form.author }}
+
+                {{ new_post_form.book }}
                 <script src="{% static "/static/js/author_typeahead_suggestion.js" %}"></script> 
 
               </div>

@@ -23,8 +23,6 @@
             <div class="thumb">
               {% thumbnail book.thumb "170x220" crop="center" as im %}
               <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
-              {% empty %}
-                <img src="{% static "/static/img/default-book.jpg" %}" width="170" height="220"/>
               {% endthumbnail %}  
             </div> <!-- thumb -->
           </div> <!-- span2 -->
