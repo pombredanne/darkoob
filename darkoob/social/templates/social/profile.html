@@ -40,89 +40,8 @@ $(function() {
 });
 </script>
 
-<script>
-function edit_gender_callback(data){
-  // alert(data.done)
-  if (data.done){
-    $('#gender_field').slideUp('normal');
-    $('#gender_box').slideDown('normal');
-    document.getElementById("gender_text").innerHTML = data.gender;	
-  }else{
-    $.pnotify({
-      title: 'Failed',
-      text: data.error,
-      opacity: .8,
-      type: 'info',
-    });
-  }
-}
 
-function edit_birthday_callback(data){
-  if (data.done) {
-    $.pnotify({
-      title: 'Birthday changed',
-      text: 'Your birthday has successfully changed',
-      type: 'info',
-      opacity: .8,
-    });
-    $('#birthday_field').slideUp('normal');
-    $('#birthday_box').slideDown('normal');
-    document.getElementById("birthday_text").innerHTML = data.birthday;	
-  } else {
-    $.pnotify({
-      title: 'Failed',
-      text: data.errors,
-      opacity: .8,
-      type: 'info',
-    });
-  }
-}
 
-function edit_mobile_callback(data){
-  // alert(data.done)
-  if (data.done){
-    $.pnotify({
-      title: 'Mobile number changed',
-      text: 'Your mobile number has successfully changed
-      opacity: .8,
-      type: 'info',
-    });
-    $('#mobile_field').slideUp('normal');
-    $('#mobile_box').slideDown('normal');
-    document.getElementById("mobile_text").innerHTML = data.mobile;	
-  }else{
-    $.pnotify({
-      title: 'Failed',
-      text: data.errors,
-      opacity: .8,
-      type: 'info',
-    });
-  }
-}
-
-function edit_website_callback(data){
-  // alert(data.done)
-  if (data.done){
-    $.pnotify({
-      title: 'Website changed',
-      text: 'Your website has successfully changed
-      opacity: .8,
-      type: 'info',
-    });
-    $('#website_field').slideUp('normal');
-    $('#website_box').slideDown('normal');
-    document.getElementById("website_text").innerHTML = data.website;	
-  }else{
-    $.pnotify({
-      title: 'Failed',
-      text: data.errors,
-      opacity: .8,
-      type: 'info',
-    });
-  }
-}
-
-</script>
 {% endblock js %}
 
 {% block pjax_container %}
@@ -162,7 +81,7 @@ function edit_website_callback(data){
 
           <form id="edit_birthday_form" style="display:none" >
             {{ form.year }} {{ form.month}}{{ form.day}}  
-            <button class="btn" type="button" onmousedown="Dajaxice.darkoob.social.edit_birthday(Dajax.process,{'day':$('#id_day').val(),'year':$('#id_year').val(),'month':$('#id_month').val()})">Change</button>
+            <button class="btn" type="button" onmousedown="Dajaxice.darkoob.social.edit_birthday(Dajax.process,{'day':$('.ui-pnotify-text #id_day').val(),'year':$('.ui-pnotify-text #id_year').val(),'month':$('.ui-pnotify-text #id_month').val()})">Change</button>
           </form>
 
 
