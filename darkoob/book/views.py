@@ -7,10 +7,12 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.template import RequestContext
 from django.db import transaction
+from django.utils import simplejson
 
 from darkoob.book.models import Book, Author
 from darkoob.book.forms import NewReviewForm
-from django.utils import simplejson
+from darkoob.social.views import common_context
+from darkoob.migration.models import Migration
 
 
 from darkoob.book.models import Review
@@ -20,26 +22,24 @@ def page(request, book_id, book_title):
         book = Book.objects.get(id=book_id)
     except Book.DoesNotExist:
         raise Http404
-
     template = 'book/book_page.html'
     reviews = Review.objects.filter(book=book).order_by("-rating_score")
     count = range(1, len(reviews) + 1)
-
     if request.is_ajax():
         template = 'book/reviews.html'
-    from darkoob.migration.models import Migration
 
-    m = Migration() 
-
-    return render(request, template ,{
-        # 'is_favorite_book': is_favorite_book,
+    context = {
         'new_review_form': NewReviewForm(),
         'book': book,
         'rate': book.rating.get_rating(),
         'reviews': reviews,
         'count': count[::-1],
         'migrations': Migration.objects.filter(book=book),
-    })
+    }
+    common_context(request, context)
+    m = Migration() 
+
+    return render(request, template, context)
 
 
 from avatar.templatetags import avatar_tags
