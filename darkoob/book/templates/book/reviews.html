@@ -22,7 +22,7 @@ function review_callback(data){
     })
   }
 }
-$(function(){
+function load_starts(){
   $.fn.raty.defaults.path='/static/img';
   $('.star').each(function(){
     {
@@ -38,7 +38,8 @@ $(function(){
         });
     }
   })
-});
+};
+load_starts();
 </script>              
 <!-- javascript code for raty -->
 
