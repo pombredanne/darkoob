@@ -97,7 +97,6 @@ for user in users:
 first_user.node().follow_person(vahid_kharazi.id)
 aryan_baghi.node().follow_person(first_user.id)
 afshin_rodgar.node().follow_person(vahid_kharazi.id)
-aryan_baghi.node().follow_person(first_user.id)
 vahid_kharazi.node().follow_person(first_user.id)
 first_user.node().follow_person(afshin_rodgar.id)
 
