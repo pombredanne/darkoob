@@ -45,12 +45,12 @@ def follow_person(request, user_id):
 def get_quote(request):
     dajax = Dajax()
     quote = Quote.get_random_quote()
-    detail = quote.author.name 
+    detail = quote.author.name
     if quote.book:
         detail += ' (' + quote.book.title + ')'
-    dajax.assign('#quote_text', 'innerHTML', quote.text)
-    dajax.assign('#quote_detail', 'innerHTML', detail)
-    dajax.script("$('#random_quote').attr('quote_id','%d')"%quote.id)
+    dajax.assign('#quote-text', 'innerHTML', quote.text)
+    dajax.assign('#quote-details', 'innerHTML', detail)
+    dajax.script("$('#top-quote blockquote').attr('quote-id','%d')" % quote.id)
  
     return dajax.json()
 
@@ -65,39 +65,35 @@ def get_quote(request):
 
 
 @dajaxice_register(method='POST')
-@transaction.commit_manually
 def submit_post(request, text, type, author, book):
     dajax = Dajax()
     post = None
     if type == '0':
         if text:
-            print "text is", text
             post = Post.objects.create(user=request.user, text=text)
             t_rendered = render_to_string('post/post.html', {'post': post})
             dajax.prepend('#id_new_post_position', 'innerHTML', t_rendered)
             dajax.script('''
                 $.pnotify({
-                title: 'Sharing Post',
+                title: 'Successful',
                 type:'success',
-                text: 'Your Post shared',
+                text: 'Your post has been submitted.',
                 opacity: .8
               });
                 $('#id_text').val('');
             ''')  
-            transaction.commit()
         else:
             print "text doesn't exists"
             dajax.script('''
                          $.pnotify({
-                         title: 'Post',
+                         title: 'Error',
                          type:'error',
-                         text: 'Write something to post',
+                         text: 'Post text is empty!',
                          opacity: .8
                         });
                          $('#id_text').val('');
                          ''')
-            transaction.rollback()
-    if type == '1':
+    elif type == '1':
         print 'type1', type
         # qoute type
         if text:
@@ -116,15 +112,14 @@ def submit_post(request, text, type, author, book):
             else:
                 quote = Quote.objects.create(user=request.user, text=text, book=book) # set author, book  
 
-            transaction.commit()
 
             t_rendered = render_to_string('post/post.html', {'post': quote})
             dajax.prepend('#id_new_post_position', 'innerHTML', t_rendered)
             dajax.script('''
                 $.pnotify({
-                title: 'Sharing Quote',
+                title: 'Successful',
                 type:'success',
-                text: 'your comment shared',
+                text: 'Your quote has been shared.',
                 opacity: .8
               });
                 $('#id_text').val('');
@@ -135,15 +130,14 @@ def submit_post(request, text, type, author, book):
             print "text doesn't exists"
             dajax.script('''
                          $.pnotify({
-                         title: 'Quote',
+                         title: 'Error',
                          type:'error',
-                         text: 'Write something to quote',
+                         text: 'Quote is empty!',
                          opacity: .8
                         });
                          $('#id_text').val('');
                          ''')  
-            transaction.rollback()
-            return dajax.json()
+    return dajax.json()
 
 @dajaxice_register(method='POST')
 @transaction.commit_manually

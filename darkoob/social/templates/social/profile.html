@@ -49,22 +49,22 @@ $(function() {
   <div class="span12">
     <div class="row-fluid">
       <div class="span12">
-        <div class="sidebox post">
-          <div class="row-fluid" style="margin:10px">
+        <div class="simple_box post">
+          <div class="row-fluid" style="margin: 1em;">
             <div class="span2">
               <div class="thumb">
                 {% avatar user 60 %}
               </div>
             </div>
             <div class="span10">
-              <b>{{ user.get_full_name }}</b>
+              <b>{{ user.get_full_name }}</b><br/>
               <a href="{% url 'avatar_change' %}">Change your avatar</a>
 
             </div>
           </div>
         </div>
 
-        <div class="sidebox post">
+        <div class="sidebox post" style="padding: 1em;">
                   <!--  <script type="text/javascript">
                         function alaki(){
                           var a = $('ui-pnotify-text')
@@ -115,7 +115,7 @@ $(function() {
 
             <b>Birthday: </b> {{ user.userprofile.birthday}}<a alt="Edit" onclick="show_form('#edit_birthday_form')"><i class="icon-edit"></i></a>
         </div> <!-- sidebox post -->
-        <div class="sidebox post">
+        <div class="sidebox post" style="padding: 1em;">
           <h4> Contact Information </h4>
           <b>Mobile: </b>{% if user.userprofile.mobile%}{{ user.userprofile.mobile }}{%else%}Nadare{%endif%}<a alt="Edit" onclick="show_form('#edit_mobile_form')"><i class="icon-edit"></i></a>
           <br/>
