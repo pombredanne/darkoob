@@ -83,7 +83,7 @@
             <div class="row-fluid">
               <li class="span3">
               {% usekwacro user_details user_=suggestion placement='top' %}
-                  <a href="#" class="thumbnail">
+                <a href="{% url 'social:user_profile' username=suggestion %}" class="thumbnail">
                     {% avatar suggestion %}
                   </a>
               </div>
@@ -91,7 +91,7 @@
               <div class="span9 suggestion-info">
                 {% usekwacro user_details user_=suggestion placement='top' %}
                   <div class="username">
-                    <a href="#">{{ suggestion.get_full_name }}</a>
+                    <a href="{% url 'social:user_profile' username=suggestion %}">{{ suggestion.get_full_name }}</a>
                   </div>
                 </div> <!-- user-details -->
                 <div class="small-info">
