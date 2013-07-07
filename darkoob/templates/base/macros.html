@@ -15,7 +15,7 @@
           <h4>{{ user_.get_full_name }}</h4>
           <small>@{{ user_.username }} &lt{{ user_.email }}&gt</small>
           <blockquote>
-            <em>{{ user_.userprofile.quote }}</em>
+            {% if user_.userprofile.quote %}<em>{{ user_.userprofile.quote }}</em>{% endif %}
           </blockquote>
         </div>
       </div>
@@ -27,7 +27,7 @@
   <div id="top-quote">
     <blockquote quote-id="{{ quote_.id }}">
       <p id="quote-text">{{ quote_.text }}</p>
-      <small id="quote-detail">
+      <small id="quote-details">
         {{ quote_.author }}{% if quote_.book %} ({{ quote_.book }}){% endif %}
       </small>
 
