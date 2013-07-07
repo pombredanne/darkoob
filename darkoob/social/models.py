@@ -14,6 +14,7 @@ GENDER_CHOICES = (
 
 def node(self):
     '''return node of a User'''
+    
     return UserNode.index.get(user_id=self.id) 
 User.add_to_class('node', node) 
 

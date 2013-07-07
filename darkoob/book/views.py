@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 from django.template import RequestContext
 from django.db import transaction
 
-from darkoob.book.models import Book
+from darkoob.book.models import Book, Author
 from darkoob.book.forms import NewReviewForm
 from django.utils import simplejson
 
@@ -51,12 +51,25 @@ def book_lookup(request):
         if request.GET.has_key(u'query'):
             value = request.GET[u'query']
             model_results = Book.objects.filter(title__icontains=value)
-            for model_result in model_results:
-                print model_result.thumb
-            results = [ {'book_title': x.title ,'photo': x.thumb.url , 'author_name': x.author_names() }  for x in model_results]
+            results = [ {'book_title': x.title ,'book_id':x.id ,'photo': x.thumb.url , 'author_name': x.author_names() }  for x in model_results]
 
     to_json = []
 
-    jt=simplejson.dumps(results)
+    jt = simplejson.dumps(results)
     print jt
     return HttpResponse(jt, mimetype='application/json')
+
+def author_lookup(request):
+    results = []
+    if request.method == "GET":
+        if request.GET.has_key(u'query'):
+            value = request.GET[u'query']
+            model_results = Author.objects.filter(name__icontains=value)
+            results = [ x.name for x in model_results]
+
+    to_json = []
+
+    jt = simplejson.dumps(results)
+    print jt
+    return HttpResponse(jt, mimetype='application/json')
+    

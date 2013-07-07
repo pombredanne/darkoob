@@ -1,4 +1,3 @@
-$(document).ready(function() {
   $(function(){
     var bondObjs = {};
     var bondNames = [];
@@ -21,7 +20,7 @@ $(document).ready(function() {
       });
     });
 
-    $(".typeahead").typeahead({
+    $("#title-look").typeahead({
       source: function ( query, process ) {
         throttledRequest( query, process );
       }
@@ -39,8 +38,8 @@ $(document).ready(function() {
       }
       , updater: function ( selectedName ) {
         $( "#title-look" ).val( bondObjs[ selectedName ].id );
+        $( "#title-look" ).attr("id",bondObjs[ selectedName ].book_id)
         return selectedName;
       }
     });
   });
-});

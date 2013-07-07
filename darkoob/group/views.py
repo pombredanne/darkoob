@@ -42,8 +42,9 @@ def group(request, group_id, group_slug):
 
         # Is this user admin of group?
         is_admin = False
-        if request.user == group.admin:
+        if request.user.id == group.admin.id:
             is_admin = True
+
         return render(request, template, {
             'group': group,
             'posts': posts,
@@ -52,14 +53,13 @@ def group(request, group_id, group_slug):
             'is_member': is_member,
             'is_admin': is_admin,
             'book_deadlines': book_deadlines,
-            'schedule_form': ScheduleForm(),
+            'schedule_form': NewScheduleForm(),
         })
 
     else:
         return HttpResponse("Group Is not exist!")
 
 @login_required
-@transaction.commit_manually
 def create_group(request):
     if request.method == 'POST':
         form = GroupForm(request.POST)
@@ -78,13 +78,11 @@ def create_group(request):
                 except:
                     pass
             group.save()
-            transaction.commit()
             groups = request.user.group_set.all()
             admin_groups = request.user.admin_set.all()
             return HttpResponseRedirect('/group/%i/%s'%(group.id,slugify(group.name)))
 
     else:
-        transaction.rollback()
         form = GroupForm()
         groups = request.user.group_set.all()
         admin_groups = request.user.admin_set.all()

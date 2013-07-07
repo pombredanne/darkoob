@@ -40,89 +40,8 @@ $(function() {
 });
 </script>
 
-<script>
-function edit_gender_callback(data){
-  // alert(data.done)
-  if (data.done){
-    $('#gender_field').slideUp('normal');
-    $('#gender_box').slideDown('normal');
-    document.getElementById("gender_text").innerHTML = data.gender;	
-  }else{
-    $.pnotify({
-      title: 'Failed',
-      text: data.error,
-      opacity: .8,
-      type: 'info',
-    });
-  }
-}
 
-function edit_birthday_callback(data){
-  if (data.done) {
-    $.pnotify({
-      title: 'Birthday changed',
-      text: 'Your birthday has successfully changed',
-      type: 'info',
-      opacity: .8,
-    });
-    $('#birthday_field').slideUp('normal');
-    $('#birthday_box').slideDown('normal');
-    document.getElementById("birthday_text").innerHTML = data.birthday;	
-  } else {
-    $.pnotify({
-      title: 'Failed',
-      text: data.errors,
-      opacity: .8,
-      type: 'info',
-    });
-  }
-}
 
-function edit_mobile_callback(data){
-  // alert(data.done)
-  if (data.done){
-    $.pnotify({
-      title: 'Mobile number changed',
-      text: 'Your mobile number has successfully changed
-      opacity: .8,
-      type: 'info',
-    });
-    $('#mobile_field').slideUp('normal');
-    $('#mobile_box').slideDown('normal');
-    document.getElementById("mobile_text").innerHTML = data.mobile;	
-  }else{
-    $.pnotify({
-      title: 'Failed',
-      text: data.errors,
-      opacity: .8,
-      type: 'info',
-    });
-  }
-}
-
-function edit_website_callback(data){
-  // alert(data.done)
-  if (data.done){
-    $.pnotify({
-      title: 'Website changed',
-      text: 'Your website has successfully changed
-      opacity: .8,
-      type: 'info',
-    });
-    $('#website_field').slideUp('normal');
-    $('#website_box').slideDown('normal');
-    document.getElementById("website_text").innerHTML = data.website;	
-  }else{
-    $.pnotify({
-      title: 'Failed',
-      text: data.errors,
-      opacity: .8,
-      type: 'info',
-    });
-  }
-}
-
-</script>
 {% endblock js %}
 
 {% block pjax_container %}
@@ -131,107 +50,81 @@ function edit_website_callback(data){
     <div class="row-fluid">
       <div class="span12">
         <div class="sidebox post">
-          <br />
-          <div class="media">
-            <a class="pull-left" href="#">
-            {% avatar user 80 %}
+          <div class="row-fluid" style="margin:10px">
+            <div class="span2">
+              <div class="thumb">
+                {% avatar user 60 %}
+              </div>
+            </div>
+            <div class="span10">
+              <b>{{ user.get_full_name }}</b>
+              <a href="{% url 'avatar_change' %}">Change your avatar</a>
 
-            </a>
-            <div class="media-body">
-              <h4 class="media-heading">{{ user.get_full_name }}</h4>
-              <a href="{% url 'avatar_change' %}">Change your avatar</a>    
             </div>
           </div>
+        </div>
 
+        <div class="sidebox post">
+                  <!--  <script type="text/javascript">
+                        function alaki(){
+                          var a = $('ui-pnotify-text')
+                          alert(a.find.val())
+                        }
+                      </script>
+            <button onmousedown="alaki()">df </button>-->
 
-          <h4> Basic Information </h4>
-
-
-          <b>Gender: </b>
-          <span id="gender_box">
-            <vahid id="gender_text">{{ user.userprofile.gender }}</vahid> <a id="edit_gender"  alt="Edit"><i class="icon-edit"></i></a>
-          </span>
-
-          <span id='gender_field'>
-            <form class="form-inline">
-            {{ form.gender }} <button class="btn" type="button" onmousedown="Dajaxice.darkoob.social.edit_gender(edit_gender_callback,{'gender':$('#id_gender').val()})">change</button>
+          <form id="edit_gender_form" style="display:none">
+            Select Your gender:
+            {{ form.gender }}
+            <button class="btn" type="button" onmousedown="Dajaxice.darkoob.social.gender(Dajax.process,{'gender':$('#id_gender').val()})">Change</button>
           </form>
-          </span>
-          <br/>
 
-          <b>Birthday: </b>
-          <span id="birthday_box">
-            <vahid id='birthday_text'>{{ user.userprofile.birthday}}</vahid><a id="edit_birthday" alt="Edit"><i class="icon-edit"></i></a>
-          </span>
-          <span id='birthday_field'>
-            <br />
-            <form class="form-inline">
-            {{ form.year }}	{{ form.month}}{{ form.day}}	
-            <button class="btn" type="button" onmousedown="Dajaxice.darkoob.social.edit_birthday(edit_birthday_callback,{'day':$('#id_day').val(),'year':$('#id_year').val(),'month':$('#id_month').val()} )">change</button>
-            </form>
-            <br />
-          </span>
+          <form id="edit_birthday_form" style="display:none" >
+            {{ form.year }} {{ form.month}}{{ form.day}}  
+            <button class="btn" type="button" onmousedown="Dajaxice.darkoob.social.edit_birthday(Dajax.process,{'day':$('.ui-pnotify-text #id_day').val(),'year':$('.ui-pnotify-text #id_year').val(),'month':$('.ui-pnotify-text #id_month').val()})">Change</button>
+          </form>
 
 
+          <form id="edit_mobile_form" style="display:none">
+            {{ form.mobile }}
+            <button class="btn" type="button" onmousedown="Dajaxice.darkoob.social.edit_mobile(Dajax.process,{'mobile':$('#id_mobile').val()})">Change</button>
+          </form>
 
+          <form id="edit_website_form" style="display:none">
+            {{ form.website }}
+            <button class="btn" type="button" onmousedown="Dajaxice.darkoob.social.edit_website(Dajax.process,{'website':$('#id_website').val()})">Change</button>
+          </form>
+
+          <script type="text/javascript">
+          function show_form(form_id){
+            var notice = $.pnotify({
+            text: $(form_id).html(),
+            icon: false,
+            hide: false,
+            sticker: false,
+            insert_brs: false,
+          });
+          }
+          </script>
+
+            <h4> Basic Information </h4>
+
+            <b>Gender: </b> {% if user.userprofile.gender == "M" %}Male{%else%} Female{%endif%} <a alt="Edit" onclick="show_form('#edit_gender_form')"><i class="icon-edit"></i></a>
+
+            <br/>
+
+            <b>Birthday: </b> {{ user.userprofile.birthday}}<a alt="Edit" onclick="show_form('#edit_birthday_form')"><i class="icon-edit"></i></a>
+        </div> <!-- sidebox post -->
+        <div class="sidebox post">
           <h4> Contact Information </h4>
-          <b>Mobile: </b>
-          {% if user.userprofile.mobile%}
-
-          <span id="mobile_box">
-            <vahid id='mobile_text'>{{ user.userprofile.mobile }}</vahid><a id="edit_mobile" alt="Edit"><i class="icon-edit"></i></a>
-          </span>
-          <span id="mobile_field">
-            <form class="form-inline">
-            {{form.mobile}}
-
-            <button class="btn" type="button" onmousedown="Dajaxice.darkoob.social.edit_mobile(edit_mobile_callback,{'mobile':$('#id_mobile').val()} )">change</button>
-            </form>
-          </span>
-
-
-          {%else%}
-          <span id='mobile_text'>
-            {{form.mobile}} <!-- // #TODO: Re edit is not work -->
-            <button class="btn" type="button" onmousedown="Dajaxice.darkoob.social.edit_mobile(edit_mobile_callback,{'mobile':$('#id_mobile').val()} )">change</button>
-          </span>
-          {%endif%}
-
-
-          <br />
-
+          <b>Mobile: </b>{% if user.userprofile.mobile%}{{ user.userprofile.mobile }}{%else%}Nadare{%endif%}<a alt="Edit" onclick="show_form('#edit_mobile_form')"><i class="icon-edit"></i></a>
+          <br/>
           <b>Website: </b>
-          {% if user.userprofile.website%}
-
-          <span id="website_box">
-            <vahid id='website_text'>{{ user.userprofile.website }} </vahid> <a id="edit_website" alt="Edit"><i class="icon-edit"></i> </a>
-          </span>
-          <span id="website_field">
-            <form class="form-inline">
-            {{form.website}}
-
-            <button class="btn" type="button" onmousedown="Dajaxice.darkoob.social.edit_website(edit_website_callback,{'website':$('#id_website').val()} )">change</button>
-            </form>
-          </span>
+          {% if user.userprofile.website%} {{ user.userprofile.website }} {%else%}Nadare{%endif%}<a alt="Edit" onclick="show_form('#edit_website_form')"><i class="icon-edit"></i></a>
 
 
-          {%else%}
-          <span id='website_text'>
-            <form class="form-inline">
-              {{form.website}} <!-- // #TODO: Re edit is not work -->
-              <button class="btn" type="button" onmousedown="Dajaxice.darkoob.social.edit_website(edit_website_callback,{'website':$('#id_website').val()} )">change</button>
-            </form>
-          </span>
-          {%endif%}
+        </div><!-- sidebox post -->
 
-<!--           <h4> Educations </h4>
-          {% for education in user.userprofile.education_set.all %}
-
-          {{ education.school.name }}
-        </br>
-        {%endfor%}
-        <h4> Location </h4>
-        {{ user.userprofile.city }}, {{ user.userprofile.city.country }} -->
 
       </div> <!-- post -->
     </div> <!-- span12 -->
