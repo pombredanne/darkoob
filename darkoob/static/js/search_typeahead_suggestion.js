@@ -9,9 +9,9 @@ $(document).ready(function() {
       var throttledRequest = _.debounce(function(query, process){
         //get the data to populate the typeahead (plus an id value)
         $.ajax({
-          url: '/group/look'
+          url: '/search/look'
           ,type: "GET"
-          ,data: { query: $('#user-look').val()}
+          ,data: { query: $('#search-look').val()}
           ,cache: false
           ,success: function(data){
             //reset these containers every time the user searches
@@ -41,7 +41,7 @@ $(document).ready(function() {
 });
 
 
-$("#user-look").typeahead({
+$("#search-look").typeahead({
   source: function ( query, process ) {
 
           //here we pass the query (search) and process callback arguments to the throttled function
@@ -67,7 +67,7 @@ $("#user-look").typeahead({
           //that we sent from the source function.
 
           //save the id value into the hidden field
-          $( "#user-look" ).val( bondObjs[ selectedName ].id );
+          $( "#search-look" ).val( bondObjs[ selectedName ].id );
 
           //return the string you want to go into the textbox (the name)
           return selectedName;

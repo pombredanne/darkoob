@@ -31,18 +31,6 @@
 {% block title %}Homepage{% endblock title %}
 
 {% block body %}
-<script>
-  function show_search_res(data) {
-    if (!$("#search_results").length) {
-      var lis = '<ul id="search_results" class="dropdown-menu" role="menu" aria-labelledby="sLabel">';
-      for (i = 0; i < data['users'].length; i += 1) {
-        lis = lis + '<li><a href="#">' + data['users'][i][0] + " &lt;" + data['users'][i][1] + "&gt;" + "</a></li>";
-      }
-      lis += '</ul>'
-      $('#search').after(lis);
-    }
-  }
-</script>
 
 <div class="container-fluid">
   <div class="row-fluid">
@@ -51,15 +39,22 @@
         <div class="navbar-inner">
           <div class="container">
             <a class="brand pull-left" href="{% url "social:home" %}"><p class="logo">Darkoob</p></a>
-            <form class="nav-search search_form pull-left" onSubmit="Dajaxice.darkoob.args_example(
-              show_search_res, {'text':$('#search').val()})">
+            <form class="nav-search search_form pull-left">
               <ul class="nav">
                 <li>
-                <input id="search" type="text" class="search-query input-xlarge dropdown-toggle"
-                data-toggle="dropdown" autocomplete="off"
-              onBlur="Dajaxice.darkoob.args_example(
-              show_search_res, {'text':$('#search').val()})"
-              placeholder="Search">
+                <link rel="stylesheet" type="text/less" href="{% static "/static/css/typeahead_suggestion_with_photo_search.css" %}">
+                <script src="{% static "/static/js/underscore.min.js" %}"></script>
+
+                <input  
+                type='text'
+                class="typeahead search-query input-xlarge dropdown-toggle"
+                autocomplete="off"
+                placeholder="Search"
+                id="search-look"
+                data-provide="typeahead"
+                >
+                <script src="{% static "/static/js/search_typeahead_suggestion.js" %}"></script>
+
               <!--<ul id="search_results" class="dropdown-menu" role="menu" aria-labelledby="sLabel">
               </ul>-->
             </form>

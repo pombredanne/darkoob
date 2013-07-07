@@ -444,6 +444,7 @@ def user_lookup(request):
                 Q(username__icontains=value)
             )
             results = [{'username': x.username , 'photo': avatar_tags.avatar_url(x,30), 'full_name': x.get_full_name()}  for x in model_results if x.id!=request.user.id ]
+            print "user-look-up", results
     to_json = []
     jt=simplejson.dumps(results)
     return HttpResponse(jt, mimetype='application/json')

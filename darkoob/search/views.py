@@ -2,7 +2,12 @@ from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from django.db.models import Q
 from django.contrib.auth.models import User
-
+from django.utils import simplejson
+from django.http import HttpResponse
+from avatar.templatetags import avatar_tags
+from itertools import chain
+from darkoob.book.models import Book
+# from haystack.query import SearchQuerySet
 import re
 
 def entry_index1( request ):
@@ -10,6 +15,33 @@ def entry_index1( request ):
 
 def entry_index( request ):
     return render_to_response('entry_index.html', {}, context_instance = RequestContext(request))
+
+def search_lookup(request):
+    results = []
+    if request.method == "GET":
+        if request.GET.has_key(u'query'):
+            value = request.GET[u'query']
+            user_result = User.objects.filter(
+                Q(first_name__icontains=value) |
+                Q(last_name__icontains=value) |
+                Q(username__icontains=value)
+            )
+            book_result = Book.objects.filter(
+                Q(title__icontains=value) 
+            )
+            
+            user_results = [{'username': x.username , 'photo': avatar_tags.avatar_url(x,30), 'full_name': x.get_full_name()}  for x in user_result ]
+            book_results = [{'username': x.title , 'photo': x.thumb.url, 'full_name': x.author_names()}  for x in book_result ]
+            # results = user_result + book_result
+            results = list(chain(book_results,user_results))
+            # help(SearchQuerySet())
+            # res_obj = SearchQuerySet().autocomplete(userprofile_user_auto=value)
+            # print res_obj
+            # print SearchQuerySet().autocomplete(book_title_auto=value)
+            # results = [{'username': x.username , 'photo': avatar_tags.avatar_url(x,30), 'full_name': x.get_full_name()}  for x in res_obj]
+    to_json = []
+    jt=simplejson.dumps(results)
+    return HttpResponse(jt, mimetype='application/json')
 
 def search_user( request ):
     return render_to_response('search_user.html', {}, context_instance = RequestContext(request))
