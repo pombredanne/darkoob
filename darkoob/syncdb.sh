@@ -1,6 +1,6 @@
 #!/bin/bash
 
-grep backends.sqlite darkoob/settings.py
+grep backends.sqlite settings.py
 if [ $? -eq 0 ]; then
   cd ..
   rm dardb
@@ -11,7 +11,7 @@ if [ $? -eq 0 ]; then
   python test/test.py
   mv dardb ../
 else
-  grep backends.postgres darkoob/settings.py
+  grep backends.postgres settings.py
   if [ $? -eq 0 ]; then
     dropdb dardb
     createdb dardb
