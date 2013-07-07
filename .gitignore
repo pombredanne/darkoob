@@ -11,3 +11,4 @@ django.contrib.html
 django.html
 .shell_history
 src/
+.DS_Store

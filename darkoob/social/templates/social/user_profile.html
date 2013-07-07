@@ -50,13 +50,12 @@
 
 
     {% if is_followers %}
-      <br />
       <i class="icon-eye-open"></i>
-      {{person_object.first_name|capfirst}} follow you <br/>
+      {{person_object.first_name|capfirst}} is following you <br/>
     {% endif %}
 
     {% if is_following %}
-      <button class="btn btn-small btn-block disabled" disabled="disabled" onclick="Dajaxice.darkoob.social.follow_person(follow_person_callback, {'user_id': {{person_object.id}}})"><i class="icon-eye-open"></i> You Follow {{person_object.first_name|capfirst}}
+      <button class="btn btn-small btn-block disabled" disabled="disabled" onclick="Dajaxice.darkoob.social.follow_person(follow_person_callback, {'user_id': {{person_object.id}}})"><i class="icon-eye-open"></i> You are following {{person_object.first_name|capfirst}}
       </button>
 
     {% else %}
@@ -138,49 +137,52 @@
 
 
         <p>
-          {% for migration in migrations %}
-          <hops>
-            <hop>
-              <a style="Display:none">{{ migration.book.title }}</a>
-              {% thumbnail migration.book.thumb "50x50" crop="center" as im %}
-              <img rel="tooltip" title="d" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
-              {% endthumbnail %}
-              <i class="icon-road"></i> 
-            </hop>
+          <div class="migrations" style="display: block;">
+            <div class="row-fluid">
+              <div>
+                {% for migration in migrations %}
+                  <div class="migration">
 
-            <hop>
-              <a style="Display:none">{{ migration.starter.get_full_name }}</a>
-              {% avatar migration.starter 30%}
-            </hop>
-            {% for hop in migration.hop_set.all|slice:":"|dictsort:"received_time" %}
-            <i class="icon-chevron-right"></i>
+                    <div class="migration-book">
+                      <a style="Display:none">{{ migration.book.title }}</a>
+                      {% thumbnail migration.book.thumb "50x50" crop="center" as im %}
+                        <img rel="tooltip" title="d" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+                      {% endthumbnail %}
+                    </div> <!-- migration-book -->
 
+                    <div class="offset1" style="display: inline-block;">
+                      <div class="migration-hop" style="display: inline-block;">
+                        <a style="Display:none">{{ migration.starter.get_full_name }}</a>
+                        {% avatar migration.starter 30%}
+                      </div>
 
-            <hop>
-              <a style="Display:none">{{ hop.host.get_full_name }}</a>
-              {% avatar hop.host 30 %}
-            </hop>
-            {% endfor %}
+                      {% for hop in migration.hop_set.all|slice:":"|dictsort:"received_time" %}
+                        <i class="icon-chevron-right"></i>
+                        <div class="migration-hop" style="display: inline-block;">
+                          <a style="Display:none">{{ hop.host.get_full_name }}</a>
+                          {% avatar hop.host 30 %}
+                        </div>
+                      {% endfor %}
+                    </div>
 
+                  </div> <!-- migration -->
+                {% endfor %}
 
-          </hops>
-          <br />
-          {% endfor %}
+                <script type="text/javascript">
 
+                $('.migration-book, .migration-hop').each(function(){
 
+                  $($(this).children()[1]).removeAttr('data-original-title')
+                  $($(this).children()[1]).attr('title',$(this).children()[0].text)
+                  $($(this).children()[1]).tooltip({
+                    'placement': 'bottom'
+                  });
+                });
 
-          <script type="text/javascript">         
-
-          $('hops hop').each(function(){
-
-            $($(this).children()[1]).removeAttr('data-original-title')
-            $($(this).children()[1]).attr('title',$(this).children()[0].text)
-            $($(this).children()[1]).tooltip({
-              'placement': 'bottom'
-            });
-          });
-
-          </script>
+                </script>
+              </div>
+            </div> <!-- row -->
+          </div> <!-- migrations -->
         </p>
 
       </div>

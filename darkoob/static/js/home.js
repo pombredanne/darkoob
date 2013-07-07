@@ -1,10 +1,10 @@
 function change_post_type(type){
   $('#id_text').attr('placeholder',$('#type_'+type).attr('placeholder'));
 
-  if (type==1){
-    $('#quote-detail').slideDown('slow');
+  if (type == 1){
+    $('#new-quote-details').slideDown('slow');
   }else{
-    $('#quote-detail').slideUp('slow');
+    $('#new-quote-details').slideUp('slow');
   }
 
   $('.new-post-icon').each(function(index,value){

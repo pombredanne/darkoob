@@ -34,7 +34,7 @@
             <form method="post" action="{% url "social:new_post" %}" id="post_form" type='0'>
               {% csrf_token %}
               {{ new_post_form.text }}
-              <div id="quote-detail"  style='display:none;'>
+              <div id="new-quote-details"  style='display:none;'>
 
                 {{ new_post_form.author }}
 
@@ -85,7 +85,7 @@
             </div> <!-- migration -->
           {% endfor %}
 
-          <script type="text/javascript">         
+          <script type="text/javascript">
 
           $('.migration-book, .migration-hop').each(function(){
 

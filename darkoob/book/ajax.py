@@ -1,5 +1,7 @@
 from django.utils import simplejson
 from dajaxice.decorators import dajaxice_register
+from django.utils.translation import ugettext as _
+from django.template.loader import render_to_string
 from dajax.core import Dajax
 from django.db import transaction
 
@@ -42,7 +44,6 @@ def review_rate(request, rate, review_id):
     return simplejson.dumps({'done': done})
 
 @dajaxice_register(method='POST')
-@transaction.commit_manually
 def submit_review(request, book_id, title, text):
     dajax = Dajax()
     #TODO: checks if you have permission for posting review
@@ -59,7 +60,6 @@ def submit_review(request, book_id, title, text):
           $('#id_text').val('');
           $('#id_title').val('');
         ''') 
-        transaction.rollback()
     else:
         if len(text) < 200:
             transaction.rollback()
@@ -74,8 +74,9 @@ def submit_review(request, book_id, title, text):
               $('#id_title').val('');
             ''')    
         else:
-            Review.objects.create(book=book, user=request.user, title=title, text=text)
-            transaction.commit()
+            review = Review.objects.create(book=book, user=request.user, title=title, text=text)
+            t_rendered = render_to_string('book/review.html', {'review': review})
+            dajax.prepend('#id_new_post_position', 'innerHTML', t_rendered)
             dajax.script('''
                 $.pnotify({
                 title: 'Review',
