@@ -132,6 +132,7 @@ the_alchemist = Book.objects.create(
     title='The Alchemist',
     publisher=harpercollins,
     language=english,
+    pages=167,
     thumb=os.path.join(BOOKS_DIR, 'the_alchemist.jpg'),
 )
 the_alchemist.authors.add(paulo_coelho)
@@ -141,6 +142,7 @@ pride_and_prejudice = Book.objects.create(
     title='Pride and Prejudice',
     publisher=modern_library,
     language=english,
+    pages=279,
     thumb=os.path.join(BOOKS_DIR, 'pride_and_prejudice.jpg'),
 )
 pride_and_prejudice.authors.add(jane_austen)
