@@ -14,7 +14,7 @@ from django.utils import timezone
 from avatar.models import Avatar
 from darkoob import settings
 from darkoob.social.models import UserNode
-from darkoob.book.models import Author, Quote, Publisher, Book, Language
+from darkoob.book.models import Author, Quote, Publisher, Book, Language, Review
 from darkoob.group.models import Group, Schedule, Deadline
 from darkoob.post.models import Post
 from darkoob.migration.models import Migration, Hop
@@ -251,3 +251,23 @@ h2 = Hop.objects.create(
     migration=m1,
     host=afshin_rodgar,
 )
+
+# Add review
+r1 = Review.objects.create(
+    book=pride_and_prejudice,
+    user=aryan_baghi,
+    title='Calculating addresses',
+    text="""You can use ipcalc provided by the ipcalc package to calculate IP broadcast, network, netmask, and host ranges for more advanced configurations. For example, I use ethernet over firewire to connect a windows machine to arch. For security and network organization, I placed them on their own network and configured the netmask and broadcast so that they are the only 2 machines on it. To figure out the netmask and broadcast addresses for this, I used ipcalc, providing it with the IP of the arch firewire nic 10.66.66.1, and specifying ipcalc should create a network of only 2 hosts.""",
+    submitted_time=timezone.now(),
+)
+
+r2 = Review.objects.create(
+    book=the_alchemist,
+    user=afshin_rodgar,
+    title='ifplugd for laptops',
+    text="""ifplugd in Official Repositories is a daemon which will automatically configure your Ethernet device when a cable is plugged in and automatically unconfigure it if the cable is pulled. This is useful on laptops with onboard network adapters, since it will only configure the interface when a cable is really connected. Another use is when you just need to restart the network but do not want to restart the computer or do it from the shell.
+
+    By default it is configured to work for the eth0 device. This and other settings like delays can be configured in /etc/ifplugd/ifplugd.conf.""",
+    submitted_time=timezone.now(),
+)
+

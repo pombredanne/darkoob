@@ -60,7 +60,7 @@ class Translation(models.Model):
 
 class Review(models.Model):
     book = models.ForeignKey(Book, db_index=True)
-    user = models.ForeignKey(User, db_index=True)
+    user = models.ForeignKey(User)
     title = models.TextField()
     text = models.TextField()
     submitted_time = models.DateTimeField(default=timezone.now(), db_index=True)
