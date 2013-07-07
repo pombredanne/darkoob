@@ -14,6 +14,7 @@ class Book(models.Model):
     language = models.ForeignKey('Language', null=True, blank=True)
     authors = models.ManyToManyField('Author')
     tags = TaggableManager(blank=True)
+    pages = models.IntegerField(blank=True, null=True)
     thumb =  models.ImageField(upload_to='books/', default='books/default.jpg')
     rating = RatingField(range=5, can_change_vote=True, allow_delete=False, allow_anonymous=False)
     creation_time = models.DateTimeField(default=timezone.now())
