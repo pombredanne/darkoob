@@ -15,21 +15,21 @@ from django.contrib.auth.decorators import login_required
 def start_new_migration(request):
     if request.method == 'POST':
         form = StartNewMigrationForm(request.POST)
-        # if form.is_valid():
-        #     cd = form.cleaned_data
-        #     try:
-        #         book = Book.objects.get(title=cd['book'])
-        #     except:
-        #         return HttpResponse("this book no exist")
-        #     else:
-        #         private_key = generate_private_key()
-        #         Migration.objects.create(book=book, starter=request.user,
-        #             starter_message=cd['starter_message'], private_key=private_key
-        #         )
-        #         # TODO:Redirect to this page 
-        #         return render(request, 'migration/started.html', 
-        #             {'private_key': private_key, 'book': book}
-        #         )
+        if form.is_valid():
+            cd = form.cleaned_data
+            try:
+                book = Book.objects.get(title=cd['book'])
+            except:
+                return HttpResponse("this book no exist")
+            else:
+                private_key = generate_private_key()
+                Migration.objects.create(book=book, starter=request.user,
+                    starter_message=cd['starter_message'], private_key=private_key
+                )
+                # TODO:Redirect to this page 
+                return render(request, 'migration/started.html', 
+                    {'private_key': private_key, 'book': book}
+                )
     else:
         form = StartNewMigrationForm()
     return render(request, 'migration/start_new_migration.html',{'form':form}) #{'form': form, })

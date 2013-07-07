@@ -7,7 +7,6 @@ from darkoob.migration.models import Migration, Hop
 from darkoob.book.models import Book
 
 @dajaxice_register(method='POST')
-@transaction.commit_manually
 def submit_key(request, private_key):
     errors = []
     done = True
@@ -21,7 +20,6 @@ def submit_key(request, private_key):
         if migration.starter == request.user:
             done = False
             errors.append(_('you are starter of this book migration!'))
-            transaction.rollback()
         else:
             try:
                 hop = Hop.objects.get(migration=migration, host=request.user)
@@ -29,11 +27,9 @@ def submit_key(request, private_key):
                 Hop.objects.create(migration=migration, host=request.user)
                 done = True
                 message = _('thanks for record %s book,' % migration.book.title )
-                transaction.commit()
             else:
                 errors.append(_('You have already submitted this book'))
                 done = False
-                transaction.rollback()
 
     return simplejson.dumps({'done': done, 'errors': errors, 'message': message})
 
@@ -74,10 +70,10 @@ def generate_private_key(len=10):
     return ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(len))
 
 @dajaxice_register(method='POST')
-def submit_new_migration_form(request, book, message):
+def submit_new_migration_form(request, book_id, message):
     done = True
     try:
-        book = Book.objects.get(title=book)
+        book = Book.objects.get(id=book_id)
     except:
         private_key = ''
         book = ''            
@@ -119,12 +115,3 @@ def is_book(request, book_title):
     return simplejson.dumps({'done': True, 'result': result })
 
 
-@dajaxice_register(method='POST')
-def book_status(request, book_title):
-    try:
-        Book.objects.get(title=book_title)
-    except:
-        status = False
-    else:
-        status = True
-    return simplejson.dumps({'status': status})

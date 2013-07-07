@@ -82,17 +82,21 @@ function book_status_callback(data){
                 <a href="http://en.wikipedia.org/wiki/License">read more</a>
               </dd>
             </dl>
-              {{ form.book }}
+
+                <link rel="stylesheet" type="text/less" href="{% static "/static/css/typeahead_suggestion_with_photo.css" %}">
+                <script src="{% static "/static/js/underscore.min.js" %}"></script>
+                <script src="{% static "/static/js/book_typeahead_suggestion.js" %}"></script> 
+              <form action="{%url 'migration:new_migration'%}" method="POST">
+                {% csrf_token %}
+                {{ form.book }}
 
 
-              <link rel="stylesheet" type="text/less" href="{% static "/static/css/typeahead_suggestion_with_photo.css" %}">
-              <script src="{% static "/static/js/underscore.min.js" %}"></script>
-              <script src="{% static "/static/js/book_typeahead_suggestion.js" %}"></script> 
-              {{ form.starter_message }}<br />
-              <!-- TODO: Redirect to started page(see Views.py)<br/>
-              <input type="checkbox" id="accept">I Accept Todo: Accept migration lisence</input> -->
+                {{ form.starter_message }}<br />
+                <!-- TODO: Redirect to started page(see Views.py)<br/>
+                <input type="checkbox" id="accept">I Accept Todo: Accept migration lisence</input> -->
 
-              <button class="btn btn-large btn-block btn-primary" type="button" onclick="Dajaxice.darkoob.migration.book_status(book_status_callback,{'book_title':$('#title-look').val()})">Start New Migration</button>
+                <button class="btn btn-large btn-block btn-primary" type="submit">Start New Migration</button>
+              </form>
           </div> <!-- before submit -->
         </div> <!-- post -->
       </div> <!-- span12 -->
